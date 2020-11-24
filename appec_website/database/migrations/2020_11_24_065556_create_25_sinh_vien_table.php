@@ -1,0 +1,39 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class Create25SinhVienTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('SINH_VIEN', function (Blueprint $table) {
+            $table->string('maSSV',20)->unique();
+            $table->primary('maSSV');
+            $table->text('HoSV')->nullable()->default('text');
+            $table->text('TenSV')->nullable()->default('text');
+            $table->text('Phai')->nullable()->default('text');
+            $table->text('NgaySinh')->nullable()->default('text');
+            $table->string('maLop',255)->unique();
+            $table->foreign('maLop')->references('maLop')->on('LOP')->onUpdate('restrict')->onDelete('cascade');
+
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('SINH_VIEN');
+    }
+}
