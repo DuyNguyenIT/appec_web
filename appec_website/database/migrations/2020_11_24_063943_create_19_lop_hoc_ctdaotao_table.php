@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Create19HocphanLopHockiTable extends Migration
+class Create19LopHocCtdaotaoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,17 @@ class Create19HocphanLopHockiTable extends Migration
      */
     public function up()
     {
-        Schema::create('HOCPHAN_HOCKY_LOP', function (Blueprint $table) {
-            $table->string('maHocPhan',20)->unique();
+        Schema::create('LOP_HOC_CTDAOTAO', function (Blueprint $table) {
+           
             $table->string('maLop',20)->unique();
-            $table->string('maHK',20)->unique();
-            $table->primary(['maHocPhan','maLop','maHK']);
+            $table->integer('maCT')->unsigned()->nullable()->default(12);
+            
+            $table->primary(['maLop','maCT']);
 
-            $table->foreign('maHocPhan')->references('maHocPhan')->on('HOC_PHAN')->onUpdate('restrict')->onDelete('cascade');
+            $table->foreign('maCT')->references('maCT')->on('CT_DAO_TAO')->onUpdate('restrict')->onDelete('cascade');
             $table->foreign('maLop')->references('maLop')->on('LOP')->onUpdate('restrict')->onDelete('cascade');
             $table->timestamps();
+
         });
     }
 
@@ -32,6 +34,6 @@ class Create19HocphanLopHockiTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('HOCPHAN_HOCKY_LOP');
+        Schema::dropIfExists('LOP_HOC_CTDAOTAO');
     }
 }

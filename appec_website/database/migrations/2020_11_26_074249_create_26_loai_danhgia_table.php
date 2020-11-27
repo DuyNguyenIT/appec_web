@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Create26TieuChuanBaocaoTable extends Migration
+class Create26LoaiDanhgiaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class Create26TieuChuanBaocaoTable extends Migration
      */
     public function up()
     {
-        Schema::create('TIEUCHUAN_BAOCAO', function (Blueprint $table) {
-            $table->increments('idBC');
-            $table->increments('maTieuChuanBC');
-            $table->primary(['idBC','maTieuChuanBC']);
-            $table->text('tenTieuChuanBC')->nullable()->default('text');
+        Schema::create('LOAI_DANH_GIA', function (Blueprint $table) {
+            $table->increments('maLoaiDG');
+            $table->text('tenLoaiDG')->nullable()->default('text');
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ class Create26TieuChuanBaocaoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('TIEUCHUAN_BAOCAO');
+        Schema::dropIfExists('LOAI_DANH_GIA');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Create34LoaiDanhgiaTable extends Migration
+class Create31TieuChuanDanhGiaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class Create34LoaiDanhgiaTable extends Migration
      */
     public function up()
     {
-        Schema::create('LOAI_DANHGIA', function (Blueprint $table) {
-            $table->increments('maLoaiDG');
-            $table->text('tenLoaiDG')->nullable()->default('text');
+        Schema::create('TIEUCHUAN_DANHGIA', function (Blueprint $table) {
+           $table->increments('maTCDG');
+           $table->text('tenTCDG')->nullable()->default('text');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class Create34LoaiDanhgiaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('LOAI_DANHGIA');
+        Schema::dropIfExists('TIEUCHUAN_DANHGIA');
     }
 }

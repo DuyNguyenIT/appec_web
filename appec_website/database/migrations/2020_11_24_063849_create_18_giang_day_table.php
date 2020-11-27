@@ -18,7 +18,8 @@ class Create18GiangDayTable extends Migration
             $table->string('maLop',20)->unique();
             $table->string('maGV',20)->unique();
             $table->string('maHK',20)->unique();
-            $table->primary(['maHocPhan','maLop','maGV','maHK']);
+            $table->string('namHoc',20)->unique();
+            $table->primary(['maHocPhan','maLop','maGV','maHK','namHoc']);
             $table->foreign('maHocPhan')->references('maHocPhan')->on('HOC_PHAN')
                 ->onUpdate('restrict')
                 ->onDelete('cascade');

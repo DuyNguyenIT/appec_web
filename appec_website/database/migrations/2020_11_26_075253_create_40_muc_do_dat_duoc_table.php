@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Create30TieuChuanTuluanTable extends Migration
+class Create40MucDoDatDuocTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class Create30TieuChuanTuluanTable extends Migration
      */
     public function up()
     {
-        Schema::create('TIEUCHUAN_TULUAN', function (Blueprint $table) {
-            $table->increments('idTL');
-            $table->increments('maTieuChuanTL');
-            $table->primary(['idTL','maTieuChuanTL']);
-            $table->text('tenTieuChuanTL')->nullable()->default('text');
+        Schema::create('MUC_DO_DAT_DUOC', function (Blueprint $table) {
+            $table->increments('maMD');
+            $table->text('tenMD')->nullable()->default('text');
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ class Create30TieuChuanTuluanTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('TIEUCHUAN_TULUAN');
+        Schema::dropIfExists('MUC_DO_DAT_DUOC');
     }
 }

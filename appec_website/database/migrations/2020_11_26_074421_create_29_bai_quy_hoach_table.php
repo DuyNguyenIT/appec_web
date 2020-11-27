@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Create32TieuChuanTracnghiemTable extends Migration
+class Create29BaiQuyHoachTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class Create32TieuChuanTracnghiemTable extends Migration
      */
     public function up()
     {
-        Schema::create('TIEUCHUAN_TRACNGHIEM', function (Blueprint $table) {
-            $table->increments('idTN');
-            $table->increments('maTieuChuanTN');
-            $table->primary(['idTN','maTieuChuanTN']);
-            $table->text('tenTieuChuanTN')->nullable()->default('text');
+        Schema::create('BAI_QUY_HOACH', function (Blueprint $table) {
+            $table->increments('maBaiQH');
+            $table->text('tenBaiQH')->nullable()->default('text');
+            $table->text('noiDungBaiQH')->nullable()->default('text');
+            
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class Create32TieuChuanTracnghiemTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('TIEUCHUAN_TRACNGHIEM');
+        Schema::dropIfExists('BAI_QUY_HOACH');
     }
 }
