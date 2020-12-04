@@ -23,8 +23,8 @@ class Create5HocPhanTable extends Migration
             $table->text('moTaHocPhan')->nullable()->default('text');
 
             $table->boolean('isDelete')->nullable()->default(false);
-            $table->string('maLoaiHocPhan',255)->unique();
-            $table->string('maCTKhoiKT',255)->unique();
+            $table->string('maLoaiHocPhan',255);
+            $table->string('maCTKhoiKT',255);
             $table->timestamps();
 
             $table->foreign('maLoaiHocPhan')->references('maLoaiHocPhan')->on('LOAI_HOC_PHAN')->onDelete('cascade');

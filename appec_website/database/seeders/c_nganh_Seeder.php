@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-
+use Illuminate\Support\Facades\DB;
 class c_nganh_Seeder extends Seeder
 {
     /**
@@ -15,7 +15,7 @@ class c_nganh_Seeder extends Seeder
     {
         DB::table('c_nganh')->insert([
             ['maCNganh'=>'1','tenCNganh'=>'Công nghệ thông tin (cử nhân – 7HK)','maNganh'=>'7480201'],
-            ['maCNganh'=>'2','tenCNganh'=>'Công nghệ thông tin (kỹ sư – 8HK)','maNganh'=>'7480201'],
+            ['maCNganh'=>'2','tenCNganh'=>'7480201','maNganh'=>'7480201'],
             ['maCNganh'=>'3','tenCNganh'=>'Hệ thống thông tin quản lý (kỹ sư – 8HK)','maNganh'=>'7480201'],
             ['maCNganh'=>'4','tenCNganh'=>'Quản trị mạng (kỹ sư – 8HK)','maNganh'=>'7480201'],
             ['maCNganh'=>'5','tenCNganh'=>'Công nghệ kỹ thuật công trình xây dựng (kỹ sư – 9HK)','maNganh'=>'7510102'],
@@ -24,8 +24,8 @@ class c_nganh_Seeder extends Seeder
             ['maCNganh'=>'8','tenCNganh'=>'Hệ thống điện (kỹ sư – 8HK)','maNganh'=>'7510301'],
             ['maCNganh'=>'9','tenCNganh'=>'Tự động hóa (kỹ sư – 8HK)','maNganh'=>'7510303'],
             ['maCNganh'=>'10','tenCNganh'=>'Cơ điện tử (kỹ sư – 8HK)','maNganh'=>'7510201'],
-            ['maCNganh'=>'11','tenCNganh'=>'Cơ khí chế tạo máy (kỹ sư – 8HK)','maNganh'=>'7510201'],
-            ['maCNganh'=>'12','tenCNganh'=>'Công nghệ ô tô (kỹ sư – 8HK)','maNganh'=>'7510205'],
+            ['maCNganh'=>'11','tenCNganh'=>'ng công trình giao thông','maNganh'=>'7510201'],
+            ['maCNganh'=>'12','tenCNganh'=>'uật điện – điện tử','maNganh'=>'7510205'],
          ]);
     }
 }

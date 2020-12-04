@@ -16,7 +16,7 @@ class CreateCtNganhTable extends Migration
         Schema::create('c_nganh', function (Blueprint $table) {
             $table->increments('maCNganh');
             $table->text('tenCNganh')->nullable()->default('text');
-            $table->string('maNganh',255)->unique();
+            $table->string('maNganh',255);
             $table->boolean('isDelete')->nullable()->default(false);
             $table->foreign('maNganh')->references('maNganh')->on('NGANH')->onDelete('cascade');
             $table->timestamps();

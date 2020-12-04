@@ -19,7 +19,7 @@ class Create30QuyhoachHocphanTable extends Migration
             $table->integer('maLoaiDG')->length(5)->default(12);
             $table->integer('maLoaiHTDG')->length(5)->default(12);
             $table->integer('maBaiQH')->length(5)->default(12);
-            $table->string('maGV',10)->unique();
+            $table->string('maGV',10);
             $table->boolean('isDelete')->nullable()->default(false);
 
             $table->timestamps();

@@ -14,7 +14,7 @@ class Create7HocPhanCtDaotaoTable extends Migration
     public function up()
     {
         Schema::create('HOCPHAN_CTDAOTAO', function (Blueprint $table) {
-            $table->string('maHocPhan',255)->unique()->default('text');
+            $table->string('maHocPhan',255)->default('text');
             $table->integer('maCT')->unsigned()->nullable()->default(12);
             $table->text('phanPhoiHocKy')->nullable()->default('text');
             $table->primary(['maHocPhan', 'maCT']);

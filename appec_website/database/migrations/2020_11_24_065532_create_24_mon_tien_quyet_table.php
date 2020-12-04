@@ -14,7 +14,7 @@ class Create24MonTienQuyetTable extends Migration
     public function up()
     {
         Schema::create('MON_TIEN_QUYET', function (Blueprint $table) {
-            $table->string('maHocPhan',20)->unique();
+            $table->string('maHocPhan',20);
             $table->string('maMonTienQuyet',20)->unique();
             $table->primary(['maHocPhan','maMonTienQuyet']);
             $table->boolean('isDelete')->nullable()->default(false);

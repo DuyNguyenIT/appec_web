@@ -21,7 +21,7 @@ class CreateCtKhoiKienThucTable extends Migration
             $table->integer('tongTinChiTHCTKhoiKT')->unsigned()->nullable()->default(12);
            
             $table->boolean('isDelete')->nullable()->default(false);
-            $table->string('maKhoiKT',255)->unique();
+            $table->string('maKhoiKT',255);
             $table->foreign('maKhoiKT')->references('maKhoiKT')->on('khoi_kien_thuc')->onDelete('cascade');
             $table->timestamps();
         });

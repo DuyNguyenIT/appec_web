@@ -17,9 +17,9 @@ class Create6CtDaoTaoTable extends Migration
             $table->increments('maCT');
             $table->text('tenCT')->nullable()->default('text');
           
-            $table->string('maBac',255)->unique();
+            $table->string('maBac',255);
             $table->integer('maCNganh')->unsigned()->nullable()->default(12);
-            $table->string('maHe',255)->unique();
+            $table->string('maHe',255);
             $table->boolean('isDelete')->nullable()->default(false);
 
             $table->timestamps();
