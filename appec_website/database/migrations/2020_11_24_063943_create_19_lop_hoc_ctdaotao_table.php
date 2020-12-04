@@ -19,7 +19,7 @@ class Create19LopHocCtdaotaoTable extends Migration
             $table->integer('maCT')->unsigned()->nullable()->default(12);
             
             $table->primary(['maLop','maCT']);
-
+            $table->boolean('isDelete')->nullable()->default(false);
             $table->foreign('maCT')->references('maCT')->on('CT_DAO_TAO')->onUpdate('restrict')->onDelete('cascade');
             $table->foreign('maLop')->references('maLop')->on('LOP')->onUpdate('restrict')->onDelete('cascade');
             $table->timestamps();

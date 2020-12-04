@@ -17,6 +17,7 @@ class Create14HocphanKqhtHpTable extends Migration
             $table->string('maHocPhan',255)->unique();
             $table->integer('maKQHT')->unsigned()->nullable()->default(12);
             $table->primary(['maHocPhan', 'maKQHT']);
+            $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
 
             $table->foreign('maHocPhan')->references('maHocPhan')->on('HOC_PHAN')

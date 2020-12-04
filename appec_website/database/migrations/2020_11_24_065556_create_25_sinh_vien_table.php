@@ -22,7 +22,7 @@ class Create25SinhVienTable extends Migration
             $table->text('NgaySinh')->nullable()->default('text');
             $table->string('maLop',255)->unique();
             $table->foreign('maLop')->references('maLop')->on('LOP')->onUpdate('restrict')->onDelete('cascade');
-
+            $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
         });
     }

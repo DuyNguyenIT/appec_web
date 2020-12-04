@@ -19,7 +19,7 @@ class Create28HocphanLoaiHinhthucDgTable extends Migration
             $table->integer('maLoaiHTDG')->unsigned()->nullable()->default(12);
             $table->integer('trongSo')->unsigned()->nullable()->default(12);
             $table->primary(['maHocPhan','maLoaiDG','maLoaiHTDG']);
-
+            $table->boolean('isDelete')->nullable()->default(false);
 
             $table->timestamps();
 

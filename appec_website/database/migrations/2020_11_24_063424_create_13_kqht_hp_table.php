@@ -17,6 +17,7 @@ class Create13KqhtHpTable extends Migration
             $table->increments('maKQHT');
             $table->text('tenKQHT')->nullable()->default('text');
             $table->timestamps();
+            $table->boolean('isDelete')->nullable()->default(false);
         });
     }
 

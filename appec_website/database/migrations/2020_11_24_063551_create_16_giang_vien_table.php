@@ -21,6 +21,7 @@ class Create16GiangVienTable extends Migration
             $table->text('tenGV')->nullable()->default('text');
             $table->text('password')->nullable()->default('text');
             $table->text('email')->nullable()->default('text');
+            $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
         });
     }

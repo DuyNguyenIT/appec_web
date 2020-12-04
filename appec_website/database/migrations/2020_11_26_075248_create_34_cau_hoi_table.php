@@ -17,7 +17,7 @@ class Create34CauHoiTable extends Migration
             $table->increments('maCauHoi');
             $table->text('noiDungCauHoi')->nullable()->default('text');
             $table->float('diemCauHoi')->nullable()->default(123.45);
-
+            $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
         });
     }

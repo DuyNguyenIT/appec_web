@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Create23HocphanKhoiKienThucTable extends Migration
+class Create23HocPhanCtKhoiKienThucTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class Create23HocphanKhoiKienThucTable extends Migration
      */
     public function up()
     {
-        Schema::create('HOCPHAN_KHOIKIENTHUC', function (Blueprint $table) {
+        Schema::create('HOCPHAN_CTKHOIKIENTHUC', function (Blueprint $table) {
             $table->string('maHocPhan',20)->unique();
-            $table->integer('maKhoiKT')->unsigned()->nullable()->default(12);
-            $table->primary(['maHocPhan','maKhoiKT']);
+            $table->string('maCTKhoiKT',255)->unique();
+            $table->primary(['maHocPhan','maCTKhoiKT']);
+            $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
             $table->foreign('maHocPhan')->references('maHocPhan')->on('HOC_PHAN')->onDelete('cascade');
-            $table->foreign('maKhoiKT')->references('maKhoiKT')->on('KHOI_KIEN_THUC')->onDelete('cascade');
+            $table->foreign('maCTKhoiKT')->references('maCTKhoiKT')->on('CT_KHOI_KIEN_THUC')->onDelete('cascade');
         });
     }
 
@@ -30,6 +31,6 @@ class Create23HocphanKhoiKienThucTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('HOCPHAN_KHOIKIENTHUC');
+        Schema::dropIfExists('23_hoc_phan_ct_khoi_kien_thuc');
     }
 }

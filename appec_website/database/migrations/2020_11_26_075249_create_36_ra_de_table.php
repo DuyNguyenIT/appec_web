@@ -20,7 +20,7 @@ class Create36RaDeTable extends Migration
             $table->string('maHocPhan',255)->unique();
             $table->string('maLop',255)->unique();
             $table->integer('lanThu')->unsigned()->nullable()->default(0);
-
+            $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
             $table->foreign('maDe')->references('maDe')->on('DE_THI')->onDelete('cascade');
             $table->foreign('maGV')->references('maGV')->on('GIANG_VIEN')->onDelete('cascade');

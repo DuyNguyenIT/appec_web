@@ -14,9 +14,11 @@ class Create22KhoiKienThucTable extends Migration
     public function up()
     {
         Schema::create('KHOI_KIEN_THUC', function (Blueprint $table) {
-            $table->increments('maKhoiKT');
+            $table->string('maKhoiKT',255)->unique();
+            $table->primary('maKhoiKT');
             $table->text('tenKhoiKT')->nullable()->default('text'); //tên khối kiến thức
             $table->integer('tongSoTC')->unsigned()->nullable()->default(12); //tống số tín chỉ
+            $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
         });
     }

@@ -18,7 +18,9 @@ class Create7HocPhanCtDaotaoTable extends Migration
             $table->integer('maCT')->unsigned()->nullable()->default(12);
             $table->text('phanPhoiHocKy')->nullable()->default('text');
             $table->primary(['maHocPhan', 'maCT']);
+            $table->boolean('isDelete')->nullable()->default(false);
 
+            
             $table->foreign('maHocPhan')->references('maHocPhan')->on('HOC_PHAN')
                 ->onUpdate('restrict')
                 ->onDelete('cascade');

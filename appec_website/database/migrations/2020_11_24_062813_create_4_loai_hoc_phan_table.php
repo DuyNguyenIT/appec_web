@@ -14,8 +14,10 @@ class Create4LoaiHocPhanTable extends Migration
     public function up()
     {
         Schema::create('LOAI_HOC_PHAN', function (Blueprint $table) {
-            $table->increments('maLoaiHocPhan');
-  	        $table->text('tenLoaiHocPhan')->nullable()->default('text');
+            $table->string('maLoaiHocPhan',255)->unique();
+           $table->primary('maLoaiHocPhan');
+            $table->text('tenLoaiHocPhan')->nullable()->default('text');
+            $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
         });
     }

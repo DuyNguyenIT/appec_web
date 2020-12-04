@@ -17,6 +17,7 @@ class Create32BaiQuyHoachTCDanhgiaTable extends Migration
             $table->integer('maBaiQH')->unsigned()->nullable()->default(12);
             $table->integer('maTCDG')->unsigned()->nullable()->default(12);
             $table->primary(['maBaiQH','maTCDG']);
+            $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
             $table->foreign('maBaiQH')->references('maBaiQH')->on('BAI_QUY_HOACH')->onDelete('cascade');
             $table->foreign('maTCDG')->references('maTCDG')->on('TIEUCHUAN_DANHGIA')->onDelete('cascade');

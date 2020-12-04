@@ -20,7 +20,7 @@ class Create30QuyhoachHocphanTable extends Migration
             $table->integer('maLoaiHTDG')->length(5)->default(12);
             $table->integer('maBaiQH')->length(5)->default(12);
             $table->string('maGV',10)->unique();
-
+            $table->boolean('isDelete')->nullable()->default(false);
 
             $table->timestamps();
             $table->foreign('maHocPhan')->references('maHocPhan')->on('HOC_PHAN')

@@ -14,8 +14,10 @@ class Create3HeTable extends Migration
     public function up()
     {
         Schema::create('HE', function (Blueprint $table) {
-            $table->increments('maHe');
+            $table->string('maHe',255)->unique();
             $table->text('tenHe')->nullable()->default('text');
+            $table->primary('maHe');
+            $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
         });
     }

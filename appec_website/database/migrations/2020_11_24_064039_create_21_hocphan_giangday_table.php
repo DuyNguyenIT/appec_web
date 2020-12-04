@@ -18,6 +18,7 @@ class Create21HocphanGiangdayTable extends Migration
             $table->integer('maPP')->unsigned()->nullable()->default(12);
 
             $table->primary(['maHocPhan','maPP']);
+            $table->boolean('isDelete')->nullable()->default(false);
             $table->foreign('maHocPhan')->references('maHocPhan')->on('HOC_PHAN')
             ->onUpdate('restrict')
             ->onDelete('cascade');

@@ -18,6 +18,7 @@ class Create33TieuChiChamDiemTable extends Migration
             $table->text('tenTCCD')->nullable()->default('text');
             $table->float('diemTCCD')->nullable()->default(123.45);
             $table->integer('maTCDG')->unsigned()->nullable()->default(12);
+            $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
 
             $table->foreign('maTCDG')->references('maTCDG')->on('TIEUCHUAN_DANHGIA')->onDelete('cascade');

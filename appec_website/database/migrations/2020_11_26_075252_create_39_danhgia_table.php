@@ -22,7 +22,7 @@ class Create39DanhgiaTable extends Migration
             $table->float('diemDG')->nullable()->default(123.45);
             $table->integer('lanDG')->unsigned()->nullable()->default(12);
             $table->primary(['maGV','maSSV','maDe','maCauHoi','maTCCD']);
-
+            $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
             $table->foreign('maGV')->references('maGV')->on('GIANG_VIEN')->onDelete('cascade');
             $table->foreign('maSSV')->references('maSSV')->on('SINH_VIEN')->onDelete('cascade');

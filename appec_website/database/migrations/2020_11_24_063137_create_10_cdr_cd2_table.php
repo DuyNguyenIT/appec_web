@@ -17,6 +17,7 @@ class Create10CdrCd2Table extends Migration
             $table->increments('maCDR2');
             $table->text('tenCDR2')->nullable()->default('text');
             $table->integer('maCDR1')->unsigned()->nullable()->default(12);
+            $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
 
             $table->foreign('maCDR1')->references('maCDR1')->on('CDR_CD1')->onDelete('cascade');

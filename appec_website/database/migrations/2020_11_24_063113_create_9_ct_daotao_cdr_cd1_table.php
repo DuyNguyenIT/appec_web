@@ -17,7 +17,8 @@ class Create9CtDaotaoCdrCd1Table extends Migration
             $table->integer('maCT')->unsigned()->nullable()->default(12);
             $table->integer('maCDR1')->unsigned()->nullable()->default(12);
             $table->primary(['maCT', 'maCDR1']);
-
+            $table->boolean('isDelete')->nullable()->default(false);
+            
             $table->foreign('maCDR1')->references('maCDR1')->on('CDR_CD1')
             ->onUpdate('restrict')
             ->onDelete('cascade');
@@ -25,6 +26,7 @@ class Create9CtDaotaoCdrCd1Table extends Migration
                 ->onUpdate('restrict')
                 ->onDelete('cascade');
             $table->timestamps();
+
         });
     }
 

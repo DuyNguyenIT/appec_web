@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Create1BacDaoTaoTable extends Migration
+class CreateCtNganhTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class Create1BacDaoTaoTable extends Migration
      */
     public function up()
     {
-        Schema::create('BAC_DAO_TAO', function (Blueprint $table) {
-            $table->string('maBac',255)->unique();
-            $table->text('tenBac')->nullable()->default('text');
+        Schema::create('c_nganh', function (Blueprint $table) {
+            $table->increments('maCNganh');
+            $table->text('tenCNganh')->nullable()->default('text');
+            $table->string('maNganh',255)->unique();
             $table->boolean('isDelete')->nullable()->default(false);
+            $table->foreign('maNganh')->references('maNganh')->on('NGANH')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class Create1BacDaoTaoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('BAC_DAO_TAO');
+        Schema::dropIfExists('ct_nganh');
     }
 }

@@ -20,14 +20,13 @@ class Create41KhaoSatTable extends Migration
             $table->string('maSSV',255)->unique();
             $table->string('maHocPhan',20)->unique();
             $table->integer('maCDR3')->unsigned()->nullable()->default(12);
-            
+            $table->boolean('isDelete')->nullable()->default(false);
             $table->primary(['maPhieuKS','maMD','maSSV','maHocPhan','maCDR3']);
             
             $table->timestamps();
             $table->foreign('maSSV')->references('maSSV')->on('SINH_VIEN')->onDelete('cascade');
             $table->foreign('maHocPhan')->references('maHocPhan')->on('HOC_PHAN')->onDelete('cascade');
             $table->foreign('maCDR3')->references('maCDR3')->on('CDR_CD3')->onDelete('cascade');
-
         });
     }
 

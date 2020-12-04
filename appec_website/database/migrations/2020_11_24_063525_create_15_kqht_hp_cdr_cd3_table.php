@@ -16,6 +16,7 @@ class Create15KqhtHpCdrCd3Table extends Migration
         Schema::create('KQHT_HP_CDRCD3', function (Blueprint $table) {
             $table->integer('maCDR3')->unsigned()->nullable()->default(12);
             $table->integer('maKQHT')->unsigned()->nullable()->default(12);
+            $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
             $table->foreign('maCDR3')->references('maCDR3')->on('CDR_CD3')->onDelete('cascade');
             $table->foreign('maKQHT')->references('maKQHT')->on('KQHT_HP')->onDelete('cascade');

@@ -18,6 +18,7 @@ class Create17LopTable extends Migration
             $table->primary('maLop');
             $table->text('tenLop')->nullable()->default('text');
             $table->text('namTS')->nullable()->default('text');
+            $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
         });
     }

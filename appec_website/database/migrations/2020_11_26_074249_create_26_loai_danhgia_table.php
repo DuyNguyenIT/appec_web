@@ -16,6 +16,7 @@ class Create26LoaiDanhgiaTable extends Migration
         Schema::create('LOAI_DANH_GIA', function (Blueprint $table) {
             $table->increments('maLoaiDG');
             $table->text('tenLoaiDG')->nullable()->default('text');
+            $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
         });
     }

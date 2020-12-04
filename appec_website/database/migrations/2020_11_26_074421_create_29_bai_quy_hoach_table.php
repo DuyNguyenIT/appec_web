@@ -17,7 +17,7 @@ class Create29BaiQuyHoachTable extends Migration
             $table->increments('maBaiQH');
             $table->text('tenBaiQH')->nullable()->default('text');
             $table->text('noiDungBaiQH')->nullable()->default('text');
-            
+            $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
         });
     }

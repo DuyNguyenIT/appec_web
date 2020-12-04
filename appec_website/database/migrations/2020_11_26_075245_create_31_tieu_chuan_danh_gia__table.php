@@ -16,6 +16,7 @@ class Create31TieuChuanDanhGiaTable extends Migration
         Schema::create('TIEUCHUAN_DANHGIA', function (Blueprint $table) {
            $table->increments('maTCDG');
            $table->text('tenTCDG')->nullable()->default('text');
+           $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
         });
     }

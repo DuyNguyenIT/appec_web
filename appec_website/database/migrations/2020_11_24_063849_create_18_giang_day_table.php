@@ -20,6 +20,7 @@ class Create18GiangDayTable extends Migration
             $table->string('maHK',20)->unique();
             $table->string('namHoc',20)->unique();
             $table->primary(['maHocPhan','maLop','maGV','maHK','namHoc']);
+            $table->boolean('isDelete')->nullable()->default(false);
             $table->foreign('maHocPhan')->references('maHocPhan')->on('HOC_PHAN')
                 ->onUpdate('restrict')
                 ->onDelete('cascade');

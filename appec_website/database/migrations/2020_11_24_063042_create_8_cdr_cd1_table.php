@@ -17,6 +17,7 @@ class Create8CdrCd1Table extends Migration
         Schema::create('CDR_CD1', function (Blueprint $table) {
             $table->increments('maCDR1');
             $table->text('tenCDR1')->nullable()->default('text');
+            $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
         });
     }

@@ -18,7 +18,7 @@ class Create35DeThiTable extends Migration
             $table->integer('soCauHoi')->unsigned()->nullable()->default(12);
             $table->integer('maBaiQH')->unsigned()->nullable()->default(12);
             $table->primary(['maDe','soCauHoi','maBaiQH']);
-
+            $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
             $table->foreign('maBaiQH')->references('maBaiQH')->on('BAI_QUY_HOACH')->onDelete('cascade');
         });
