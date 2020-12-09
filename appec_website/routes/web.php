@@ -12,7 +12,17 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['prefix' => '/','namespace'=>'App\Http\Controllers'], function () {
+    Route::get('/', 'loginController@index');
+    Route::get('/dang-nhap', 'loginController@index');
+    Route::post('/dang-nhap_submit', function () {
+        
+    });
+    Route::get('/dang-xuat', function () {
+        
+    });
 });
+
+
+
+

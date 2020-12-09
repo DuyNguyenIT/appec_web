@@ -24,6 +24,9 @@ class Create25SinhVienTable extends Migration
             $table->foreign('maLop')->references('maLop')->on('LOP')->onUpdate('restrict')->onDelete('cascade');
             $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
+            $table->string('username');
+            $table->foreign('username')->references('username')->on('users')->onDelete('cascade');
+
         });
     }
 

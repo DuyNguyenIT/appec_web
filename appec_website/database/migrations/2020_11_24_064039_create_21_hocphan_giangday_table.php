@@ -13,7 +13,7 @@ class Create21HocphanGiangdayTable extends Migration
      */
     public function up()
     {
-        Schema::create('HOCPHAN_GIANGDAY', function (Blueprint $table) {
+        Schema::create('HOCPHAN_PPGIANGDAY', function (Blueprint $table) {
             $table->string('maHocPhan',20)->unique();
             $table->integer('maPP')->unsigned()->nullable()->default(12);
 
