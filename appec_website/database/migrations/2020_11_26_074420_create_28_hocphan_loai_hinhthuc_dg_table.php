@@ -14,7 +14,7 @@ class Create28HocphanLoaiHinhthucDgTable extends Migration
     public function up()
     {
         Schema::create('HOCPHAN_LOAI_HINHTHUC_DG', function (Blueprint $table) {
-            $table->string('maHocPhan',20)->unique();
+            $table->string('maHocPhan',20);
             $table->integer('maLoaiDG')->unsigned()->nullable()->default(12);
             $table->integer('maLoaiHTDG')->unsigned()->nullable()->default(12);
             $table->integer('trongSo')->unsigned()->nullable()->default(12);

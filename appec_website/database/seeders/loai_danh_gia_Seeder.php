@@ -13,7 +13,7 @@ class loai_danh_gia_Seeder extends Seeder
      */
     public function run()
     {
-        DB::table('loai_danh_ga')->insert([
+        DB::table('loai_danh_gia')->insert([
             ['maLoaiDG'=>'QT','tenLoaiDG'=>'Đánh giá quá trình'],
             ['maLoaiDG'=>'KT','tenLoaiDG'=>'Đánh giá kết thúc môn']
          ]);

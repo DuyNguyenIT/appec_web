@@ -13,12 +13,10 @@ class hocphan_loai_ht_danh_gia_Seeder extends Seeder
      */
     public function run()
     {
-        DB::table('he')->insert([
-            ['maHocPhan'=>'CQ','maLoaiDG'=>'Chính quy'],
-            ['maHocPhan'=>'LT','maLoaiDG'=>'Liên thông'],
-            ['maHocPhan'=>'TX','maLoaiDG'=>'Giáo dục từ xa'],
-            ['maHocPhan'=>'VLVH','maLoaiDG'=>'Vừa làm vừa học'],
-            ['maHocPhan'=>'VB','maLoaiDG'=>'Văn bằng hai']
+        DB::table('hocphan_loai_hinhthuc_dg')->insert([
+            ['maHocPhan'=>'220228','maLoaiDG'=>'1','maLoaiHTDG'=>'1','trongSo'=>'25'],
+            ['maHocPhan'=>'220228','maLoaiDG'=>'1','maLoaiHTDG'=>'2','trongSo'=>'25'],
+            ['maHocPhan'=>'220228','maLoaiDG'=>'2','maLoaiHTDG'=>'8','trongSo'=>'50']
          ]);
     }
 }

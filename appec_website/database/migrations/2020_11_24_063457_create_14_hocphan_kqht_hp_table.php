@@ -14,7 +14,7 @@ class Create14HocphanKqhtHpTable extends Migration
     public function up()
     {
         Schema::create('HOCPHAN_KQHT_HP', function (Blueprint $table) {
-            $table->string('maHocPhan',255)->unique();
+            $table->string('maHocPhan',255);
             $table->integer('maKQHT')->unsigned()->nullable()->default(12);
             $table->primary(['maHocPhan', 'maKQHT']);
             $table->boolean('isDelete')->nullable()->default(false);
