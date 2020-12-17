@@ -229,7 +229,7 @@
       <footer class="main-footer">
         <strong
           >Copyright &copy; 2020
-          <a href="https://adminlte.io"> Hệ thống đáng giá học sinh CAP</a
+          <a href="https://adminlte.io"> Hệ thống đánh giá học sinh CAP</a
           >.</strong
         >
         <div class="float-right d-none d-sm-inline-block">

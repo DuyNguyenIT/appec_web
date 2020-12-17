@@ -18,9 +18,7 @@ Route::group(['prefix' => '/','namespace'=>'App\Http\Controllers'], function () 
     Route::post('/dang-nhap_submit', function () {
         
     });
-    Route::get('/dang-xuat', function () {
-        
-    });
+    Route::get('/dang-xuat', 'loginController@logout');
 });
 
 

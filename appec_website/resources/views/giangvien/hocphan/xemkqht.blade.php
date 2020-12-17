@@ -67,12 +67,7 @@
                               <h5 class="modal-title" id="exampleModalLabel">
                                 Thêm kết quả học tập của học phần
                               </h5>
-                              <button
-                                type="button"
-                                class="close"
-                                data-dismiss="modal"
-                                aria-label="Close"
-                              >
+                              <button type="button" class="close"   data-dismiss="modal" aria-label="Close" >
                                 <span aria-hidden="true">&times;</span>
                               </button>
                             </div>
@@ -81,11 +76,7 @@
                                 <label for="hocphan" style="font-size: 20px"
                                   >Nhập kết quả học tập của học phần:</label
                                 >
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  placeholder="Nhập kết quả học tập của học phần"
-                                  style="width: 100%"
+                                <input   type="text"   class="form-control"  placeholder="Nhập kết quả học tập của học phần" style="width: 100%"
                                 />
                               </div>
                             </div>
@@ -116,28 +107,39 @@
                         <tr>
                           <th>STT</th>
                           <th>Tên kết quả học tập của học phần</th>
-                          <th>Đáp ứng chuẩn đầu ra</th>
+                          <th>Đáp ứng chuẩn đầu ra </th>
+                         
                           <th>Tùy chọn</th>
                         </tr>
                       </thead>
                       <tbody>
                           @php
                               $i=1;
+                              $dem=0; 
                           @endphp
                           @foreach ($kqht as $x)
-                          <tr>
-                            <td>{{$i++}}</td>
-                            <td>{{$x->tenKQHT}}</td>
-                            <td>{{$x->tenCDR3}}</td>
-                            <td>
-                              <button class="btn btn-primary">
-                                <i class="fas fa-edit"></i> Chỉnh sửa
-                              </button>
-                            </td>
-                          </tr>
+                            @php
+                                $rs=$x->groupBy("maKQHT")->count();
+                                $dem=$dem+1;
+                                if($dem>$rs)
+                                  $dem=1;
+                            @endphp
+                            @if($dem==1)
+                              {{$dem}}
+                              <tr>
+                                <td rowspan={{$rs}}>{{$i++}}</td>
+                                <td rowspan={{$rs}}>{{$x->tenKQHT}}</td>
+                                <td>{{$x->maCDR3VB}}--{{$x->tenCDR3}}</td>
+                                <td rowspan={{$rs}}>&nbsp;</td>
+                              </tr>
+                            @else
+                              <tr>
+                                <td>{{$x->maCDR3VB}}--{{$x->tenCDR3}}</td>
+                              </tr>
+                            @endif
+                                               
                           @endforeach
-                        
-                       
+
                       </tbody>
                       <tfoot></tfoot>
                     </table>

@@ -22,6 +22,6 @@ class loai_ht_danh_gia_Seeder extends Seeder
             ['maLoaiHTDG'=>'T6','tenLoaiHTDG'=>'Seminar'],
             ['maLoaiHTDG'=>'T7','tenLoaiHTDG'=>'Vấn đáp'],
             ['maLoaiHTDG'=>'T8','tenLoaiHTDG'=>'Đồ án'],
-         ]);
+        ]);
     }
 }

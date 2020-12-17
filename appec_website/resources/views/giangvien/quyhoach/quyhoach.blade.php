@@ -66,47 +66,35 @@
               <div class="card-body">
                 <table
                   id="example2"
-                  class="table table-bordered table-hover"
-                >
+                  class="table table-bordered table-hover">
                 <thead>
                   <tr>
                     <th >STT</th>
                     <th >Tên học phần</th>
-                    
                     <th >Học kì</th>
                     <th >Năm học</th>
                     <th >Mã lớp</th>
                     <th >Tùy chọn</th></tr>
-
                 </thead>
                 <tbody>
-                  
                 <tr >
-
                   @php
                       $i=1;
                   @endphp
                   @foreach ($gd as $item)
                     <td>{{$i++}}</td>
                     <td>{{$item->tenHocPhan}}</td>
-                    
                     <td>{{$item->maHK}}</td>
                     <td>{{$item->namHoc}}</td>
                     <td>
-                      
                         {{$item->maLop}}
-                      
                     </td>
                       <td>
-                        <a href="{{ asset('giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/'.$item->maHocPhan) }}" class="btn btn-success">
+                        <a href="{{ asset('giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/'.$item->maHocPhan.'/'.$item->maBaiQH.'/'.$item->maHK.'/'.$item->namHoc.'/'.$item->maLop) }}" class="btn btn-success">
                             <i class="fas fa-align-justify"></i> Quy hoạch KQHT                  
                         </a>
-                        
-                       
                       </td>
-                    
                   @endforeach
-                    
                   </tr>
                 </tbody>
                   <tfoot></tfoot>

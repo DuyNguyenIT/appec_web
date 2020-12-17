@@ -14,8 +14,9 @@ class loai_danh_gia_Seeder extends Seeder
     public function run()
     {
         DB::table('loai_danh_gia')->insert([
-            ['maLoaiDG'=>'QT','tenLoaiDG'=>'Đánh giá quá trình'],
-            ['maLoaiDG'=>'KT','tenLoaiDG'=>'Đánh giá kết thúc môn']
+            ['maLoaiDG'=>'1','tenLoaiDG'=>'Đánh giá quá trình lần 1'],
+            ['maLoaiDG'=>'2','tenLoaiDG'=>'Đánh giá quá trình lần 2'],
+            ['maLoaiDG'=>'3','tenLoaiDG'=>'Đánh giá kết thúc môn']
          ]);
     }
 }

@@ -9,4 +9,6 @@ class deThi extends Model
 {
     use HasFactory;
     protected $table='de_thi';
+    protected $primaryKey='maDe';
+    public $incrementing = false;
 }

@@ -140,12 +140,13 @@
                 </thead>
                 <tbody>
                   
-                <tr >
+               
 
                   @php
                       $i=1;
                   @endphp
                   @foreach ($gd as $item)
+                  <tr >
                     <td>{{$i++}}</td>
                     <td>{{$item->tenHocPhan}}</td>
                     
@@ -156,7 +157,7 @@
                         {{$item->maLop}}
                       </a>
                     </td>
-                      <td>
+                    <td>
                         <a href="{{ asset('giang-vien/hoc-phan/xem-ket-qua-hoc-tap/'.$item->maHocPhan) }}" class="btn btn-success">
                             <i class="fas fa-align-justify"></i> Kết quả học tập                    
                         </a>
@@ -165,11 +166,11 @@
                           <i class="fas fa-print"></i>
                           Đề cương chi tiết
                         </button>
-                      </td>
-                    
+                    </td>
+                  </tr>
                   @endforeach
                     
-                  </tr>
+               
                 </tbody>
                 <tfoot></tfoot>
               </table>

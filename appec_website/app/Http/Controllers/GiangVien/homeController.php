@@ -10,7 +10,7 @@ class homeController extends Controller
 {
     public function index(Type $var = null)
     {
-        Session::push('maGV',1234);
+        Session::put('maGV',1234);
         return view('giangvien.home');
     }
 }

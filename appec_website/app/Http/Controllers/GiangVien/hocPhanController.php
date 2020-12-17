@@ -17,12 +17,14 @@ class hocPhanController extends Controller
     public function index(Type $var = null)
     {
         $gd=giangDay::where('giangday.isDelete',false)->where('maGV',Session::get('maGV'))
-        
         ->join('hoc_phan',function($q){
             $q->on('hoc_phan.maHocPhan','=','giangday.maHocPhan')
                 ->where('hoc_phan.isDelete',false);
-        })
+        })->groupBy('maBaiQH')->distinct()
         ->get();
+
+
+        
         return view('giangvien.hocphan.hocphan',['gd'=>$gd]);
     }
 
@@ -32,24 +34,21 @@ class hocPhanController extends Controller
         
             $kqht=hocPhan_kqHTHP::where('hocphan_kqht_hp.isDelete',false)
             ->where('hocphan_kqht_hp.maHocPhan',$maHocPhan)
-            ->join('hoc_phan',function($x){
-                $x->on('hocphan_kqht_hp.maHocPhan','=','hoc_phan.maHocPhan')
-                ->where('hoc_phan.isDelete',false);
-            })
+            
+            // ->join('hoc_phan',function($x){
+            //     $x->on('hocphan_kqht_hp.maHocPhan','=','hoc_phan.maHocPhan')
+            //     ->where('hoc_phan.isDelete',false);
+            // })
             ->join('kqht_hp',function($y){
                 $y->on('kqht_hp.maKQHT','=','hocphan_kqht_hp.maKQHT')
                 ->where('kqht_hp.isDelete',false);
             })
-            ->join('kqht_hp_cdrcd3',function($z){
-                $z->on('kqht_hp_cdrcd3.maKQHT','=','hocphan_kqht_hp.maKQHT')
-                ->where('kqht_hp_cdrcd3.isDelete',false);
-            })
             ->join('cdr_cd3',function($t){
-                $t->on('cdr_cd3.maCDR3','=','kqht_hp_cdrcd3.maCDR3')
+                $t->on('cdr_cd3.maCDR3','=','hocphan_kqht_hp.maCDR3')
                 ->where('cdr_cd3.isDelete',false);
             })
             ->get();
-
+           
             return view('giangvien.hocphan.xemkqht',['kqht'=>$kqht]);
         } catch (\Throwable $th) {
             return $th;

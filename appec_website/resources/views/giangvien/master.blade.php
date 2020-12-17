@@ -181,18 +181,18 @@
                 </a>
               </li>
 
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a href="{{ asset('/giang-vien/de-danh-gia') }}" class="nav-link">
                   <i class="nav-icon fas fa-store-alt"></i>
                   <p>Đề đánh giá</p>
                 </a>
-              </li>
-              <li class="nav-item">
+              </li> --}}
+              {{-- <li class="nav-item">
                 <a href="{{ asset('/giang-vien/cham-diem-bao-cao') }}" class="nav-link">
                   <i class="fas fa-balance-scale-left"></i>
                   <p>Chấm điểm báo cáo</p>
                 </a>
-              </li>
+              </li> --}}
               <li class="nav-item">
                 <a href="{{ asset('/giang-vien/ket-qua-danh-gia') }}" class="nav-link">
                   <i class="nav-icon fas fa-user-friends"></i>
@@ -211,7 +211,7 @@
       <footer class="main-footer">
         <strong
           >Copyright &copy; 2020
-          <a href=""> Hệ thống đáng giá học sinh CAP</a
+          <a href=""> Hệ thống đánh giá học sinh CAP</a
           >.</strong
         >
         <div class="float-right d-none d-sm-inline-block">

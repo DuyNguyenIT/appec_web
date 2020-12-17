@@ -36,7 +36,22 @@
               <!-- /.container-fluid -->
             </div>
             <!-- /.content-header -->
-    
+            @if(session('success'))
+            <div class="alert alert-success alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <h5><i class="icon fas fa-check"></i> Thông báo!</h5>
+              {{session('success')}}
+            </div>
+            @endif
+            @if(session('warning'))
+              <div class="alert alert-warning alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h5><i class="icon fas fa-exclamation-triangle"></i> Thông báo!</h5>
+                {{session('warning')}}
+              </div>
+            @endif
+
+
             <section class="content">
               <div class="container-fluid">
                 <div class="row">
@@ -44,40 +59,28 @@
                     <div class="card">
                       <div class="card-header">
                         <h3 class="card-title">
-                          <button
-                            type="button"
-                            class="btn btn-primary"
-                            data-toggle="modal"
-                            data-target="#exampleModal"
-                          >
+                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" >
                             <i class="fas fa-plus"></i> Thêm
                           </button>
     
                           <!-- Modal -->
-                          <div
-                            class="modal fade"
-                            id="exampleModal"
-                            tabindex="-1"
-                            role="dialog"
-                            aria-labelledby="exampleModalLabel"
-                            aria-hidden="true"
-                          >
+                          <div class="modal fade" id="exampleModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
-                              <div class="modal-content">
+                              <form action="{{ asset('/giang-vien/quy-hoach-danh-gia/them-quy-hoach') }}" method="post" enctype="multipart/form-data">
+                              @csrf
+                                <div class="modal-content">
                                 <div class="modal-header">
                                   <h5 class="modal-title" id="exampleModalLabel">
                                     Thêm quy hoạch đánh giá
                                   </h5>
-                                  <button
-                                    type="button"
-                                    class="close"
-                                    data-dismiss="modal"
-                                    aria-label="Close"
-                                  >
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
                                     <span aria-hidden="true">&times;</span>
                                   </button>
                                 </div>
                                 <div class="modal-body">
+                                  <div class="form-group">
+                                    <input type="text" name="maHocPhan" value="{{$hp->maHocPhan}}" hidden>
+                                  </div>
                                   <div class="form-group">
                                     <label for="" style="font-size: 20px">Chọn hình thức đánh giá:</label>
                                     <select name="maLoaiDG" class="form-control custom-select">
@@ -89,7 +92,7 @@
                                 
                                   <div class="form-group">
                                     <label for="" style="font-size: 20px">Nhập tỉ lệ:</label>
-                                    <input type="text" name="trongSo" class="form-control" placeholder="VD:20,30,..." style="width: 100%" />
+                                    <input required type="text" name="trongSo" class="form-control" placeholder="VD:20,30,..." style="width: 100%" />
                                   </div>
     
                                   <div class="form-group">
@@ -102,18 +105,16 @@
                                   </div>
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="button" class="btn btn-primary">
+                                  <button type="submit" class="btn btn-primary">
                                     Lưu
                                   </button>
-                                  <button
-                                    type="button"
-                                    class="btn btn-secondary"
-                                    data-dismiss="modal"
-                                  >
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal" >
                                     Hủy
                                   </button>
                                 </div>
                               </div>
+                              </form>
+                            
                             </div>
                           </div>
                         </h3>
@@ -146,7 +147,7 @@
                              
                                 <td>{{$x->tenLoaiHTDG}}</td>
                                 <td>
-                                  <a href="#">
+                                  <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/xem-noi-dung-danh-gia/'.$x->maCTBaiQH) }}">
                                     <button class="btn btn-success">
                                       <i class="fas fa-info-circle"></i> Nội dung đánh
                                       giá
