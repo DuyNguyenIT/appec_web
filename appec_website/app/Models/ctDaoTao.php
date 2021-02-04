@@ -9,4 +9,21 @@ class ctDaoTao extends Model
 {
     use HasFactory;
     protected $table='ct_dao_tao';
+    protected $primaryKey='maCT';
+    public $incrementing=false;
+
+    public function bac()
+    {
+        return $this->hasOne('App\Models\bacDaoTao', 'maBac', 'maBac');
+    }
+
+    public function cnganh()
+    {
+        return $this->hasOne('App\Models\cNganh', 'maCNganh', 'maCNganh');
+    }
+
+    public function he()
+    {
+        return $this->hasOne('App\Models\he', 'maHe', 'maHe');
+    }
 }

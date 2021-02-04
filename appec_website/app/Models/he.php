@@ -9,4 +9,6 @@ class he extends Model
 {
     use HasFactory;
     protected $table='he';
+    public $incrementing=false;
+    protected $primaryKey='maHe';
 }

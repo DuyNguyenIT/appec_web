@@ -7,14 +7,14 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Nhóm tiêu chí đánh giá<noscript></noscript><nav></nav></h1>
+            <h1 class="m-0 text-dark">Nội dung quy hoạch<noscript></noscript><nav></nav></h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ asset('giang-vien') }}">Trang chủ</a></li>
               <li class="breadcrumb-item "><a href="quyhoachKQHT.html">Đồ án</a></li>
               <li class="breadcrumb-item "><a href="noidungdanhgia_3.html">Nội dung đánh giá</a></li>
-              <li class="breadcrumb-item active">Nhóm tiêu chí đánh giá</li>
+              <li class="breadcrumb-item active">Nội dung quy hoạch</li>
 
             </ol>
           </div><!-- /.col -->
@@ -24,6 +24,20 @@
       
     </div>
     <!-- /.content-header -->
+    @if(session('success'))
+    <div class="alert alert-success alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <h5><i class="icon fas fa-check"></i> Thông báo!</h5>
+      {{session('success')}}
+    </div>
+  @endif
+  @if(session('warning'))
+    <div class="alert alert-warning alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <h5><i class="icon fas fa-exclamation-triangle"></i> Thông báo!</h5>
+      {{session('warning')}}
+    </div>
+  @endif
 
     <section class="content">
         <div class="container-fluid">
@@ -42,27 +56,67 @@
                    <!-- Modal -->
                   <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
+                      <form action="{{ asset('/giang-vien/quy-hoach-danh-gia/them-noi-dung-quy-hoach-submit') }}" method="POST">
+                      @csrf
                       <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">Thêm nội dung</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-
-                          <div class="form-group">
-                            <label for="hocphan" style="font-size:20px">Nhập nhóm tiêu chí</label>
-                            <!-- Button trigger modal -->
-                            <input type="text" class="form-control" id="" placeholder="Nhập nhóm tiêu chí...">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Thêm nội dung</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
                           </div>
-                        
+                          <div class="modal-body">
+                            <input type="text" name="maCTBaiQH" value="{{$maCTBaiQH}}" hidden>
+                            <div class="form-group">
+                              <label for="">Chọn kết quả học tập</label>
+                              <select name="maKQHT" id="" class="form-control">
+                                @php
+                                    $i=1;
+                                @endphp
+                                @foreach ($ketQuaHT as $kqht)
+                                  @if ($i==1)
+                                    <option value="{{$kqht->maKQHT}}" selected >{{$kqht->tenKQHT}}</option>
+                                  @else
+                                    <option value="{{$kqht->maKQHT}}">{{$kqht->tenKQHT}}</option>
+                                  @endif
+                                  @php
+                                      $i++;
+                                  @endphp
+                                @endforeach
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label for="">Chọn mức độ đánh giá</label>
+                              <select name="maMucDoDG" id="" class="form-control">
+                                @php
+                                    $i=1;
+                                @endphp
+                                @foreach ($mucDoDG as $md)
+                                  @if ($i==1)
+                                    <option value="{{$md->maMucDoDG}}" selected >{{$md->tenMucDoDG}}</option>
+                                  @else
+                                    <option value="{{$md->maMucDoDG}}">{{$md->tenMucDoDG}}</option>
+                                  @endif
+                                  @php
+                                      $i++;
+                                  @endphp
+                                @endforeach
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label for="hocphan" style="font-size:20px">Nhập tên nội dung quy hoạch</label>
+                              <!-- Button trigger modal -->
+                              <input type="text" name="tenNoiDungQH" class="form-control" id="" placeholder="Nhập tên nội dung quy hoạch...">
+                            </div>
+                          
+                          </div>
+                          <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Lưu</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                          </div>
                         </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-primary">Lưu</button>
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                        </div>
-                      </div>
+                    </form>
+                      
                     </div>
                   </div>
                       
@@ -74,59 +128,30 @@
                     <thead>
                     <tr>
                       <th>STT</th>
-                      <th>Nhóm tiêu chí</th>
+                      <th>Tên nội dung quy hoạch</th>
                       <th>Tùy chọn</th>
                     </tr>
                   </thead>
                    <tbody>
-                     <tr>
-                       <td>1</td>
-                       <td>Quyển báo cáo</td>
-                       <td>
-                         <a href="tieuchi_1.html">
+                     @php
+                         $i=1;
+                     @endphp
+                     @foreach ($noiDungQH as $nd)
+                      <tr>
+                        <td>{{$i++}}</td>
+                        <td>{{$nd->tenNoiDungQH}}</td>
+                        <td>
+                          <a href="tieuchi_1.html">
                             <button class="btn btn-success">
                             <i class="fas fa-info-circle"></i> Chi tiết
-                           </button>
-                         </a>
+                            </button>
+                          </a>
                           
-                       </td>
-                     </tr>
-                     <tr>
-                        <td>2</td>
-                        <td>Mô hình</td>
-                        <td>
-                          <a href="tieuchi_2.html">
-                            <button class="btn btn-success">
-                                <i class="fas fa-info-circle"></i> Chi tiết
-                            </button>
-                          </a>
-                            
                         </td>
                       </tr>
-
-                      <tr>
-                        <td>3</td>
-                        <td>Cài đặt</td>
-                        <td>
-                          <a href="tieuchi_3.html">
-                            <button class="btn btn-success">
-                                <i class="fas fa-info-circle"></i> Chi tiết
-                            </button>
-                          </a>
-                            
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>4</td>
-                        <td>Demo minh họa chức năng phân quyền</td>
-                        <td>
-                          <a href="tieuchi_4.html">
-                            <button class="btn btn-success">
-                                <i class="fas fa-info-circle"></i> Chi tiết
-                            </button>
-                          </a>
-                        </td>
-                      </tr>
+                     @endforeach
+                     
+                    
                    </tbody>
                     <tfoot>
                  

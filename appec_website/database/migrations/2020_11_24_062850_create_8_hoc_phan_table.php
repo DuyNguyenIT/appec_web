@@ -21,8 +21,10 @@ class Create8HocPhanTable extends Migration
             $table->integer('tinChiLyThuyet')->unsigned()->nullable()->default(12);
             $table->integer('tinChiThucHanh')->unsigned()->nullable()->default(12);
             $table->text('moTaHocPhan')->nullable()->default('text');
+            $table->integer('dacTrung')->unsigned()->nullable()->default(0);
 
             $table->boolean('isDelete')->nullable()->default(false);
+            $table->boolean('trangThai')->nullable()->default(false);
            
             $table->string('maCTKhoiKT',255);
             $table->timestamps();

@@ -30,6 +30,112 @@
               <div class="card-header">
                 <h3 class="card-title">
                    
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                          Thêm học phần giảng dạy
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <form action="{{ asset('/giao-vu/hoc-phan-giang-day/them-hoc-phan-giang-day-submit') }}" method="post">
+                          @csrf
+                          <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Thêm học phần</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                          
+                            {{-- <div class="form-group">
+                              <label for="">Chọn ngành:</label>
+                              <select name="" id="" class="form-control">
+                                <option value=""></option>
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label for="">Chọn chuyên ngành:</label>
+                              <select name="" id="" class="form-control">
+                                <option value=""></option>
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label for="">Chọn bậc</label>
+                              <select name="" id="" class="form-control">
+                                <option value=""></option>
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label for="">Chọn hệ</label>
+                              <select name="" id="" class="form-control">
+                                <option value=""></option>
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label for="">Chọn chương trình đào tạo:</label>
+                              <select name="" id="" class="form-control">
+                                <option value=""></option>
+                              </select>
+                            </div> --}}
+
+
+                            {{-- <div class="form-group">
+                              <label for="">Chọn loại học phần:</label>
+                              <select name="maHocPhan" id="" class="form-control">
+                                <option value=""></option>
+                              </select>
+                            </div> --}}
+
+
+                            <div class="form-group">
+                              <label for="">Chọn học phần:</label>
+                              <select name="maHocPhan" id="" class="form-control">
+                                @foreach ($hocphan as $hp)
+                                  <option value="{{$hp->maHocPhan}}">{{$hp->maHocPhan}}: {{$hp->tenHocPhan}}</option>
+                                @endforeach
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label for="">Chọn giảng viên</label>
+                              <select name="maGV" id="" class="form-control">
+                                @foreach ($giangvien as $gv)
+                                  <option value="{{$gv->maGV}}">{{$gv->hoGV}} {{$gv->tenGV}}</option>
+                                @endforeach
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label for="">Chọn lớp</label>
+                              <select name="maLop" id="" class="form-control">
+                                @foreach ($lop as $lp)
+                                  <option value="{{$lp->maLop}}">{{$lp->tenLop}}</option>
+                                @endforeach
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label for="">Chọn học kì:</label>
+                              <select name="maHK" id="" class="form-control">
+                                <option value="HK1">Hk1</option>
+                                <option value="HK2">Hk2</option>
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label for="">Nhập năm học:</label>
+                              <select name="namHoc" id="" class="form-control">
+                                <option value="2020-2021">2020-2021</option>
+                              </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="sumit" class="btn btn-primary">Lưu</button>
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        </div>
+                      </div>
+                      </form>
+                      
+                    </div>
+                  </div>
                   <button class="btn btn-success">
                     <i class="fas fa-file-excel"></i> Cập nhật lịch phân công giảng dạy bằng file excel
                   </button>
@@ -40,71 +146,55 @@
               <div class="card-body">
                 <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer"><div class="row"><div class="col-sm-12 col-md-6"></div><div class="col-sm-12 col-md-6"></div></div><div class="row"><div class="col-sm-12"><table id="example2" class="table table-bordered table-hover dataTable no-footer dtr-inline" role="grid" aria-describedby="example2_info">
                   <thead>
-                  <tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="STT: activate to sort column descending">STT</th><th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Tên học phần: activate to sort column ascending">Tên học phần</th><th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Giảng viên hướng dẫn: activate to sort column ascending">Giảng viên hướng dẫn</th><th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Ngành: activate to sort column ascending">Ngành</th><th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Học kì: activate to sort column ascending">Học kì</th><th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Năm học: activate to sort column ascending">Năm học</th><th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Tùy chọn: activate to sort column ascending">Tùy chọn</th></tr>
+                  <tr role="row">
+                    <th>STT</th>
+                    <th>Năm học</th>
+                    <th>Học kì</th>
+                    <th>Tên học phần</th>
+                    <th>Lớp</th>
+                    <th>Tên giảng viên</th>
+                   
+                   
+                   
+                    <th>Tùy chọn</th>
+                  </tr>
                 </thead>
                  <tbody>
-                    
-                    
-                 <tr role="row" class="odd">
-                        <td class="sorting_1 dtr-control">1</td>
-                        <td>Hệ quản trị cơ sở dữ liệu</td>
-                        <td>Phan Thị Phương Nam</td>
-                        <td>Công nghệ thông tin</td>
-                        <td>Học kì 1</td>
-                        <td>2018-2019</td>
-                        <td>
-                          <button class="btn btn-success">
-                            Xem chuẩn đầu ra
-                          </button>
-                          <a href="danhsachsv_1.html">
-                            <button class="btn btn-primary"> 
-                              <i class="fas fa-align-justify"></i> Cập nhật danh sách sinh viên
-                           </button>
-                          </a>
-                        </td>
-                    </tr><tr role="row" class="even">
-                      <td class="sorting_1 dtr-control">2</td>
-                      <td>Công nghệ phần mềm</td>
-                      <td>Phạm Minh Đương</td>
-
-                      <td>Công nghệ thông tin</td>
-                      <td>Học kì 1</td>
-                      <td>2018-2019</td>
-                      <td>
-                        <button class="btn btn-success">
-                          Xem chuẩn đầu ra
-                        </button>
-                        <a href="danhsachsv_2.html">
-                          <button class="btn btn-primary"> 
-                            <i class="fas fa-align-justify"></i> Cập nhật danh sách sinh viên
-                         </button>
-                        </a>
-                       
-                      </td>
-                      </tr><tr role="row" class="odd">
-                        <td class="sorting_1 dtr-control">3</td>
-                        <td>Kỹ thuật Lập Trình</td>
-                        <td>Võ Thành C</td>
-
-                        <td>Công nghệ thông tin</td>
-                        <td>Học kì 1</td>
-                        <td>2018-2019</td>
-                        <td>
-                          <button class="btn btn-success">
-                            Xem chuẩn đầu ra
-                          </button>
-                          <a href="danhsachsv_3.html">
-                            <button class="btn btn-primary"> 
-                              <i class="fas fa-align-justify"></i> Cập nhật danh sách sinh viên
-                           </button>
-                          </a>
+                    @php
+                        $i=1;
+                    @endphp
+                    @foreach ($giangday as $gd)
+                        <tr role="row" class="odd">
+                          <td class="sorting_1 dtr-control">{{$i++}}</td>
+                          <td>{{$gd->namHoc}}</td>
+                          <td>{{$gd->maHK}}</td>
+                          <td>{{$gd->tenHocPhan}}</td>
+                          <td>{{$gd->maLop}}</td>
+                          <td>
+                              @foreach ($gd->GV as $gv)
+                              <li>{{$gv->hoGV}} {{$gv->tenGV}}</li>
+                              @endforeach
+                          </td>
+                        
                          
-                        </td>
-                  </tr></tbody>
+                         
+                          <td>
+                            <button class="btn btn-success">
+                                CDR3
+                            </button>
+                            <a href="danhsachsv_1.html">
+                              <button class="btn btn-primary"> 
+                                  <i class="fas fa-align-justify"></i> DSSV
+                              </button>
+                            </a>
+                          </td>
+                        </tr>
+                    @endforeach
+                  </tbody>
                   <tfoot>
                
                   </tfoot>
-                </table></div></div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="example2_info" role="status" aria-live="polite">Showing 1 to 3 of 3 entries</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="example2_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="example2_previous"><a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item next disabled" id="example2_next"><a href="#" aria-controls="example2" data-dt-idx="2" tabindex="0" class="page-link">Next</a></li></ul></div></div></div></div>
+                </table>
               </div>
               <!-- /.card-body -->
             </div>

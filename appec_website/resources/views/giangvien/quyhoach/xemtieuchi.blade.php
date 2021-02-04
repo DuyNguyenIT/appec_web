@@ -14,7 +14,7 @@
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="../../giang_vien.html">Trang chủ</a></li>
               <li class="breadcrumb-item "><a href="quyhoachKQHT.html">Đồ án</a></li>
-              <li class="breadcrumb-item "><a href="noidungdanhgia_3.html">Nội dung đánh giá</a></li>
+              <li class="breadcrumb-item "><a href="{{ asset('/giang-vien/quy-hoach-danh-gia/xem-noi-dung-danh-gia/'.Session::get('maCTBaiQH')) }}">Nội dung đánh giá</a></li>
               <li class="breadcrumb-item active">Nhóm tiêu chí đánh giá</li>
 
             </ol>
@@ -33,40 +33,14 @@
               <div class="card">
                 <div class="card-header">
                   <h3 class="">
-                      <button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#exampleModal">
-                        <i class="fas fa-plus"></i> Thêm
-                        </button>
-                        <button class="btn btn-success">
-                            <i class="fas fa-print"></i> Xuất tiêu chí đánh giá
-                        </button>
-
-                   <!-- Modal -->
-                  <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">Thêm nội dung</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-
-                          <div class="form-group">
-                            <label for="hocphan" style="font-size:20px">Nhập nhóm tiêu chí</label>
-                            <!-- Button trigger modal -->
-                            <input type="text" class="form-control" id="" placeholder="Nhập nhóm tiêu chí...">
-                          </div>
-                        
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-primary">Lưu</button>
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                    <a href="{{ asset('giang-vien/quy-hoach-danh-gia/them-tieu-chi-danh-gia/'.Session::get('maCTBaiQH')) }}" class="btn btn-primary">
+                       <i class="fas fa-plus"></i> Thêm
+                    </a>
                       
+                    <button class="btn btn-success">
+                        <i class="fas fa-print"></i> Xuất tiêu chí đánh giá
+                    </button>
+
                   </h3>
                 </div>
                 <!-- /.card-header -->
@@ -78,6 +52,7 @@
                       <th>Tiêu chuẩn</th>
                       <th>Chuẩn đầu ra</th>
                       <th>Tiêu chí</th>
+                      <th>Điểm</th>
                     </tr>
                   </thead>
                    <tbody>
@@ -119,23 +94,29 @@
                    
                      @if ($chayTieuChuan==1)
                         <tr>
-                          <td>{{$i++}}</td>
-                          <td rowspan={{$demTieuChi_TCDG}}>{{$tc->tenTCDG}}</td>
+                          <td rowspan={{$demTieuChi_TCDG}}>{{$i++}}</td>
+                          <td rowspan={{$demTieuChi_TCDG}}><b>{{$tc->tenTCDG}}</b></td>
                           @if ($chayCDR_TCDG==1)
-                            <td rowspan={{$demTC_CDR}}>{{$tc->tenCDR3}}</td>
-                            <td>{{$tc->tenTCCD}}</td>
+                            <td rowspan={{$demTC_CDR}}>{{$tc->maCDR3VB}}: {{$tc->tenCDR3}}</td>
+                            <td>{{$chayCDR_TCDG}}. {{$tc->tenTCCD}}</td>
+                            <td>{{$tc->diemTCCD}} điểm</td>
                           @else
-                            <td>{{$tc->tenTCCD}} nè</td>
+                            <td>{{$chayCDR_TCDG}}. {{$tc->tenTCCD}}</td>
+                            <td>{{$tc->diemTCCD}} điểm</td>
                           @endif
                         </tr>
                      @else
                         <tr>
-                          <td>{{$i++}}</td>
+                         
                           @if ($chayCDR_TCDG==1)
-                            <td rowspan={{$demTC_CDR}}>{{$tc->tenCDR3}}</td>
-                            <td>{{$tc->tenTCCD}}</td>
+                            <td rowspan={{$demTC_CDR}}>{{$tc->maCDR3VB}}: {{$tc->tenCDR3}}</td>
+                            <td>{{$chayCDR_TCDG}}. {{$tc->tenTCCD}}</td>
+                            <td>{{$tc->diemTCCD}} điểm</td>
+
                           @else
-                            <td>{{$tc->tenTCCD}}</td>
+                            <td>{{$chayCDR_TCDG}}. {{$tc->tenTCCD}}</td>
+                            <td>{{$tc->diemTCCD}} điểm</td>
+
                           @endif
                         </tr>
                      @endif

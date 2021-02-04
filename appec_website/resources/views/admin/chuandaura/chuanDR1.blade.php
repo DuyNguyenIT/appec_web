@@ -7,7 +7,7 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1 class="m-0 text-dark">
-              Chuẩn đầu ra<noscript></noscript>
+              Chuẩn đầu ra CDIO1<noscript></noscript>
               <nav></nav>
             </h1>
           </div>
@@ -26,6 +26,22 @@
     </div>
     <!-- /.content-header -->
 
+
+      @if(session('success'))
+        <div class="alert alert-success alert-dismissible">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+          <h5><i class="icon fas fa-check"></i> Thông báo!</h5>
+          {{session('success')}}
+        </div>
+      @endif
+      @if(session('warning'))
+          <div class="alert alert-warning alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h5><i class="icon fas fa-exclamation-triangle"></i> Thông báo!</h5>
+            {{session('warning')}}
+          </div>
+      @endif
+
     <!-- Main content -->
 
     <section class="content">
@@ -36,59 +52,31 @@
               <div class="card-header">
                 <h3 class="card-title">
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-          <i class="fas fa-plus"></i>Thêm
-</button>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                        <i class="fas fa-plus"></i>Thêm
+              </button>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-<div class="modal-dialog" role="document">
-<div class="modal-content">
-  <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Thêm chuẩn đầu ra</h5>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-      <span aria-hidden="true">×</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-    <button type="button" class="btn btn-primary">Lưu</button>
-  </div>
-</div>
-</div>
-</div>
-                  <!-- Modal -->
-                  <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">
-                            Thêm học phần
-                          </h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                          <div class="form-group">
-                            <label for="">Nhập tên chuẩn đầu ra:</label>
-                            <input type="text" class="form-control" placeholder="">
-                          </div>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-primary">
-                            Lưu
-                          </button>
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                            Hủy
-                          </button>
-                        </div>
-                      </div>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Thêm chuẩn đầu ra</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                      <button type="button" class="btn btn-primary">Lưu</button>
                     </div>
                   </div>
+                  </div>
+                </div>
+                 
                 </h3>
               </div>
               <!-- /.card-header -->
@@ -129,40 +117,28 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>L1</td>
-                      <td>Chuẩn đầu ra L1</td>
-                      <td>
-                        
-                          <button class="btn btn-success" data-toggle="modal" data-target="#addModal">
-                            <i class="fas fa-align-justify"></i> chỉnh sửa
-                          </button>
+                    @php
+                        $i=1;
+                    @endphp
+                    @foreach ($chuandaura as $cdr)
+                      <tr>
+                        <td>{{$i++}}</td>
+                        <td>{{$cdr->tenCDR1}}</td>
+                        <td>
                           
-                          <a href="cdr_2.html">
-                            <button class="btn btn-primary">
-                            Chuẩn đầu ra 2
+                            <button class="btn btn-success" data-toggle="modal" data-target="#addModal">
+                              <i class="fas fa-align-justify"></i> chỉnh sửa
                             </button>
-                        </a>
-                        
-                      </td>
-                    </tr>
-                    
-                    <tr>
-                      <td>L2</td>
-                      <td>Chuẩn đầu ra L2</td>
-                      <td>
-                        <a href="#">
-                          <button class="btn btn-success">
-                            <i class="fas fa-align-justify"></i> chỉnh sửa
-                          </button>
-                        </a>
-                        <a href="cdr_2.html">
-                          <button class="btn btn-primary">
-                          Chuẩn đầu ra 2
-                          </button>
-                      </a>
-                      </td>
-                    </tr>
+                            
+                            <a href="{{ asset('/quan-ly/chuan-dau-ra/chuan-dau-ra-2/'.$cdr->maCDR1) }}">
+                              <button class="btn btn-primary">
+                              Chuẩn đầu ra 2
+                              </button>
+                          </a>  
+                          
+                        </td>
+                      </tr>
+                    @endforeach
                   </tbody>
                   <tfoot></tfoot>
                 </table>

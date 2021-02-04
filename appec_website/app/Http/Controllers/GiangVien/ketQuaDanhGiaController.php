@@ -35,7 +35,7 @@ class ketQuaDanhGiaController extends Controller
 
     public function chi_tiet_quy_hoach_kq_qua_danh_gia($maHocPhan,$maBaiQH,$maHK,$namHoc,$maLop)
     {
-        Session::put('maHocPhan',$maHocPhan);
+           Session::put('maHocPhan',$maHocPhan);
            Session::put('maHK',$maHK);
            Session::put('namHoc',$namHoc);  
            Session::put('maLop',$maLop);
@@ -64,11 +64,30 @@ class ketQuaDanhGiaController extends Controller
 
     public function nhap_ket_qua_danh_gia($maCTBaiQH)
     {
+        Session::put('maCTBaiQH',$maCTBaiQH);
         //kiểm loại ht đánh giá
         $loaiHTDG=ct_bai_quy_hoach::where('isDelete',false)
         ->where('maCTBaiQH',$maCTBaiQH)
         ->first('maLoaiHTDG');
-        if($loaiHTDG->maLoaiHTDG=="T8")
+
+        $ctbqh=ct_bai_quy_hoach::where('isDelete',false)
+        ->where('maCTBaiQH',$maCTBaiQH)
+        ->first();
+        
+        Session::put('maGV_2',$ctbqh->maGV_2);
+
+        $gv2=giangVien::where('isDelete',false)
+        ->where('maGV',Session::get('maGV_2'))
+        ->first();
+
+        if($gv2==null){
+            $gv2= new giangVien();
+            $gv2->hoGV="";
+            $gv2->tenGV="Nhiều giảng viên";
+        }
+
+        
+        if($loaiHTDG->maLoaiHTDG=="T8") /// nếu kết quả là đồ án
         {
 
             $hp=hocPhan::where('maHocPhan',Session::get('maHocPhan'))
@@ -82,6 +101,7 @@ class ketQuaDanhGiaController extends Controller
              ->where('de_thi.maCTBaiQH',$maCTBaiQH)
              ->Join('phieu_cham',function($x){
                  $x->on('phieu_cham.maDe','=','de_thi.maDe')
+                 ->where('phieu_cham.maGV',Session::get('maGV'))
                  ->where('phieu_cham.isDelete',false);
              })
              ->leftJoin('sinh_vien',function($y){
@@ -89,11 +109,24 @@ class ketQuaDanhGiaController extends Controller
                  ->where('sinh_vien.isDelete',false);
              })
              ->orderBy('phieu_cham.maDe','desc')
-             ->get(['de_thi.maDe','de_thi.tenDe','sinh_vien.maSSV','sinh_vien.HoSV','sinh_vien.TenSV','phieu_cham.trangThai','phieu_cham.diemSo']);
-         
+             ->get(['de_thi.maDeVB','de_thi.maDe','de_thi.tenDe','sinh_vien.maSSV','sinh_vien.HoSV','sinh_vien.TenSV','phieu_cham.maPhieuCham','phieu_cham.trangThai','phieu_cham.diemSo']);
+            
+            
+            foreach ($maDe as $md) {
+                $temp=deThi::where('de_thi.isDelete',false)
+                ->where('de_thi.maCTBaiQH',$maCTBaiQH)
+                ->where('de_thi.maDe',$md->maDe)
+                ->Join('phieu_cham',function($x){
+                    $x->on('phieu_cham.maDe','=','de_thi.maDe')
+                    ->where('phieu_cham.loaiCB',2)
+                    ->where('phieu_cham.isDelete',false);
+                })->first();
+                $md->diemCB2=$temp->diemSo;
+                
+            }
             
              //ct_bai_QH
-            return view('giangvien.ketqua.ketquadoan',['hp'=>$hp,'gv'=>$gv,
+            return view('giangvien.ketqua.ketquadoan',['hp'=>$hp,'gv'=>$gv,'gv2'=>$gv2,
             'deThi'=>$maDe]);
         }
 
@@ -109,12 +142,14 @@ class ketQuaDanhGiaController extends Controller
         //giảng viên
         $gv=phieu_cham::where('phieu_cham.isDelete',false)
         ->where('maDe',$maDe)
+        ->where('phieu_cham.maGV',Session::get('maGV'))
         ->where('maSSV',$maSSV)
         ->join('giang_vien',function($x){
             $x->on('giang_vien.maGV','=','phieu_cham.maGV')
             ->where('giang_vien.isDelete',false);
         })
         ->first(['giang_vien.maGV','hoGV','tenGV','phieu_cham.maPhieuCham']);
+       
         //sinh viên
         $sv=sinhVien::where('isDelete',false)
         ->where('maSSV',$maSSV)
@@ -137,8 +172,6 @@ class ketQuaDanhGiaController extends Controller
        // ->get(['tieu_chi_cham_diem.maTCCD','tenTCCD','tieu_chi_cham_diem.maCDR3']);
        ->get();
       
-
-      
        foreach ($ndQh as $tc) {
             $cdr3=CDR3::where('isDelete',false)
                 ->where('maCDR3', $tc->maCDR3)
@@ -146,8 +179,6 @@ class ketQuaDanhGiaController extends Controller
             $tc->tenCDR3=$cdr3[0]["tenCDR3"];
             $tc->maCDR3VB=$cdr3[0]["maCDR3VB"];
        }
-
-       
 
        return view('giangvien.ketqua.nhapDiemDoan',['tieuchi'=>$ndQh,'deTai'=>$deTai,'gv'=>$gv,'sv'=>$sv]);
     }
@@ -167,11 +198,214 @@ class ketQuaDanhGiaController extends Controller
         }
         $dg=danhGia::where('maPhieuCham',$request->maPhieuCham)->sum('diemDG');
         
+
         $pc=phieu_cham::where('maPhieuCham',$request->maPhieuCham)
         ->first();
+        if($diem>=0 && $diem<4){
+            $pc->diemChu="F";
+            $pc->xepHang=5;
+        }
+        
+        if($diem>=4 && $diem<=4.9){
+             $pc->diemChu="D";
+             $pc->xepHang=4;
+        }
+        if($diem>=5 && $diem<=5.4){
+            $pc->diemChu="D+";
+            $pc->xepHang=4;
+        }
+        
+
+        if($diem>=5.5 && $diem<=6.4){
+            $pc->diemChu="C";
+            $pc->xepHang=3;
+        }
+        if($diem>=6.5 && $diem<=6.9){
+            $pc->diemChu="C+";
+            $pc->xepHang=3;
+        }
+        
+
+        if($diem>=7 && $diem<=7.9){
+            $pc->diemChu="B";
+            $pc->xepHang=2;
+        }
+        if($diem>=8.0 && $diem<=8.9){
+            $pc->diemChu="B+";
+            $pc->xepHang=2;
+        }
+        
+        if($diem>=9.0 && $diem<=10){
+            $pc->diemChu="A";
+            $pc->xepHang=1;
+        }
         $pc->trangThai=true;
         $pc->diemSo=$diem;
+        $pc->loaiCB=1;
+        $pc->yKienDongGop=$request->yKienDongGop;
         $pc->update();
         return redirect('/giang-vien/ket-qua-danh-gia/nhap-ket-qua-danh-gia/'.Session::get('maCTBaiQH'))->with('success','Chấm điểm thành công!');
+    }
+
+    public function xem_ket_qua_danh_gia($maDe,$maSSV,$maCanBo)
+    {
+
+        if($maCanBo==1){
+            $deTai=phieu_cham::where('phieu_cham.isDelete',false)
+            ->where('phieu_cham.maDe',$maDe)
+            ->where('phieu_cham.maSSV',$maSSV)
+            ->where('phieu_cham.maGV',Session::get('maGV'))
+            ->join('de_thi',function($x){
+                $x->on('de_thi.maDe','=','phieu_cham.maDe')
+                ->where('de_thi.isDelete',false);
+            })
+            ->first();
+
+             //giảng viên
+            $gv=phieu_cham::where('phieu_cham.isDelete',false)
+            ->where('phieu_cham.maDe',$maDe)
+            ->where('phieu_cham.maSSV',$maSSV)
+            ->where('phieu_cham.maGV',Session::get('maGV'))
+            ->join('giang_vien',function($x){
+                $x->on('giang_vien.maGV','=','phieu_cham.maGV')
+                ->where('giang_vien.isDelete',false);
+            })
+            ->first(['giang_vien.maGV','hoGV','tenGV','phieu_cham.maPhieuCham']);
+            
+
+            //sinh viên
+            $sv=phieu_cham::where('phieu_cham.isDelete',false)
+            ->where('phieu_cham.maDe',$maDe)
+            ->where('phieu_cham.maSSV',$maSSV)
+            ->where('phieu_cham.maGV',Session::get('maGV'))
+            ->join('sinh_vien',function($y){
+                $y->on('phieu_cham.maSSV','=','sinh_vien.maSSV')
+                ->where('sinh_vien.isDelete',false);
+            })
+            ->first();
+            
+        }
+        else{
+           
+
+             //giảng viên
+            if(Session::get('maGV_2')!='00000'){
+                $deTai=phieu_cham::where('phieu_cham.isDelete',false)
+                ->where('phieu_cham.maDe',$maDe)
+                ->where('phieu_cham.maSSV',$maSSV)
+                ->where('phieu_cham.maGV',Session::get('maGV_2'))
+                ->join('de_thi',function($x){
+                    $x->on('de_thi.maDe','=','phieu_cham.maDe')
+                    ->where('de_thi.isDelete',false);
+                })
+                ->first();
+                $gv=phieu_cham::where('phieu_cham.isDelete',false)
+                ->where('phieu_cham.maDe',$maDe)
+                ->where('phieu_cham.maSSV',$maSSV)
+                ->where('phieu_cham.maGV',Session::get('maGV_2'))
+                ->join('giang_vien',function($x){
+                    $x->on('giang_vien.maGV','=','phieu_cham.maGV')
+                    ->where('giang_vien.isDelete',false);
+                })
+                ->first(['giang_vien.maGV','hoGV','tenGV','phieu_cham.maPhieuCham']);
+                //sinh viên
+                $sv=phieu_cham::where('phieu_cham.isDelete',false)
+                ->where('phieu_cham.maDe',$maDe)
+                ->where('phieu_cham.maSSV',$maSSV)
+                ->where('phieu_cham.maGV',Session::get('maGV_2'))
+                ->join('sinh_vien',function($y){
+                    $y->on('phieu_cham.maSSV','=','sinh_vien.maSSV')
+                    ->where('sinh_vien.isDelete',false);
+                })
+                ->first();
+            }else{
+                $deTai=phieu_cham::where('phieu_cham.isDelete',false)
+                ->where('phieu_cham.maDe',$maDe)
+                ->where('phieu_cham.maSSV',$maSSV)
+                ->where('phieu_cham.loaiCB',$maCanBo)
+                ->join('de_thi',function($x){
+                    $x->on('de_thi.maDe','=','phieu_cham.maDe')
+                    ->where('de_thi.isDelete',false);
+                })
+                ->first();
+                $gv=phieu_cham::where('phieu_cham.isDelete',false)
+                ->where('phieu_cham.maDe',$maDe)
+                ->where('phieu_cham.maSSV',$maSSV)
+                ->where('phieu_cham.loaiCB',$maCanBo)
+                ->join('giang_vien',function($x){
+                    $x->on('giang_vien.maGV','=','phieu_cham.maGV')
+                    ->where('giang_vien.isDelete',false);
+                })
+                ->first(['giang_vien.maGV','hoGV','tenGV','phieu_cham.maPhieuCham']);
+                //sinh viên
+                $sv=phieu_cham::where('phieu_cham.isDelete',false)
+                ->where('phieu_cham.maDe',$maDe)
+                ->where('phieu_cham.maSSV',$maSSV)
+                ->where('phieu_cham.loaiCB',$maCanBo)
+                ->join('sinh_vien',function($y){
+                    $y->on('phieu_cham.maSSV','=','sinh_vien.maSSV')
+                    ->where('sinh_vien.isDelete',false);
+                })
+                ->first();
+            }
+
+            
+        }
+        
+        
+
+        //ct_bai-quy_hoach->noi_dung_quy_hoach
+        $ndQh=noiDungQH::where('noi_dung_quy_hoach.isDelete',false)
+        ->where('noi_dung_quy_hoach.maCTBaiQH',Session::get('maCTBaiQH'))
+        ->join('tieuchuan_danhgia',function($x){
+            $x->on('tieuchuan_danhgia.maNoiDungQH','=','noi_dung_quy_hoach.maNoiDungQH')
+            ->where('tieuchuan_danhgia.isDelete',false);
+        })
+        ->join('cau_hoi_tcchamdiem',function($y){
+            $y->on('cau_hoi_tcchamdiem.maTCDG','=','tieuchuan_danhgia.maTCDG')
+            ->where('cau_hoi_tcchamdiem.isDelete',false);
+        })
+        ->join('tieu_chi_cham_diem',function($z){
+            $z->on('tieu_chi_cham_diem.maTCCD','=','cau_hoi_tcchamdiem.maTCCD')
+            ->where('tieu_chi_cham_diem.isDelete',false);
+        })
+        ->get();
+        //phiếu chấm
+        
+       //lọc chuẩn đầu ra và hiện điểm chấm
+        foreach ($ndQh as $tc) {
+            $cdr3=CDR3::where('isDelete',false)
+                ->where('maCDR3', $tc->maCDR3)
+                ->get(['maCDR3VB', 'tenCDR3']);
+            $tc->tenCDR3=$cdr3[0]["tenCDR3"];
+            $tc->maCDR3VB=$cdr3[0]["maCDR3VB"];
+
+
+            
+                $pc=phieu_cham::where('phieu_cham.isDelete',false)
+                ->where('phieu_cham.maDe',$maDe)
+                ->where('phieu_cham.maSSV',$maSSV)
+                ->where('phieu_cham.loaiCB',$maCanBo)
+                ->join('danh_gia',function($x) use ($tc){
+                    $x->on('phieu_cham.maPhieuCham','=','danh_gia.maPhieuCham')
+                    ->where('danh_gia.maTCCD',$tc->maTCCD)
+                    ->where('danh_gia.isDelete',false);
+                    })
+                ->get(['danh_gia.maTCCD','danh_gia.diemDG']);
+                
+            
+            
+            
+
+            if(count($pc)>0){
+                $tc->diemDG=$pc[0]->diemDG;
+            }
+            else{
+                $tc->diemDG=0;
+            }
+        }
+    
+        return view('giangvien.ketqua.xemKetQuaCham',['tieuchi'=>$ndQh,'sv'=>$sv,'gv'=>$gv,'deTai'=>$deTai]);
+
     }
 }

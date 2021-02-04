@@ -20,7 +20,6 @@ class Create38TieuChiChamDiemTable extends Migration
             $table->boolean('isDelete')->nullable()->default(false);
             $table->integer('maCDR3')->unsigned()->nullable()->default(12);
             $table->timestamps();
-
             $table->foreign('maCDR3')->references('maCDR3')->on('cdr_cd3')->onDelete('cascade');
 
         });

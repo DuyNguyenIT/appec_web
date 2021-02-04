@@ -1,5 +1,11 @@
 @extends('giangvien.master')
 @section('content')
+
+
+
+
+
+
      <!-- Content Wrapper. Contains page content -->
      <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -56,25 +62,48 @@
                   <div class="card-header">
                     <h3 class="">
                       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" >
-                        <i class="fas fa-plus"></i> Thêm
+                        <i class="far fa-address-card"></i> Thêm phiếu chấm
                       </button>
                       <a href="{{ asset('giang-vien/quy-hoach-danh-gia/xem-tieu-chi-danh-gia/'.$maCTBaiQH) }}"class="btn btn-primary">
-                       
-                          <i class="fas fa-plus"></i> Tiêu chí đánh giá đồ án
-                        
+                        <i class="fas fa-balance-scale-left"></i> Tiêu chí đánh giá đồ án
                       </a>
+                      <button class="btn btn-primary" data-toggle="modal" data-target="#moichambc">
+                          Mời chấm báo cáo
+                      </button>
+                        <!-- Modal mời chấm báo cáo -->
+                        <div class="modal fade" id="moichambc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <form action="{{ asset('/giang-vien/quy-hoach-danh-gia/moi-cham-bao-cao') }}" method="post">
+                              @csrf
+                               <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Mời chấm báo cáo</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="form-group">
+                                  <label for=""> Chọn giảng viên:</label>
+                                  <select name="maGV_2" id="" class="form-control">
+                                    <option value="00000">Chọn riêng giảng viên chấm cho đề tài</option>
+                                    @foreach ($gv as $x)
+                                        <option value="{{$x->maGV}}">{{$x->hoGV}} {{$x->tenGV}}</option>
+                                    @endforeach
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Lưu</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                              </div>
+                            </div>
+                            </form>
+                           
+                          </div>
+                        </div>
 
-                      {{-- <button
-                        type="button"
-                        class="btn btn-primary"
-                        data-toggle="modal"
-                        data-target="#addLecture"
-                      >
-                        <i class="fas fa-user-plus"></i> Thêm giảng viêng cộng
-                        tác
-                      </button> --}}
-
-                      <!-- Modal -->
+                      <!-- Modal thêm phiếu chấm -->
                       <div
                         class="modal fade bd-example-modal-lg"
                         id="exampleModal"
@@ -99,15 +128,15 @@
                                 <label for="hocphan" style="font-size: 20px">Chọn đề tài</label> 
                                 <!-- Button trigger modal -->
                                 <select name="maDe" id="" class="form-control custom-select">
-                                    @foreach ($deThi as $md)
+                                    @foreach ($deTai as $md)
                                         
                                         <option value="{{$md->maDe}}">
-                                            {{$md->tenDe}}
+                                          {{$md->maDeVB}}--{{$md->tenDe}}
                                         </option>
                                     @endforeach
                                 </select>
                               </div>
-                              <div>
+                              <div class="form-group">
                                 <label for="">Chọn sinh viên</label>
                                 <select name="maSSV" id="" class="form-control custom-select">
                                   @foreach ($dsLop as $sv)
@@ -115,6 +144,18 @@
                                   @endforeach
                                 </select>
                               </div>
+                              
+                              @if ($canbo2->maGV=='00000')
+                                <div class="form-group">
+                                  <label for=""> Chọn giảng viên:</label>
+                                    <select name="maGV_2" id="" class="form-control">
+                                      @foreach ($gv as $x)
+                                          <option value="{{$x->maGV}}">{{$x->hoGV}} {{$x->tenGV}}</option>
+                                      @endforeach
+                                    </select>
+                              </div>
+                              @endif
+                              
                             </div>
                             <div class="modal-footer">
                               <button type="submit" class="btn btn-primary">
@@ -129,69 +170,9 @@
                          
                         </div>
                       </div>
-
-                      <!-- Modal -->
-                      <div
-                        class="modal fade bd-example-modal-lg"
-                        id="addLecture"
-                        tabindex="-1"
-                        role="dialog"
-                        aria-labelledby="exampleModalLabel"
-                        aria-hidden="true"
-                      >
-                        <div class="modal-dialog modal-lg" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">
-                                Thêm giảng viên cộng tác
-                              </h5>
-                              <button  type="button" class="close" data-dismiss="modal" aria-label="Close"
-                               >
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              <div class="form-group">
-                                <label for="hocphan" style="font-size: 20px">Chọn khoa</label>
-                                <!-- Button trigger modal -->
-                                <select name="" id="" class="form-control">
-                                  <option value="1">
-                                    Khoa kỹ thuật và công nghệ
-                                  </option>
-                                  <option value="1">
-                                    Nông nghiệp thủy sản
-                                  </option>
-                                </select>
-                              </div>
-                              <div class="form-group">
-                                <label for="hocphan" style="font-size: 20px"
-                                  >Chọn bộ môn</label>
-                                <!-- Button trigger modal -->
-                                <select name="" id="" class="form-control">
-                                  <option value="1">Công nghệ thông tin</option>
-                                  <option value="1">Điện tử</option>
-                                </select>
-                              </div>
-                              <div>
-                                <label for=""  style="font-size: 20px">Chọn giảng viên</label>
-                                <select name="" id="" class="form-control">
-                                  <option value="">Võ Thành C</option>
-                                  <option value="">Dương Ngọc Vân Khanh</option>
-                                </select>
-                              </div>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-primary">
-                                Lưu
-                              </button>
-                              <button type="button"  class="btn btn-secondary"  data-dismiss="modal">
-                                Hủy
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </h3>
+                      <hr>
+                      Cán bộ chấm 2: {{$canbo2->hoGV}} {{$canbo2->tenGV}}
+                     </h3>
                   </div>
                   {{-- <div class="card-header">Giảng viên cộng tác: <b>Võ Thành C</b></div> --}}
                   <!-- /.card-header -->
@@ -203,6 +184,7 @@
                       <thead>
                         <tr>
                           <th>STT</th>
+                          <th>Mã đề tài</th>
                           <th>
                          
                           
@@ -247,25 +229,55 @@
                           </th>
                           <th>Sinh viên thực hiện</th>
                           <th>Mã sinh viên</th>
+                          <th>Cán bộ chấm 2</th>
                           <th>Tùy chọn</th>
                         </tr>
                       </thead>
                       <tbody>
                         @php
-                            $i=1;
-                        @endphp
+                          $i=1;
+                          $chayTenDT=0;
+                          $maDe_cur=0;
+                      @endphp
                         @foreach ($deThi as $dt)
+                        @php      
+                             $demTenDT=$deThi->where('maDe',$dt->maDe)->count();
+                             if($chayTenDT>$demTenDT)
+                                $chayTenDT=1;
+                             else {
+                                $chayTenDT+=1;
+                            }
+                             if($maDe_cur!==$dt->maDe){
+                                $maDe_cur=$dt->maDe;
+                                $chayTenDT=1;
+                            }
+                        @endphp
+                        @if ($chayTenDT==1)
                         <tr>
-                          <td>{{$i++}}</td>
-                          <td>{{$dt->tenDe}}</td>
+                            <td rowspan={{$demTenDT}}>{{$i++}}</td>
+                            <td rowspan={{$demTenDT}}>{{$dt->maDeVB}}</td>
+                            <td rowspan={{$demTenDT}}>{{$dt->tenDe}}</td>
+                            
+                            <td>{{$dt->HoSV}} {{$dt->TenSV}}</td>
+                            <td>{{$dt->maSSV}}</td>
+                            <td>{{$dt->hoGV}} {{$dt->tenGV}}</td>
+                            <td>
+                              <button class="btn btn-primary">
+                                <i class="fas fa-edit"></i> Chỉnh sửa
+                              </button>
+                            </td>
+                        </tr>
+                        @else
+                        <tr>
                           <td>{{$dt->HoSV}} {{$dt->TenSV}}</td>
                           <td>{{$dt->maSSV}}</td>
+                          <td>{{$dt->hoGV}} {{$dt->tenGV}}</td>
                           <td>
                             <button class="btn btn-primary">
                               <i class="fas fa-edit"></i> Chỉnh sửa
                             </button>
                           </td>
-                        </tr>
+                        @endif
                         @endforeach
                       </tbody>
                       <tfoot></tfoot>

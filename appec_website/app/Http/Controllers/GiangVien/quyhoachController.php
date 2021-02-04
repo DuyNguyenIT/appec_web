@@ -6,17 +6,25 @@ use App\Models\giangDay;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\baiQuyHoach;
+use App\Models\cauHoi;
+use App\Models\cauHoi_tieuChiChamDiem;
 use App\Models\CDR3;
 use App\Models\ct_bai_quy_hoach;
 use App\Models\deThi;
+use App\Models\giangVien;
 use App\Models\hocPhan;
+use App\Models\hocPhan_kqHTHP;
 use App\Models\hocPhan_loaiHTDanhGia;
+use App\Models\kqHTHP;
 use App\Models\loaiDanhGia;
 use App\Models\loaiHTDanhGia;
+use App\Models\mucDoDanhGia;
 use App\Models\noiDungQH;
 use App\Models\phieu_cham;
 use App\Models\quyHoach_hocPhan;
 use App\Models\sinhVien;
+use App\Models\tieuChiChamDiem;
+use App\Models\tieuChuanDanhGia;
 use Session;
 
 class quyhoachController extends Controller
@@ -43,6 +51,7 @@ class quyhoachController extends Controller
            Session::put('maHK',$maHK);
            Session::put('namHoc',$namHoc);  
            Session::put('maLop',$maLop);
+           Session::put('maBaiQH',$maBaiQH);
 
            $ldg=loaiDanhGia::where('isDelete',false)->get();
            $lhtdg=loaiHTDanhGia::where('isDelete',false)->get();
@@ -61,42 +70,78 @@ class quyhoachController extends Controller
             ->where('loai_ht_danhgia.isDelete',false);
             })
            ->get();
+
+           
         
            return view('giangvien.quyhoach.quyhoachketqua',['qh'=>$qh,'hp'=>$hp,
            'ldg'=>$ldg,'lhtdg'=>$lhtdg]);
+
        } catch (\Throwable $th) {
            return $th;
        }
     }
 
+    /////////---------nội dung quy hoạch
+    public function noi_dung_quy_hoach($maCTBaiQH)
+    {
+        $ct_bqh=ct_bai_quy_hoach::where('isdelete',false)->where('maCtBaiQH',$maCTBaiQH)->first();
+        
+        if(!$ct_bqh){
+            return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-quy-hoach/'.$maCTBaiQH)->with('warning','Không thể tìm thất chi tiết bài quy hoạch');
+        }
+        $ndqh=noiDungQH::where('isDelete',false)
+        ->where('maCTBaiQH',$maCTBaiQH)
+        ->get();
+        //kết quả học tập
+        $kqht=kqHTHP::where('isDelete',false)
+        ->get();
+        //mức độ đánh giá
+        $mdg=mucDoDanhGia::where('isDelete',false)
+        ->get();
+
+        if ($ct_bqh->maLoaiHTDG=='T1') { //nếu là tự luận
+            return view('giangvien.quyhoach.noidungquyhoachtuluan',['noiDungQH'=>$ndqh,'maCTBaiQH'=>$maCTBaiQH,'ketQuaHT'=>$kqht,
+        'mucDoDG'=>$mdg]);
+        }elseif($ct_bqh->maLoaiHTDG=='T2'){ //nếu là trắc nghiệm
+            return view('giangvien.quyhoach.noidungquyhoachtracnghiem',['noiDungQH'=>$ndqh,'maCTBaiQH'=>$maCTBaiQH,'ketQuaHT'=>$kqht,
+            'mucDoDG'=>$mdg]);
+        }
+        //còn lại là đồ án
+        return view('giangvien.quyhoach.noidungquyhoach',['noiDungQH'=>$ndqh,'maCTBaiQH'=>$maCTBaiQH,'ketQuaHT'=>$kqht,
+        'mucDoDG'=>$mdg]);
+    }
+
+    public function them_noi_dung_quy_hoach_submit(Request $request)
+    {
+        $ndqh=new noiDungQH();
+        $ndqh->maCTBaiQH=$request->maCTBaiQH;
+        $ndqh->tenNoiDungQH=$request->tenNoiDungQH;
+        $ndqh->maKQHT=$request->maKQHT;
+        $ndqh->maMucDoDG=$request->maMucDoDG;
+        $ndqh->save();
+        return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-quy-hoach/'.$request->maCTBaiQH)->with('success','Thêm thành công!!');
+    }
+
     public function them_quy_hoach(Request $request)
     {
-       
-        try {
-            //tạo bai_quy_hoach==>maBaiQH
-            $bhq=new baiQuyHoach();
-            $bhq->save();
-            $maBaiQH=baiQuyHoach::where('isDelete',false)->get('maBaiQH')->first();
             //maHocPhan+maLoaiDG+=maLoaiHTDG+trongSo===>hocphan_loai_hinhthuc_dg
-            $hp_lhtdg=new hocPhan_loaiHTDanhGia();
-            $hp_lhtdg->maHocPhan=$request->maHocPhan;
-            $hp_lhtdg->maLoaiDG=$request->maLoaiDG;
-            $hp_lhtdg->maLoaiHTDG=$request->maLoaiHTDG;
-            $hp_lhtdg->trongSo=$request->trongSo;
-            $hp_lhtdg->save();
+            $ct_bqh=new ct_bai_quy_hoach();
+            $ct_bqh->maLoaiDG=$request->maLoaiDG;
+            $ct_bqh->maLoaiHTDG=$request->maLoaiHTDG;
+            $ct_bqh->trongSo=$request->trongSo;
+            $ct_bqh->maBaiQH=Session::get('maBaiQH');
+            $ct_bqh->save();
             //maHocPhan+maLoaiDG+maLoaiHTDG+maBaiQH+maGV==>quyhoach_hocphan
             $qh_hp=new quyHoach_hocPhan();
             $qh_hp->maHocPhan=$request->maHocPhan;
             $qh_hp->maLoaiDG=$request->maLoaiDG;
             $qh_hp->maLoaiHTDG=$request->maLoaiHTDG;
-            $qh_hp->maBaiQH=$maBaiQH;
+            $qh_hp->maBaiQH=Session::get('maBaiQH');
             $qh_hp->maGV=Session::get('maGV');
             $qh_hp->save();
-            return redirect('/giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/'.$request->maHocPhan)->with('success','thêm thành công');
+            return redirect('/giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/'.$request->maHocPhan.'/'.Session::get('maBaiQH').'/'.Session::get('maHK').'/'.Session::get('namHoc').'/'.Session::get('maLop'))->with('success','thêm thành công');
 
-        } catch (\Throwable $th) {
-            return $th;
-        }
+       
     }
 
     public function xem_noi_dung_danh_gia($maCTBaiQH)
@@ -108,22 +153,51 @@ class quyhoachController extends Controller
             ->where('maCTBaiQH',$maCTBaiQH)
             ->first('maLoaiHTDG');
           
-            //?maCTBaiQH->maDe
-            $maDe=deThi::where('de_thi.isDelete',false)
-            ->where('de_thi.maCTBaiQH',$maCTBaiQH)
-            ->leftJoin('phieu_cham',function($x){
-                $x->on('phieu_cham.maDe','=','de_thi.maDe')
-                ->where('phieu_cham.isDelete',false);
-            })
-            ->leftJoin('sinh_vien',function($y){
-                $y->on('phieu_cham.maSSV','=','sinh_vien.maSSV')
-                ->where('sinh_vien.isDelete',false);
-            })
-            ->get(['de_thi.maDe','de_thi.tenDe','sinh_vien.maSSV','sinh_vien.HoSV','sinh_vien.TenSV']);
- 
+            //ct_bai_quy_hoach
+            $ct_bqh=ct_bai_quy_hoach::where('isDelete',false)
+            ->where('maCTBaiQH',$maCTBaiQH)
+            ->first();
+            Session::put('maGV_2',$ct_bqh->maGV_2);
+            if (Session::get('maGV_2')!='00000') {
+                //?maCTBaiQH->maDe
+                $maDe=deThi::where('de_thi.isDelete',false)
+                ->where('de_thi.maCTBaiQH',$maCTBaiQH)
+                ->leftJoin('phieu_cham',function($x){
+                    $x->on('phieu_cham.maDe','=','de_thi.maDe')
+                    ->where('phieu_cham.maGV','=',Session::get('maGV_2'))
+                    ->where('phieu_cham.isDelete',false);
+                })
+                ->leftJoin('sinh_vien',function($y){
+                    $y->on('phieu_cham.maSSV','=','sinh_vien.maSSV')
+                    ->where('sinh_vien.isDelete',false);
+                })
+                ->leftJoin('giang_vien',function($y){
+                    $y->on('phieu_cham.maGV','=','giang_vien.maGV')
+                    ->where('giang_vien.isDelete',false);
+                })
+                ->get(['de_thi.maDeVB','de_thi.maDe','de_thi.tenDe','sinh_vien.maSSV','sinh_vien.HoSV','sinh_vien.TenSV','giang_vien.hoGV','giang_vien.tenGV']);
+            }else{
+                $maDe=deThi::where('de_thi.isDelete',false)
+                ->where('de_thi.maCTBaiQH',$maCTBaiQH)
+                ->leftJoin('phieu_cham',function($x){
+                    $x->on('phieu_cham.maDe','=','de_thi.maDe')
+                    ->where('phieu_cham.loaiCB',2)
+                    ->where('phieu_cham.isDelete',false);
+                })
+                ->leftJoin('sinh_vien',function($y){
+                    $y->on('phieu_cham.maSSV','=','sinh_vien.maSSV')
+                    ->where('sinh_vien.isDelete',false);
+                })
+                ->leftJoin('giang_vien',function($y){
+                    $y->on('phieu_cham.maGV','=','giang_vien.maGV')
+                    ->where('giang_vien.isDelete',false);
+                })
+                ->get(['de_thi.maDeVB','de_thi.maDe','de_thi.tenDe','sinh_vien.maSSV','sinh_vien.HoSV','sinh_vien.TenSV','giang_vien.hoGV','giang_vien.tenGV']);
+            }
+            
+            
 
 
-           
             if($maLoaiHTDG->maLoaiHTDG=="T8"){
                  //lấy danh sách sinh viên đã có trong phiếu chấm
                  $dssvTrongPC=deThi::where('de_thi.isDelete',false)
@@ -144,17 +218,50 @@ class quyhoachController extends Controller
                 
                  
                  //select những sinh viên chưa được gán vào phiếu chấm
-
                 $dsLop=sinhVien::where('isDelete',false)
                 ->where('maLop',Session::get('maLop'))
                 ->whereNotIn('maSSV',$massv)
+                ->orderBy('maSSV')
                 ->get();
                
+                 //lấy danh sách đề tài
+                 $deTai=deThi::where('de_thi.isDelete',false)
+                 ->where('de_thi.maCTBaiQH',$maCTBaiQH)
+                 ->get();
 
-
-
+                 //giảng viên
+                 $gv=giangVien::where('isDelete',false)
+                 ->where('maGV','!=',Session::get('maGV'))
+                 ->get();
+                
+                 //cb chấm 2
+                 $ct_bqh=ct_bai_quy_hoach::where('isDelete',false)
+                 ->where('ct_bai_quy_hoach.maCTBaiQH',$maCTBaiQH)
+                 ->first();
+                 if($ct_bqh->maGV_2==null){ //chưa mời
+                    $cb2=new giangVien();
+                    $cb2->maGV="-1";
+                    $cb2->hoGV="";
+                    $cb2->tenGV="Chưa mời giảng viên";
+                 }else{//đã mời
+                    $cb2=ct_bai_quy_hoach::where('ct_bai_quy_hoach.isDelete',false)
+                    ->where('ct_bai_quy_hoach.maCTBaiQH',$maCTBaiQH)
+                    ->leftjoin('giang_vien',function($x){
+                        $x->on('giang_vien.maGV','=','ct_bai_quy_hoach.maGV_2')
+                        ->where('giang_vien.isDelete',false);
+                    })
+                    ->first();
+                    
+                    if($cb2->maGV==null){//mời nhiều người
+                        $cb2->maGV="00000";
+                        $cb2->hoGV="";
+                        $cb2->tenGV="Nhiều giảng viên";
+                    }
+                 }
+                 
+                
                 return view('giangvien.quyhoach.xemnddanhgia',['deThi'=>$maDe,
-                'maCTBaiQH'=>$maCTBaiQH,
+                'maCTBaiQH'=>$maCTBaiQH,'deTai'=>$deTai,'gv'=>$gv, 'canbo2'=>$cb2,
                 'dsLop'=>$dsLop]);
             }   
             
@@ -165,11 +272,27 @@ class quyhoachController extends Controller
 
     }
 
+
+    public function moi_cham_bao_cao(Request $request)
+    {
+        //kiễm tra đã mời hay chưa
+        $ct_bqh=ct_bai_quy_hoach::where('isDelete',false)
+        ->where('maCTBaiQH',Session::get('maCTBaiQH'))
+        ->first();
+        if(!$ct_bqh->maGV_2){
+            $ct_bqh->maGV_2=$request->maGV_2;
+            $ct_bqh->update();
+            return redirect('/giang-vien/quy-hoach-danh-gia/xem-noi-dung-danh-gia/'.Session::get('maCTBaiQH'))->with('success','Mời chấm báo cáo thành công!');
+        }else{
+            return back()->with('warning!','Đã mời 1 giảng viên cộng tác, không thể mời thêm!');
+        }
+        //nếu chưa được mời thì tiến hành lưu dữ liệu
+    }
+
     public function them_de_tai(Request $request)
     {
-      
             $dt=new deThi();
-            $dt->maDe=$request->maDe;
+            $dt->maDeVB=$request->maDe;
             $dt->tenDe=$request->tenDe;
             $dt->maCTBaiQH=Session::get('maCTBaiQH');
             $dt->save();
@@ -177,16 +300,54 @@ class quyhoachController extends Controller
 
         
     }
+
     public function them_phieu_cham(Request $request)
     {
         //noiDungDe+maSSV->phieuCham
-        
-        $pc=new phieu_cham();
-        $pc->maGV=Session::get('maGV');
-        $pc->maSSV=$request->maSSV;
-        $pc->maDe=$request->maDe;
-        $pc->save();
-        return redirect('giang-vien/quy-hoach-danh-gia/xem-noi-dung-danh-gia/'.Session::get('maCTBaiQH'))->with('success','Thêm thành công!');
+        //kiễm tra đã mời hay chưa
+        $ct_bqh=ct_bai_quy_hoach::where('isDelete',false)
+        ->where('maCTBaiQH',Session::get('maCTBaiQH'))
+        ->first();
+        if($ct_bqh->maGV_2){
+            if($ct_bqh->maGV_2!='00000'){
+                //cb1
+                $pc=new phieu_cham();
+                $pc->maGV=Session::get('maGV');
+                $pc->loaiCB=1;
+                $pc->maSSV=$request->maSSV;
+                $pc->maDe=$request->maDe;
+                $pc->save();
+
+                //cb2
+                $pc=new phieu_cham();
+                $pc->maGV=$ct_bqh->maGV_2;
+                $pc->loaiCB=2;
+                $pc->maSSV=$request->maSSV;
+                $pc->maDe=$request->maDe;
+                $pc->save();
+                return redirect('giang-vien/quy-hoach-danh-gia/xem-noi-dung-danh-gia/'.Session::get('maCTBaiQH'))->with('success','Thêm thành công!');
+            }
+            else{
+                //cb1
+                $pc=new phieu_cham();
+                $pc->maGV=Session::get('maGV');
+                $pc->maSSV=$request->maSSV;
+                $pc->maDe=$request->maDe;
+                $pc->loaiCB=1;
+                $pc->save();
+                //cb2
+                $pc=new phieu_cham();
+                $pc->maGV=$request->maGV_2;
+                $pc->maSSV=$request->maSSV;
+                $pc->loaiCB=2;
+                $pc->maDe=$request->maDe;
+                $pc->save();
+                return redirect('giang-vien/quy-hoach-danh-gia/xem-noi-dung-danh-gia/'.Session::get('maCTBaiQH'))->with('success','Thêm thành công!');
+            }
+            
+        }
+        else
+            return redirect('giang-vien/quy-hoach-danh-gia/xem-noi-dung-danh-gia/'.Session::get('maCTBaiQH'))->with('warning','Chưa mời giảng viên chấm báo cáo!');
 
     }
 
@@ -220,7 +381,7 @@ class quyhoachController extends Controller
                  $tc->tenCDR3=$cdr3[0]["tenCDR3"];
                  $tc->maCDR3VB=$cdr3[0]["maCDR3VB"];
             }
-
+           
 
             // return $ndQh->count('tenTCCD');  //số tiêu chí trong một tiêu chuẩn
             // return $ndQh->groupBy('maCDR3')->count();//số chuẩn đầu ra
@@ -229,5 +390,113 @@ class quyhoachController extends Controller
        
     }
    
+    public function them_tieu_chi_danh_gia($maCTBaiQH)
+    {
+        Session::put('maCTBaiQH',$maCTBaiQH);
+        
+        //Session maBaiQH, hocKi, namHoc, maHocPhan->maCDR3
+
+        $cdr3=giangDay::where('giangday.isDelete',false)
+        ->where('giangday.maBaiQH',Session::get('maBaiQH'))
+        ->leftjoin('cdr_cd3',function($x){
+            $x->on('cdr_cd3.maCDR3','=','giangday.maCDR3')
+            ->where('cdr_cd3.isDelete',false);
+        })
+        //->get();
+        ->get(['cdr_cd3.maCDR3','cdr_cd3.maCDR3VB','cdr_cd3.tenCDR3']);
+     
+        //kqht
+        $kqht=hocPhan_kqHTHP::where('hocphan_kqht_hp.isDelete',false)
+        ->where('hocphan_kqht_hp.maHocPhan',Session::get('maHocPhan'))
+        ->groupBy('hocphan_kqht_hp.maKQHT')
+        ->distinct()
+        ->join('kqht_hp',function($x){
+            $x->on('kqht_hp.maKQHT','=','hocphan_kqht_hp.maKQHT')
+            ->where('kqht_hp.isDelete',false);
+        })
+        ->get(['kqht_hp.maKQHT','kqht_hp.tenKQHT']);
+        
+        //loai ht dg
+        $loai_htdg=loaiHTDanhGia::where('isDelete',false)
+        ->get();
+       
+        //noiDung BaiqH
+        $ndqh=noiDungQH::where('isDelete',false)
+        ->where('maCTBaiQH',$maCTBaiQH)
+        ->get();
+       
+
+        $tc=tieuChuanDanhGia::where('isDelete',false)
+        ->where('maNoiDungQH',$ndqh[0]->maNoiDungQH)
+        ->get();
+
+       
+        return view('giangvien.quyhoach.themtieuchi',['cdr3'=>$cdr3,'kqht'=>$kqht,'loai_htdg'=>$loai_htdg,'tieuchuan'=>$tc,
+        'ndqh'=>$ndqh,'maCTBaiQH'=>$maCTBaiQH]);
+    }
+
+    public function get_tieu_chuan_by_NDQH($maNoiDungQH)
+    {
+        $tc=tieuChuanDanhGia::where('isDelete',false)
+        ->where('maNoiDungQH',$maNoiDungQH)
+        ->get();
+        $data="";
+        foreach ($tc as $x) {
+            $data=$data."<option value='".$x->maTCDG."'>".$x->tenTCDG.'-'.$x->diem." điểm</option>";
+        }
+        return response()->json($data);
+    }
+
+
+    public function them_tieu_chuan_submit(Request $request)
+    {
+        $tc=new tieuChuanDanhGia();
+        $tc->tenTCDG=$request->tenTCDG;
+        $tc->maNoiDungQH=$request->maNoiDungQH;
+        $tc->diem=$request->diemTCDG;   
+        $tc->save();
+        return redirect('/giang-vien/quy-hoach-danh-gia/them-tieu-chi-danh-gia/'.Session::get('maCTBaiQH'));
+    }
+
+
+    public function them_tieu_chi_danh_gian_submit(Request $request)
+    {
+        //tạo câu hỏi noiDungCauHoi
+        $ch=new cauHoi();
+        $ch->noiDungCauHoi=$request->noiDungCauHoi;
+        $ch->maKQHT=$request->maKQHT;
+        $ch->maLoaiHTDG=$request->maLoaiHTDG;
+        $ch->save();
+        $ch=cauHoi::where('isDelete',false)->orderBy('maCauHoi','desc')->first();
+        //noiDungQH->tieuchuan_danhgia
+        $noiDungQH=noiDungQH::where('isDelete',false)
+        ->where('maCTBaiQH',Session::get('maCTBaiQH'))
+        ->where('maKQHT',$request->maKQHT)
+        ->first();
+        
+        
+        $tc=tieuChuanDanhGia::where('isDelete',false)->where('maTCDG',$request->maTCDG)->first();
+        
+        
+        //tenTCCD[]
+        $tenTCCD=$request->tenTCCD;
+        $diemTCCD=$request->diemTCCD;
+        for ($i=0; $i < count($tenTCCD); $i++) { 
+            $tccd=new tieuChiChamDiem();
+            $tccd->tenTCCD=$tenTCCD[$i];
+            $tccd->diemTCCD=$diemTCCD[$i];
+            $tccd->maCDR3=$request->maCDR3;
+            $tccd->save();
+            $tccd=tieuChiChamDiem::orderBy('maTCCD','desc')->first();
+
+            $ch_tccd=new cauHoi_tieuChiChamDiem();
+            $ch_tccd->maCauHoi=$ch->maCauHoi;
+            $ch_tccd->maTCCD=$tccd->maTCCD;
+            $ch_tccd->maTCDG=$tc->maTCDG;
+            $ch_tccd->save();
+        }
+
+        return redirect('giang-vien/quy-hoach-danh-gia/xem-tieu-chi-danh-gia/'.Session::get('maCTBaiQH'));
+    }
     
 }

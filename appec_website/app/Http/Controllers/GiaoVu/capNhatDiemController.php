@@ -9,6 +9,6 @@ class capNhatDiemController extends Controller
 {
     public function index(Type $var = null)
     {
-       return view('giaovu.capnhatdiem');
+       return view('giaovu.error');
     }
 }

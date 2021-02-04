@@ -41,30 +41,30 @@
               <div class="card-header">
                 <h3 class="card-title">
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-          <i class="fas fa-plus"></i>Thêm
-</button>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                        <i class="fas fa-plus"></i>Thêm
+              </button>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-<div class="modal-dialog" role="document">
-<div class="modal-content">
-  <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Thêm chuẩn đầu ra</h5>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-      <span aria-hidden="true">×</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-    <button type="button" class="btn btn-primary">Lưu</button>
-  </div>
-</div>
-</div>
-</div>
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thêm chuẩn đầu ra</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary">Lưu</button>
+                  </div>
+                </div>
+                </div>
+              </div>
                   <!-- Modal -->
                   <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -129,44 +129,37 @@
                   <thead>
                     <tr>
                       <th>STT</th>
-                      <th>Tên chuẩn đầu ra</th>
+                      <th>Mã chuẩn đầu ra 2</th>
+                      <th>Tên chuẩn đầu ra 1</th>
+                      <th>Chuẩn đầu ra 1</th>
                       <th>Tùy chọn</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>L1.1</td>
-                      <td>Chuẩn đầu ra L2</td>
-                      <td>
-                        
-                          <button class="btn btn-success" data-toggle="modal" data-target="#addModal">
-                            <i class="fas fa-align-justify"></i> chỉnh sửa
-                          </button>
-                          <a href="cdr_2.html">
-                            <button class="btn btn-primary">
-                            Chuẩn đầu ra 2
+                    @php
+                        $i=1;
+                    @endphp
+                    @foreach ($chuandaura2 as $cdr2)
+                      <tr>
+                        <td>{{$i++}}</td>
+                        <td>{{$cdr2->maCDR2VB}}</td>
+                        <td>{{$cdr2->tenCDR2}}</td>
+                        <td>{{$cdr2->maCDR1VB}}</td>
+                        <td>
+                          
+                            <button class="btn btn-success" data-toggle="modal" data-target="#addModal">
+                              <i class="fas fa-align-justify"></i> chỉnh sửa
                             </button>
-                        </a>
-                        
-                      </td>
-                    </tr>
-                    
-                    <tr>
-                      <td>L1.2</td>
-                      <td>Chuẩn đầu ra L2</td>
-                      <td>
-                        <a href="#">
-                          <button class="btn btn-success">
-                            <i class="fas fa-align-justify"></i> chỉnh sửa
-                          </button>
-                        </a>
-                        <a href="cdr_2.html">
-                            <button class="btn btn-primary">
-                            Chuẩn đầu ra 2
-                            </button>
-                        </a>
-                        
-                      </td>
+                            <a href="{{ asset('/quan-ly/chuan-dau-ra/chuan-dau-ra-3/'.$cdr2->maCDR2) }}">
+                              <button class="btn btn-primary">
+                              Chuẩn đầu ra 3
+                              </button>
+                          </a>
+                          
+                        </td>
+                      </tr>
+                    @endforeach
+
                     </tr>
                   </tbody>
                   <tfoot></tfoot>

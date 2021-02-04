@@ -19,6 +19,7 @@ class Create32CtBaiQuyHoachTable extends Migration
             $table->string('maLoaiHTDG',255);
             $table->integer('maBaiQH')->unsigned()->nullable()->default(12);
             $table->integer('trongSo')->unsigned()->nullable()->default(12);
+            $table->string('maGV_2',255);
             $table->boolean('isDelete')->nullable()->default(false);
             
             $table->timestamps();

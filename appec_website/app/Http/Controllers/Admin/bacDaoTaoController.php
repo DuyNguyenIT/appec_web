@@ -14,7 +14,6 @@ class bacDaoTaoController extends Controller
     
         return view('admin.bacdaotao',['bdt'=>$bdt]);
     }
-    //thêm bậc đào tạo mới
     public function themBacDaoTao(Request $request)
     {
 
@@ -25,7 +24,7 @@ class bacDaoTaoController extends Controller
             $bdt->save();
             return redirect('/quan-ly/bac-dao-tao')->with('success','Thêm thành công!');
         } catch (\Throwable $th) {
-            return $th;
+            return redirect('/quan-ly/bac-dao-tao')->with('warning','Lỗi:'.$th);
         }
       
     }
@@ -39,8 +38,8 @@ class bacDaoTaoController extends Controller
             $bdt->update();
             return redirect('/quan-ly/bac-dao-tao')->with('success','Sửa thành công!');
         } catch (\Throwable $th) {
-            //throw $th;
-            return $th;
+           
+            return redirect('/quan-ly/bac-dao-tao')->with('warning','Lỗi:'.$th);
         }
     }
 
@@ -53,8 +52,7 @@ class bacDaoTaoController extends Controller
             $bdt->update();
             return redirect('/quan-ly/bac-dao-tao')->with('success','Xóa thành công!');
         } catch (\Throwable $th) {
-            //throw $th;
-            return $th;
+            return redirect('/quan-ly/bac-dao-tao')->with('warning','Lỗi:'.$th);
         }
         
     }

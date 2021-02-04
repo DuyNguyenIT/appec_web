@@ -9,6 +9,7 @@ class hocPhanController extends Controller
 {
     public function index(Type $var = null)
     {
+        
         return view('admin.hocphan');
     }
 }

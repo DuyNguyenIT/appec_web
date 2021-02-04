@@ -64,11 +64,12 @@
                     <th >Tùy chọn</th></tr>
                 </thead>
                 <tbody>
-                <tr >
+                
                   @php
                       $i=1;
                   @endphp
                   @foreach ($gd as $item)
+                  <tr >
                     <td>{{$i++}}</td>
                     <td>{{$item->tenHocPhan}}</td>
                     <td>{{$item->maHK}}</td>
@@ -81,8 +82,9 @@
                             <i class="fas fa-align-justify"></i> Kết quả học tập                
                         </a>
                       </td>
-                  @endforeach
                     </tr>
+                  @endforeach
+                    
                   </tbody>
                     <tfoot></tfoot>
                   </table>

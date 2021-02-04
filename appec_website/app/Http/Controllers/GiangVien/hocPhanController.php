@@ -4,6 +4,7 @@ namespace App\Http\Controllers\GiangVien;
 
 use App\Http\Controllers\Controller;
 use App\Models\bacDaoTao;
+use App\Models\CDR3;
 use App\Models\ctDaoTao;
 use App\Models\giangDay;
 use App\Models\hocPhan_ctDaoTao;
@@ -22,9 +23,6 @@ class hocPhanController extends Controller
                 ->where('hoc_phan.isDelete',false);
         })->groupBy('maBaiQH')->distinct()
         ->get();
-
-
-        
         return view('giangvien.hocphan.hocphan',['gd'=>$gd]);
     }
 
@@ -80,4 +78,63 @@ class hocPhanController extends Controller
     {
         # code...
     }
+
+    public function chuan_dau_ra_dap_ung_giang_day($maHocPhan,$maLop,$maHK,$namHoc,$maBaiQH)
+    {   
+        //maGV
+        $maGV=Session::get('maGV');
+        Session::put('maHocPhan',$maHocPhan);
+        Session::put('maHK',$maHK);
+        Session::put('namHoc',$namHoc);
+        Session::put('maBaiQH',$maBaiQH);
+        Session::put('maLop',$maLop);
+
+        //maHocPhan, maHK, namHoc
+        $gd=giangDay::where('giangday.isDelete',false)
+        ->where('giangday.maGV',$maGV)
+        ->where('giangday.maHocPhan',$maHocPhan)
+        ->where('giangday.maHK',$maHK)
+        ->where('giangday.namHoc',$namHoc)
+        ->where('giangday.maLop',$maLop)
+        ->join('cdr_cd3',function($x){
+            $x->on('giangday.maCDR3','=','cdr_cd3.maCDR3')
+            ->where('giangday.isDelete',false);
+        })
+        ->get();
+
+        $cdr3=CDR3::where('isDelete',false)
+        ->get();
+        return view('giangvien.hocphan.cdr_dap_ung_gd',['chuandaura'=>$gd,'cdr3'=>$cdr3]);
+
+    }
+
+    public function them_chuan_dau_ra(Request $request)
+    {
+        $gd=new giangDay();
+        $gd->maHocPhan=Session::get('maHocPhan');
+        $gd->maHK=Session::get('maHK');
+        $gd->namHoc=Session::get('namHoc');
+        $gd->maGV=Session::get('maGV');
+        $gd->maBaiQH=Session::get('maBaiQH');
+        $gd->maCDR3=$request->maCDR3;
+        $gd->maLop=Session::get('maLop');
+        $gd->save();
+        return redirect('/giang-vien/hoc-phan/chuan-dau-ra-dap-ung-giang-day/'.Session::get('maHocPhan').'/'.Session::get('maLop').'/'.Session::get('maHK').'/'.Session::get('namHoc').'/'.Session::get('maBaiQH'));
+    }
+
+    public function sua_chuan_dau_ra(Request $request)
+    {
+        $gd=giangDay::where('isDelete',false)
+        ->where('maCDR3',$request->maCDR3_old)
+        ->where('maBaiQH',Session::get('maBaiQH'))
+        ->first();
+        $gd->delete();  
+        // $gd->maCDR3=$request->maCDR3;
+        // $gd->save();
+
+        return redirect('/giang-vien/hoc-phan/chuan-dau-ra-dap-ung-giang-day/'.Session::get('maHocPhan').'/'.Session::get('maLop').'/'.Session::get('maHK').'/'.Session::get('namHoc').'/'.Session::get('maBaiQH'));
+
+    }
 }
+
+

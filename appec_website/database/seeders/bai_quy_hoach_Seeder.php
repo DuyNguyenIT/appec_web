@@ -14,7 +14,9 @@ class bai_quy_hoach_Seeder extends Seeder
     public function run()
     {
         DB::table('bai_quy_hoach')->insert([
-            ['maBaiQH'=>'1','tenBaiQH'=>'text']
+            ['maBaiQH'=>'1','tenBaiQH'=>'text'],
+            ['maBaiQH'=>'2','tenBaiQH'=>'text'],
+            ['maBaiQH'=>'2','tenBaiQH'=>'text']
          ]);
     }
 }

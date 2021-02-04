@@ -9,4 +9,6 @@ class khoiKienThuc extends Model
 {
     use HasFactory;
     protected $table='khoi_kien_thuc';
+    protected $primaryKey='maKhoiKT';
+    public $incrementing=false;
 }

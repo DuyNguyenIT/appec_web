@@ -21,8 +21,9 @@
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}" />
   </head>
   <body class="hold-transition login-page">
-      <form action="" method="post">
+      <form action="{{ asset('/dang-nhap') }}" method="post" enctype="multipart/form-data">
         @csrf
+        
         <div class="login-box">
             <div class="login-logo">
               <a href="#"><b>Đăng nhập</b></a>
@@ -36,7 +37,8 @@
                   <div class="input-group mb-3">
                     <input
                       type="text"
-                      id="username"
+                      name="username"
+                      
                       class="form-control"
                       placeholder="Tên đăng nhập"
                     />
@@ -49,7 +51,8 @@
                   <div class="input-group mb-3">
                     <input
                       type="password"
-                      id="password"
+                      name="password"
+                   
                       class="form-control"
                       placeholder="Mật khẩu"
                     />
@@ -71,7 +74,6 @@
                       <button
                         type="submit"
                         class="btn btn-primary btn-block"
-                        
                       >
                         Đăng nhập
                       </button>
@@ -80,7 +82,7 @@
                   </div>
                 </div>
       
-                <div class="social-auth-links text-center mb-3">
+                {{-- <div class="social-auth-links text-center mb-3">
                   <p>- OR -</p>
                   <!-- <a href="#" class="btn btn-block btn-primary">
                 <i class="fab fa-facebook mr-2"></i> Facebook
@@ -89,7 +91,7 @@
                     <i class="fab fa-google-plus mr-2"></i> Google
                   </a>
                 </div>
-                <!-- /.social-auth-links -->
+                <!-- /.social-auth-links --> --}}
       
                 <p class="mb-1">
                   <a href="#">Quên mật khẩu</a>

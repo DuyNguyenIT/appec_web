@@ -77,11 +77,12 @@
                     <th >Tùy chọn</th></tr>
                 </thead>
                 <tbody>
-                <tr >
+               
                   @php
                       $i=1;
                   @endphp
                   @foreach ($gd as $item)
+                  <tr >
                     <td>{{$i++}}</td>
                     <td>{{$item->tenHocPhan}}</td>
                     <td>{{$item->maHK}}</td>
@@ -90,12 +91,14 @@
                         {{$item->maLop}}
                     </td>
                       <td>
+                      
                         <a href="{{ asset('giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/'.$item->maHocPhan.'/'.$item->maBaiQH.'/'.$item->maHK.'/'.$item->namHoc.'/'.$item->maLop) }}" class="btn btn-success">
                             <i class="fas fa-align-justify"></i> Quy hoạch KQHT                  
                         </a>
                       </td>
+                    </tr>
                   @endforeach
-                  </tr>
+                  
                 </tbody>
                   <tfoot></tfoot>
                 </table>

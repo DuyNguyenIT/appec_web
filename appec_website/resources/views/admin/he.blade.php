@@ -26,6 +26,20 @@
   </div>
   <!-- /.content-header -->
 
+  @if(session('success'))
+  <div class="alert alert-success alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <h5><i class="icon fas fa-check"></i> Thông báo!</h5>
+    {{session('success')}}
+  </div>
+@endif
+@if(session('warning'))
+  <div class="alert alert-warning alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <h5><i class="icon fas fa-exclamation-triangle"></i> Thông báo!</h5>
+    {{session('warning')}}
+  </div>
+@endif
   <!-- Main content -->
 
   <section class="content">
@@ -34,124 +48,115 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">
+              <h3 class="card-title"></h3>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-        <i class="fas fa-plus"></i>Thêm
-    </button>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-<div class="modal-dialog" role="document">
-<div class="modal-content">
-<div class="modal-header">
-  <h5 class="modal-title" id="exampleModalLabel">Thêm hệ đào tạo</h5>
-  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-    <span aria-hidden="true">×</span>
-  </button>
-</div>
-<div class="modal-body">
-  
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-  <button type="button" class="btn btn-primary">Lưu</button>
-</div>
-</div>
-</div>
-</div>
+                  <i class="fas fa-plus"></i>Thêm
+              </button>
 
                 <!-- Modal -->
-                <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog" role="document">
+                    <form action="{{ asset('quan-ly/he/them') }}" method="post">
+                    @csrf
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">
-                          Thêm học phần
-                        </h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Thêm hệ </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">×</span>
                         </button>
                       </div>
                       <div class="modal-body">
-                        <div class="form-group">
-                          <label for="">Nhập tên hệ đào tạo:</label>
-                          <input type="text" class="form-control" placeholder="">
-                        </div>
+                          <div class="form-group">
+                            <label for="">Nhập mã hệ:</label>
+                            <input type="text" name="maHe" class="form-control">
+                          </div>
+                          <div class="form-group">
+                            <label for="">Nhập tên hệ:</label>
+                            <input type="text" class="form-control" name="tenHe">
+                          </div>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">
-                          Lưu
-                        </button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                          Hủy
-                        </button>
+                        <button type="submit" class="btn btn-primary">Lưu</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                       </div>
                     </div>
-                  </div>
+                    </form>
+                      
                 </div>
-              </h3>
             </div>
+
+               
             <!-- /.card-header -->
             <div class="card-body">
-              <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">
-                            Thêm học phần
-                          </h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                          <div class="form-group">
-                            <label for="">Nhập tên hệ đào tạo:</label>
-                            <input type="text" class="form-control" placeholder="">
-                          </div>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-primary">
-                            Lưu
-                          </button>
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                            Hủy
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div><table id="example2" class="table table-bordered table-hover">
+              <table id="example2" class="table table-bordered table-hover">
                 <thead>
                   <tr>
                     <th>STT</th>
+                    <th>Mã hệ</th>
                     <th>Tên hệ đào tạo</th>
                     <th>Tùy chọn</th>
                   </tr>
                 </thead>
                 <tbody>
+                  @php
+                      $i=1;
+                  @endphp
+                  @foreach ($he as $h)
                   <tr>
-                    <td>1</td>
-                    <td>Chính quy</td>
+                    <td>{{$i++}}</td>
+                    <td>{{$h->maHe}}</td>
+                    <td>{{$h->tenHe}}</td>
                     <td>
                       
-                        <button class="btn btn-success" data-toggle="modal" data-target="#addModal">
-                          <i class="fas fa-align-justify"></i> chỉnh sửa
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#edit_{{$h->maHe}}">
+                          <i class="fas fa-edit"></i>
                         </button>
-                      
+
+                        <a class="btn btn-danger" onclick="return confirm('Bạn có muốn xóa {{$h->tenHe}}?')" href="{{ asset('quan-ly/he/xoa/'.$h->maHe) }}"><i class="fa fa-trash"></i></a>
+
+
+
+                        <div class="modal fade" id="edit_{{$h->maHe}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <form action="{{ asset('quan-ly/he/sua') }}" method="post">
+                            @csrf
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">
+                                    Sửa hệ
+                                  </h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <input type="text" name="maHe" value="{{$h->maHe}}" hidden>
+                                  <div class="form-group">
+                                    <label for="">Nhập tên hệ:</label>
+                                    <input type="text" name="tenHe" class="form-control" value="{{$h->tenHe}}" placeholder="">
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="submit" class="btn btn-primary">
+                                    Lưu
+                                  </button>
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                    Hủy
+                                  </button>
+                                </div>
+                              </div>
+                            </form>
+                        
+                          </div>
+                        </div>
+
+
                     </td>
                   </tr>
+                  @endforeach
+                 
                   
-                  <tr>
-                    <td>2</td>
-                    <td>Liên thông</td>
-                    <td>
-                      <a href="#">
-                        <button class="btn btn-success">
-                          <i class="fas fa-align-justify"></i> chỉnh sửa
-                        </button>
-                      </a>
-                    </td>
-                  </tr>
+                  
                 </tbody>
                 <tfoot></tfoot>
               </table>

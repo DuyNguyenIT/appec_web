@@ -86,12 +86,9 @@
         <ul class="navbar-nav ml-auto">
           <!-- Messages Dropdown Menu -->
           <li class="nav-item">
-            <a
-              class="nav-link"
-              data-widget="fullscreen"
-              href="login.html"
-              role="button"
-            >
+            <a class="nav-link" data-widget="fullscreen" href="{{ asset('/dang-xuat') }}"
+              role="button">
+            Đăng xuất
               <i class="fas fa-sign-out-alt"></i>
             </a>
           </li>
@@ -170,9 +167,9 @@
               </li>
 
               <li class="nav-item">
-                <a href="{{ asset('/giao-vu/hoc-phan') }}" class="nav-link">
+                <a href="{{ asset('/giao-vu/hoc-phan-giang-day') }}" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
-                  <p>Học phần</p>
+                  <p>Phân công dạy học</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -263,6 +260,8 @@
       });
       
     });
+
+  
     </script>
   </body>
 </html>

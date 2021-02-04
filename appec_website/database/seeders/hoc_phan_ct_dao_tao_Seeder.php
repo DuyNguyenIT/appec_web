@@ -47,6 +47,8 @@ class hoc_phan_ct_dao_tao_Seeder extends Seeder
             ['maHocPhan'=>'220103','maCT'=>'3','phanPhoiHocKy'=>'5','maLoaiHocPhan'=>'BB'],
             ['maHocPhan'=>'220103','maCT'=>'4','phanPhoiHocKy'=>'7','maLoaiHocPhan'=>'BB'],
             ['maHocPhan'=>'220103','maCT'=>'5','phanPhoiHocKy'=>'4','maLoaiHocPhan'=>'BB'],
+            ['maHocPhan'=>'220104','maCT'=>'5','phanPhoiHocKy'=>'4','maLoaiHocPhan'=>'BB'],
+            
          ]);
     }
 }

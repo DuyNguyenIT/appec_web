@@ -89,7 +89,7 @@
             <a
               class="nav-link"
               data-widget="fullscreen"
-              href="login.html"
+              href="{{ asset('/dang-xuat') }}"
               role="button"
             >
               <i class="fas fa-sign-out-alt"></i> Đăng xuất
@@ -118,13 +118,13 @@
           <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
               <img
-                src="{{ asset('dist/img/user2-160x160.jpg') }}"
+                src="{{ asset('dist/img/avatar3.png') }}"
                 class="img-circle elevation-2"
                 alt="User Image"
               />
             </div>
             <div class="info">
-              <a href="#" class="d-block">Giảng viên</a>
+              <a href="#" class="d-block">{{Session::get('hoGV')}} {{Session::get('tenGV')}}</a>
             </div>
           </div>
 
@@ -187,16 +187,18 @@
                   <p>Đề đánh giá</p>
                 </a>
               </li> --}}
-              {{-- <li class="nav-item">
-                <a href="{{ asset('/giang-vien/cham-diem-bao-cao') }}" class="nav-link">
-                  <i class="fas fa-balance-scale-left"></i>
-                  <p>Chấm điểm báo cáo</p>
-                </a>
-              </li> --}}
+              
               <li class="nav-item">
                 <a href="{{ asset('/giang-vien/ket-qua-danh-gia') }}" class="nav-link">
                   <i class="nav-icon fas fa-user-friends"></i>
                   <p>Kết quả đánh giá</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{{ asset('/giang-vien/cham-diem-bao-cao') }}" class="nav-link">
+                  <i class="fas fa-balance-scale-left"></i>
+                  <p> Chấm báo cáo</p>
                 </a>
               </li>
             </ul>

@@ -28,6 +28,8 @@ class Create44PhieuChamTable extends Migration
             $table->timestamp('ngayCham')->useCurrent = true;
             $table->boolean('isDelete')->nullable()->default(false);
             $table->boolean('trangThai')->nullable()->default(false);
+            $table->integer('xepHang')->unsigned()->nullable()->default(12);
+            $table->integer('loaiCB')->unsigned()->nullable()->default(12);
 
             
             $table->foreign('maGV')->references('maGV')->on('GIANG_VIEN')->onDelete('cascade');

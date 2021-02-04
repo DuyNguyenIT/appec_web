@@ -41,7 +41,8 @@
                     <div class="card">
                       <div class="card-header">
                         <h4 class="">
-                          <b>Cán bộ chấm:</b> {{$gv->hoGV}} {{$gv->tenGV}}<br />
+                          <b>Cán bộ chấm 1:</b> {{$gv->hoGV}} {{$gv->tenGV}}<br />
+                          <b>Cán bộ chấm 2:</b> {{$gv2->hoGV}} {{$gv2->tenGV}}<br />
                         </h4>
                       </div>
                       <!-- /.card-header -->
@@ -53,7 +54,8 @@
                               <th>Tên đề tài</th>
                               <th>Sinh viên thực hiện</th>
                               <th>Mã sinh viên</th>
-                              <th>Điểm</th>
+                              <th>Điểm CB1</th>
+                              <th>Điểm CB2</th>
                               <th>Tùy chọn</th>
                             </tr>
                           </thead>
@@ -86,7 +88,10 @@
                                             <td>{{$dt->maSSV}}</td>
                                             @if ($dt->trangThai==false)
                                                  <td>
-
+                                                  {{$dt->diemSo}}
+                                                </td>
+                                                <td>
+                                                  {{$dt->diemCB2}}
                                                 </td>
                                                 <td>
                                                 <a href="{{ asset('/giang-vien/ket-qua-danh-gia/nhap-diem-do-an/'.$dt->maDe.'/'.$dt->maSSV) }}">
@@ -97,12 +102,19 @@
                                                 </td>
                                             @else
                                                 <td>{{$dt->diemSo}}</td>
+                                                <td>{{$dt->diemCB2}}</td>
                                                 <td>
-                                                  <a href="#">
-                                                    <button class="btn btn-primary">
-                                                    <i class="fas fa-edit"></i> Xem kết quả
+                                                  <a href="{{ asset('/giang-vien/ket-qua-danh-gia/xem-ket-qua-danh-gia/'.$dt->maDe.'/'.$dt->maSSV.'/1') }}">
+                                                    <button class="btn btn-success">
+                                                    <i class="fas fa-eye"></i> Xem kết quả cán bộ chấm 1
                                                     </button>
                                                 </a>
+
+                                                <a href="{{ asset('/giang-vien/ket-qua-danh-gia/xem-ket-qua-danh-gia/'.$dt->maDe.'/'.$dt->maSSV.'/2') }}">
+                                                  <button class="btn btn-primary">
+                                                  <i class="fas fa-eye"></i> Xem kết quả cán bộ chấm 2
+                                                  </button>
+                                              </a>
                                                 </td>
                                             @endif
                                            
@@ -116,18 +128,29 @@
 
                                                 </td>
                                                 <td>
-                                                <a href="{{ asset('/giang-vien/ket-qua-danh-gia/nhap-diem-do-an/'.$dt->maDe.'/'.$dt->maSSV) }}">
-                                                    <button class="btn btn-primary">
-                                                    <i class="fas fa-edit"></i> Chấm điểm
-                                                    </button>
-                                                </a>
+
+                                                </td>
+                                                <td>
+                                                  <a href="{{ asset('/giang-vien/ket-qua-danh-gia/nhap-diem-do-an/'.$dt->maDe.'/'.$dt->maSSV) }}">
+                                                      <button class="btn btn-primary">
+                                                      <i class="fas fa-edit"></i> Chấm điểm
+                                                      </button>
+                                                  </a>
                                                 </td>
                                             @else
                                                 <td>{{$dt->diemSo}}</td>
+                                                <td>{{$dt->diemCB2}}</td>
+
                                                 <td>
-                                                  <a href="#">
+                                                  <a href="{{ asset('/giang-vien/ket-qua-danh-gia/xem-ket-qua-danh-gia/'.$dt->maDe.'/'.$dt->maSSV.'/1') }}">
+                                                      <button class="btn btn-success">
+                                                      <i class="fas fa-eye"></i> Xem kết quả cán bộ chấm 1
+                                                      </button>
+                                                  </a>
+
+                                                  <a href="{{ asset('/giang-vien/ket-qua-danh-gia/xem-ket-qua-danh-gia/'.$dt->maDe.'/'.$dt->maSSV.'/2') }}">
                                                     <button class="btn btn-primary">
-                                                    <i class="fas fa-edit"></i> Xem kết quả
+                                                    <i class="fas fa-eye"></i> Xem kết quả cán bộ chấm 2
                                                     </button>
                                                 </a>
                                                 </td>

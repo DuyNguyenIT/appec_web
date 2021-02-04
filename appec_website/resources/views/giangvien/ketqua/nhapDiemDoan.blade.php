@@ -1,5 +1,11 @@
 @extends('giangvien.master')
 @section('content')
+   <!-- jQuery -->
+   <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+   <!-- jQuery UI 1.11.4 -->
+   <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+   <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+   
      <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -53,7 +59,12 @@
                         <th>Tiêu chuẩn</th>
                         <th>Chuẩn đầu ra</th>
                         <th>Tiêu chí</th>
-                        <th>Chọn</th>
+                        <th>Chọn <input type="checkbox" name="" id="selectAll"></th>
+                        <script>
+                          $("#selectAll").click(function(){
+                                  $("input[type=checkbox]").prop('checked', $(this).prop('checked'));
+                          });
+                        </script>
                       </tr>
                     </thead>
                      <tbody>

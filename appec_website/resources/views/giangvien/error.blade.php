@@ -12,7 +12,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ asset('giang-vien') }}">Trang chủ</a></li>
-              <li class="breadcrumb-item active">404 Error Page</li>
+              <li class="breadcrumb-item active">Đang nâng cấp</li>
             </ol>
           </div>
         </div>

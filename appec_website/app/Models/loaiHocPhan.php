@@ -9,4 +9,6 @@ class loaiHocPhan extends Model
 {
     use HasFactory;
     protected $table='loai_hoc_phan';
+    protected $primaryKey='maLoaiHocPhan';
+    public $incrementing=false;
 }

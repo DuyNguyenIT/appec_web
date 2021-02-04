@@ -147,6 +147,9 @@
                              
                                 <td>{{$x->tenLoaiHTDG}}</td>
                                 <td>
+                                  <a href="{{ asset('giang-vien/quy-hoach-danh-gia/noi-dung-quy-hoach/'.$x->maCTBaiQH) }}" class="btn btn-success">
+                                    <i class="fas fa-align-justify"></i> Nội dung quy hoạch               
+                                </a>
                                   <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/xem-noi-dung-danh-gia/'.$x->maCTBaiQH) }}">
                                     <button class="btn btn-success">
                                       <i class="fas fa-info-circle"></i> Nội dung đánh

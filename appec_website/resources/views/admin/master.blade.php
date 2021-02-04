@@ -88,7 +88,7 @@
             <a
               class="nav-link"
               data-widget="fullscreen"
-              href="login.html"
+              href="{{ asset('/dang-xuat') }}"
               role="button"
             >
               <i class="fas fa-sign-out-alt"></i> Đăng xuất

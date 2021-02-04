@@ -35,6 +35,12 @@ class hoc_phan_kqht_Seeder extends Seeder
             ['maHocPhan'=>'220228','maKQHT'=>'4','maCDR3'=>'2'],
             ['maHocPhan'=>'220228','maKQHT'=>'4','maCDR3'=>'3'],
             ['maHocPhan'=>'220228','maKQHT'=>'4','maCDR3'=>'4'],
+
+            ['maHocPhan'=>'220104','maKQHT'=>'4','maCDR3'=>'1'],
+            ['maHocPhan'=>'220104','maKQHT'=>'4','maCDR3'=>'2'],
+            ['maHocPhan'=>'220104','maKQHT'=>'4','maCDR3'=>'3'],
+            ['maHocPhan'=>'220104','maKQHT'=>'4','maCDR3'=>'4'],
+            
          ]);
     }
 }

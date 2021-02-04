@@ -14,7 +14,9 @@ class hocphan_ct_khoi_kien_thuc_Seeder extends Seeder
     public function run()
     {
         DB::table('hocphan_ctkhoikienthuc')->insert([
-            ['maHocPhan'=>'220100','maCTKhoiKT'=>'A1']
+            ['maHocPhan'=>'220100','maCTKhoiKT'=>'A1'],
+            ['maHocPhan'=>'220104','maCTKhoiKT'=>'A1']
+            
          ]);
     }
 }

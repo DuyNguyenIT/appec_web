@@ -10,4 +10,5 @@ class ct_bai_quy_hoach extends Model
     use HasFactory;
     protected $table='ct_bai_quy_hoach';
     protected $primaryKey = 'maCTBaiQH';
+    
 }

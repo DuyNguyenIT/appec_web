@@ -9,4 +9,7 @@ class nganh extends Model
 {
     use HasFactory;
     protected $table='nganh';
+    protected $primaryKey='maNganh';
+    public $incrementing = false;
+    
 }

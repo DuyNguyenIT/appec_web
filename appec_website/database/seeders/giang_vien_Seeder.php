@@ -15,6 +15,7 @@ class giang_vien_Seeder extends Seeder
     {
         DB::table('giang_vien')->insert([
             ['maGV'=>'1234','hoGV'=>'Phan','tenGV'=>'Thị Phương Nam','username'=>'ptpnam'], //admin
+            ['maGV'=>'8452','hoGV'=>'Phạm','tenGV'=>'Thị Trúc Mai','username'=>'pttmai'], //admin
             
          ]);
     }
