@@ -21,6 +21,7 @@ class Create23GiangDayTable extends Migration
             $table->string('namHoc',20);
             $table->integer('maBaiQH')->unsigned()->nullable()->default(12);
             $table->integer('maCDR3')->unsigned()->nullable()->default(12);
+
             $table->primary(['maHocPhan','maLop','maGV','maHK','namHoc','maBaiQH','maCDR3']);
 
             $table->boolean('isDelete')->nullable()->default(false);

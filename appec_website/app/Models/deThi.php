@@ -11,4 +11,5 @@ class deThi extends Model
     protected $table='de_thi';
     protected $primaryKey='maDe';
     public $incrementing = false;
+    public $fillable=['maDeVB','soCauHoi','tenDe','thoiGian','maCTBaiQH','ghiChu','isDelete'];
 }

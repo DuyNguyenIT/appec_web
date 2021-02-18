@@ -21,10 +21,7 @@ class chuanDauRaController extends Controller
     public function them_cdr_submit(Request $request)
     {
         try {
-            $cdr=new CDR1();
-            $cdr->maCDR1VB=$request->maCDR1VB;
-            $cdr->tenCDR1=$request->tenCDR1;
-            $cdr->save();
+            $cdr=CDR1::create($request->all());
             return redirect('/quan-ly/chuan-dau-ra')->with('success','Thêm thành công!');
         } catch (\Throwable $th) {
             return redirect('/quan-ly/chuan-dau-ra')->with('warning','Lỗi: '.$th);

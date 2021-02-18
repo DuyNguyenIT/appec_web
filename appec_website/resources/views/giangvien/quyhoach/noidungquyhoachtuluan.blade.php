@@ -130,6 +130,7 @@
                     <tr>
                       <th>STT</th>
                       <th>Tên nội dung quy hoạch</th>
+                      <th>Chương</th>
                       <th>Tùy chọn</th>
                     </tr>
                   </thead>

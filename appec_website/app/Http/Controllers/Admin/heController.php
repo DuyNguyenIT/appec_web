@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\he;
 use Illuminate\Http\Request;
+use SweetAlert;
 
 class heController extends Controller
 {
@@ -14,43 +15,40 @@ class heController extends Controller
         return view('admin.he',['he'=>$he]);
     }
 
-    public function them_he(Request $request)
+    public function them(Request $request)
     {
         try {
-            $he=new he();
-            $he->maHe=$request->maHe;
-            $he->tenHe=$request->tenHe;
-            $he->save();
-            return redirect('/quan-ly/he')->with('success','Thêm thành công!');
+            $he=he::updateOrCreate(['maHe'=>$request->maHe],['tenHe'=>$request->tenHe,'isdelete'=>false]);
+            alert()->success('Thêm thành công', 'Thông báo');
+            return redirect('/quan-ly/he');
         } catch (\Throwable $th) {
-            return redirect('/quan-ly/he')->with('warning','Lỗi: '.$th);
+            alert()->error('Lỗi:'.$th, 'Cảnh báo');
+            return redirect('/quan-ly/he');
         }
-       
     }
 
-    public function sua_he(Request $request)
+    public function sua(Request $request)
     {
         try {
-            $he=he::where('maHe',$request->maHe)->first();
-            $he->tenHe=$request->tenHe;
-            $he->update();
-            return redirect('/quan-ly/he')->with('success','Sửa thành công!');
+            $he=he::updateOrCreate(['maHe'=>$request->maHe],['tenHe'=>$request->tenHe,'isdelete'=>false]);
+            alert()->success('Sửa thành công', 'Thông báo');
+            return redirect('/quan-ly/he');
         } catch (\Throwable $th) {
-            return redirect('/quan-ly/he')->with('warning','Lỗi: '.$th);
+            alert()->error('Lỗi:'.$th, 'Cảnh báo');
+            return redirect('/quan-ly/he');
         }
-        
     }
-
+    
+    
     public function xoa_he($maHe)
     {
         try {
-            $he=he::where('maHe',$maHe)->first();
-            $he->isDelete=true;
-            $he->update();
-            return redirect('/quan-ly/he')->with('sucess','Xóa thành công!');
+            $he=he::updateOrCreate(['maHe'=>$maHe],['isDelete'=>true]);
+            alert()->success('Xóa thành công', 'Thông báo');
+            return redirect('/quan-ly/he');
         } catch (\Throwable $th) {
-            return redirect('/quan-ly/he')->with('warning','Lỗi: '.$th);
+            alert()->error('Lỗi:'.$th, 'Cảnh báo');
+            return redirect('/quan-ly/he');
         }
-       
     }
 }

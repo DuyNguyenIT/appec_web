@@ -8,22 +8,22 @@ Route::group(['middleware' =>'App\Http\Middleware\isAdmin'], function (){
     //bậc đào tạo
     Route::group(['prefix' => 'bac-dao-tao'], function () {
         Route::get('/', 'bacDaoTaoController@index');
-        Route::post('them', 'bacDaoTaoController@themBacDaoTao');
-        Route::post('sua', 'bacDaoTaoController@suaBacDaoTao');
-        Route::get('xoa/{id}', 'bacDaoTaoController@xoaBacDaoTao');
+        Route::post('them', 'bacDaoTaoController@them');
+        Route::post('sua', 'bacDaoTaoController@sua');
+        Route::get('xoa/{id}', 'bacDaoTaoController@xoa');
     });
     //ngành học
     Route::group(['prefix' => 'nganh-hoc'], function () {
         Route::get('/', 'nganhController@index');
-        Route::post('them', 'nganhController@them_nganh');
-        Route::post('sua/', 'nganhController@sua_nganh');
-        Route::get('xoa/{maNganh}', 'nganhController@xoa_nganh');
+        Route::post('them', 'nganhController@them');
+        Route::post('sua/', 'nganhController@sua');
+        Route::get('xoa/{maNganh}', 'nganhController@xoa');
     });
     //hệ
     Route::group(['prefix' => 'he'], function () {
         Route::get('/', 'heController@index');
-        Route::post('them', 'heController@them_he');
-        Route::post('sua', 'heController@sua_he');
+        Route::post('/them', 'heController@them');
+        Route::post('/sua', 'heController@sua');
         Route::get('xoa/{maHe}', 'heController@xoa_he');
     });
 
@@ -77,6 +77,5 @@ Route::group(['middleware' =>'App\Http\Middleware\isAdmin'], function (){
         // Route::post('sua/{id}', '');
         // Route::post('xoa/{id}', '');
     });
-   
 });
  });

@@ -9,4 +9,7 @@ class tieuChiChamDiem extends Model
 {
     use HasFactory;
     protected $table='tieu_chi_cham_diem';
+    protected $primaryKey='maTCCD';
+    protected $fillable=['tenTCCD','diemTCCD','isDelete','maCDR3'];
+
 }

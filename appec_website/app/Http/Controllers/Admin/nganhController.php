@@ -15,7 +15,7 @@ class nganhController extends Controller
         return view('admin.nganh',['nganh'=>$nganh]);
     }
 
-    public function them_nganh(Request $request)
+    public function them(Request $request)
     {
         try {
             $nganh=new nganh();
@@ -29,7 +29,7 @@ class nganhController extends Controller
         }
     }
 
-    public function sua_nganh(Request $request)
+    public function sua(Request $request)
     {
         try {
             $nganh=nganh::where('maNganh',$request->maNganh)->first();
@@ -42,7 +42,7 @@ class nganhController extends Controller
         }
     }
 
-    public function xoa_nganh($maNganh)
+    public function xoa($maNganh)
     {
         try {
             $nganh=nganh::where('maNganh',$maNganh)->first();

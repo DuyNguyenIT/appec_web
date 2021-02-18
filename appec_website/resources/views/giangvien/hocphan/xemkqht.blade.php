@@ -84,11 +84,7 @@
                               <button type="button" class="btn btn-primary">
                                 Lưu
                               </button>
-                              <button
-                                type="button"
-                                class="btn btn-secondary"
-                                data-dismiss="modal"
-                              >
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                 Hủy
                               </button>
                             </div>
@@ -108,7 +104,6 @@
                           <th>STT</th>
                           <th>Tên kết quả học tập của học phần</th>
                           <th>Đáp ứng chuẩn đầu ra </th>
-                         
                           <th>Tùy chọn</th>
                         </tr>
                       </thead>
@@ -130,7 +125,9 @@
                                 <td rowspan={{$rs}}>{{$i++}}</td>
                                 <td rowspan={{$rs}}>{{$x->tenKQHT}}</td>
                                 <td>{{$x->maCDR3VB}}--{{$x->tenCDR3}}</td>
-                                <td rowspan={{$rs}}>&nbsp;</td>
+                                <td rowspan={{$rs}}>
+                                    
+                                </td>
                               </tr>
                             @else
                               <tr>

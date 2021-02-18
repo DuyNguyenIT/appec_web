@@ -17,6 +17,7 @@ class Create17MucdoDgTable extends Migration
             $table->string('maMucDoDG',255)->unique();
             $table->primary('maMucDoDG');
             $table->text('tenMucDoDG')->nullable()->default('text');
+            $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
         });
     }

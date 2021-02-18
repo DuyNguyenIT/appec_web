@@ -1,5 +1,6 @@
 @extends('admin.master')
 @section('content')
+
 <div class="content-wrapper" style="min-height: 22px;">
   <!-- Content Header (Page header) -->
   <div class="content-header">

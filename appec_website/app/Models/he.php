@@ -11,4 +11,5 @@ class he extends Model
     protected $table='he';
     public $incrementing=false;
     protected $primaryKey='maHe';
+    protected $fillable = ['maHe','tenHe','isDelete'];
 }

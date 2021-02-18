@@ -48,7 +48,6 @@ class DatabaseSeeder extends Seeder
             tieu_chi_danh_gia_Seeder::class,
             cau_hoi_Seeder::class,
             cau_hoi_tieu_chi_Seeder::class
-
             
         ]);
     }

@@ -12,9 +12,9 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="../../giang_vien.html">Trang chủ</a></li>
+              <li class="breadcrumb-item"><a href="{{ asset('/') }}">Trang chủ</a></li>
               <li class="breadcrumb-item "><a href="quyhoachKQHT.html">Đồ án</a></li>
-              <li class="breadcrumb-item "><a href="{{ asset('/giang-vien/quy-hoach-danh-gia/xem-noi-dung-danh-gia/'.Session::get('maCTBaiQH')) }}">Nội dung đánh giá</a></li>
+              <li class="breadcrumb-item "><a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gianoi-dung-danh-gia/xem-noi-dung-danh-gia/'.Session::get('maCTBaiQH')) }}">Nội dung đánh giá</a></li>
               <li class="breadcrumb-item active">Nhóm tiêu chí đánh giá</li>
 
             </ol>
@@ -33,7 +33,7 @@
               <div class="card">
                 <div class="card-header">
                   <h3 class="">
-                    <a href="{{ asset('giang-vien/quy-hoach-danh-gia/them-tieu-chi-danh-gia/'.Session::get('maCTBaiQH')) }}" class="btn btn-primary">
+                    <a href="{{ asset('giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/them-tieu-chi-danh-gia/'.Session::get('maCTBaiQH')) }}" class="btn btn-primary">
                        <i class="fas fa-plus"></i> Thêm
                     </a>
                       

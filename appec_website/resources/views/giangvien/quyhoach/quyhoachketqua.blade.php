@@ -146,18 +146,18 @@
                                 <td>{{$x->trongSo}}%</td>
                              
                                 <td>{{$x->tenLoaiHTDG}}</td>
-                                <td>
+                                <td style='white-space: nowrap'>
                                   <a href="{{ asset('giang-vien/quy-hoach-danh-gia/noi-dung-quy-hoach/'.$x->maCTBaiQH) }}" class="btn btn-success">
                                     <i class="fas fa-align-justify"></i> Nội dung quy hoạch               
                                 </a>
-                                  <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/xem-noi-dung-danh-gia/'.$x->maCTBaiQH) }}">
+                                  <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/'.$x->maCTBaiQH) }}">
                                     <button class="btn btn-success">
                                       <i class="fas fa-info-circle"></i> Nội dung đánh
                                       giá
                                     </button>
                                   </a>
                                   <button class="btn btn-primary">
-                                    <i class="fas fa-edit"></i> Chỉnh sửa
+                                    <i class="fas fa-edit"></i>
                                   </button>
                                 </td>
                               </tr>

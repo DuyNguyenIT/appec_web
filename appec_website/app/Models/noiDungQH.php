@@ -9,4 +9,7 @@ class noiDungQH extends Model
 {
     use HasFactory;
     protected $table='noi_dung_quy_hoach';
+    protected $primaryKey='maNoiDungQH';
+    public $incrementing=false;
+    protected $fillable=['maNoiDungQH','tenNoiDungQH','noiDungQH','maMucDoDG','maKQHT','maCTBaiQH','isDelete'];
 }

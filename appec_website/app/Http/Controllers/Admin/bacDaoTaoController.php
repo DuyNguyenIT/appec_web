@@ -11,45 +11,39 @@ class bacDaoTaoController extends Controller
     public function index(Type $var = null)
     {
         $bdt=bacDaoTao::where('isDelete',false)->get();
-    
         return view('admin.bacdaotao',['bdt'=>$bdt]);
     }
-    public function themBacDaoTao(Request $request)
+    public function them(Request $request)
     {
-
         try {
-            $bdt=new bacDaoTao();
-            $bdt->maBac=$request->maBac;
-            $bdt->tenBac=$request->tenBac;
-            $bdt->save();
-            return redirect('/quan-ly/bac-dao-tao')->with('success','Thêm thành công!');
+            $bdt=bacDaoTao::created($request->only('maBac','tenBac'));
+            alert()->success('Thêm thành công', 'Thông báo')->persistent('Đóng');
+            return redirect('/quan-ly/bac-dao-tao');
         } catch (\Throwable $th) {
-            return redirect('/quan-ly/bac-dao-tao')->with('warning','Lỗi:'.$th);
+            alert()->error('Lỗi:'.$th, 'Cảnh báo');
+            return redirect('/quan-ly/bac-dao-tao');
         }
-      
     }
 
     //chỉnh sửa bậc đào tạo
-    public function suaBacDaoTao(Request $request)
+    public function sua(Request $request)
     {
         try {
-            $bdt=bacDaoTao::where('maBac',$request->maBac)->first();
-            $bdt->tenBac=$request->tenBac;
-            $bdt->update();
-            return redirect('/quan-ly/bac-dao-tao')->with('success','Sửa thành công!');
+            $bdt=bacDaoTao::updateOrCreated(['maBac'=>$request->maBac],['tenBac'=>$request->tenBac]);
+            alert()->success('Sửa thành công', 'Thông báo');
+            return redirect('/quan-ly/bac-dao-tao');
         } catch (\Throwable $th) {
-           
-            return redirect('/quan-ly/bac-dao-tao')->with('warning','Lỗi:'.$th);
+            alert()->error('Lỗi:'.$th, 'Cảnh báo');
+            return redirect('/quan-ly/bac-dao-tao');
         }
     }
 
     //xóa bậc đào tọa
-    public function xoaBacDaoTao($maBac)
+    public function xoa($maBac)
     {
         try {
-            $bdt=bacDaoTao::where('maBac',$maBac)->first();
-            $bdt->isDelete=true;
-            $bdt->update();
+            $bdt=bacDaoTao::updateOrCreated(['maBac'=>$request->maBac],['isDelete'=>false]);
+
             return redirect('/quan-ly/bac-dao-tao')->with('success','Xóa thành công!');
         } catch (\Throwable $th) {
             return redirect('/quan-ly/bac-dao-tao')->with('warning','Lỗi:'.$th);

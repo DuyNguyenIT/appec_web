@@ -157,11 +157,14 @@
                         {{$item->maLop}}
                       </a>
                     </td>
-                    <td>
+                    <td style='white-space: nowrap'>
 
                         <a href="{{ asset('giang-vien/hoc-phan/xem-ket-qua-hoc-tap/'.$item->maHocPhan) }}" class="btn btn-success">
                             <i class="fas fa-align-justify"></i> Kết quả học tập                    
                         </a>
+                        <a href="{{ asset('giang-vien/hoc-phan/chuong/'.$item->maHocPhan) }}" class="btn btn-success">
+                          <i class="fas fa-align-justify"></i> Nội dung học phần               
+                        </a>  
                         <a href="{{ asset('giang-vien/hoc-phan/chuan-dau-ra-dap-ung-giang-day/'.$item->maHocPhan.'/'.$item->maLop.'/'.$item->maHK.'/'.$item->namHoc.'/'.$item->maBaiQH) }}" class="btn btn-success">
                           <i class="fas fa-align-justify"></i> Chuẩn đầu ra đáp ứng giảng dạy                 
                         </a>  
