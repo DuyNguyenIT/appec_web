@@ -23,7 +23,6 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiangVien'], function (){
                    Route::post('/themsubmit','GVChuongController@them');
                    Route::post('/suasubmit','GVChuongController@sua');
                    Route::get('/xoa/{id}','GVChuongController@xoa'); 
-                   
                    Route::group(['prefix' => '/{idchuong}/{tenkhongdau}/cau-hoi-tu-luan'], function () {
                        Route::get('/','GVCauHoiTuLuanController@index');
                        Route::post('/them','GVCauHoiTuLuanController@them');
@@ -52,7 +51,6 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiangVien'], function (){
 
                //nội dung đánh giá
                Route::group(['prefix' => 'noi-dung-danh-gia'], function () {
-                    Route::get('/xem-noi-dung-danh-gia/{maCTBaiQH}', 'quyhoachController@xem_noi_dung_danh_gia');
                     Route::get('/xem-tieu-chi-danh-gia/{maCTBaiQH}', 'quyhoachController@xem_tieu_chi_danh_gia');
                     Route::get('/them-de-thi-tu-luan','quyhoachController@them_de_thi_tu_luan');
                     Route::get('/them-de-thi-trac-nghiem','quyhoachController@them_de_thi_trac_nghiem');
@@ -64,6 +62,15 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiangVien'], function (){
                     Route::post('/moi-cham-bao-cao','quyhoachController@moi_cham_bao_cao');
                     Route::post('/them-phieu-cham','quyhoachController@them_phieu_cham');
                     Route::post('/them-de-tai','quyhoachController@them_de_tai');
+
+                    //thi tự luận
+                    Route::post('/them-de-thi-tu-luan-submit', 'quyhoachController@them_de_thi_tu_luan_submit');
+                    Route::prefix('xem-noi-dung-danh-gia')->group(function () {
+                         Route::get('/{maCTBaiQH}', 'quyhoachController@xem_noi_dung_danh_gia');
+                         Route::get('/cau-truc-de-tu-luan/{maDe}', 'quyhoachController@cau_truc_de_luan');
+                         Route::post('/them-cau-truc-de-luan','quyhoachController@them_cau_truc_de_luan');
+                    });
+
                });
                
            });

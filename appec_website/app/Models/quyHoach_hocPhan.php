@@ -9,4 +9,6 @@ class quyHoach_hocPhan extends Model
 {
     use HasFactory;
     protected $table='quyhoach_hocphan';
+    protected $primaryKey='id_QH_HP';
+    public $fillabel=['maHocPhan','maLoaiDG','maLoaiHTDG','maBaiQH','maGV','isDelete'];
 }

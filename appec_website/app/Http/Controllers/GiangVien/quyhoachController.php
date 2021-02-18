@@ -21,6 +21,7 @@ use App\Models\mucDoDanhGia;
 use Illuminate\Http\Request;
 use App\Models\chuong_cauhoi;
 use App\Models\loaiHTDanhGia;
+use App\Models\phanBoNoiDung;
 use App\Models\hocPhan_kqHTHP;
 use App\Models\tieuChiChamDiem;
 use App\Models\ct_bai_quy_hoach;
@@ -29,6 +30,7 @@ use App\Models\tieuChuanDanhGia;
 use App\Http\Controllers\Controller;
 use App\Models\hocPhan_loaiHTDanhGia;
 use App\Models\cauHoi_tieuChiChamDiem;
+
 
 class quyhoachController extends Controller
 {
@@ -45,20 +47,18 @@ class quyhoachController extends Controller
     }
 
     ///giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/220104/1/HK1/2020-2021/DA16TT
-    public function quy_hoach_ket_qua_hoc_tap($maHocPhan,$maBaiQH,$maHK,$namHoc,$maLop)
+    public function quy_hoach_ket_qua_hoc_tap(Request $request,$maHocPhan,$maBaiQH,$maHK,$namHoc,$maLop)
     {
        try {
-           Session::put('maHocPhan',$maHocPhan);
-           Session::put('maHK',$maHK);
-           Session::put('namHoc',$namHoc);  
-           Session::put('maLop',$maLop);
-           Session::put('maBaiQH',$maBaiQH);
+           $request->session()->put('maHocPhan', $maHocPhan);
+           $request->session()->put('maHK', $maHK);
+           $request->session()->put('namHoc', $namHoc);
+           $request->session()->put('maLop', $maLop);
+           $request->session()->put('maBaiQH', $maBaiQH);
 
            $ldg=loaiDanhGia::where('isDelete',false)->get();
            $lhtdg=loaiHTDanhGia::where('isDelete',false)->get();
-           
-           $hp=hocPhan::where('maHocPhan',$maHocPhan)
-           ->where('isDelete',false)->first();
+           $hp=hocPhan::where('maHocPhan',$maHocPhan)->where('isDelete',false)->first();
 
            $qh=ct_bai_quy_hoach::where('ct_bai_quy_hoach.isDelete',false)
            ->where('ct_bai_quy_hoach.maBaiQH',$maBaiQH)
@@ -69,8 +69,7 @@ class quyhoachController extends Controller
            ->join('loai_ht_danhgia',function($x){
                 $x->on('loai_ht_danhgia.maLoaiHTDG','=','ct_bai_quy_hoach.maLoaiHTDG')
                 ->where('loai_ht_danhgia.isDelete',false);
-            })
-           ->get();
+            })->get();
         
            return view('giangvien.quyhoach.quyhoachketqua',['qh'=>$qh,'hp'=>$hp,
            'ldg'=>$ldg,'lhtdg'=>$lhtdg]);
@@ -123,7 +122,6 @@ class quyhoachController extends Controller
         $ndqh=noiDungQH::findOrFail($maNoiDungQH);
         Session::put('maNoiDungQH', $maNoiDungQH);
         $chuong=chuong_ndqh::where('maNoiDungQH',$maNoiDungQH)->get();
-       
         if ($chuong) {
             foreach ($chuong as $key => $value) {
                 $ch=chuong::find($value->id_chuong);
@@ -131,7 +129,6 @@ class quyhoachController extends Controller
                 if($ch){
                     $value->tenchuong=$ch->tenchuong;
                 }
-                
             }
         }
         $chuong_hp=chuong::where('maHocPhan',Session::get('maHocPhan'))->get();
@@ -161,12 +158,7 @@ class quyhoachController extends Controller
     public function them_quy_hoach(Request $request)
     {
             //maHocPhan+maLoaiDG+=maLoaiHTDG+trongSo===>hocphan_loai_hinhthuc_dg
-            $ct_bqh=new ct_bai_quy_hoach();
-            $ct_bqh->maLoaiDG=$request->maLoaiDG;
-            $ct_bqh->maLoaiHTDG=$request->maLoaiHTDG;
-            $ct_bqh->trongSo=$request->trongSo;
-            $ct_bqh->maBaiQH=Session::get('maBaiQH');
-            $ct_bqh->save();
+            ct_bai_quy_hoach::create(['maLoaiDG'=>$request->maLoaiDG,'maLoaiHTDG'=>$request->maLoaiHTDG,'trongSo'=>$request->trongSo,'maBaiQH'=>Session::get('maBaiQH')]);
             //maHocPhan+maLoaiDG+maLoaiHTDG+maBaiQH+maGV==>quyhoach_hocphan
             $qh_hp=new quyHoach_hocPhan();
             $qh_hp->maHocPhan=$request->maHocPhan;
@@ -182,22 +174,18 @@ class quyhoachController extends Controller
 
     // ------------------------NỌI DUNG ĐÁNH GIÁ
     // /giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/3
-    public function xem_noi_dung_danh_gia($maCTBaiQH)
+    public function xem_noi_dung_danh_gia(Request $request,$maCTBaiQH)
     {
-        
         try {
-            Session::put('maCTBaiQH',$maCTBaiQH);
+            $request->session()->put('maCTBaiQH', $maCTBaiQH);
             //maCTBaiQH->ct_bai-quy_hoach
-            $maLoaiHTDG=ct_bai_quy_hoach::where('isDelete',false)
-            ->where('maCTBaiQH',$maCTBaiQH)
-            ->first('maLoaiHTDG');
+            $maLoaiHTDG=ct_bai_quy_hoach::where('isDelete',false)->where('maCTBaiQH',$maCTBaiQH)->first('maLoaiHTDG');
           
             //ct_bai_quy_hoach
-            $ct_bqh=ct_bai_quy_hoach::where('isDelete',false)
-            ->where('maCTBaiQH',$maCTBaiQH)
-            ->first();
-            Session::put('maGV_2',$ct_bqh->maGV_2);
-            if (Session::get('maGV_2')!='00000') {
+            $ct_bqh=ct_bai_quy_hoach::where('isDelete',false)->where('maCTBaiQH',$maCTBaiQH)->first();
+            $request->session()->put('maGV_2', $ct_bqh->maGV_2);
+
+            if ($request->session()->get('maGV_2')!='00000') {
                 //?maCTBaiQH->maDe
                 $maDe=deThi::where('de_thi.isDelete',false)
                 ->where('de_thi.maCTBaiQH',$maCTBaiQH)
@@ -233,18 +221,22 @@ class quyhoachController extends Controller
                 })
                 ->get(['de_thi.maDeVB','de_thi.maDe','de_thi.tenDe','sinh_vien.maSSV','sinh_vien.HoSV','sinh_vien.TenSV','giang_vien.hoGV','giang_vien.tenGV']);
             }
-            
-            
-
-
-            if ($maLoaiHTDG->maLoaiHTDG=="T1") { //tự luận
-                return view('giangvien.quyhoach.noidungdanhgia.xemnddanhgiatuluan');
+            //-----------------------------tự luận
+            if ($maLoaiHTDG->maLoaiHTDG=="T1") { 
+                $dethi=deThi::where('isDelete',false)->where('maCTBaiQH',$maCTBaiQH)->get();
+                return view('giangvien.quyhoach.noidungdanhgia.xemnddanhgiatuluan',['dethi'=>$dethi]);
             }
-            if ($maLoaiHTDG->maLoaiHTDG=="T2") { //trắc nghiệm
+
+
+            //------------------------------trắc nghiệm
+            if ($maLoaiHTDG->maLoaiHTDG=="T2") { 
                 return view('giangvien.quyhoach.noidungdanhgia.xemnddanhgiatracnghiem');
             }
 
-            if($maLoaiHTDG->maLoaiHTDG=="T8"){  //cho đồ án
+
+
+            //-------------------------------cho đồ án
+            if($maLoaiHTDG->maLoaiHTDG=="T8"){  
                  //lấy danh sách sinh viên đã có trong phiếu chấm
                  $dssvTrongPC=deThi::where('de_thi.isDelete',false)
                  ->where('de_thi.maCTBaiQH',$maCTBaiQH)
@@ -259,31 +251,20 @@ class quyhoachController extends Controller
                         array_push($massv,'null');
                     else
                         array_push($massv, $value->maSSV);
-                   
                  }
                 
                  
                  //select những sinh viên chưa được gán vào phiếu chấm
-                $dsLop=sinhVien::where('isDelete',false)
-                ->where('maLop',Session::get('maLop'))
-                ->whereNotIn('maSSV',$massv)
-                ->orderBy('maSSV')
-                ->get();
+                $dsLop=sinhVien::where('isDelete',false)->where('maLop',Session::get('maLop'))->whereNotIn('maSSV',$massv)->orderBy('maSSV')->get();
                
                  //lấy danh sách đề tài
-                 $deTai=deThi::where('de_thi.isDelete',false)
-                 ->where('de_thi.maCTBaiQH',$maCTBaiQH)
-                 ->get();
+                 $deTai=deThi::where('de_thi.isDelete',false)->where('de_thi.maCTBaiQH',$maCTBaiQH)->get();
 
                  //giảng viên
-                 $gv=giangVien::where('isDelete',false)
-                 ->where('maGV','!=',Session::get('maGV'))
-                 ->get();
+                 $gv=giangVien::where('isDelete',false) ->where('maGV','!=',Session::get('maGV'))->get();
                 
                  //cb chấm 2
-                 $ct_bqh=ct_bai_quy_hoach::where('isDelete',false)
-                 ->where('ct_bai_quy_hoach.maCTBaiQH',$maCTBaiQH)
-                 ->first();
+                 $ct_bqh=ct_bai_quy_hoach::where('isDelete',false)->where('ct_bai_quy_hoach.maCTBaiQH',$maCTBaiQH)->first();
                  if($ct_bqh->maGV_2==null){ //chưa mời
                     $cb2=new giangVien();
                     $cb2->maGV="-1";
@@ -311,7 +292,6 @@ class quyhoachController extends Controller
                 'dsLop'=>$dsLop]);
             }   
             
-            
         } catch (\Throwable $th) {
             return $th;
         }
@@ -319,6 +299,39 @@ class quyhoachController extends Controller
     }
 
 
+    public function them_de_thi_tu_luan_submit(Request $request)
+    {
+        try {
+            deThi::create(['maDeVB'=>$request->maDeVB,'soCauHoi'=>$request->soCauHoi,'tenDe'=>$request->tenDe,'thoiGian'=>$request->thoiGian,'ghiChu'=>$request->ghiChu,'maCTBaiQH'=>Session::get('maCTBaiQH')]);
+            alert()->success('Thêm thành công', 'Thông báo');
+            return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/'.Session::get('maCTBaiQH'));
+        } catch (\Throwable $th) {
+            return  $th;
+        }
+    }
+
+    public function cau_truc_de_luan(Request $request,$maDe)
+    {
+        $kqht=kqHTHP::all();
+        $pb=phanBoNoiDung::where('maDe',$maDe)->with('kqht')->get();
+        
+        return view('giangvien.quyhoach.noidungdanhgia.tuluan.cautrucde',['maDe'=>$maDe,'kqht'=>$kqht,'phanBo'=>$pb]);
+    }
+
+    public function them_cau_truc_de_luan(Request $request)
+    {
+        try {
+            //code...
+            phanBoNoiDung::create(['maDe'=>$request->maDe,'maKQHT'=>$request->maKQHT,'soCauHoi'=>$request->soCauHoi,'diemNhomKQHT'=>$request->diemNhomKQHT]);
+            alert()->success('Thêm thành công!!','Thông báo');
+            return back();
+        } catch (\Throwable $th) {
+            return $th;
+        }
+       
+    }
+
+    //thêm đề thi tự luận
     public function them_de_thi_tu_luan(Type $var = null)
     { 
         return view('giangvien.quyhoach.noidungdanhgia.themdethituluan');
@@ -362,9 +375,7 @@ class quyhoachController extends Controller
     {
         //noiDungDe+maSSV->phieuCham
         //kiễm tra đã mời hay chưa
-        $ct_bqh=ct_bai_quy_hoach::where('isDelete',false)
-        ->where('maCTBaiQH',Session::get('maCTBaiQH'))
-        ->first();
+        $ct_bqh=ct_bai_quy_hoach::where('isDelete',false)->where('maCTBaiQH',Session::get('maCTBaiQH'))->first();
         if($ct_bqh->maGV_2){
             if($ct_bqh->maGV_2!='00000'){ //nếu không cần mời thêm cán bộ 2 ( mã CB 2 =0000)
                 //cb1
@@ -387,6 +398,7 @@ class quyhoachController extends Controller
             return redirect('giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/'.Session::get('maCTBaiQH'));
         }
     }
+
 
     public function xem_tieu_chi_danh_gia($maCTBaiQH)
     {
@@ -427,9 +439,9 @@ class quyhoachController extends Controller
        
     }
    
-    public function them_tieu_chi_danh_gia($maCTBaiQH)
+    public function them_tieu_chi_danh_gia(Request $request,$maCTBaiQH)
     {
-        Session::put('maCTBaiQH',$maCTBaiQH);
+        $request->session()->put('maCTBaiQH', $maCTBaiQH);
         
         //Session maBaiQH, hocKi, namHoc, maHocPhan->maCDR3
 
@@ -476,11 +488,7 @@ class quyhoachController extends Controller
 
     public function them_tieu_chuan_submit(Request $request)
     {
-        $tc=new tieuChuanDanhGia();
-        $tc->tenTCDG=$request->tenTCDG;
-        $tc->maNoiDungQH=$request->maNoiDungQH;
-        $tc->diem=$request->diemTCDG;   
-        $tc->save();
+        tieuChiChamDiem::create(['tenTCDG'=>$request->tenTCDG,'maNoiDungQH'=>$request->maNoiDungQH,'diem'=>$request->diemTCDG]);
         return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/them-tieu-chi-danh-gia/'.Session::get('maCTBaiQH'));
     }
 
@@ -488,22 +496,11 @@ class quyhoachController extends Controller
     public function them_tieu_chi_danh_gian_submit(Request $request) // submit form thêm tiêu chí đánh giá mới
     {
         //tạo câu hỏi noiDungCauHoi
-        $ch=new cauHoi();
-        $ch->noiDungCauHoi=$request->noiDungCauHoi;
-        $ch->maKQHT=$request->maKQHT;
-        $ch->maLoaiHTDG=$request->maLoaiHTDG;
-        $ch->save();
+        cauHoi::create(['noiDungCauHoi'=>$request->noiDungCauHoi,'maKQHT'=>$request->maKQHT,'maLoaiHTDG'=>$request->maLoaiHTDG]);
         $ch=cauHoi::where('isDelete',false)->orderBy('maCauHoi','desc')->first();
         //noiDungQH->tieuchuan_danhgia
-        $noiDungQH=noiDungQH::where('isDelete',false)
-        ->where('maCTBaiQH',Session::get('maCTBaiQH'))
-        ->where('maKQHT',$request->maKQHT)
-        ->first();
-        
-        
+        $noiDungQH=noiDungQH::where('isDelete',false)->where('maCTBaiQH',Session::get('maCTBaiQH'))->where('maKQHT',$request->maKQHT)->first();
         $tc=tieuChuanDanhGia::where('isDelete',false)->where('maTCDG',$request->maTCDG)->first();
-        
-        
         //duyêt tenTCCD[]
         //duyệt diemTCCD[]
         $tenTCCD=$request->tenTCCD;

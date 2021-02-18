@@ -9,4 +9,6 @@ class tieuChuanDanhGia extends Model
 {
     use HasFactory;
     protected $table='tieuchuan_danhgia';
+    public $primaryKey="maTCDG";
+    public $fillable=['tenTCDG','diem','isDelete','maNoiDungQH'];
 }

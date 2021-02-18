@@ -25,4 +25,5 @@ class CommonController extends Controller
         $str = preg_replace("/ /", "-", $str);
         return $str;
     }
+
 }
