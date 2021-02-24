@@ -16,7 +16,7 @@ class bacDaoTaoController extends Controller
     public function them(Request $request)
     {
         try {
-            $bdt=bacDaoTao::created($request->only('maBac','tenBac'));
+            $bdt=bacDaoTao::created($request->all());
             alert()->success('Thêm thành công', 'Thông báo')->persistent('Đóng');
             return redirect('/quan-ly/bac-dao-tao');
         } catch (\Throwable $th) {

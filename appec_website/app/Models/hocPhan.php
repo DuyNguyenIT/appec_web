@@ -9,4 +9,7 @@ class hocPhan extends Model
 {
     use HasFactory;
     protected $table='hoc_phan';
+    protected $primaryKey='maHocPhan';
+    public $incrementing=false;
+    public $fillable=['maHocPhan','tenHocPhan','tongSoTinChi','tinChiLyThuyet','tinChiThucHanh','moTaHocPhan','dacTrung','isDelete','trangThai','maCTKhoiKT'];
 }

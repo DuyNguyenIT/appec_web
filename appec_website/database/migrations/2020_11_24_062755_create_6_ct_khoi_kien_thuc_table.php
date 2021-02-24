@@ -17,8 +17,8 @@ class Create6CtKhoiKienThucTable extends Migration
             $table->string('maCTKhoiKT',255)->unique();
             $table->primary('maCTKhoiKT');
             $table->text('tenCTKhoiKT')->nullable()->default('text');
-            $table->integer('tongTinChiLTCTKhoiKT')->unsigned()->nullable()->default(12);
-            $table->integer('tongTinChiTHCTKhoiKT')->unsigned()->nullable()->default(12);
+            $table->integer('tongTinChiLT')->unsigned()->nullable()->default(12);
+            $table->integer('tongTinChiTH')->unsigned()->nullable()->default(12);
            
             $table->boolean('isDelete')->nullable()->default(false);
             $table->string('maKhoiKT',255);

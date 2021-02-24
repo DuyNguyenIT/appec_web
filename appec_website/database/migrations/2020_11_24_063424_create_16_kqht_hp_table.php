@@ -15,9 +15,10 @@ class Create16KqhtHpTable extends Migration
     {
         Schema::create('KQHT_HP', function (Blueprint $table) {
             $table->increments('maKQHT');
+            $table->text('maKQHTVB')->nullable()->default('text');
             $table->text('tenKQHT')->nullable()->default('text');
-            $table->timestamps();
             $table->boolean('isDelete')->nullable()->default(false);
+            $table->timestamps();
         });
     }
 

@@ -20,6 +20,7 @@ class Create8HocPhanTable extends Migration
             $table->integer('tongSoTinChi')->unsigned()->nullable()->default(12);
             $table->integer('tinChiLyThuyet')->unsigned()->nullable()->default(12);
             $table->integer('tinChiThucHanh')->unsigned()->nullable()->default(12);
+            $table->longText('yeuCau')->nullable()->default('text');
             $table->text('moTaHocPhan')->nullable()->default('text');
             $table->integer('dacTrung')->unsigned()->nullable()->default(0);
 

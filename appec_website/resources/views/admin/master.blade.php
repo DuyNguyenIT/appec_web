@@ -58,10 +58,10 @@
             ></a>
           </li>
           <li class="nav-item d-none d-sm-inline-block">
-            <a href="giang_vien.html" class="nav-link">Trang chủ</a>
+            <a href="giang_vien.html" class="nav-link">Home</a>
           </li>
           <li class="nav-item d-none d-sm-inline-block">
-            <a href="#" class="nav-link">Liên hệ</a>
+            <a href="#" class="nav-link">Contact</a>
           </li>
         </ul>
 
@@ -92,7 +92,7 @@
               href="{{ asset('/dang-xuat') }}"
               role="button"
             >
-              <i class="fas fa-sign-out-alt"></i> Đăng xuất
+              <i class="fas fa-sign-out-alt"></i> Logout
             </a>
           </li>
         </ul>
@@ -109,7 +109,7 @@
             class="brand-image img-circle elevation-3"
             style="opacity: 0.8"
           />
-          <span class="brand-text font-weight-light">Quản lý hệ thống</span>
+          <span class="brand-text font-weight-light">Administration</span>
         </a>
 
         <!-- Sidebar -->
@@ -124,7 +124,7 @@
               />
             </div>
             <div class="info">
-              <a href="#" class="d-block">Quản lý hệ thống</a>
+              <a href="#" class="d-block">Administrator</a>
             </div>
           </div>
 
@@ -134,7 +134,7 @@
               <input
                 class="form-control form-control-sidebar"
                 type="search"
-                placeholder="Tìm kiếm...."
+                placeholder="Searching...."
                 aria-label="Search"
               />
               <div class="input-group-append">

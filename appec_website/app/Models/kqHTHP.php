@@ -9,4 +9,6 @@ class kqHTHP extends Model
 {
     use HasFactory;
     protected $table='kqht_hp';
+    protected $primaryKey='maKQHT';
+    public $fillable=['maKQHTVB','tenKQHT'];
 }

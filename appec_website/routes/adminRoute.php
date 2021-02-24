@@ -57,7 +57,20 @@ Route::group(['middleware' =>'App\Http\Middleware\isAdmin'], function (){
     //loại học phần
     Route::group(['prefix' => 'hoc-phan'], function () {
         Route::get('/', 'hocPhanController@index');
-        // Route::post('them', '');
+        Route::post('them', 'hocPhanController@them_hp');
+        Route::prefix('de-cuong-mon-hoc')->group(function () {
+            Route::get('/{maHocPhan}','hocPhanController@de_cuong_mon_hoc');
+            Route::post('/them_chuan_dau_ra_mon_hoc','hocPhanController@them_chuan_dau_ra_mon_hoc');
+            
+            Route::post('/sua_mo_ta_mon_hoc','hocPhanController@them_mo_ta_hoc_phan');
+            Route::post('/sua_yeu_cau_mon_hoc','hocPhanController@them_yeu_cau_hoc_phan');
+
+            Route::post('/sua_giao_trinh','hocPhanController@them_giao_trinh');
+            Route::post('/sua_tai_lieu_tham_khao_them','hocPhanController@them_tai_lieu_tham_khao_them');
+            Route::post('/sua_tai_lieu_khac','hocPhanController@them_tai_lieu_khac');
+            Route::post('/them_phuong_phap_giang_day','hocPhanController@them_phuong_phap_giang_giay');
+            
+        });
         // Route::post('sua/{id}', '');
         // Route::post('xoa/{id}', '');
     });
