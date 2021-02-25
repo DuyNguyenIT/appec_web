@@ -25,20 +25,7 @@
       <!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
-    @if(session('success'))
-    <div class="alert alert-success alert-dismissible">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-      <h5><i class="icon fas fa-check"></i> Thông báo!</h5>
-      {{session('success')}}
-    </div>
-  @endif
-  @if(session('warning'))
-    <div class="alert alert-warning alert-dismissible">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-      <h5><i class="icon fas fa-exclamation-triangle"></i> Thông báo!</h5>
-      {{session('warning')}}
-    </div>
-  @endif
+
     <!-- Main content -->
 
     <section class="content">
@@ -47,93 +34,43 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">
-                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal"><i class="fas fa-plus"></i>
-          Thêm
-      </button>
+                <h3 class="card-title"></h3>
+                <!-- Button trigger modal -->
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPPGD">
+                <i class="fas fa-plus"></i>
+              </button>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-<div class="modal-dialog" role="document">
-<div class="modal-content">
-  <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Thêm phương pháp giảng dạy</h5>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-      <span aria-hidden="true">×</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-    <button type="button" class="btn btn-primary">Lưu</button>
-  </div>
-</div>
-</div>
-</div>
-
-                  <!-- Modal -->
-                  <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">
-                            Thêm học phần
-                          </h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                          </button>
+              <!-- Modal -->
+              <div class="modal fade" id="addPPGD" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <form action="{{ asset('/quan-ly/phuong-phap-giang-day/them') }}" method="post">
+                  @csrf
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Thêm phương pháp giảng dạy</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                          <label for="">Tên phương pháp giảng dạy</label>
+                          <input type="text" name="tenPP" class="form-control" required>
                         </div>
-                        <div class="modal-body">
-                          <div class="form-group">
-                            <label for="">Nhập tên phương pháp giảng dạy:</label>
-                            <input type="text" class="form-control" placeholder="">
-                          </div>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-primary">
-                            Lưu
-                          </button>
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                            Hủy
-                          </button>
-                        </div>
-                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-primary">Save</button>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                   </div>
-                </h3>
+                  </form>
+               
+                </div>
+              </div>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                      <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">
-                              Thêm học phần
-                            </h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">×</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                            <div class="form-group">
-                              <label for="">Nhập tên phương pháp giảng dạy:</label>
-                              <input type="text" class="form-control" placeholder="">
-                            </div>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-primary">
-                              Lưu
-                            </button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                              Hủy
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div><table id="example2" class="table table-bordered table-hover">
+                <table id="example2" class="table table-bordered table-hover">
                   <thead>
                     <tr>
                       <th>STT</th>
@@ -142,29 +79,52 @@
                     </tr>
                   </thead>
                   <tbody>
+                    @php
+                        $i=1;
+                    @endphp
+                    @foreach ($ppGiangDay as $data)
                     <tr>
-                      <td>1</td>
-                      <td>Phương pháp giảng dạy 1</td>
+                      <td>{{ $i++ }}</td>
+                      <td>{{ $data->tenPP}}</td>
                       <td>
                         
-                          <button class="btn btn-success" data-toggle="modal" data-target="#addModal">
-                            <i class="fas fa-align-justify"></i> chỉnh sửa
-                          </button>
+                       <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editPP_{{ $data->maPP }}">
+                          <i class="fas fa-edit"></i>
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="editPP_{{ $data->maPP }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <form action="{{ asset('/quan-ly/phuong-phap-giang-day/sua') }}" method="post">
+                              @csrf
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">Thêm phương pháp giảng dạy</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <input type="text" name="maPP" value="{{ $data->maPP }}" hidden>
+                                    <div class="form-group">
+                                      <label for="">Tên phương pháp giảng dạy</label>
+                                      <input type="text" name="tenPP" value="{{ $data->tenPP }}" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="submit" class="btn btn-primary">Save</button>
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                              </div>
+                              </form>
+                          </div>
+                        </div>
                         
                       </td>
                     </tr>
-                    
-                    <tr>
-                      <td>2</td>
-                      <td>Tên phương pháp giảng dạy 2</td>
-                      <td>
-                        <a href="#">
-                          <button class="btn btn-success">
-                            <i class="fas fa-align-justify"></i> chỉnh sửa
-                          </button>
-                        </a>
-                      </td>
-                    </tr>
+                    @endforeach
+                 
                   </tbody>
                   <tfoot></tfoot>
                 </table>

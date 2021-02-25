@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class loaiHTDanhGia extends Model
+class chuong_kqht extends Model
 {
     use HasFactory;
-    protected $table='loai_ht_danhgia';
-    public $fillable=['maLoaiHTDG','tenLoaiHTDG','isDelete'];
+    protected $table='chuong_kqht';
+    public $fillable=['machuong','maKQHT','isdelete'];
 }

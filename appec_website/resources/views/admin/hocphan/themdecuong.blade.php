@@ -60,7 +60,7 @@
               <div class="card-body">
               <h5><b>1. Thông tin chung</b></h5>    <!-- ----------------------------------1. Thông tin chung-------------------- -->
               <table class="table table-bordered">
-                <thead class="thead-green">
+                <thead class="thead-green" style="background-color: green">
                   <tr>
                     <th>Loại môn học</th>
                     <th>Số tín chỉ</th>
@@ -121,9 +121,45 @@
                   @endforeach   
                 </i></td>
                  <td>
-                  <button class="btn btn-primary">
-                   <i class="fas fa-edit"></i>
-                  </button>
+                 <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addMonTQ">
+                  <i class="fas fa-edit"></i>
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="addMonTQ" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <form action="{{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/them_mon_tien_quyet') }}" method="post">
+                    @csrf
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Thêm môn tiên quyết</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+
+                        <div class="form-group">
+                          <label for="">Chọn môn tiên quyết</label>
+                          <input type="text" name="maHocPhan" value="{{ $hocPhan->maHocPhan }}" hidden>
+                          <select name="maMonTienQuyet" id="" class="form-control">
+                              @foreach ($monHoc as $data)
+                                  <option value="{{ $data->maHocPhan }}"> {{ $data->maHocPhan }} -- {{ $data->tenHocPhan }}</option>
+                              @endforeach
+                          </select>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Save </button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                    
+                    </form>
+                    
+                  </div>
+                </div>
                 </td>
                </tr>
                <tr>
@@ -403,7 +439,7 @@
               <table class="table table-bordered">
                 <thead>
                     <th colspan="2"></th>
-                    <th>Đáp ứng CĐR của CTĐT</th>                 
+                    <th style="background-color: green">Đáp ứng CĐR của CTĐT</th>                 
                 </thead>
                 <tbody>
                   @foreach ($CDR1 as $cdr1)
@@ -411,7 +447,7 @@
                         <td colspan="3"><b>Chủ đề {{ $cdr1->maCDR1VB }}: {{ $cdr1->tenCDR1 }}:</b> 
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#chuDe_{{ $cdr1->maCDR1VB }}">
-                          <i class="fas fa-plus"></i>
+                          <i class="fas fa-edit"></i>
                         </button>
 
                         <!-- Modal -->
@@ -460,9 +496,11 @@
                         </div>
                         </td>
                       </tr>
+                     
                       @foreach ($kqht as $x)
+                     
                           @if ($x->maCDR1==$cdr1->maCDR1)
-                          
+
                           <tr>
                             <td>{{ $x->maKQHTVB }}</td>
                             <td>{{ $x->tenKQHT }}</td>
@@ -479,9 +517,64 @@
 
              <h5><b>5. Nội dung môn học: </b></h5>    <!-----------------------------------5.Nội dung môn học: --------------------------->
               <table class="table table-bordered">
-                <thead>
+                <thead style="background-color: green">
                   <tr>
-                    <th rowspan="2">Nội dung</th>
+                    <th rowspan="2">Nội dung
+                      <!-- Button trigger modal -->
+                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addChuong">
+                        <i class="fas fa-edit"></i>
+                      </button>
+
+                      <!-- Modal -->
+                      <div class="modal fade" id="addChuong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <form action="{{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/them_noi_dung_mon_hoc') }}" method="post">
+                          @csrf
+                            <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Thêm nội dung</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <input type="text" name="maHocPhan" value="{{ $hocPhan->maHocPhan }}" hidden>
+                              <div class="form-group">
+                                <label for="">Tên chương:</label>
+                                <input type="text" name="tenchuong" class="form-control" required>
+                              </div>
+                              <div class="form-group">
+                                <label for="">Số tiết lý thuyết:</label>
+                                <input type="number" min="0" name="soTietLT" class="form-control" required>
+                              </div>
+                              <div class="form-group">
+                                <label for="">Số tiết thực hành:</label>
+                                <input type="number" min="0" name="soTietTH" class="form-control" required>
+                              </div>
+                              <div class="form-group">
+                                <label for="">Số tiết khác:</label>
+                                <input type="number" min="0" name="khác" class="form-control" required>
+                              </div>
+                              <div class="form-group">
+                                <label for="">Chọn kết quả học tập:</label>
+                                <select name="maKQHT[]" id="" class="form-control" multiple required>
+                                  @foreach ($getKQHT as $data)
+                                      <option value="{{ $data->maKQHT }}">{{ $data->maKQHTVB }} -- {{ $data->tenKQHT }}</option>
+                                  @endforeach
+                                </select>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="submit" class="btn btn-primary">Save</button>
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                          </form>
+                        
+                        </div>
+                      </div>
+
+                    </th>
                     <th rowspan="2">Chuẩn đầu ra học phần lý thuyết</th>
                     <th colspan="3"> Số tiết</th>
                   </tr>
@@ -492,27 +585,30 @@
                   </tr>
                 </thead>
                 <tbody>
+                  @foreach ($noidung as $data)
                   <tr>
-                    <td>Chương 1. TỔNG QUAN VỀ CÁC THÀNH PHẦN CHÍNH TRONG MỘT HỆ QUẢN TRỊ CƠ SỞ DỮ LIỆU (HQTCSDL)</td>
-                    <td>L1</td>
-                    <td>3</td>
-                    <td>0</td>
-                    <td></td>
+                    <td>{{ $data->tenchuong }}</td>
+                    <td>
+                      @foreach ($data->chuong_kqht as $item)
+                          {{ $item->maKQHTVB }};
+                      @endforeach
+                    </td>
+                    <td>
+                      {{ $data->soTietLT }}
+                    </td>
+                    <td>{{ $data->soTietTH }}</td>
+                    <td>{{ $data->soTietKhac }}</td>
                   </tr>
-                  <tr>
-                    <td>Chủ đề 2:Kỹ năng cá nhân và nghề nghiệp, và phẩm chất</td>
-                    <td colspan="4">L8(U)->L12(U)</td>
-                  </tr>
-                  <tr>
-                    <td>Kỹ năng giao tiếp: làm việc nhóm và giao tiếp </td>
-                    <td colspan="4">L13(U)->L18(U)</td>
-                  </tr>
+               
+                  @endforeach
+                 
+                 
                 </tbody>
               </table>
              <h5><b>6. Phương pháp giảng dạy </b></h5>    <!----------------------------------6. Phương pháp giảng dạy: --------------------------->
              <!-- Button trigger modal -->
               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ppgiangday">
-                <i class="fas fa-plus"></i>
+                <i class="fas fa-edit"></i>
               </button>
 
               <!-- Modal -->
@@ -554,7 +650,7 @@
                 </div>
               </div>
              <table class="table table-bordered">
-               <thead>
+               <thead style="background-color: green">
                    <tr>
                      <th>Mã số</th>
                      <th>Phương pháp/ kỹ thuật giảng dạy</th>
@@ -577,21 +673,72 @@
                </tbody>
              </table>
              <h5><b>7. Phương thức đánh giá </b></h5>    <!----------------------------------7. Phương thức đánh giá: --------------------------->
-            <table class="table table-bordered">
-              <thead>
+            
+             <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addHocPhan_loaiHTDG">
+              <i class="fas fa-edit"></i>
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="addHocPhan_loaiHTDG" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Cập nhật phương thức đánh giá</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  
+                  <div class="modal-body">
+                    <div class="form-group">
+                      <label for="">Chọn hình thức đánh giá</label>
+                      <select name="maLoaiHTDG" id="" class="form-control" required>
+                        @foreach ($loaiHTDG as $data)
+                            <option value="{{ $data->maLoaiHTDG }}">{{ $data->tenLoaiHTDG }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="">Chọn loại hình thức đánh giá</label>
+                      <select name="maLoaiDG" id="" class="form-control" required>
+                        @foreach ($loaiDG as $data)
+                            <option value="{{ $data->maLoaiDG }}">{{ $data->tenLoaiDG }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="">Tỉ lệ</label>
+                      <input type="number" min="25" name="trongSo" class="form-control">
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+             <table class="table table-bordered">
+
+              <thead style="background-color: green">
                 <th>Mã số</th>
                 <th>Hình thức đánh giá</th>
-                <th>Hình thức gợi ý</th>
-                <th>Hình thức lựa chọn</th>
+                <th>Loại hình thức đánh giá</th>
                 <th>Tỉ lệ</th>
-                <th>Đánh giá so với chuẩn đầu ra</th>
               </thead>
+              <tbody> 
+                
+              </tbody>
             </table>
+
+
              <h5><b>8. Các quy định chung </b></h5>    <!----------------------------------8. Các quy định chung --------------------------->
              <h6><b>Các quy định về tham dự lớp học</b></h6>
             <ul>
               <li>Sinh viên có trách nhiệm tham dự đầy đủ các buổi học. Trong trường hợp phải nghỉ học vì lý do bất khả kháng thì phải có giấy tờ chứng minh đầy đủ và hợp lý.</li>
-              <li>Sinh viên có trách nhiệm tham dự đầy đủ các buổi học. Trong trường hợp phải nghỉ học vì lý do bất khả kháng thì phải có giấy tờ chứng minh đầy đủ và hợp lý.</li>
+              <li>Sinh viên vắng quá 20% số tiết của học phần, dù có lý do hay không có lý do, đều bị coi như không hoàn thành học phần và phải đăng ký học lại vào học kỳ sau.</li>
             </ul>
             <h6><b>Quy định về hành vi trong lớp học</b></h6>
             <ul>

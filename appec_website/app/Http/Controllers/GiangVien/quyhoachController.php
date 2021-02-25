@@ -151,7 +151,7 @@ class quyhoachController extends Controller
 
     public function xem_cau_hoi_trong_chuong(Type $var = null)
     {
-        # code...
+        #code...
     }
 
     ///---------------thêm quy hoạch

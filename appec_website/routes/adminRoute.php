@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' =>'App\Http\Middleware\isAdmin'], function (){ 
     Route::group(['prefix' => 'quan-ly','namespace'=>'App\Http\Controllers\Admin'], function () {
+    Route::post('ckeditor/image_upload', 'GVCKEditorController@upload')->name('upload');
     Route::get('/', 'homeController@index');
     //bậc đào tạo
     Route::group(['prefix' => 'bac-dao-tao'], function () {
@@ -69,7 +70,8 @@ Route::group(['middleware' =>'App\Http\Middleware\isAdmin'], function (){
             Route::post('/sua_tai_lieu_tham_khao_them','hocPhanController@them_tai_lieu_tham_khao_them');
             Route::post('/sua_tai_lieu_khac','hocPhanController@them_tai_lieu_khac');
             Route::post('/them_phuong_phap_giang_day','hocPhanController@them_phuong_phap_giang_giay');
-            
+            Route::post('/them_mon_tien_quyet','hocPhanController@them_mon_tien_quyet');
+            Route::post('/them_noi_dung_mon_hoc','hocPhanController@them_noi_dung_mon_hoc');
         });
         // Route::post('sua/{id}', '');
         // Route::post('xoa/{id}', '');
@@ -86,8 +88,8 @@ Route::group(['middleware' =>'App\Http\Middleware\isAdmin'], function (){
     //phương pháp giảng dạy
     Route::group(['prefix' => 'phuong-phap-giang-day'], function () {
         Route::get('/', 'ppGiangDayController@index');
-        // Route::post('them', '');
-        // Route::post('sua/{id}', '');
+        Route::post('/them', 'ppGiangDayController@them');
+        Route::post('/sua', 'ppGiangDayController@sua');
         // Route::post('xoa/{id}', '');
     });
 });

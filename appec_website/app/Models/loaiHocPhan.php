@@ -11,4 +11,5 @@ class loaiHocPhan extends Model
     protected $table='loai_hoc_phan';
     protected $primaryKey='maLoaiHocPhan';
     public $incrementing=false;
+    public $fillable=['maLoaiHocPhan','tenLoaiHocPhan','isDelete'];
 }

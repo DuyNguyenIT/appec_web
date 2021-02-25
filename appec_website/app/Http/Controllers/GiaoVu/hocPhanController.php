@@ -62,9 +62,7 @@ class hocPhanController extends Controller
         //tạo bài quy hoạch mới
         $bqh=new baiQuyHoach();
         $bqh->save();
-        $bqh=baiQuyHoach::where('isDelete',false)
-        ->orderBy('maBaiQH','desc')
-        ->first();
+        $bqh=baiQuyHoach::where('isDelete',false)->orderBy('maBaiQH','desc')->first();
 
         //tạo giảng dạy
         $gd=new giangDay();

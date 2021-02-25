@@ -9,9 +9,15 @@ class chuong extends Model
 {
     use HasFactory;
     protected $table='chuong';
-    protected $fillable=['tenchuong','tenkhongdau','mota','maHocPhan','isdelete'];
+    protected $fillable=['tenchuong','tenkhongdau','soTietLT','soTietTH','soTietKhac','mota','maHocPhan','isdelete'];
     public function hocphan()
     {
         return $this->belongsTo('App\Models\hocPhan', 'maHocPhan', 'maHocPhan');
+    }
+
+    
+    public function chuong_kqht()
+    {
+        return $this->hasMany('App\Models\chuong_kqht', 'machuong', 'id');
     }
 }
