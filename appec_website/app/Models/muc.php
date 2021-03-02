@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class cNganh extends Model
+class muc extends Model
 {
     use HasFactory;
-    protected $table='c_nganh';
-    protected $primaryKey = 'maCNganh';
+    protected $table = 'muc';
+    protected $fillable = ['maMucVB','tenMuc','id_chuong'];
 }

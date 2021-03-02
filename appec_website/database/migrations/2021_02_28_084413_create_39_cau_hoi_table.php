@@ -20,6 +20,8 @@ class Create39CauHoiTable extends Migration
             $table->integer('maKQHT')->unsigned()->nullable()->default(12);
             $table->boolean('isDelete')->nullable()->default(false);
             $table->string('maLoaiHTDG',255);
+            $table->integer('id_muc')->unsigned()->nullable()->default(1);
+            $table->foreign('id_muc')->references('id')->on('muc')->onDelete('cascade');
             $table->foreign('maKQHT')->references('maKQHT')->on('KQHT_HP')->onDelete('cascade');
             $table->foreign('maLoaiHTDG')->references('maLoaiHTDG')->on('LOAI_HT_DANHGIA')->onDelete('cascade');
             $table->timestamps();

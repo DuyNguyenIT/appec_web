@@ -93,7 +93,7 @@
               href="{{ asset('/dang-xuat') }}"
               role="button"
             >
-              <i class="fas fa-sign-out-alt"></i> Đăng xuất
+              <i class="fas fa-sign-out-alt"></i> Login
             </a>
           </li>
         </ul>
@@ -110,7 +110,7 @@
             class="brand-image img-circle elevation-3"
             style="opacity: 0.8"
           />
-          <span class="brand-text font-weight-light">Giảng viên</span>
+          <span class="brand-text font-weight-light">Lecture</span>
         </a>
 
         <!-- Sidebar -->
@@ -160,14 +160,14 @@
               <li class="nav-item">
                 <a href="{{ asset('/giang-vien') }}" class="nav-link">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
-                  <p>Bảng điều khiển</p>
+                  <p>Dashboard</p>
                 </a>
               </li>
 
               <li class="nav-item">
                 <a href="{{ asset('/giang-vien/hoc-phan') }}" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
-                  <p>Học phần</p>
+                  <p>Course</p>
                 </a>
               </li>
 
@@ -178,7 +178,7 @@
                 >
                   <i class="nav-icon fas fa-gavel"></i>
 
-                  <p>Quy hoạch đánh giá KQHT</p>
+                  <p>Assessment Planing</p>
                 </a>
               </li>
 
@@ -192,14 +192,14 @@
               <li class="nav-item">
                 <a href="{{ asset('/giang-vien/ket-qua-danh-gia') }}" class="nav-link">
                   <i class="nav-icon fas fa-user-friends"></i>
-                  <p>Kết quả đánh giá</p>
+                  <p>Assessment Result</p>
                 </a>
               </li>
 
               <li class="nav-item">
                 <a href="{{ asset('/giang-vien/cham-diem-bao-cao') }}" class="nav-link">
                   <i class="fas fa-balance-scale-left"></i>
-                  <p> Chấm báo cáo</p>
+                  <p>Instructor</p>
                 </a>
               </li>
             </ul>

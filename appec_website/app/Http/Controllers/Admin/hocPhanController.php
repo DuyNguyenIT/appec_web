@@ -2,18 +2,25 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\he;
+use App\Models\muc;
 use App\Models\CDR1;
+use App\Models\nganh;
 use App\Models\chuong;
+use App\Models\cNganh;
 use App\Models\kqHTHP;
 use App\Models\hocPhan;
+use App\Models\bacDaoTao;
 use App\Models\ppGiangDay;
 use App\Models\chuong_kqht;
 use App\Models\loaiDanhGia;
 use App\Models\loaiHocPhan;
 use App\Models\monTienQuyet;
+use App\Models\mucDoDanhGia;
 use Illuminate\Http\Request;
 use App\Models\loaiHTDanhGia;
 use App\Models\hocPhan_kqHTHP;
+use App\Models\hocPhan_ctDaoTao;
 use App\Models\ct_khoi_kien_thuc;
 use App\Models\hocPhan_ppGiangDay;
 use App\Models\tai_lieu_tham_khao;
@@ -25,7 +32,7 @@ class hocPhanController extends Controller
 {
     public function index(Type $var = null)
     {
-        $hp=hocPhan::all();
+        $hp=hocPhan::where('isDelete',false)->get();
         $ctkkt=ct_khoi_kien_thuc::all();
         return view('admin.hocphan.hocphan',['hocPhan'=>$hp,'ctkkt'=>$ctkkt]);
     }
@@ -36,7 +43,7 @@ class hocPhanController extends Controller
         $request->tongSoTinChi=$request->tinChiLyThuyet+$request->tinChiThucHanh;
         //tạo học phần
         hocPhan::create(['maHocPhan'=>$request->maHocPhan,'tenHocPhan'=>$request->tenHocPhan,'tongSoTinChi'=>$request->tongSoTinChi,
-        'tinChiLyThuyet'=>$request->tinChiLyThuyet,'tinChiThucHanh'=>$request->tinChiThucHanh,'maCTKhoiKT'=>$request->maCTKhoiKT]);
+        'tinChiLyThuyet'=>$request->tinCh+iLyThuyet,'tinChiThucHanh'=>$request->tinChiThucHanh,'maCTKhoiKT'=>$request->maCTKhoiKT]);
         //phản hồi
         alert()->success('Thêm thành công','Thông báo');
         return redirect('quan-ly/hoc-phan');
@@ -50,6 +57,16 @@ class hocPhanController extends Controller
         $hocPhan=hocPhan::where('maHocPhan',$maHocPhan)->first();
         $loaiMonHoc=loaiHocPhan::all();
         $mon=hocPhan::where('maHocPhan','!=',$maHocPhan)->get(); //hiển thị combobox cho phép chọn môn tiên quyết
+        $hocphan_ctdaotao=hocPhan_ctDaoTao::where('isDelete',false)->where('maHocPhan',$maHocPhan)->with('ctDaoTao')->first(); //**chổ này cần chỉ khi có nhiều chương trình đào tạo hơn
+        //**lấy tên hệ, tên bậc, tên ngành->thay đổi đối với 1 học phần thuộc nhiều chương trình đào tạo
+        $he=$bac=$CNganh="";
+        $he=he::findOrFail($hocphan_ctdaotao->ctDaoTao[0]->maHe);
+        $bac=bacDaoTao::findOrFail($hocphan_ctdaotao->ctDaoTao[0]->maBac);
+        $CNganh=cNganh::findOrFail($hocphan_ctdaotao->ctDaoTao[0]->maCNganh);
+        $nganh=new nganh();
+        if ($CNganh) {
+            $nganh=nganh::findOrFail($CNganh->maNganh);
+        }
         $monTQ=monTienQuyet::where('maHocPhan',$maHocPhan)->where('isDelete',false)->with('hoc_phan')->get();
         // $hp_ctdt=hocPhan_ctDaoTao::where('isdelete',false)->where('maH')
         //2/ Tài liệu tham khảo
@@ -94,12 +111,13 @@ class hocPhanController extends Controller
         ->get('maKQHT');
 
         $getKQHT=kqHTHP::whereIn('maKQHT',$kqht_hp)->get(); //biến hiện combobox kqht thêm chương (vì select distinct không chạy nên dùng wherein)
-        
+        $mucDoDG=mucDoDanhGia::where('isDelete',false)->get();  //hiện combobox mức độ đánh giá trong chương
         $noidung=chuong::where('chuong.isdelete',false)->where('chuong.maHocPhan',$maHocPhan)
         ->orderBy('chuong.id','asc')
+        ->with('muc')
         ->with('chuong_kqht')
         ->get();
-       
+        
 
         foreach ($noidung as $nd) {
             foreach ($nd->chuong_kqht as $x) {
@@ -109,6 +127,7 @@ class hocPhanController extends Controller
             }
         }
        
+
         //6 Phương pháp giảng dạy
         $ppgd=ppGiangDay::where('isDelete',false)->orderBy('maPP','desc')->get(); //biến tạo combobox giảng dạy
         $hp_ppgd=hocPhan_ppGiangDay::where('isDelete',false)->where('maHocPhan',$maHocPhan)->with('ppGiangDay')->get(); //biển hiển thị phương pháp giảng dạy 
@@ -118,18 +137,21 @@ class hocPhanController extends Controller
         $hocPhan_loaiHTDG=hocPhan_loaiHTDanhGia::where('isDelete',false)->where('maHocPhan',$maHocPhan)
         ->with('loai_danh_gia')
         ->with('loaiHTDanhGia')
-        ->get();
+        ->get(); //biến này in bảng phương thức đánh giá
+
         //phản hồi
-        return view('admin.hocphan.themdecuong',['hocPhan'=>$hocPhan,'monHoc'=>$mon,'monTQ'=>$monTQ,
-        'tailieu'=>$tailieu,'CDR1'=>$cdr1,'cdr'=>$cdr,'kqht'=>$kqht,'getKQHT'=>$getKQHT,
-        'ppGiangDay'=>$ppgd,'hocPhan_ppGiangDay'=>$hp_ppgd,'noidung'=>$noidung,'loaiDG'=>$loaiDG,
-        'loaiHTDG'=>$loaiHTDG]);
+        return view('admin.hocphan.themdecuong',['hocPhan'=>$hocPhan,'monHoc'=>$mon,'hocphan_ctdaotao'=>$hocphan_ctdaotao,
+        'monTQ'=>$monTQ,'tailieu'=>$tailieu,
+        'he'=>$he,'bac'=>$bac,'CNganh'=>$CNganh,'nganh'=>$nganh,
+        'CDR1'=>$cdr1,'cdr'=>$cdr,'kqht'=>$kqht,'getKQHT'=>$getKQHT,
+        'ppGiangDay'=>$ppgd,'hocPhan_ppGiangDay'=>$hp_ppgd,
+        'noidung'=>$noidung,'loaiDG'=>$loaiDG, 'mucDoDG'=>$mucDoDG,
+        'loaiHTDG'=>$loaiHTDG,'hocPhan_loaiHTDG'=>$hocPhan_loaiHTDG]);
 
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////CÁC HÀM XỬ LÝ CHO THÊM ĐỀ CƯƠNG/////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////    
-    
     public function them_mon_tien_quyet(Request $request)
     {
         monTienQuyet::create(['maHocPhan'=>$request->maHocPhan,'maMonTienQuyet'=>$request->maMonTienQuyet]);
@@ -137,7 +159,6 @@ class hocPhanController extends Controller
         alert()->success('Cập nhật môn tiên quyết thành công!!','Thông báo');
         return back();
     }
-
     public function them_giao_trinh(Request $request)
     {
         //sửa tài liệu tham khảo
@@ -162,7 +183,6 @@ class hocPhanController extends Controller
         alert()->success('Cập nhật thành công!!','Thông báo');
         return back();
     }
-
     public function them_yeu_cau_hoc_phan(Request $request)
     {
         //sửa học phần
@@ -200,7 +220,6 @@ class hocPhanController extends Controller
         alert()->success('Thêm chuẩn đầu ra thành công!!','Thông báo');
         return back();
     }
-
     public function them_noi_dung_mon_hoc(Request $request)  //thêm nội dung môn học (chương)
     {
         //1.thêm chương mới
@@ -220,6 +239,14 @@ class hocPhanController extends Controller
         return back();
     }
 
+    public function them_muc(Request $request)
+    {
+        //thêm mục mới
+        muc::create($request->all());
+        //phản hồi
+        alert()->success('Thêm nội dung thành công!!','Thông báo');
+        return back();
+    }
     public function them_phuong_phap_giang_giay(Request $request)
     {
         //thêm bảng hocphan_ppGiangDay
@@ -229,16 +256,18 @@ class hocPhanController extends Controller
         return back();
         
     }
-
-
     public function them_hoc_phan_loaiHTDG(Request $request)
     {
-        hocPhan_loaiHTDanhGia::create(['maHocPhan'=>$request->maHocPhan,'maLoaiDG'=>$request->maLoaiDG,'maLoaiHTDG'=>$request->maLoaiHTDG]);
-         //phản hồi
-         alert()->success('Thêm phương pháp giảng dạy thành công!!','Thông báo');
-         return back();
+        $tile=  $hocPhan_loaiHTDG=hocPhan_loaiHTDanhGia::where('isDelete',false)->where('maHocPhan',$request->maHocPhan)->sum('trongSo');
+        if($tile==100){
+            alert()->warning('Tỉ lệ đã đạt 100%, không thể thêm phương thức đánh giá!!','Cảnh báo');
+            return back();
+        }
+        hocPhan_loaiHTDanhGia::create(['maHocPhan'=>$request->maHocPhan,'maLoaiDG'=>$request->maLoaiDG,'maLoaiHTDG'=>$request->maLoaiHTDG,'trongSo'=>$request->trongSo]);
+        //phản hồi
+        alert()->success('Thêm phương thức đánh giá thành công!!','Thông báo');
+        return back();
     }
-
     ///////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////HẾT XỬ LÝ ĐỀ CƯƠNG////////////////
     //////////////////////////////////////////////////////////////////////////////////

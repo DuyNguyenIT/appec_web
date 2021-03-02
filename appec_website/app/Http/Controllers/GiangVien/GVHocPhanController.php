@@ -24,7 +24,7 @@ class GVHocPhanController extends Controller
         return view('giangvien.hocphan.hocphan',['gd'=>$gd]);
     }
     ////////////////---------------Xem kết quả học tập của học phần
-    public function xem_ket_qua_hoc_tap($maHocPhan)
+    public function xem_ket_qua_hoc_tap($maHocPhan) //hàm này khong dùng, quản trị đã thêm KQHT trong đề cương
     {
         try {
         
@@ -146,5 +146,13 @@ class GVHocPhanController extends Controller
 
         return redirect('/giang-vien/hoc-phan/chuan-dau-ra-dap-ung-giang-day/'.Session::get('maHocPhan').'/'.Session::get('maLop').'/'.Session::get('maHK').'/'.Session::get('namHoc').'/'.Session::get('maBaiQH'));
 
+    }
+
+    /////////////////////////////////////////////////////////////////////////
+    //////////////XEM ĐỀ CƯƠNG CHI TIẾT/////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    public function xem_de_cuong_chi_tiet(Request $request)
+    {
+        # code...
     }
 }

@@ -9,15 +9,15 @@
             <div class="row mb-2">
               <div class="col-sm-6">
                 <h1 class="m-0 text-dark">
-                  Bậc đào tạo<noscript></noscript>
+                  Education level<noscript></noscript>
                   <nav></nav>
                 </h1>
               </div>
               <!-- /.col -->
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                  <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                  <li class="breadcrumb-item active">Bậc đào tạo</li>
+                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li class="breadcrumb-item active">Education level</li>
                 </ol>
               </div>
               <!-- /.col -->
@@ -46,7 +46,7 @@
                             @csrf
                             <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Thêm bậc đào tạo</h5>
+                              <h5 class="modal-title" id="exampleModalLabel">Adding a new education level</h5>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                               </button>
@@ -62,9 +62,9 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                              <button type="submit" class="btn btn-primary">Lưu</button>
+                              <button type="submit" class="btn btn-primary">Save</button>
 
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                             </div>
                           </div>
                         </form>
@@ -78,10 +78,10 @@
                     <table id="example2" class="table table-bordered table-hover" >
                       <thead>
                         <tr>
-                          <th>STT</th>
-                          <th>Mã bậc</th>
-                          <th>Tên bậc đào tạo</th>
-                          <th>Tùy chọn</th>
+                          <th>Order</th>
+                          <th>ID</th>
+                          <th>education level name</th>
+                          <th>Option</th>
                         </tr>
                       </thead>
                       <tbody>

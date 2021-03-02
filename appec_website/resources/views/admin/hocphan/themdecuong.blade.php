@@ -56,6 +56,7 @@
                 Mã học phần: {{ $hocPhan->maHocPhan }}
                 </h3>
               </div>
+              <a href="{{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/in-de-cuong-mon-hoc/'.$hocPhan->maHocPhan) }}">IN ĐỀ CƯƠNG</a>
               <!-- /.card-header -->
               <div class="card-body">
               <h5><b>1. Thông tin chung</b></h5>    <!-- ----------------------------------1. Thông tin chung-------------------- -->
@@ -70,11 +71,36 @@
                 <tbody>
                   <tr>
                     <td>
-                       <ul>
-                        <li>Đại cương
-                        <li>Cở sở
-                        <li>Chuyên ngành
-                      </ul>
+                      @php
+                          $daicuong = array("A1", "A2", "A3", "A4","A5");
+                          $coso = array('B1','B2' );
+                          $chuyennganh = array('B3');
+                      @endphp
+                      @if (in_array($hocPhan->maCTKhoiKT,$daicuong))
+                        <ul>
+                          <li>Đại cương <i class="far fa-check-square"></i>
+                          <li>Cở sở
+                          <li>Chuyên ngành
+                        </ul>
+                      @else
+                          @if (in_array($hocPhan->maCTKhoiKT,$coso))
+                            <ul>
+                              <li>Đại cương 
+                              <li>Cở sở <i class="far fa-check-square"></i>
+                              <li>Chuyên ngành
+                            </ul>
+                          @else
+                            @if (in_array($hocPhan->maCTKhoiKT,$chuyennganh))
+                                <ul>
+                                <li>Đại cương 
+                                <li>Cở sở 
+                                <li>Chuyên ngành <i class="far fa-check-square"></i>
+                              </ul>
+                            @endif
+                          @endif
+                      @endif
+                   
+                      
                     </td>
                     <td>
                       <ul>
@@ -98,16 +124,13 @@
                   <h6><b>Đối tượng học:</b></h6> 
                 </div>
                 <div class="col-md-7">
-                  Bậc: Đại học <br>
-                  Ngành: Công nghệ thông tin <br>
-                  Chuyên ngành: <br>
-                  Hệ: Chính quy <br>
+                  Bậc: {{ $bac->tenBac }} <br>
+                  Ngành: {{ $nganh->tenNganh }} <br>
+                  Chuyên ngành: {{ $CNganh->tenCNganh }}<br>
+                  Hệ: {{ $he->tenHe }} <br>
                 </div>
                 <div class="col-md-1">
                   <td>
-                    <button class="btn btn-primary">
-                     <i class="fas fa-edit"></i>
-                    </button>
                   </td>
                 </div>
               </div>
@@ -290,7 +313,7 @@
                       <i class="fas fa-edit"></i>
                     </button>
       
-                    <!-- Modal -->
+                    <!--///////////////////////////// Modal thêm tài liệu tham khảo thêm-->
                     <div class="modal fade" id="addthamKhaoThem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                       <div class="modal-dialog modal-lg" role="document">
                         <form action="{{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/sua_tai_lieu_tham_khao_them') }}" method="post">
@@ -345,7 +368,7 @@
                 <i class="fas fa-edit"></i>
               </button>
 
-              <!-- Modal -->
+              <!--//////////////////////// Modal thêm các loại tài liệu khác -->
               <div class="modal fade" id="addtaiLieuKhac" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                   <form action="{{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/sua_tai_lieu_khac') }}" method="post">
@@ -390,13 +413,14 @@
              </table>
              <h5><b>3.Mô tả môn học</b></h5>    <!-----------------------------------3. Mô tả môn học--------------------------->
              <!-- Button trigger modal -->
-              <!-- Button trigger modal -->
+      
               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addMoTa">
                 <i class="fas fa-edit"></i>
               </button> <br>
 
               {!! $hocPhan->moTaHocPhan !!}
-              <!-- Modal -->
+              <!-- /////////////////////Modal thêm mô tả học phần-->
+
               <div class="modal fade" id="addMoTa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                   <form action="{{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/sua_mo_ta_mon_hoc') }}" method="post">
@@ -445,73 +469,95 @@
                   @foreach ($CDR1 as $cdr1)
                       <tr>
                         <td colspan="3"><b>Chủ đề {{ $cdr1->maCDR1VB }}: {{ $cdr1->tenCDR1 }}:</b> 
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#chuDe_{{ $cdr1->maCDR1VB }}">
-                          <i class="fas fa-edit"></i>
-                        </button>
+                          <!-- Button trigger modal -->
+                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#chuDe_{{ $cdr1->maCDR1VB }}">
+                            <i class="fas fa-edit"></i>
+                          </button>
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="chuDe_{{ $cdr1->maCDR1VB }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                          <div class="modal-dialog" role="document">
-                            <form action="{{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/them_chuan_dau_ra_mon_hoc') }}" method="post">
-                            @csrf
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Chủ đề {{ $cdr1->maCDR1VB }}: {{ $cdr1->tenCDR1 }}</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
+                          <!-- /////////////////// Modal thêm chuẩn đầu ra đề cương-->
+                          <div class="modal fade" id="chuDe_{{ $cdr1->maCDR1VB }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                              <form action="{{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/them_chuan_dau_ra_mon_hoc') }}" method="post">
+                              @csrf
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">Chủ đề {{ $cdr1->maCDR1VB }}: {{ $cdr1->tenCDR1 }}</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="form-group">
+                                    <input type="text" name="maHocPhan" value="{{ $hocPhan->maHocPhan }}" hidden>
+                                  </div>
+                                  <div class="form-group">
+                                      <label for=""> Mã kết quả học tập:</label>
+                                      <input type="text" name="maKQHTVB" placeholder="L1,L2,..." class="form-control">
+                                  </div>
+                                  <div class="form-group">
+                                    <label for=""> Nội dung kết quả học tập:</label>
+                                    <input type="text" name="tenKQHT" placeholder="Phân tích, khái niệm, mô tả,.." class="form-control">
+                                  </div>
+                                  <div class="form-group">
+                                    <label for=""> Chọn chuẩn đầu ra:</label>
+                                    <select name="maCDR3[]" id="" class="form-control" multiple>
+                                      @foreach ($cdr as $t)
+                                          @if ($t->maCDR1==$cdr1->maCDR1)
+                                              <option value="{{ $t->maCDR3 }}"> {{ $t->maCDR3VB }} - {{ $t->tenCDR3 }}</option>
+                                          @endif
+                                      @endforeach
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="submit" class="btn btn-primary">Lưu</button>
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                </div>
                               </div>
-                              <div class="modal-body">
-                                <div class="form-group">
-                                  <input type="text" name="maHocPhan" value="{{ $hocPhan->maHocPhan }}" hidden>
-                                </div>
-                                <div class="form-group">
-                                    <label for=""> Mã kết quả học tập:</label>
-                                    <input type="text" name="maKQHTVB" placeholder="L1,L2,..." class="form-control">
-                                </div>
-                                <div class="form-group">
-                                  <label for=""> Nội dung kết quả học tập:</label>
-                                  <input type="text" name="tenKQHT" placeholder="Phân tích, khái niệm, mô tả,.." class="form-control">
-                                </div>
-                                <div class="form-group">
-                                  <label for=""> Chọn chuẩn đầu ra:</label>
-                                  <select name="maCDR3[]" id="" class="form-control" multiple>
-                                     @foreach ($cdr as $t)
-                                        @if ($t->maCDR1==$cdr1->maCDR1)
-                                            <option value="{{ $t->maCDR3 }}"> {{ $t->maCDR3VB }} - {{ $t->tenCDR3 }}</option>
-                                        @endif
-                                     @endforeach
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Lưu</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                              </div>
+                              </form>
+                              
                             </div>
-                            </form>
-                            
                           </div>
-                        </div>
                         </td>
                       </tr>
-                     
+                      @php
+                            $cur_rs=0;
+                            $bienchay=0;
+                      @endphp
                       @foreach ($kqht as $x)
-                     
                           @if ($x->maCDR1==$cdr1->maCDR1)
-
+                          {{-- {{ $kqht->where('maCDR1',$cdr1->maCDR1)->where('maKQHT',$x->maKQHT)->count() }}
                           <tr>
                             <td>{{ $x->maKQHTVB }}</td>
                             <td>{{ $x->tenKQHT }}</td>
                             <td>{{ $x->maCDR3VB }}</td>
-                          </tr>
+                          </tr>   --}}
+                            @php
+                                $rs=$kqht->where('maCDR1',$cdr1->maCDR1)->where('maKQHT',$x->maKQHT)->count(); 
+                                
+                                if($bienchay>$rs || $rs>$cur_rs){
+                                  $cur_rs=$rs;  
+                                  $bienchay=1;
+                                }
+                                else {
+                                   $bienchay+=1;
+                                }
+                            @endphp
+                       
+                            @if($bienchay==1)
+                              <tr>
+                                <td rowspan={{ $rs }}>{{ $x->maKQHTVB }}</td>
+                                <td rowspan={{ $rs }}>{{ $x->tenKQHT }}</td>
+                                <td>{{ $x->maCDR3VB }}</td>
+                              </tr>   
+                            @else
+                              <tr>
+                                <td>{{ $x->maCDR3VB }}</td>
+                              </tr>
+                            @endif
                           @endif
                       @endforeach
-                     
                   @endforeach
-                  
-                  
                 </tbody>
               </table>
 
@@ -525,7 +571,7 @@
                         <i class="fas fa-edit"></i>
                       </button>
 
-                      <!-- Modal -->
+                      <!-- Modal thêm nội dung môn học-->
                       <div class="modal fade" id="addChuong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                           <form action="{{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/them_noi_dung_mon_hoc') }}" method="post">
@@ -587,7 +633,49 @@
                 <tbody>
                   @foreach ($noidung as $data)
                   <tr>
-                    <td>{{ $data->tenchuong }}</td>
+                    <td>{{ $data->tenchuong }}
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addMuc">
+                      <i class="fas fa-plus"></i>Thêm mục
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="addMuc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <form action="{{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/them_noi_dung_muc_chuong') }}" method="POST">
+                          @csrf
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Adding a new item</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <input type="text" name="id_chuong" value="{{ $data->id }}" hidden>
+
+                              <div class="form-group">
+                                <label for="" >Item ID:</label>
+                                <input type="text" name="maMucVB" class="form-control" >
+                              </div>
+
+                              <div class="form-group">
+                                <label for="" >Item name:</label>
+                                <input type="text" name="tenMuc" class="form-control" >
+                              </div>
+
+                            </div>
+                            <div class="modal-footer">
+                              <button type="submit" class="btn btn-primary">Save</button>
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </form>
+                          
+                      </div>
+                    </div>
+                    </td>
+
                     <td>
                       @foreach ($data->chuong_kqht as $item)
                           {{ $item->maKQHTVB }};
@@ -598,6 +686,21 @@
                     </td>
                     <td>{{ $data->soTietTH }}</td>
                     <td>{{ $data->soTietKhac }}</td>
+                  </tr>
+                  @foreach ($data->muc as $m)
+                      <tr>
+                        <td>
+                          {{ $m->maMucVB }}
+                          {{ $m->tenMuc }}
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                  @endforeach
+                  <tr>
+                    
                   </tr>
                
                   @endforeach
@@ -611,7 +714,7 @@
                 <i class="fas fa-edit"></i>
               </button>
 
-              <!-- Modal -->
+              <!-- Modal thêm phương pháp giảng dạy-->
               <div class="modal fade" id="ppgiangday" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <form action="{{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/them_phuong_phap_giang_day') }}" method="post">
@@ -679,58 +782,92 @@
               <i class="fas fa-edit"></i>
             </button>
 
-            <!-- Modal -->
+            <!-- Modal thêm hình thức đánh giá -->
             <div class="modal fade" id="addHocPhan_loaiHTDG" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Cập nhật phương thức đánh giá</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  
-                  <div class="modal-body">
-                    <div class="form-group">
-                      <label for="">Chọn hình thức đánh giá</label>
-                      <select name="maLoaiHTDG" id="" class="form-control" required>
-                        @foreach ($loaiHTDG as $data)
-                            <option value="{{ $data->maLoaiHTDG }}">{{ $data->tenLoaiHTDG }}</option>
-                        @endforeach
-                      </select>
+                <form action="{{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/them_phuong_phap_danh_gia') }}" method="post">
+                  @csrf
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Cập nhật phương thức đánh giá</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
                     </div>
-                    <div class="form-group">
-                      <label for="">Chọn loại hình thức đánh giá</label>
-                      <select name="maLoaiDG" id="" class="form-control" required>
-                        @foreach ($loaiDG as $data)
-                            <option value="{{ $data->maLoaiDG }}">{{ $data->tenLoaiDG }}</option>
-                        @endforeach
-                      </select>
+                    <div class="modal-body">
+                      <input type="text" name="maHocPhan" value="{{ $hocPhan->maHocPhan }}" hidden>
+                      <div class="form-group">
+                        <label for="">Chọn hình thức đánh giá</label>
+                        <select name="maLoaiHTDG" id="" class="form-control" required>
+                          @foreach ($loaiHTDG as $data)
+                              <option value="{{ $data->maLoaiHTDG }}">{{ $data->tenLoaiHTDG }}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="">Chọn loại hình thức đánh giá</label>
+                        <select name="maLoaiDG" id="" class="form-control" required>
+                          @foreach ($loaiDG as $data)
+                              <option value="{{ $data->maLoaiDG }}">{{ $data->tenLoaiDG }}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="">Tỉ lệ</label>
+                        <input type="number" min="25" name="trongSo" class="form-control" required>
+                      </div>
                     </div>
-                    <div class="form-group">
-                      <label for="">Tỉ lệ</label>
-                      <input type="number" min="25" name="trongSo" class="form-control">
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-primary">Save</button>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                   </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  </div>
-                </div>
+                </form>
               </div>
             </div>
-
              <table class="table table-bordered">
-
               <thead style="background-color: green">
-                <th>Mã số</th>
+                <th>STT</th>
                 <th>Hình thức đánh giá</th>
                 <th>Loại hình thức đánh giá</th>
                 <th>Tỉ lệ</th>
               </thead>
               <tbody> 
-                
+                @php
+                    $i=1;
+                @endphp
+                @foreach ($hocPhan_loaiHTDG as $data)
+                    <tr>
+                      <td>{{ $i++ }}</td>
+                      <td>{{ $data->loai_danh_gia['tenLoaiDG'] }}</td>
+                      <td>{{ $data->loaiHTDanhGia['maLoaiHTDG'] }}-{{ $data->loaiHTDanhGia['tenLoaiHTDG'] }}</td>
+                      <td>{{ $data->trongSo }}%</td>
+                    </tr>
+                @endforeach
               </tbody>
+              <tr>
+                <td colspan="2">Ghi chú công thức tính điểm</td>
+                <td colspan="2">
+                  @php
+                      $n=$hocPhan_loaiHTDG->count();
+                      $cr=0;
+                  @endphp
+                  @foreach ($hocPhan_loaiHTDG as $data)
+                  @if ($cr!=0 && $cr<$n)
+                      +
+                      @php
+                          $cr++;
+                      @endphp
+                  @else
+                      @php
+                          $cr++;
+                      @endphp
+                  @endif
+                   {{ $data->loaiHTDanhGia['maLoaiHTDG'] }}*{{ $data->trongSo }}%
+                  @endforeach
+                
+                </td>
+              </tr>
             </table>
 
 

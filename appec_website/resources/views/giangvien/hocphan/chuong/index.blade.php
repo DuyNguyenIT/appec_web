@@ -48,49 +48,7 @@
           <div class="card">
             <div class="card-header">
               <h3 class="card-title">
-                  <!-- Button trigger modal -->
-                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                    <li class="fas fa-plus"></li>
-                  </button>
-
-                  <!-- Modal -->
-                  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg" role="document">
-                      <form action="{{ asset('giang-vien/hoc-phan/chuong/themsubmit') }}" method="post">
-                        @csrf
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Thêm chương</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                            <div class="form-group">
-                              <label for="">Nhập tên chương:</label>
-                              <input type="text" class="form-control" name="tenchuong">
-                            </div>
-                            <div class="form-group">
-                              <label for="">Nhập mô tả:</label>
-                              <textarea name="mota" id="ckcontent" cols="30" rows="10" class="form-control"></textarea>
-                              <script>
-                                CKEDITOR.replace( 'ckcontent', {
-                                    filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
-                                    filebrowserUploadMethod: 'form'
-                                } );
-                            </script>
-                            </div>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Lưu</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                          </div>
-                        </div>
-
-                      </form>
-                     
-                    </div>
-                  </div>
+                  
               </h3>
             </div>
             <!-- /.card-header -->
@@ -139,6 +97,7 @@
                                 <input type="text" name="id" value="{{$item->id}}" hidden>
                                 <div class="form-group">
                                   <label for="">Nhập tên chương:</label>
+
                                   <input type="text" name="tenchuong" value="{{$item->tenchuong}}" class="form-control">
                                 </div>
                                 <div class="form-group">

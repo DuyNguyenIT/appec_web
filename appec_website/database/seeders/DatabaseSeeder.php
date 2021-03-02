@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             users_Seeder::class,  //user
+            loai_cau_hoi_Seeder::class,
             giang_vien_Seeder::class,  //giảng viên
             nganh_Seeder::class,  //ngành
             bac_dao_tao_Seeder::class, //bậc đào tạo
@@ -24,6 +25,8 @@ class DatabaseSeeder extends Seeder
             khoi_kien_thuc_Seeder::class,  //khối kiến thức
             ct_khoi_kien_thuc_Seeder::class,  //chi tiết khối kiến thức
             hoc_phan_Seeder::class,  //học phần
+            chuong_Seeder::class,   //chương
+            muc_Seeder::class,   //mục
             mon_tien_quyet_Seeder::class,  //môn tiên quyết
             ct_dao_tao_Seeder::class,  //chi tiết đào tạo
             hoc_phan_ct_dao_tao_Seeder::class,  //học phần - chương trình đào tọa

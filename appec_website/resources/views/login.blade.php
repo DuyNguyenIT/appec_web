@@ -26,7 +26,7 @@
         
         <div class="login-box">
             <div class="login-logo">
-              <a href="#"><b>Đăng nhập</b></a>
+              <a href="#"><b>Login</b></a>
             </div>
             <!-- /.login-logo -->
             <div class="card">
@@ -40,7 +40,7 @@
                       name="username"
                       
                       class="form-control"
-                      placeholder="Tên đăng nhập"
+                      placeholder="Username"
                     />
                     <div class="input-group-append">
                       <div class="input-group-text">
@@ -54,7 +54,7 @@
                       name="password"
                    
                       class="form-control"
-                      placeholder="Mật khẩu"
+                      placeholder="Password"
                     />
                     <div class="input-group-append">
                       <div class="input-group-text">
@@ -66,7 +66,7 @@
                     <div class="col-7">
                       <div class="icheck-primary">
                         <input type="checkbox" id="remember" />
-                        <label for="remember"> Ghi nhớ </label>
+                        <label for="remember"> Remember </label>
                       </div>
                     </div>
                     <!-- /.col -->
@@ -75,7 +75,7 @@
                         type="submit"
                         class="btn btn-primary btn-block"
                       >
-                        Đăng nhập
+                        Submit
                       </button>
                     </div>
                     <!-- /.col -->
@@ -94,10 +94,10 @@
                 <!-- /.social-auth-links --> --}}
       
                 <p class="mb-1">
-                  <a href="#">Quên mật khẩu</a>
+                  <a href="#">forget password</a>
                 </p>
                 <p class="mb-0">
-                  <a href="#" class="text-center">Đăng kí thành viên</a>
+                  <a href="#" class="text-center">Register</a>
                 </p>
               </div>
               <!-- /.login-card-body -->

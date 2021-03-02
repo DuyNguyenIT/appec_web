@@ -15,6 +15,10 @@ class chuong extends Model
         return $this->belongsTo('App\Models\hocPhan', 'maHocPhan', 'maHocPhan');
     }
 
+    public function muc()
+    {
+        return $this->hasMany('App\Models\muc', 'id_chuong', 'id');
+    }
     
     public function chuong_kqht()
     {

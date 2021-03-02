@@ -159,61 +159,61 @@
               <li class="nav-item">
                 <a href="{{ asset('/quan-ly') }}" class="nav-link">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
-                  <p>Bảng điều khiển</p>
+                  <p>Dashboard</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ asset('/quan-ly/bac-dao-tao') }}" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
-                  <p>Bậc đào tạo</p>
+                  <p>Education level</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ asset('/quan-ly/nganh-hoc') }}" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
-                  <p>Ngành học</p>
+                  <p>Majors</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ asset('/quan-ly/he') }}" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
-                  <p>Hệ</p>
+                  <p>Specialized</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ asset('/quan-ly/chuong-trinh-dao-tao') }}" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
-                  <p>Chương trình đào tạo</p>
+                  <p>Program Curriculum</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ asset('/quan-ly/chuan-dau-ra') }}" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
-                  <p>Chuẩn đầu ra</p>
+                  <p>Course Learning Outcomes</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ asset('/quan-ly/loai-hoc-phan') }}" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
-                  <p>Loại học phần</p>
+                  <p>Course type</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ asset('/quan-ly/hoc-phan') }}" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
-                  <p>Học phần</p>
+                  <p>Course</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ asset('/quan-ly/khoi-kien-thuc') }}" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
-                  <p>Khối kiến thức</p>
+                  <p>Knowledge block</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ asset('/quan-ly/phuong-phap-giang-day') }}" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
-                  <p>Phương pháp giảng dạy</p>
+                  <p>Teaching methods</p>
                 </a>
               </li>
             </ul>
@@ -231,8 +231,8 @@
       
       <footer class="main-footer">
         <strong
-          >Copyright &copy; 2020
-          <a href="https://adminlte.io"> Hệ thống đánh giá học sinh CAP</a
+          >Copyright &copy; 2020-2021
+          <a href="https://adminlte.io"> CAP</a
           >.</strong
         >
         <div class="float-right d-none d-sm-inline-block">

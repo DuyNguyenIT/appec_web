@@ -173,6 +173,8 @@ class quyhoachController extends Controller
     }
 
     // ------------------------NỌI DUNG ĐÁNH GIÁ
+    
+
     // /giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/3
     public function xem_noi_dung_danh_gia(Request $request,$maCTBaiQH)
     {
@@ -298,8 +300,16 @@ class quyhoachController extends Controller
 
     }
 
-
-    public function them_de_thi_tu_luan_submit(Request $request)
+    //////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////KHU VỰC HÀM CHO TỰ LUẬN///////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////
+     //thêm đề thi tự luận
+     public function them_de_thi_tu_luan(Type $var = null)
+     { 
+         return view('giangvien.quyhoach.noidungdanhgia.themdethituluan');
+     }
+    
+    public function them_de_thi_tu_luan_submit(Request $request)  //thêm tiêu đèn, ngày thi, giờ thi,...
     {
         try {
             deThi::create(['maDeVB'=>$request->maDeVB,'soCauHoi'=>$request->soCauHoi,'tenDe'=>$request->tenDe,'thoiGian'=>$request->thoiGian,'ghiChu'=>$request->ghiChu,'maCTBaiQH'=>Session::get('maCTBaiQH')]);
@@ -310,7 +320,7 @@ class quyhoachController extends Controller
         }
     }
 
-    public function cau_truc_de_luan(Request $request,$maDe)
+    public function cau_truc_de_luan(Request $request,$maDe) //hàm này tạm không dùng
     {
         $kqht=kqHTHP::all();
         $pb=phanBoNoiDung::where('maDe',$maDe)->with('kqht')->get();
@@ -318,7 +328,7 @@ class quyhoachController extends Controller
         return view('giangvien.quyhoach.noidungdanhgia.tuluan.cautrucde',['maDe'=>$maDe,'kqht'=>$kqht,'phanBo'=>$pb]);
     }
 
-    public function them_cau_truc_de_luan(Request $request)
+    public function them_cau_truc_de_luan(Request $request) //hàm này tạm không dùng
     {
         try {
             //code...
@@ -331,19 +341,30 @@ class quyhoachController extends Controller
        
     }
 
-    //thêm đề thi tự luận
-    public function them_de_thi_tu_luan(Type $var = null)
-    { 
-        return view('giangvien.quyhoach.noidungdanhgia.themdethituluan');
+    public function cau_truc_noi_dung_de_luan(Request $request,$maDe)
+    {
+        $md=deThi::findOrFail($maDe);
+        return view('GiangVien.quyhoach.noidungdanhgia.tuluan.cautrucnoidungdeluan');
     }
 
+    public function them_cau_truc_noi_dung_de_luan_submit(Request $request)
+    {
+        
+    }
 
+    
+    //////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////KHU VỰC HÀM CHO TRẮC NGHIỆM///////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////
 
     public function them_de_thi_trac_nghiem(Type $var = null)
     {
         return view('giangvien.quyhoach.noidungdanhgia.themdethitracnghiem');
     }
 
+    //////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////KHU VỰC HÀM CHO BÁO CÁO///////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////
     //-----mời chấm báo cáo
     public function moi_cham_bao_cao(Request $request)
     {
@@ -360,7 +381,6 @@ class quyhoachController extends Controller
         }
         //nếu chưa được mời thì tiến hành lưu dữ liệu
     }
-
 
     //thêm đề tài mới
     public function them_de_tai(Request $request)
@@ -399,7 +419,7 @@ class quyhoachController extends Controller
         }
     }
 
-
+    //xem tiêu chí đánh giá
     public function xem_tieu_chi_danh_gia($maCTBaiQH)
     {
         
@@ -439,6 +459,7 @@ class quyhoachController extends Controller
        
     }
    
+    //thêm tiêu chí đánh giá mới
     public function them_tieu_chi_danh_gia(Request $request,$maCTBaiQH)
     {
         $request->session()->put('maCTBaiQH', $maCTBaiQH);
@@ -475,6 +496,7 @@ class quyhoachController extends Controller
         'ndqh'=>$ndqh,'maCTBaiQH'=>$maCTBaiQH]);
     }
 
+    //
     public function get_tieu_chuan_by_NDQH($maNoiDungQH)
     {
         $tc=tieuChuanDanhGia::where('isDelete',false)->where('maNoiDungQH',$maNoiDungQH)->get();
@@ -496,7 +518,7 @@ class quyhoachController extends Controller
     public function them_tieu_chi_danh_gian_submit(Request $request) // submit form thêm tiêu chí đánh giá mới
     {
         //tạo câu hỏi noiDungCauHoi
-        cauHoi::create(['noiDungCauHoi'=>$request->noiDungCauHoi,'maKQHT'=>$request->maKQHT,'maLoaiHTDG'=>$request->maLoaiHTDG]);
+        cauHoi::create(['noiDungCauHoi'=>$request->noiDungCauHoi,'maKQHT'=>$request->maKQHT,'maLoaiHTDG'=>$request->maLoaiHTDG,'id_loaiCH'=>4,'id_muc'=>1]);
         $ch=cauHoi::where('isDelete',false)->orderBy('maCauHoi','desc')->first();
         //noiDungQH->tieuchuan_danhgia
         $noiDungQH=noiDungQH::where('isDelete',false)->where('maCTBaiQH',Session::get('maCTBaiQH'))->where('maKQHT',$request->maKQHT)->first();

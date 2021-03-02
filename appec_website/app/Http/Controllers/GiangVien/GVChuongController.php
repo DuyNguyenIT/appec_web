@@ -14,7 +14,7 @@ class GVChuongController extends Controller
     public function index($maHocPhan)
     {
         Session::put('maHocPhan_chuong',$maHocPhan);
-        $chuong=chuong::where('isdelete',false)->where('maHocPhan',$maHocPhan)->orderBy('id','desc')->with('hocphan')->get();
+        $chuong=chuong::where('isdelete',false)->where('maHocPhan',$maHocPhan)->orderBy('id','asc')->with('hocphan')->get();
         $hocphan=hocPhan::firstOrCreate(['isdelete'=>false],['maHocPhan'=>$maHocPhan]);
         return view('giangvien.hocphan.chuong.index',['chuong'=>$chuong,'hocPhan'=>$hocphan]);
     }

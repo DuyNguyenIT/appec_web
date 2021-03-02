@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Create17MucdoDgTable extends Migration
+class Create53LoaiCauHoiTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class Create17MucdoDgTable extends Migration
      */
     public function up()
     {
-        Schema::create('mucdo_dg', function (Blueprint $table) {
-            $table->string('maMucDoDG',255);
-            $table->primary('maMucDoDG');
-            $table->text('tenMucDoDG')->nullable()->default('text');
-            $table->boolean('isDelete')->nullable()->default(false);
+        Schema::create('loai_cau_hoi', function (Blueprint $table) {
+            $table->increments('id');
+            $table->text('tenLoaiCauHoi')->nullable()->default('text');
+            $table->boolean('isdelete')->nullable()->default(false);
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class Create17MucdoDgTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('42_mucdo_dg');
+        Schema::dropIfExists('53_loai_cau_hoi');
     }
 }

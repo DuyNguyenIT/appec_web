@@ -17,7 +17,7 @@ class bacDaoTaoController extends Controller
     {
         try {
             $bdt=bacDaoTao::created($request->all());
-            alert()->success('Thêm thành công', 'Thông báo')->persistent('Đóng');
+            alert()->success('Added successfully', 'Message')->persistent('Đóng');
             return redirect('/quan-ly/bac-dao-tao');
         } catch (\Throwable $th) {
             alert()->error('Lỗi:'.$th, 'Cảnh báo');
@@ -30,7 +30,7 @@ class bacDaoTaoController extends Controller
     {
         try {
             $bdt=bacDaoTao::updateOrCreated(['maBac'=>$request->maBac],['tenBac'=>$request->tenBac]);
-            alert()->success('Sửa thành công', 'Thông báo');
+            alert()->success('Updated successfully', 'Message');
             return redirect('/quan-ly/bac-dao-tao');
         } catch (\Throwable $th) {
             alert()->error('Lỗi:'.$th, 'Cảnh báo');
@@ -43,8 +43,8 @@ class bacDaoTaoController extends Controller
     {
         try {
             $bdt=bacDaoTao::updateOrCreated(['maBac'=>$request->maBac],['isDelete'=>false]);
-
-            return redirect('/quan-ly/bac-dao-tao')->with('success','Xóa thành công!');
+            alert()->success('Updated successfully', 'Message');
+            return redirect('/quan-ly/bac-dao-tao');
         } catch (\Throwable $th) {
             return redirect('/quan-ly/bac-dao-tao')->with('warning','Lỗi:'.$th);
         }

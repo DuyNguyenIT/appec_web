@@ -111,16 +111,20 @@
                           @php
                               $i=1;
                               $dem=0; 
+                              $cur_rs=0;
                           @endphp
                           @foreach ($kqht as $x)
                             @php
                                 $rs=$x->groupBy("maKQHT")->count();
-                                $dem=$dem+1;
-                                if($dem>$rs)
+                                if($dem>$rs || $rs>$cur_rs){
+                                  $cur_rs=$rs;  
                                   $dem=1;
+                                }
+                                else {
+                                   $dem+=1;
+                                }
                             @endphp
                             @if($dem==1)
-                              {{$dem}}
                               <tr>
                                 <td rowspan={{$rs}}>{{$i++}}</td>
                                 <td rowspan={{$rs}}>{{$x->tenKQHT}}</td>

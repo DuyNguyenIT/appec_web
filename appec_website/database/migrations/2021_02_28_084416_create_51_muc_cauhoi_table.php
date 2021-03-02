@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Create51ChuongCauhoiTable extends Migration
+class Create51MucCauhoiTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class Create51ChuongCauhoiTable extends Migration
      */
     public function up()
     {
-        Schema::create('chuong_cauhoi', function (Blueprint $table) {
+        Schema::create('muc_cauhoi', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('maChuong')->unsigned()->nullable()->default(1);
+            $table->integer('maMuc')->unsigned()->nullable()->default(1);
             $table->integer('maCauHoi')->unsigned()->nullable()->default(1);
-            $table->foreign('maChuong')->references('id')->on('chuong')->onDelete('cascade');
+            $table->foreign('maMuc')->references('id')->on('muc')->onDelete('cascade');
             $table->foreign('maCauHoi')->references('maCauHoi')->on('cau_hoi')->onDelete('cascade');
             $table->timestamps();
         });

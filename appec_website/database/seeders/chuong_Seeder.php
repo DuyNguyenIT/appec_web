@@ -4,7 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-class cau_hoi_Seeder extends Seeder
+
+class chuong_Seeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,8 +14,8 @@ class cau_hoi_Seeder extends Seeder
      */
     public function run()
     {
-        DB::table('cau_hoi')->insert([
-            ['maCauHoi'=>'1','noiDungCauHoi'=>'quyển báo cáo','maKQHT'=>'1','maLoaiHTDG'=>'T8','id_muc'=>1]
+        DB::table('chuong')->insert([
+            ['id'=>'1','tenChuong'=>'text','maHocPhan'=>'000000']
          ]);
     }
 }

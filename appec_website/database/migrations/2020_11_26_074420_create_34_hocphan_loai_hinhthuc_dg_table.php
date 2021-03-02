@@ -17,6 +17,7 @@ class Create34HocphanLoaiHinhthucDgTable extends Migration
             $table->string('maHocPhan',20);
             $table->integer('maLoaiDG')->unsigned()->nullable()->default(12);
             $table->string('maLoaiHTDG',255);
+            $table->integer('groupCT')->nullable()->default(1);
             $table->integer('trongSo')->unsigned()->nullable()->default(12);
             $table->primary(['maHocPhan','maLoaiDG','maLoaiHTDG']);
             $table->boolean('isDelete')->nullable()->default(false);

@@ -15,6 +15,17 @@ class hoc_phan_Seeder extends Seeder
     {
         DB::table('hoc_phan')->insert([
             [   
+                'maHocPhan'=>'000000',
+                'tenHocPhan'=>'text',
+                'tongSoTinChi'=>'0',
+                'tinChiLyThuyet'=>'0',
+                'tinChiThucHanh'=>'0',
+                'moTaHocPhan'=>'text',
+               
+                'maCTKhoiKT'=>'A4',
+                'dacTrung'=>0
+            ],
+            [   
                 'maHocPhan'=>'220100',
                 'tenHocPhan'=>'Lý thuyết đồ thị',
                 'tongSoTinChi'=>'3',

@@ -130,7 +130,7 @@
                                 <td>{{ $data->soCauHoi }}</td>
                                 <td>{{ $data->ghiChu }}</td>
                                 <td>
-                                  <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/cau-truc-de-tu-luan/'.$data->maDe) }}" class="btn btn-primary">Cấu trúc đề thi</a>
+                                  <a href="" class="btn btn-primary">Cấu trúc nội dung</a>
                                   <button class="btn btn-danger">Xóa</button>
                                 </td>
                               </tr>
