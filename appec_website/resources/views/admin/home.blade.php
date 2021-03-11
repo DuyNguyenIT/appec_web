@@ -9,15 +9,15 @@
           <div class="row mb-2">
             <div class="col-sm-6">
               <h1 class="m-0 text-dark">
-                Bảng điều khiển<noscript></noscript>
+                Control panel<noscript></noscript>
                 <nav></nav>
               </h1>
             </div>
             <!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                <li class="breadcrumb-item active">Bảng điều khiển</li>
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active">Control panel</li>
               </ol>
             </div>
             <!-- /.col -->
