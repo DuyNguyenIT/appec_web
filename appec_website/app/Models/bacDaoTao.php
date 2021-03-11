@@ -12,6 +12,7 @@ class bacDaoTao extends Model
     public $incrementing = false;
     protected $table='bac_dao_tao';
     protected $primaryKey = 'maBac';
-    protected $fillable = ['maBac','tenBac'];
+    //PTTMai có sửa giá trị trong biến $fillable
+    protected $fillable = ['maBac','tenBac', 'isDelete'];
     
 }
