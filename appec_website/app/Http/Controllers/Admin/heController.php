@@ -19,10 +19,10 @@ class heController extends Controller
     {
         try {
             $he=he::updateOrCreate(['maHe'=>$request->maHe],['tenHe'=>$request->tenHe,'isdelete'=>false]);
-            alert()->success('Thêm thành công', 'Thông báo');
+            alert()->success('Added successfully', 'Message')->persistent('Close');
             return redirect('/quan-ly/he');
         } catch (\Throwable $th) {
-            alert()->error('Lỗi:'.$th, 'Cảnh báo');
+            alert()->error('Error:'.$th, 'Can not add this entry');
             return redirect('/quan-ly/he');
         }
     }
@@ -31,10 +31,10 @@ class heController extends Controller
     {
         try {
             $he=he::updateOrCreate(['maHe'=>$request->maHe],['tenHe'=>$request->tenHe,'isdelete'=>false]);
-            alert()->success('Sửa thành công', 'Thông báo');
+            alert()->success('Updated successfully', 'Message');
             return redirect('/quan-ly/he');
         } catch (\Throwable $th) {
-            alert()->error('Lỗi:'.$th, 'Cảnh báo');
+            alert()->error('Error:'.$th, 'Update failed');
             return redirect('/quan-ly/he');
         }
     }
@@ -44,10 +44,10 @@ class heController extends Controller
     {
         try {
             $he=he::updateOrCreate(['maHe'=>$maHe],['isDelete'=>true]);
-            alert()->success('Xóa thành công', 'Thông báo');
+            alert()->success('Deleted successful', 'Message');
             return redirect('/quan-ly/he');
         } catch (\Throwable $th) {
-            alert()->error('Lỗi:'.$th, 'Cảnh báo');
+            alert()->error('Error:'.$th, 'Delete failed');
             return redirect('/quan-ly/he');
         }
     }
