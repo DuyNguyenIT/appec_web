@@ -15,8 +15,8 @@ class Create54MucTable extends Migration
     {
         Schema::create('muc', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('maMucVB')->nullable()->default('1');
-            $table->text('tenMuc')->nullable()->default('text');
+            $table->text('maMucVB')->nullable()->default(null);
+            $table->text('tenMuc')->nullable()->default(null);
             $table->integer('id_chuong')->unsigned()->nullable()->default(1);
             $table->timestamps();
             $table->foreign('id_chuong')->references('id')->on('chuong')->onDelete('cascade');

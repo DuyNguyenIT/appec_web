@@ -15,7 +15,7 @@ class Create36TieuChuanDanhGiaTable extends Migration
     {
         Schema::create('TIEUCHUAN_DANHGIA', function (Blueprint $table) {
            $table->increments('maTCDG');
-           $table->text('tenTCDG')->nullable()->default('text');
+           $table->text('tenTCDG')->nullable()->default(null);
            $table->boolean('isDelete')->nullable()->default(false);
            $table->float('diem')->nullable()->default(0);
            $table->integer('maNoiDungQH')->unsigned()->nullable()->default(12);

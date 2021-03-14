@@ -16,9 +16,9 @@ class Create0UsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->string('username')->unique();
             $table->primary('username');
-            $table->text('email')->nullable()->default('text');
-            $table->text('password')->nullable()->default('text');
-            $table->integer('permission')->unsigned()->nullable()->default(12);
+            $table->text('email')->nullable()->default(null);
+            $table->text('password')->nullable()->default(null);
+            $table->integer('permission')->unsigned()->nullable()->default(1);
             $table->boolean('isBlock')->nullable()->default(false);
             $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();

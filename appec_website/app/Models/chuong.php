@@ -10,6 +10,7 @@ class chuong extends Model
     use HasFactory;
     protected $table='chuong';
     protected $fillable=['tenchuong','tenkhongdau','soTietLT','soTietTH','soTietKhac','mota','maHocPhan','isdelete'];
+    
     public function hocphan()
     {
         return $this->belongsTo('App\Models\hocPhan', 'maHocPhan', 'maHocPhan');

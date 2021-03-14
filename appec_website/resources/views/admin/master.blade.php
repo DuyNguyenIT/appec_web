@@ -175,9 +175,15 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ asset('/quan-ly/he') }}" class="nav-link">
+                <a href="{{ asset('/quan-ly/chuyen-nganh') }}" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
                   <p>Specialized</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ asset('/quan-ly/he') }}" class="nav-link">
+                  <i class="nav-icon fas fa-book-reader"></i>
+                  <p>Forms of training</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -201,7 +207,7 @@
               <li class="nav-item">
                 <a href="{{ asset('/quan-ly/hoc-phan') }}" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
-                  <p>Course</p>
+                  <p>Courses</p>
                 </a>
               </li>
               <li class="nav-item">

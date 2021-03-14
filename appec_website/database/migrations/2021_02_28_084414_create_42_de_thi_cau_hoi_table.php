@@ -14,9 +14,9 @@ class Create42DeThiCauHoiTable extends Migration
     public function up()
     {
         Schema::create('DE_THI_CAU_HOI', function (Blueprint $table) {
-            $table->integer('maDe')->unsigned()->nullable()->default(12);
+            $table->increments('id');
+            $table->integer('maDe')->unsigned()->nullable()->default(1);
             $table->integer('maCauHoi')->unsigned()->nullable()->default(1);
-            $table->primary(['maDe','maCauHoi']);
             $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
             $table->foreign('maDe')->references('maDe')->on('DE_THI')->onDelete('cascade');

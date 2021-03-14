@@ -14,8 +14,8 @@ class Create1BacDaoTaoTable extends Migration
     public function up()
     {
         Schema::create('BAC_DAO_TAO', function (Blueprint $table) {
-            $table->string('maBac',255)->unique();
-            $table->text('tenBac')->nullable()->default('text');
+            $table->string('maBac',191)->unique();
+            $table->text('tenBac')->nullable()->default(null);
             $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
         });

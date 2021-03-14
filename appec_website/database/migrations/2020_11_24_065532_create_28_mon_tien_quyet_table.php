@@ -14,9 +14,9 @@ class Create28MonTienQuyetTable extends Migration
     public function up()
     {
         Schema::create('MON_TIEN_QUYET', function (Blueprint $table) {
+            $table->increments('id');
             $table->string('maHocPhan',20);
-            $table->string('maMonTienQuyet',20)->unique();
-            $table->primary(['maHocPhan','maMonTienQuyet']);
+            $table->string('maMonTienQuyet',20);
             $table->boolean('isDelete')->nullable()->default(false);
             $table->foreign('maHocPhan')->references('maHocPhan')->on('HOC_PHAN')->onDelete('cascade');
 

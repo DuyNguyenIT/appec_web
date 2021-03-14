@@ -14,10 +14,9 @@ class Create27HocPhanCtKhoiKienThucTable extends Migration
     public function up()
     {
         Schema::create('HOCPHAN_CTKHOIKIENTHUC', function (Blueprint $table) {
-            $table->string('maHocPhan',20)->unique();
-            $table->string('maCTKhoiKT',255)->unique();
-            $table->primary(['maHocPhan','maCTKhoiKT']);
-            $table->boolean('isDelete')->nullable()->default(false);
+           $table->increments('id');
+            $table->string('maHocPhan',20);
+            $table->string('maCTKhoiKT',255);
             $table->timestamps();
             $table->foreign('maHocPhan')->references('maHocPhan')->on('HOC_PHAN')->onDelete('cascade');
             $table->foreign('maCTKhoiKT')->references('maCTKhoiKT')->on('CT_KHOI_KIEN_THUC')->onDelete('cascade');

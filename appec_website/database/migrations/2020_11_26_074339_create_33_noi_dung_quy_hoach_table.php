@@ -16,11 +16,11 @@ class Create33NoiDungQuyHoachTable extends Migration
         Schema::create('noi_dung_quy_hoach', function (Blueprint $table) {
             
             $table->increments('maNoiDungQH');
-            $table->text('tenNoiDungQH')->nullable()->default('text');
-            $table->text('noiDungQH')->nullable()->default('text');
+            $table->text('tenNoiDungQH')->nullable()->default(null);
+            $table->text('noiDungQH')->nullable()->default(null);
             $table->string('maMucDoDG');
-            $table->integer('maKQHT')->unsigned()->nullable()->default(12);
-            $table->integer('maCTBaiQH')->unsigned()->nullable()->default(12);
+            $table->integer('maKQHT')->unsigned()->nullable()->default(1);
+            $table->integer('maCTBaiQH')->unsigned()->nullable()->default(1);
             $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
             $table->foreign('maKQHT')->references('maKQHT')->on('KQHT_HP')->onDelete('cascade');

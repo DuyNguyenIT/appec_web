@@ -14,9 +14,9 @@ class Create12CtDaotaoCdrCd1Table extends Migration
     public function up()
     {
         Schema::create('CTDT_CDRCD1', function (Blueprint $table) {
-            $table->integer('maCT')->unsigned()->nullable()->default(12);
-            $table->integer('maCDR1')->unsigned()->nullable()->default(12);
-            $table->primary(['maCT', 'maCDR1']);
+            $table->increments('id');
+            $table->integer('maCT')->unsigned()->nullable()->default(1);
+            $table->integer('maCDR1')->unsigned()->nullable()->default(1);
             $table->boolean('isDelete')->nullable()->default(false);
             
             $table->foreign('maCDR1')->references('maCDR1')->on('CDR_CD1')

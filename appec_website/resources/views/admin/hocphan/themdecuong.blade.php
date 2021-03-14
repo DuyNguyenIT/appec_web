@@ -56,7 +56,7 @@
                 Mã học phần: {{ $hocPhan->maHocPhan }}
                 </h3>
               </div>
-              <a href="{{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/in-de-cuong-mon-hoc/'.$hocPhan->maHocPhan) }}">IN ĐỀ CƯƠNG</a>
+              <a class="btn btn-primary" href="{{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/in-de-cuong-mon-hoc/'.$hocPhan->maHocPhan) }}">IN ĐỀ CƯƠNG</a>
               <!-- /.card-header -->
               <div class="card-body">
               <h5><b>1. Thông tin chung</b></h5>    <!-- ----------------------------------1. Thông tin chung-------------------- -->
@@ -557,6 +557,7 @@
                             @endif
                           @endif
                       @endforeach
+
                   @endforeach
                 </tbody>
               </table>
@@ -634,12 +635,14 @@
                   @foreach ($noidung as $data)
                   <tr>
                     <td>{{ $data->tenchuong }}
-                    <!-- Button trigger modal -->
+                      
+                    <!-- Button thêm mục -->
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addMuc">
-                      <i class="fas fa-plus"></i>Thêm mục
+                      <i class="fas fa-plus"></i>Adding item
                     </button>
 
-                    <!-- Modal -->
+
+                    <!-- Modal thêm mục -->
                     <div class="modal fade" id="addMuc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                       <div class="modal-dialog" role="document">
                         <form action="{{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/them_noi_dung_muc_chuong') }}" method="POST">
@@ -674,8 +677,63 @@
                           
                       </div>
                     </div>
-                    </td>
 
+                    {{-- Button thêm kỹ năng UIT --}}
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addMucDoKyNangUIT">
+                      <i class="fas fa-plus"></i>Adding level of skill
+                    </button>
+                    <div class="modal fade" id="addMucDoKyNangUIT" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <form action="{{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/them_muc_do_ky_nang_uti') }}" method="POST">
+                          @csrf
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Adding level of skill</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <input type="text" name="id_chuong" value="{{ $data->id }}" hidden>
+
+                              <div class="form-group">
+                                <label for="" >Choosing topic:</label>
+                                <select name="maCDR1" id="" class="form-control">
+                                 @foreach ($CDR1 as $cdr1)
+                                     <option value="{{ $cdr1->maCDR1}}">{{ $cdr1->tenCDR1 }}</option>
+                                 @endforeach
+                                </select>
+                              </div>
+
+                              <div class="form-group">
+                                <label for="" >Result assiment:</label>
+                                <select name="maKQHT[]" id="" class="form-control" multiple>
+                                  @foreach ($getKQHT as $x)
+                                      <option value="{{ $x->maKQHT }}">{{ $x->maKQHTVB }}-- {{ $x->tenKQHT }}</option>
+                                  @endforeach
+                                </select>
+                              </div>
+
+                              <div class="form-group">
+                                <label for="" >Choosing U - I - T:</label>
+                                <select name="ky_nang" id="" class="form-control">
+                                  <option value="U">U</option>
+                                  <option value="I">I</option>
+                                  <option value="T">T</option>
+                                </select>
+                              </div>
+
+                            </div>
+                            <div class="modal-footer">
+                              <button type="submit" class="btn btn-primary">Save</button>
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </form>
+                          
+                      </div>
+                    </div>
+                  </td>
                     <td>
                       @foreach ($data->chuong_kqht as $item)
                           {{ $item->maKQHTVB }};
@@ -699,13 +757,22 @@
                         <td></td>
                       </tr>
                   @endforeach
+                 @foreach ($CDR1 as $x)
                   <tr>
-                    
+                      <td>Chủ đề: {{ $x->tenCDR1 }}</td>
+                      <td colspan="4">
+                        @foreach ($mudokynangUIT as $uit)
+                          @if ($uit->maCDR1==$x->maCDR1 && $uit->id_chuong==$data->id)
+                              {{ $uit->maKQHTVB }}({{ $uit->ky_nang }});
+                          @endif
+                        @endforeach 
+                      </td>    
                   </tr>
+                 @endforeach
+                
                
                   @endforeach
-                 
-                 
+
                 </tbody>
               </table>
              <h5><b>6. Phương pháp giảng dạy </b></h5>    <!----------------------------------6. Phương pháp giảng dạy: --------------------------->
@@ -816,6 +883,13 @@
                         <label for="">Tỉ lệ</label>
                         <input type="number" min="25" name="trongSo" class="form-control" required>
                       </div>
+                      <div class="form-group">
+                        <label for="">Group</label>
+                        <select name="groupCT" id="" class="form-control">
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                        </select>
+                      </div>
                     </div>
                     <div class="modal-footer">
                       <button type="submit" class="btn btn-primary">Save</button>
@@ -849,23 +923,45 @@
                 <td colspan="2">Ghi chú công thức tính điểm</td>
                 <td colspan="2">
                   @php
-                      $n=$hocPhan_loaiHTDG->count();
+                      $n=$hocPhan_loaiHTDG->where('groupCT',1)->count();
                       $cr=0;
                   @endphp
                   @foreach ($hocPhan_loaiHTDG as $data)
-                  @if ($cr!=0 && $cr<$n)
+                  @if ($cr!=0 && $cr<$n && $data->groupCT==1)
                       +
                       @php
                           $cr++;
                       @endphp
-                  @else
+                      {{ $data->loaiHTDanhGia['maLoaiHTDG'] }}*{{ $data->trongSo }}%
+                  @elseif($data->groupCT==1)
                       @php
                           $cr++;
                       @endphp
+                      {{ $data->loaiHTDanhGia['maLoaiHTDG'] }}*{{ $data->trongSo }}%
                   @endif
-                   {{ $data->loaiHTDanhGia['maLoaiHTDG'] }}*{{ $data->trongSo }}%
+                   
                   @endforeach
-                
+                  <br>  hoặc <br>
+                  {{-- groupCT==2 --}}
+                  @php
+                  $n=$hocPhan_loaiHTDG->where('groupCT',2)->count();
+                  $cr=0;
+              @endphp
+              @foreach ($hocPhan_loaiHTDG as $data)
+              @if ($cr!=0 && $cr<$n && $data->groupCT==2)
+                  +
+                  @php
+                      $cr++;
+                  @endphp
+                  {{ $data->loaiHTDanhGia['maLoaiHTDG'] }}*{{ $data->trongSo }}%
+              @elseif($data->groupCT==2)
+                  @php
+                      $cr++;
+                  @endphp
+                  {{ $data->loaiHTDanhGia['maLoaiHTDG'] }}*{{ $data->trongSo }}%
+              @endif
+               
+              @endforeach
                 </td>
               </tr>
             </table>

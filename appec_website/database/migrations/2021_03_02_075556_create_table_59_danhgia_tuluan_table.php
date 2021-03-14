@@ -16,7 +16,7 @@ class CreateTable59DanhgiaTuluanTable extends Migration
         Schema::create('danhgia_tuluan', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('maPATL')->unsigned()->nullable()->default(1);
-            $table->integer('maPhieuCham')->unsigned()->nullable()->default(12);
+            $table->integer('maPhieuCham')->unsigned()->nullable()->default(1);
             $table->float('diemDG')->nullable()->default(0.0);
             $table->integer('lanDG')->unsigned()->nullable()->default(1);
             $table->timestamps();

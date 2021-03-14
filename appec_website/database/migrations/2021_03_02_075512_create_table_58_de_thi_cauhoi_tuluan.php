@@ -15,9 +15,9 @@ class CreateTable58DeThiCauhoiTuluan extends Migration
     {
         Schema::create('de_thi_cauhoi_tuluan', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('maDe')->unsigned()->nullable()->default(12);
+            $table->integer('maDe')->unsigned()->nullable()->default(1);
             $table->integer('maCauHoi')->unsigned()->nullable()->default(1);
-            $table->integer('maPATL')->unsigned()->nullable()->default(12);
+            $table->integer('maPATL')->unsigned()->nullable()->default(1);
             $table->timestamps();
             $table->foreign('maDe')->references('maDe')->on('de_thi')->onDelete('cascade');
             $table->foreign('maCauHoi')->references('maCauHoi')->on('cau_hoi')->onDelete('cascade');

@@ -15,10 +15,10 @@ class Create24LopHocCtdaotaoTable extends Migration
     {
         Schema::create('LOP_HOC_CTDAOTAO', function (Blueprint $table) {
            
-            $table->string('maLop',20)->unique();
-            $table->integer('maCT')->unsigned()->nullable()->default(12);
-            
-            $table->primary(['maLop','maCT']);
+            $table->increments('id');
+            $table->string('maLop',20);
+            $table->integer('maCT')->unsigned()->nullable()->default(1);
+
             $table->boolean('isDelete')->nullable()->default(false);
             $table->foreign('maCT')->references('maCT')->on('CT_DAO_TAO')->onUpdate('restrict')->onDelete('cascade');
             $table->foreign('maLop')->references('maLop')->on('LOP')->onUpdate('restrict')->onDelete('cascade');

@@ -15,9 +15,9 @@ class Create14CdrCd3Table extends Migration
     {
         Schema::create('CDR_CD3', function (Blueprint $table) {
             $table->increments('maCDR3');
-            $table->text('maCDR3VB')->nullable()->default('text');
-            $table->text('tenCDR3')->nullable()->default('text');
-            $table->integer('maCDR2')->unsigned()->nullable()->default(12);
+            $table->text('maCDR3VB')->nullable()->default(null);
+            $table->text('tenCDR3')->nullable()->default(null);
+            $table->integer('maCDR2')->unsigned()->nullable()->default(1);
             $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
 

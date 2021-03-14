@@ -16,7 +16,7 @@ class Create2NganhTable extends Migration
         Schema::create('NGANH', function (Blueprint $table) {
             $table->string('maNganh',255)->unique();
             $table->primary('maNganh');
-            $table->text('tenNganh')->nullable()->default('text');
+            $table->text('tenNganh')->nullable()->default(null);
             $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
         });

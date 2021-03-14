@@ -14,17 +14,13 @@ class Create26HocphanGiangdayTable extends Migration
     public function up()
     {
         Schema::create('HOCPHAN_PPGIANGDAY', function (Blueprint $table) {
+            $table->increments('id');
             $table->string('maHocPhan',20);
-            $table->integer('maPP')->unsigned()->nullable()->default(12);
-            $table->longText('dienGiai')->nullable()->default('text');
-            $table->primary(['maHocPhan','maPP']);
+            $table->integer('maPP')->unsigned()->nullable()->default(1);
+            $table->longText('dienGiai')->nullable()->default(null);
             $table->boolean('isDelete')->nullable()->default(false);
-            $table->foreign('maHocPhan')->references('maHocPhan')->on('HOC_PHAN')
-            ->onUpdate('restrict')
-            ->onDelete('cascade');
-            $table->foreign('maPP')->references('maPP')->on('PP_GIANGDAY')
-            ->onUpdate('restrict')
-            ->onDelete('cascade');
+            $table->foreign('maHocPhan')->references('maHocPhan')->on('HOC_PHAN')->onUpdate('restrict')->onDelete('cascade');
+            $table->foreign('maPP')->references('maPP')->on('PP_GIANGDAY')->onUpdate('restrict')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -59,64 +59,63 @@
                     <div class="card">
                       <div class="card-header">
                         <h3 class="card-title">
-                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" >
-                            <i class="fas fa-plus"></i> Thêm
-                          </button>
-    
-                          <!-- Modal -->
-                          <div class="modal fade" id="exampleModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                              <form action="{{ asset('/giang-vien/quy-hoach-danh-gia/them-quy-hoach') }}" method="post" enctype="multipart/form-data">
-                              @csrf
-                                <div class="modal-content">
-                                <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModalLabel">
-                                    Thêm quy hoạch đánh giá
-                                  </h5>
-                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
-                                    <span aria-hidden="true">&times;</span>
-                                  </button>
-                                </div>
-                                <div class="modal-body">
-                                  <div class="form-group">
-                                    <input type="text" name="maHocPhan" value="{{$hp->maHocPhan}}" hidden>
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="" style="font-size: 20px">Chọn hình thức đánh giá:</label>
-                                    <select name="maLoaiDG" class="form-control custom-select">
-                                        @foreach ($ldg as $x)
-                                            <option value="{{$x->maLoaiDG}}">{{$x->tenLoaiDG}}</option>
-                                        @endforeach
-                                    </select>
-                                  </div>
-                                
-                                  <div class="form-group">
-                                    <label for="" style="font-size: 20px">Nhập tỉ lệ:</label>
-                                    <input required type="text" name="trongSo" class="form-control" placeholder="VD:20,30,..." style="width: 100%" />
-                                  </div>
-    
-                                  <div class="form-group">
-                                    <label for="" style="font-size: 20px" >Chọn phương pháp đánh giá:</label>
-                                    <select name="maLoaiHTDG" id="" class="form-control custom-select">
-                                        @foreach ($lhtdg as $x)
-                                        <option value="{{$x->maLoaiHTDG}}">{{$x->tenLoaiHTDG}}</option>
-                                      @endforeach
-                                    </select>
-                                  </div>
-                                </div>
-                                <div class="modal-footer">
-                                  <button type="submit" class="btn btn-primary">
-                                    Lưu
-                                  </button>
-                                  <button type="button" class="btn btn-secondary" data-dismiss="modal" >
-                                    Hủy
-                                  </button>
-                                </div>
+                          
+                        @if ($count_ct==0)
+                          <form action="{{ asset('/giang-vien/quy-hoach-danh-gia/chon-nhom-cong-thuc') }}" method="post">
+                          @csrf   
+                          <div class="form-group">
+                                <label for="">Chọn nhóm công thức:</label>
+                                <select name="groupCT" id="" class="form-control">
+                                  <option value="1">
+                                    @php
+                                        $n=$hocphan_loai_htdg_array->where('groupCT',1)->count();
+                                        $cr=0;
+                                    @endphp
+                                    @foreach ($hocphan_loai_htdg_array as $data)
+                                      @if ($cr!=0 && $cr<$n && $data->groupCT==1)
+                                          +
+                                          @php
+                                              $cr++;
+                                          @endphp
+                                          {{ $data->loaiHTDanhGia['maLoaiHTDG'] }}*{{ $data->trongSo }}%
+                                      @elseif($data->groupCT==1)
+                                          @php
+                                              $cr++;
+                                          @endphp
+                                          {{ $data->loaiHTDanhGia['maLoaiHTDG'] }}*{{ $data->trongSo }}%
+                                      @endif
+                                    @endforeach
+                                  </option>
+                                  <option value="2" >
+
+                                    @php
+                                        $n=$hocphan_loai_htdg_array->where('groupCT',2)->count();
+                                        $cr=0;
+                                    @endphp
+                                    @foreach ($hocphan_loai_htdg_array as $data)
+                                      @if ($cr!=0 && $cr<$n && $data->groupCT==2)
+                                          +
+                                          @php
+                                              $cr++;
+                                          @endphp
+                                          {{ $data->loaiHTDanhGia['maLoaiHTDG'] }}*{{ $data->trongSo }}%
+                                      @elseif($data->groupCT==2)
+                                          @php
+                                              $cr++;
+                                          @endphp
+                                          {{ $data->loaiHTDanhGia['maLoaiHTDG'] }}*{{ $data->trongSo }}%
+                                      @endif
+                                    @endforeach
+                                  </option>
+                                </select>
                               </div>
-                              </form>
-                            
-                            </div>
-                          </div>
+                              <button type="submit" class="btn btn-primary"  >
+                                <i class="fas fa-plus"></i> Choose
+                              </button>
+                        @endif
+                         
+                      </form>
+                       
                         </h3>
                       </div>
                       <!-- /.card-header -->

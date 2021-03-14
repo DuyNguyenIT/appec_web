@@ -14,11 +14,11 @@ class Create43CauHoiTieuChiChamdiemTable extends Migration
     public function up()
     {
         Schema::create('CAU_HOI_TCCHAMDIEM', function (Blueprint $table) {
-            $table->integer('maCauHoi')->default(12);
-            $table->integer('maTCCD')->unsigned()->nullable()->default(12);
-            $table->integer('maTCDG')->unsigned()->nullable()->default(12);
+            $table->increments('id');
+            $table->integer('maCauHoi')->default(1);
+            $table->integer('maTCCD')->unsigned()->nullable()->default(1);
+            $table->integer('maTCDG')->unsigned()->nullable()->default(1);
             $table->boolean('isDelete')->nullable()->default(false);
-            $table->primary(['maCauHoi','maTCCD','maTCDG']);
             $table->timestamps();
             $table->foreign('maTCCD')->references('maTCCD')->on('TIEU_CHI_CHAM_DIEM')->onDelete('cascade');
             $table->foreign('maTCDG')->references('maTCDG')->on('TIEUCHUAN_DANHGIA')->onDelete('cascade');

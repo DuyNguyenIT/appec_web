@@ -14,10 +14,10 @@ class Create21LopTable extends Migration
     public function up()
     {
         Schema::create('LOP', function (Blueprint $table) {
-            $table->string('maLop',255)->unique();
+            $table->string('maLop',191);
             $table->primary('maLop');
-            $table->text('tenLop')->nullable()->default('text');
-            $table->text('namTS')->nullable()->default('text');
+            $table->text('tenLop')->nullable()->default(null);
+            $table->text('namTS')->nullable()->default(null);
             $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
         });

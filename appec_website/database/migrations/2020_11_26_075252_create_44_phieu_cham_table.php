@@ -15,21 +15,21 @@ class Create44PhieuChamTable extends Migration
     {
         Schema::create('phieu_cham', function (Blueprint $table) {
             $table->increments('maPhieuCham');
-            $table->string('maGV',255);
-            $table->string('maSSV',255);
-            $table->integer('maDe')->unsigned()->nullable()->default(12);
+            $table->string('maGV',191);
+            $table->string('maSSV',191);
+            $table->integer('maDe')->unsigned()->nullable()->default(1);
 
             
-            $table->text('diaDiem')->nullable()->default('text');
-            $table->text('ghiChu')->nullable()->default('text');
+            $table->text('diaDiem')->nullable()->default(null);
+            $table->text('ghiChu')->nullable()->default(null);
             $table->float('diemSo')->nullable()->default(0.0);
-            $table->text('diemChu')->nullable()->default('text');
-            $table->text('yKienDongGop')->nullable()->default('text');
+            $table->text('diemChu')->nullable()->default(null);
+            $table->text('yKienDongGop')->nullable()->default(null);
             $table->timestamp('ngayCham')->useCurrent = true;
             $table->boolean('isDelete')->nullable()->default(false);
             $table->boolean('trangThai')->nullable()->default(false);
-            $table->integer('xepHang')->unsigned()->nullable()->default(12);
-            $table->integer('loaiCB')->unsigned()->nullable()->default(12);
+            $table->integer('xepHang')->unsigned()->nullable()->default(1);
+            $table->integer('loaiCB')->unsigned()->nullable()->default(1);
 
             
             $table->foreign('maGV')->references('maGV')->on('GIANG_VIEN')->onDelete('cascade');

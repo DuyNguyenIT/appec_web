@@ -22,10 +22,12 @@ class nganhController extends Controller
             $nganh->maNganh=$request->maNganh;
             $nganh->tenNganh=$request->tenNganh;
             $nganh->save();
-            return redirect('/quan-ly/nganh-hoc')->with('success','Thêm thành công!');
+            alert()->success('Added successfully', 'Message')->persistent('Close');
+            return redirect('/quan-ly/nganh-hoc');
     
         } catch (\Throwable $th) {
-            return redirect('/quan-ly/nganh-hoc')->with('warning','Lỗi:'.$th);
+            alert()->error('Error:'.$th, 'Can not add this entry');
+            return redirect('/quan-ly/nganh-hoc');
         }
     }
 
@@ -36,9 +38,11 @@ class nganhController extends Controller
             $nganh->maNganh=$request->maNganh;
             $nganh->tenNganh=$request->tenNganh;
             $nganh->update();
-            return redirect('/quan-ly/nganh-hoc')->with('success','Thêm thành công!');
+            alert()->success('Updated successfully', 'Message');
+            return redirect('/quan-ly/nganh-hoc');
         } catch (\Throwable $th) {
-            return redirect('/quan-ly/nganh-hoc')->with('warning','Lỗi:'.$th);
+            alert()->error('Error:'.$th, 'Update failed');
+            return redirect('/quan-ly/nganh-hoc');
         }
     }
 
@@ -48,10 +52,11 @@ class nganhController extends Controller
             $nganh=nganh::where('maNganh',$maNganh)->first();
             $nganh->isDelete=true;
             $nganh->update();
-            return redirect('/quan-ly/nganh-hoc')->with('success','Xóa thành công!');
+            alert()->success('Deleted successful', 'Message');
+            return redirect('/quan-ly/nganh-hoc');
         } catch (\Throwable $th) {
-            return redirect('/quan-ly/nganh-hoc')->with('warning','Lỗi:'.$th);
-
+            alert()->error('Error:'.$th, 'Delete failed');
+            return redirect('/quan-ly/nganh-hoc');
         }
         
     }

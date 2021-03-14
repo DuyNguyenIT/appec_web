@@ -10,6 +10,5 @@ class giangDay extends Model
 {
     use HasFactory;
     protected $table='giangday';
-    protected $primaryKey=['maHocPhan','maLop','maGV','maHK','namHoc','maBaiQH','maCDR3'];
-    public $incrementing = false;
+    public $fillable=['maHocPhan','maLop','maGV','maHK','namHoc','maBaiQH','maCDR3'];
 }

@@ -130,6 +130,23 @@ class chamDiemBCController extends Controller
         ->where('maCTBaiQH',$maCTBaiQH)
         ->first();
         Session::put('maGV_2',$gv2->maGV_2);
+
+
+        // nhập kết quả cho tự luận
+        if ($loaiHTDG->maLoaiHTDG=="T1") {
+            # code...
+            return view('giangvien.ketqua.tuluan.ketquatuluan');
+        }
+        //nhập kết quả cho thực hành
+        if ($loaiHTDG->maLoaiHTDG=="T3") {
+            # code...
+            return view('giangvien.ketqua.thuchanh.ketquathuchanh');
+        }
+        //nhập kết quả cho trắc nghiệm
+        if ($loaiHTDG->maLoaiHTDG=="T2") {
+            return view('giangvien.ketqua.tracnghiem.ketquatracnghiem');
+        }
+        //nhập kết quả cho đồ án
         if($loaiHTDG->maLoaiHTDG=="T8")
         {
 

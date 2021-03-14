@@ -14,14 +14,14 @@ class Create8HocPhanTable extends Migration
     public function up()
     {
         Schema::create('HOC_PHAN', function (Blueprint $table) {
-            $table->string('maHocPhan',255)->unique();
+            $table->string('maHocPhan',191)->unique();
             $table->primary('maHocPhan');
-            $table->text('tenHocPhan')->nullable()->default('text');
-            $table->integer('tongSoTinChi')->unsigned()->nullable()->default(12);
-            $table->integer('tinChiLyThuyet')->unsigned()->nullable()->default(12);
-            $table->integer('tinChiThucHanh')->unsigned()->nullable()->default(12);
-            $table->longText('yeuCau')->nullable()->default('text');
-            $table->text('moTaHocPhan')->nullable()->default('text');
+            $table->text('tenHocPhan')->nullable()->default(null);
+            $table->integer('tongSoTinChi')->unsigned()->nullable()->default(1);
+            $table->integer('tinChiLyThuyet')->unsigned()->nullable()->default(1);
+            $table->integer('tinChiThucHanh')->unsigned()->nullable()->default(1);
+            $table->longText('yeuCau')->nullable()->default(null);
+            $table->text('moTaHocPhan')->nullable()->default(null);
             $table->integer('dacTrung')->unsigned()->nullable()->default(0);
 
             $table->boolean('isDelete')->nullable()->default(false);

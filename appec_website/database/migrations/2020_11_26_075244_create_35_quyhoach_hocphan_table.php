@@ -16,9 +16,9 @@ class Create35QuyhoachHocphanTable extends Migration
         Schema::create('QUYHOACH_HOCPHAN', function (Blueprint $table) {
             $table->increments('id_QH_HP');
             $table->string('maHocPhan',10);
-            $table->integer('maLoaiDG')->length(5)->default(12);
-            $table->integer('maLoaiHTDG')->length(5)->default(12);
-            $table->integer('maBaiQH')->length(5)->default(12);
+            $table->integer('maLoaiDG')->length(5)->default(1);
+            $table->integer('maLoaiHTDG')->length(5)->default(1);
+            $table->integer('maBaiQH')->length(5)->default(1);
             $table->string('maGV',10);
             $table->boolean('isDelete')->nullable()->default(false);
 

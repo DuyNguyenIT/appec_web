@@ -1,12 +1,17 @@
-@extends('giangvien.master')
+@extends('giangvien.no_menu_master')
 @section('content')
+<!-- jQuery -->
+<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 <div class="content-wrapper" style="min-height: 96px;">
     <div class="content-header">
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
               <h1 class="m-0 text-dark">
-                Phân bổ nội dung<noscript></noscript>
+                Cấu trúc đề thi<noscript></noscript>
                 <nav></nav>
               </h1>
             </div>
@@ -14,8 +19,9 @@
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                <li class="breadcrumb-item active">Nội dung đánh giá</li>
-                <li class="breadcrumb-item active">Phân bổ nội dung</li>
+                <li class="breadcrumb-item ">Nội dung đánh giá</li>
+                <li class="breadcrumb-item ">Tự luận</li>
+                <li class="breadcrumb-item active">Cấu trúc đề thi</li>
               </ol>
             </div>
             <!-- /.col -->
@@ -29,82 +35,103 @@
       <section class="content">
         <div class="container-fluid">
           <div class="row">
+            
             <div class="col-12">
               <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title"></h3>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                      <i class="fas fa-plus"></i>Thêm cấu hình
-                    </button>
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                      <div class="modal-dialog" role="document">
-                        <form action="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/them-cau-truc-de-luan') }}" method="post">
-                        @csrf
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Thêm cấu trúc đề thi </h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">×</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                             <input type="text" name="maDe" value="{{ $maDe }}" hidden>
-                             <div class="form-group">
-                               <label for="">Chọn kết quả học tập</label>
-                               <select name="maKQHT" id="" class="form-control">
-                                  @foreach ($kqht as $item)
-                                      <option value="{{ $item->maKQHT}}">{{ $item->tenKQHT }}</option>
-                                  @endforeach
-                               </select>
-                             </div>
-                             <div class="form-group">
-                               <label for="">Số câu hỏi</label>
-                               <input type="text" name="soCauHoi" class="form-control">
-                             </div>
-                             <div class="form-group">
-                               <label for="">Điểm nhóm kết quả học tập</label>
-                               <input type="text" name="diemNhomKQHT" class="form-control">
-                             </div>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Lưu</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                          </div>
-                        </div>
-                        </form>
-                    </div>
-                </div>
-    
 
-                <!-- /.card-header -->
+                <div class="card-header">
+                <a class="btn btn-primary" href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/in-de-tu-luan/'.$dethi->maDe.'/'.$hocphan->maHocPhan) }}">Print</a>
+
+                  <div class="row">
+                    
+                    <div class="col-md-5">
+                        <b>Trường: </b>Đại học Trà Vinh <br>
+                        <b>Lớp:</b>......................... <br>
+                        <b>Họ và tên:</b>................... 
+                    </div>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-5">
+                        KHOA KỸ THUẬT VÀ CÔNG NGHỆ <br>
+                        <b>{{ $dethi->tenDe }}</b><br>
+                        <b>Học phần:</b> {{ $hocphan->tenHocPhan }} <br>
+                        <b>Thời gian thi:</b>  {{ $dethi->thoiGian }} phút <br>
+                        <b>Mã đề:</b> {{ $dethi->maDeVB }}
+                    </div>
+                  </div>
+                  <h3 class="card-title"></h3>
+                <i>  {{ $dethi->ghiChu }}</i>
+                </div>
                 <div class="card-body">
-                  <table id="example2" class="table table-bordered table-hover">
-                    <thead>
-                      <tr>
-                        <th>STT</th>
-                        <th>Tên kết quả học tập</th>
-                        <th>Số câu hỏi</th>
-                        <th>Điểm nhóm kết quả học tập</th>
-                        <th>Tùy chọn</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @php
-                          $i=1;
-                      @endphp
-                      @foreach ($phanBo as $data)
-                          <tr>
-                            <td>{{ $i++ }}</td>
-                            <td>{{ $data->kqht->tenKQHT }}</td>
-                            <td>{{ $data->soCauHoi }}</td>
-                            <td>{{ $data->diemNhomKQHT }}</td>
-                            <td></td>
-                          </tr>
+                  @php
+                      $i=1;
+                  @endphp
+                  @foreach ($noidung as $data)
+                      <b>Câu </b> {{ $i++ }} <b>({{ $data->diem }} điểm)</b>
+                      {!! $data->noiDungCauHoi !!}
+                  @endforeach
+                </div>
+                 
+                <!-- /.card-header -->
+                <div class="card-body" style="background-color: whitesmoke">
+                  <h3>Adding new content form</h3>
+                  <form action="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/them-cau-hoi-de-luan') }}" method="post">
+                  @csrf
+                    <input type="text" name="maDe" value="{{ $dethi->maDe }}" hidden>
+                    <div class="form-group">
+                      <label for="">Chọn chuẩn đầu ra:</label>
+                      <select name="maCDR3" id="" class="form-control" required>
+                        @foreach ($cdr3 as $data)
+                            <option value="{{ $data->maCDR3 }}">{{ $data->maCDR3VB }}--{{ $data->tenCDR3 }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <table id="example2" class="table table-bordered table-hover">
+                      <thead>
+                        <tr>
+                          <th>Order</th>
+                          <th>Question</th>
+                          <th>Choise</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @php
+                            $i=1;
+                        @endphp
+                      @foreach ($cauhoi as $item)
+                        <tr>
+                          <td>{{ $i++ }}</td>
+                          <td>{!! $item->noiDungCauHoi !!}</td>
+                          <td>
+                            <input type="radio" id="ch_{{$item->maCauHoi }}" name="maCauHoi" value="{{$item->maCauHoi }}">
+                          </td>
+                        </tr> 
                       @endforeach
-                    </tbody>
-                    <tfoot></tfoot>
-                  </table>
+                      </tbody>
+                      <tfoot></tfoot>
+                    </table>
+                    </div>
+                    <div class="form-group">
+                      <div class="form-group">
+                        <label for="">Chọn số ý trả lời:</label>
+                        <select name="" id="soTC" class="form-control" >
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                        </select>
+                    </div>
+                    </div>
+                    <div class="form-group">
+                        <div id="tbl-content"></div>
+                    </div>
+                    <div class="form-group">
+                      <button class="btn btn-primary" type="submit">Save</button>
+                      <button class="btn btn-info" type="reset">Cancel</button>
+                    </div>
+                  </form>
                 </div>
                 <!-- /.card-body -->
               </div>
@@ -119,4 +146,28 @@
       <!-- /.content -->
 
 </div>
+<script>
+   $('#soTC').on('change', function() {
+        var soTC= this.value;
+        console.log(soTC);
+        var html="";
+        $('#tbl-content').empty();
+        for (let index = 1; index <= soTC; index++) {
+            html+= "<div class='form-group'>"+
+                  "<label for=''>Nhập nội dung ý:</label>"+
+                  "<textarea name='phuongAn[]' id='ckcontent_"+index+"' cols='30' rows='10' class='form-control' required></textarea>"+
+                  "<label for=''>Nhập điểm</label>"+
+                  "<input type='text' name='diem[]' class='form-control'>"+
+                  "</div>";
+        }
+        console.log(html);
+        $('#tbl-content').append(html);
+        for (let index = 1; index <=soTC; index++) {
+          CKEDITOR.replace( 'ckcontent_'+index, {
+                filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
+                filebrowserUploadMethod: 'form'
+            } );
+        }
+    });
+</script>
 @endsection

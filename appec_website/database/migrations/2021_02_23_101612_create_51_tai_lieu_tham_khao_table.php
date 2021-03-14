@@ -15,9 +15,9 @@ class Create51TaiLieuThamKhaoTable extends Migration
     {
         Schema::create('tai_lieu_tham_khao', function (Blueprint $table) {
             $table->increments('id');
-            $table->longText('giaoTrinh')->nullable()->default('text');
-            $table->longText('thamKhaoThem')->nullable()->default('text');
-            $table->longText('taiLieuKhac')->nullable()->default('text');
+            $table->longText('giaoTrinh')->nullable()->default(null);
+            $table->longText('thamKhaoThem')->nullable()->default(null);
+            $table->longText('taiLieuKhac')->nullable()->default(null);
             $table->string('maHocPhan',20);
             $table->foreign('maHocPhan')->references('maHocPhan')->on('HOC_PHAN')->onUpdate('restrict')->onDelete('cascade');
             $table->timestamps();

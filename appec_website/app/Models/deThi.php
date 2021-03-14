@@ -12,4 +12,5 @@ class deThi extends Model
     protected $primaryKey='maDe';
     public $incrementing = false;
     public $fillable=['maDeVB','soCauHoi','tenDe','thoiGian','maCTBaiQH','ghiChu','isDelete'];
+    
 }

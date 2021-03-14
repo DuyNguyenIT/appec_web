@@ -16,7 +16,7 @@ class Create31LoaiHtDanhgiaTable extends Migration
         Schema::create('LOAI_HT_DANHGIA', function (Blueprint $table) {
             $table->string('maLoaiHTDG',255)->unique();
             $table->primary('maLoaiHTDG');
-            $table->text('tenLoaiHTDG')->nullable()->default('text');
+            $table->text('tenLoaiHTDG')->nullable()->default(null);
             $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
         });

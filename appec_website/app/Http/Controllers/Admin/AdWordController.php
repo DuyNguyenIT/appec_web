@@ -12,8 +12,6 @@ class AdWordController extends Controller
 {
     public function in_de_cuong_mon_hoc($maHocPhan)
     {
-
-      
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
 
         //tạo nội dung file
@@ -104,7 +102,6 @@ class AdWordController extends Controller
         $doi_tuong_hoc=$section->addTextRun();  //đối tượng học
         $doi_tuong_hoc->addText('Đối tượng học:     ',$headding1,array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::LEFT));
         $doi_tuong_hoc->addText('  Bậc: Đại học',$normalText,array('tabs' => array(new \PhpOffice\PhpWord\Style\Tab('right', 9090))));
-        
         $section->addText('Ngành:   Công nghệ thông tin ',$normalText);
         $section->addText('Hệ:         Chính quy',$normalText);
         
@@ -163,8 +160,9 @@ class AdWordController extends Controller
         
         $table_chuandaura = $section->addTable(array('borderSize' => 6, 'borderColor' => '000000'));
         $table_chuandaura->addRow();
-        $cell2 = $table_chuandaura->addCell(10000);
+        $cell2 = $table_chuandaura->addCell(2000);
         $cell2->addText('A');
+        $cell2 = $table_chuandaura->addCell(2000,array('vMerge'=>'continue'));
         $cell2 = $table_chuandaura->addCell(2000,$cellRowSpan);
         $cell2->addText('B');
         //--------------------------------------5. Nội dung học phần----------------------------------------------------------------
@@ -240,8 +238,6 @@ class AdWordController extends Controller
         $section->addListItem('Sinh viên vi phạm các nguyên tắc trên sẽ bị mời ra khỏi lớp và bị coi là vắng buổi học đó.',0,$normalText);
         $section->addText('Quy định về học vụ',$headding1);
         $section->addListItem('Các vấn đề liên quan đến xin bảo lưu điểm, khiếu nại điểm, chấm phúc tra, kỷ luật thi cử được thực hiện theo quy chế học vụ của trường Đại học Trà Vinh.',0,$normalText);
-        
-       
         $filename=$hocPhan->maHocPhan.'_'.$hocPhan->tenHocPhan.'.docx';
         //xuất fileE
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');

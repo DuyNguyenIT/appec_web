@@ -14,12 +14,12 @@ class Create10HocPhanCtDaotaoTable extends Migration
     public function up()
     {
         Schema::create('HOCPHAN_CTDAOTAO', function (Blueprint $table) {
-            $table->string('maHocPhan',255)->default('text');
-            $table->integer('maCT')->unsigned()->nullable()->default(12);
-            $table->text('phanPhoiHocKy')->nullable()->default('text');
-            $table->primary(['maHocPhan', 'maCT']);
+           $table->increments('id');
+            $table->string('maHocPhan',191)->default(null);
+            $table->integer('maCT')->unsigned()->nullable()->default(1);
+            $table->text('phanPhoiHocKy')->nullable()->default(null);
             $table->boolean('isDelete')->nullable()->default(false);
-            $table->string('maLoaiHocPhan',255);
+            $table->string('maLoaiHocPhan',191);
             
             $table->foreign('maHocPhan')->references('maHocPhan')->on('HOC_PHAN')
                 ->onUpdate('restrict')

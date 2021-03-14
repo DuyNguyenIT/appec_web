@@ -14,9 +14,9 @@ class Create17MucdoDgTable extends Migration
     public function up()
     {
         Schema::create('mucdo_dg', function (Blueprint $table) {
-            $table->string('maMucDoDG',255);
+            $table->string('maMucDoDG',191);
             $table->primary('maMucDoDG');
-            $table->text('tenMucDoDG')->nullable()->default('text');
+            $table->text('tenMucDoDG')->nullable()->default(null);
             $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
         });

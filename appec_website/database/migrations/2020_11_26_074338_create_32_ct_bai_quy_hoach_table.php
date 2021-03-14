@@ -15,11 +15,11 @@ class Create32CtBaiQuyHoachTable extends Migration
     {
         Schema::create('ct_bai_quy_hoach', function (Blueprint $table) {
             $table->increments('maCTBaiQH');
-            $table->integer('maLoaiDG')->unsigned()->nullable()->default(12);
-            $table->string('maLoaiHTDG',255);
-            $table->integer('maBaiQH')->unsigned()->nullable()->default(12);
-            $table->integer('trongSo')->unsigned()->nullable()->default(12);
-            $table->string('maGV_2',255);
+            $table->integer('maLoaiDG')->unsigned()->nullable()->default(1);
+            $table->string('maLoaiHTDG',191);
+            $table->integer('maBaiQH')->unsigned()->nullable()->default(1);
+            $table->integer('trongSo')->unsigned()->nullable()->default(1);
+            $table->string('maGV_2',191);
             $table->boolean('isDelete')->nullable()->default(false);
             
             $table->timestamps();

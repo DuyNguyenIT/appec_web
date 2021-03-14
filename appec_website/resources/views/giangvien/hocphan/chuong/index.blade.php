@@ -16,7 +16,9 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ asset('/') }}">Trang chủ</a></li>
-            <li class="breadcrumb-item"><a href="{{ asset('giang-vien/hoc-phan') }}">{{$hocPhan->tenHocPhan}}</a></li>
+            <li class="breadcrumb-item"><a href="{{ asset('giang-vien/hoc-phan') }}">
+              {{\Illuminate\Support\Str::limit(html_entity_decode($hocPhan->tenHocPhan),$limit=20,$end='...')}}  
+            </a></li>
             <li class="breadcrumb-item active">Nội dung học phần</li>
           </ol>
         </div>
@@ -56,11 +58,10 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                   <tr>
-                    <th >STT</th>
-                    <th >Tên chương</th>
-                    <th >Mô tả</th>
-                    <th> Học phần</th>
-                    <th >Tùy chọn</th>
+                    <th >Order</th>
+                    <th >Chapter name</th>
+                    <th >Description</th>
+                    <th >Option</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -73,14 +74,13 @@
                       <td>{{$i++}}</td>
                       <td>{{$item->tenchuong}}</td>
                       <td>{!! html_entity_decode($item->mota) !!}</td>
-                      <td>{{$item->hocphan->tenHocPhan}}</td>
-                      <td>
+                      <td style='white-space: nowrap'>
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit_{{$item->id}}">
                           <li class="fas fa-edit"></li>
                         </button>
-                        <a href="{{ asset('/giang-vien/hoc-phan/chuong/'.$item->id.'/'.$item->tenkhongdau.'/cau-hoi-tu-luan') }}" class="btn btn-primary" ><i class="fas fa-th-list"></i> Câu hỏi tự luận</a>
                         <a href="" class="btn btn-danger" ><i class="fas fa-trash"></i></a>
+                     <a class="btn btn-success" href="{{ asset('/giang-vien/hoc-phan/chuong/muc/'.$item->id) }}"><i class="fas fa-list-ul"></i> item </a>
                         <!-- Modal -->
                         <div class="modal fade" id="edit_{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                           <div class="modal-dialog modal-lg" role="document">

@@ -14,12 +14,12 @@ class Create20GiangVienTable extends Migration
     public function up()
     {
         Schema::create('GIANG_VIEN', function (Blueprint $table) {
-            $table->string('maGV',255)->unique();
+            $table->string('maGV',191)->unique();
             $table->primary('maGV');
-            $table->text('hoGV')->nullable()->default('text');
-            $table->text('tenGV')->nullable()->default('text');
+            $table->text('hoGV')->nullable()->default(null);
+            $table->text('tenGV')->nullable()->default(null);
             $table->string('username');
-            $table->text('email')->nullable()->default('text');
+            $table->text('email')->nullable()->default(null);
             $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
             $table->foreign('username')->references('username')->on('users')->onDelete('cascade');

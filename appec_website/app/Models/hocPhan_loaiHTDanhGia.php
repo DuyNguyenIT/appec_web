@@ -9,7 +9,7 @@ class hocPhan_loaiHTDanhGia extends Model
 {
     use HasFactory;
     protected $table='hocphan_loai_hinhthuc_dg';
-    public $fillable=['maHocPhan','maLoaiDG','maLoaiHTDG','trongSo','isDelete'];
+    public $fillable=['maHocPhan','maLoaiDG','maLoaiHTDG','trongSo','isDelete','groupCT'];
     public function loai_danh_gia()
     {
         return $this->hasOne('App\Models\loaiDanhGia', 'maLoaiDG', 'maLoaiDG');

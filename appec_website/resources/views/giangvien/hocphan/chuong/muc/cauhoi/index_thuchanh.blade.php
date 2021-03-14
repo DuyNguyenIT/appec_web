@@ -8,7 +8,7 @@
       <div class="row mb-2">
         <div class="col-sm-6">
           <h1 class="m-0 text-dark">
-            Câu hỏi tự luận<noscript></noscript>
+            Câu hỏi thực hành<noscript></noscript>
             <nav></nav>
           </h1>
         </div>
@@ -16,9 +16,21 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ asset('/') }}">Trang chủ</a></li>
-            <li class="breadcrumb-item"><a href="{{ asset('giang-vien/hoc-phan') }}">{{$hocphan->tenHocPhan}}</a></li>
-            <li class="breadcrumb-item"><a href="{{ asset('giang-vien/hoc-phan/chuong/'.$hocphan->maHocPhan) }}">{{$chuong->tenchuong}}</a></li>
-            <li class="breadcrumb-item active">Câu hỏi tự luận</li>
+            <li class="breadcrumb-item">
+                <a href="{{ asset('/giang-vien/hoc-phan') }}">
+                  {{\Illuminate\Support\Str::limit(html_entity_decode($hocphan->tenHocPhan),$limit=20,$end='...')}}  
+                </a>
+              </li>
+              <li class="breadcrumb-item ">
+                <a href="{{ asset('/giang-vien/hoc-phan/chuong/'.Session::get('maHocPhan_chuong')) }}">
+                  {{\Illuminate\Support\Str::limit(html_entity_decode($chuong->tenchuong),$limit=20,$end='...')}}  
+                </a>
+              </li>
+            <li class="breadcrumb-item"><a href="#">    
+                <a href="{{ asset('/giang-vien/hoc-phan/chuong/muc/'.Session::get('maMuc')) }}">
+                {{\Illuminate\Support\Str::limit(html_entity_decode($muc->tenMuc),$limit=20,$end='...')}}  
+              </a></a></li>
+            <li class="breadcrumb-item active">Câu hỏi thực hành</li>
           </ol>
         </div>
         <!-- /.col -->
@@ -60,11 +72,11 @@
                 <!-- Modal -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog modal-lg" role="document">
-                    <form action="{{ asset('giang-vien/hoc-phan/chuong/'.$chuong->id.'/'.$chuong->tenkhongdau.'/cau-hoi-tu-luan/them') }}" method="post">
+                    <form action="{{ asset('/giang-vien/hoc-phan/chuong/muc/cau-hoi-thuc-hanh/them') }}" method="post">
                     @csrf
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Thêm câu hỏi tự luận </h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Thêm câu hỏi thực hành </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">×</span>
                         </button>
@@ -86,7 +98,7 @@
                             <label for=""> Đáp ứng kết quả học tập:</label>
                             <select name="maKQHT" id="" class="form-control" required>
                               @foreach ($kqht as $x)
-                              <option value="{{$x->maKQHT}}">{{$x->tenKQHT}}</option>
+                              <option value="{{$x->maKQHT}}">{{$x->maKQHTVB}}-{{$x->tenKQHT}}</option>
                               @endforeach
                             </select>
                           </div>
@@ -110,6 +122,7 @@
                   <tr>
                     <th>STT</th>
                     <th>Nội dung câu hỏi</th>
+                    <th>Kết quả học tập</th>
                     <th>Tùy chọn</th>
                   </tr>
                 </thead>
@@ -121,6 +134,7 @@
                      <tr>
                        <td>{{$i++}}</td>
                        <td>{!! html_entity_decode($x->noiDungCauHoi)!!}</td>
+                       <td>{{ $x->kqht->maKQHTVB }}</td>
                        <td>
                          <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit_{{$x->maCauHoi}}">
@@ -130,11 +144,11 @@
                         <!-- Modal -->
                         <div class="modal fade" id="edit_{{$x->maCauHoi}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                           <div class="modal-dialog modal-lg" role="document">
-                            <form action="{{ asset('giang-vien/hoc-phan/chuong/'.$chuong->id.'/'.$chuong->tenkhongdau.'/cau-hoi-tu-luan/sua') }}" method="post">
+                            <form action="{{ asset('/giang-vien/hoc-phan/chuong/muc/cau-hoi-thuc-hanh/sua') }}" method="post">
                               @csrf
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModalLabel">Sửa nội dung câu hỏi</h5>
+                                  <h5 class="modal-title" id="exampleModalLabel">Sửa nội dung câu hỏi thực hành</h5>
                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                   </button>
@@ -159,7 +173,7 @@
                                     <label for=""> Đáp ứng kết quả học tập:</label>
                                     <select name="maKQHT" id="" class="form-control" required>
                                       @foreach ($kqht as $x)
-                                      <option value="{{$x->maKQHT}}">{{$x->tenKQHT}}</option>
+                                      <option value="{{$x->maKQHT}}">{{$x->maKQHTVB}}-{{$x->tenKQHT}}</option>
                                       @endforeach
                                     </select>
                                   </div>

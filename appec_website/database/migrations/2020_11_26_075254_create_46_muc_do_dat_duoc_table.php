@@ -15,7 +15,7 @@ class Create46MucDoDatDuocTable extends Migration
     {
         Schema::create('MUC_DO_DAT_DUOC', function (Blueprint $table) {
             $table->increments('maMD');
-            $table->text('tenMD')->nullable()->default('text');
+            $table->text('tenMD')->nullable()->default(null);
             $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
         });

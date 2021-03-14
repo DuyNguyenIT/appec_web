@@ -15,8 +15,8 @@ class Create22BaiQuyHoachTable extends Migration
     {
         Schema::create('BAI_QUY_HOACH', function (Blueprint $table) {
             $table->increments('maBaiQH');
-            $table->text('tenBaiQH')->nullable()->default('text');
-            $table->text('noiDungBaiQH')->nullable()->default('text');
+            $table->text('tenBaiQH')->nullable()->default(null);
+            $table->text('noiDungBaiQH')->nullable()->default(null);
             $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
         });

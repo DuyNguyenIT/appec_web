@@ -10,6 +10,7 @@ use App\Models\chuong;
 use App\Models\cNganh;
 use App\Models\kqHTHP;
 use App\Models\hocPhan;
+use App\Models\ctKhoiKT;
 use App\Models\bacDaoTao;
 use App\Models\ppGiangDay;
 use App\Models\chuong_kqht;
@@ -20,6 +21,7 @@ use App\Models\mucDoDanhGia;
 use Illuminate\Http\Request;
 use App\Models\loaiHTDanhGia;
 use App\Models\hocPhan_kqHTHP;
+use App\Models\mucDoKyNangUIT;
 use App\Models\hocPhan_ctDaoTao;
 use App\Models\ct_khoi_kien_thuc;
 use App\Models\hocPhan_ppGiangDay;
@@ -32,31 +34,65 @@ class hocPhanController extends Controller
 {
     public function index(Type $var = null)
     {
-        $hp=hocPhan::where('isDelete',false)->get();
-        $ctkkt=ct_khoi_kien_thuc::all();
-        return view('admin.hocphan.hocphan',['hocPhan'=>$hp,'ctkkt'=>$ctkkt]);
+        $hocphan=hocPhan::where('isDelete',false)->orderBy('maHocPhan','desc')->with('ctkhoi')->get();
+        
+        $ctkhoi=ctKhoiKT::where('isDelete',false)->orderBy('maCTKhoiKT','asc')->get();
+        return view('admin.hocphan.hocphan',['ctkhoi'=>$ctkhoi,'hocphan'=>$hocphan]);
     }
 
-    public function them_hp(Request $request) //thêm học phần mới
+    public function them(Request $request) //thêm học phần mới
     {
         //tính tổng số tín chỉ
         $request->tongSoTinChi=$request->tinChiLyThuyet+$request->tinChiThucHanh;
         //tạo học phần
         hocPhan::create(['maHocPhan'=>$request->maHocPhan,'tenHocPhan'=>$request->tenHocPhan,'tongSoTinChi'=>$request->tongSoTinChi,
-        'tinChiLyThuyet'=>$request->tinCh+iLyThuyet,'tinChiThucHanh'=>$request->tinChiThucHanh,'maCTKhoiKT'=>$request->maCTKhoiKT]);
+        'tinChiLyThuyet'=>$request->tinChiLyThuyet,'tinChiThucHanh'=>$request->tinChiThucHanh,'maCTKhoiKT'=>$request->maCTKhoiKT]);
         //phản hồi
         alert()->success('Thêm thành công','Thông báo');
         return redirect('quan-ly/hoc-phan');
     }
+
+     //Sửa học phần
+     public function sua(Request $request)
+     {
+         try {
+             $tclt=$request->tinChiLyThuyet;
+             $tcth=$request->tinChiThucHanh;
+             $tongtc=$tclt+$tcth;
+             //echo $tongtc;
+             $hp=hocPhan::updateOrCreate(['maHocPhan'=>$request->maHocPhan],['tenHocPhan'=>$request->tenHocPhan,'tongSoTinChi'=>$tongtc,'tinChiLyThuyet'=>$request->tinChiLyThuyet,'tinChiThucHanh'=>$request->tinChiThucHanh,'moTaHocPhan'=>$request->moTaHocPhan,'maCTKhoiKT'=>$request->maCTKhoiKT] );
+             
+             alert()->success('Updated successfully', 'Message');
+             return redirect('/quan-ly/hoc-phan');
+         } catch (\Throwable $th) {
+            // dd ("lỗi ".$th); hiện lỗi thử
+             alert()->error('Error:'.$th, 'Update failed');
+            return redirect('/quan-ly/hoc-phan');
+         }
+     }
+ 
+     //xóa học phần
+     public function xoa($maHocPhan)
+     {
+         try {
+             $hp=hocPhan::updateOrCreate(['maHocPhan'=>$maHocPhan],['isDelete'=>true]);
+             alert()->success('Deleted successful', 'Message');
+             return redirect('/quan-ly/hoc-phan');
+         } catch (\Throwable $th) {
+             alert()->error('Error:'.$th, 'Delete failed');
+             return redirect('/quan-ly/hoc-phan');
+         }
+     }
+     //Hết đoạn PTTMai thêm
     //////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////HIỂN THỊ ĐỀ CƯƠNG MÔN HỌC//////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////
     public function de_cuong_mon_hoc(Request $request,$maHocPhan)
     {//hàm hiển thị đề cương chi tiết
         //1/ Thông tin chung
-        $hocPhan=hocPhan::where('maHocPhan',$maHocPhan)->first();
+        $hocPhan=hocPhan::where('maHocPhan',$maHocPhan)->where('isDelete',false)->first();
         $loaiMonHoc=loaiHocPhan::all();
-        $mon=hocPhan::where('maHocPhan','!=',$maHocPhan)->get(); //hiển thị combobox cho phép chọn môn tiên quyết
+        $mon=hocPhan::where('maHocPhan','!=',$maHocPhan)->where('isDelete',false)->get(); //hiển thị combobox cho phép chọn môn tiên quyết
         $hocphan_ctdaotao=hocPhan_ctDaoTao::where('isDelete',false)->where('maHocPhan',$maHocPhan)->with('ctDaoTao')->first(); //**chổ này cần chỉ khi có nhiều chương trình đào tạo hơn
         //**lấy tên hệ, tên bậc, tên ngành->thay đổi đối với 1 học phần thuộc nhiều chương trình đào tạo
         $he=$bac=$CNganh="";
@@ -111,13 +147,22 @@ class hocPhanController extends Controller
         ->get('maKQHT');
 
         $getKQHT=kqHTHP::whereIn('maKQHT',$kqht_hp)->get(); //biến hiện combobox kqht thêm chương (vì select distinct không chạy nên dùng wherein)
+        
         $mucDoDG=mucDoDanhGia::where('isDelete',false)->get();  //hiện combobox mức độ đánh giá trong chương
         $noidung=chuong::where('chuong.isdelete',false)->where('chuong.maHocPhan',$maHocPhan)
         ->orderBy('chuong.id','asc')
         ->with('muc')
         ->with('chuong_kqht')
         ->get();
+        $chuong_array=chuong::where('chuong.isdelete',false)->where('chuong.maHocPhan',$maHocPhan)
+        ->orderBy('chuong.id','asc')
+        ->pluck('id');
         
+        $mudokynangUIT=mucDoKyNangUIT::whereIn('muc_do_ky_nang_itu.id_chuong',$chuong_array)
+        ->orderBy('muc_do_ky_nang_itu.maCDR1')
+        ->join('cdr_cd1','cdr_cd1.maCDR1','=','muc_do_ky_nang_itu.maCDR1')
+        ->join('kqht_hp','kqht_hp.maKQHT','=','muc_do_ky_nang_itu.maKQHT')
+        ->get();
 
         foreach ($noidung as $nd) {
             foreach ($nd->chuong_kqht as $x) {
@@ -127,7 +172,6 @@ class hocPhanController extends Controller
             }
         }
        
-
         //6 Phương pháp giảng dạy
         $ppgd=ppGiangDay::where('isDelete',false)->orderBy('maPP','desc')->get(); //biến tạo combobox giảng dạy
         $hp_ppgd=hocPhan_ppGiangDay::where('isDelete',false)->where('maHocPhan',$maHocPhan)->with('ppGiangDay')->get(); //biển hiển thị phương pháp giảng dạy 
@@ -143,7 +187,7 @@ class hocPhanController extends Controller
         return view('admin.hocphan.themdecuong',['hocPhan'=>$hocPhan,'monHoc'=>$mon,'hocphan_ctdaotao'=>$hocphan_ctdaotao,
         'monTQ'=>$monTQ,'tailieu'=>$tailieu,
         'he'=>$he,'bac'=>$bac,'CNganh'=>$CNganh,'nganh'=>$nganh,
-        'CDR1'=>$cdr1,'cdr'=>$cdr,'kqht'=>$kqht,'getKQHT'=>$getKQHT,
+        'CDR1'=>$cdr1,'cdr'=>$cdr,'kqht'=>$kqht,'getKQHT'=>$getKQHT,'mudokynangUIT'=>$mudokynangUIT,
         'ppGiangDay'=>$ppgd,'hocPhan_ppGiangDay'=>$hp_ppgd,
         'noidung'=>$noidung,'loaiDG'=>$loaiDG, 'mucDoDG'=>$mucDoDG,
         'loaiHTDG'=>$loaiHTDG,'hocPhan_loaiHTDG'=>$hocPhan_loaiHTDG]);
@@ -152,14 +196,14 @@ class hocPhanController extends Controller
     /////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////CÁC HÀM XỬ LÝ CHO THÊM ĐỀ CƯƠNG/////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////    
-    public function them_mon_tien_quyet(Request $request)
+    public function them_mon_tien_quyet(Request $request)//thêm môn tiên quyết
     {
         monTienQuyet::create(['maHocPhan'=>$request->maHocPhan,'maMonTienQuyet'=>$request->maMonTienQuyet]);
         //phản hồi
         alert()->success('Cập nhật môn tiên quyết thành công!!','Thông báo');
         return back();
     }
-    public function them_giao_trinh(Request $request)
+    public function them_giao_trinh(Request $request)//thêm giáo trình
     {
         //sửa tài liệu tham khảo
         tai_lieu_tham_khao::updateOrCreate(['maHocPhan'=>$request->maHocPhan],['giaoTrinh'=>$request->giaoTrinh]);
@@ -167,7 +211,7 @@ class hocPhanController extends Controller
         alert()->success('Cập nhật thành công!!','Thông báo');
         return back();
     }
-    public function them_tai_lieu_tham_khao_them(Request $request)
+    public function them_tai_lieu_tham_khao_them(Request $request)//thêm tài liệu tham khảo
     {
         //sửa tài liệu tham khảo
         tai_lieu_tham_khao::updateOrCreate(['maHocPhan'=>$request->maHocPhan],['thamKhaoThem'=>$request->thamKhaoThem]);
@@ -175,7 +219,7 @@ class hocPhanController extends Controller
         alert()->success('Cập nhật thành công!!','Thông báo');
         return back();
     }
-    public function them_tai_lieu_khac(Request $request)
+    public function them_tai_lieu_khac(Request $request)//thêm tài liệu khác
     {
         //sửa tài liệu tham khảo
         tai_lieu_tham_khao::updateOrCreate(['maHocPhan'=>$request->maHocPhan],['taiLieuKhac'=>$request->taiLieuKhac]);
@@ -183,7 +227,7 @@ class hocPhanController extends Controller
         alert()->success('Cập nhật thành công!!','Thông báo');
         return back();
     }
-    public function them_yeu_cau_hoc_phan(Request $request)
+    public function them_yeu_cau_hoc_phan(Request $request)  //thêm yêu cầu học phần
     {
         //sửa học phần
         //hocPhan::updateOrCreate(['maHocPhan'=>$request->maHocPhan],['yeuCau'=>$request->yeuCau]);
@@ -194,7 +238,7 @@ class hocPhanController extends Controller
         alert()->success('Thêm yêu cầu thành công!!','Thông báo');
         return back();
     }
-    public function them_mo_ta_hoc_phan(Request $request)
+    public function them_mo_ta_hoc_phan(Request $request) //thêm mô tả học phần
     {
         //sửa học phần
         hocPhan::updateOrCreate(['maHocPhan'=>$request->maHocPhan],['moTaHocPhan'=>$request->moTaHocPhan]);
@@ -220,6 +264,7 @@ class hocPhanController extends Controller
         alert()->success('Thêm chuẩn đầu ra thành công!!','Thông báo');
         return back();
     }
+
     public function them_noi_dung_mon_hoc(Request $request)  //thêm nội dung môn học (chương)
     {
         //1.thêm chương mới
@@ -239,7 +284,18 @@ class hocPhanController extends Controller
         return back();
     }
 
-    public function them_muc(Request $request)
+    public function them_muc_do_ky_nang_uti(Request $request)
+    {
+        # code...
+        $kqht=$request->maKQHT;
+        for ($i=0; $i < count($kqht); $i++) { 
+            mucDoKyNangUIT::create(['id_chuong'=>$request->id_chuong,'maKQHT'=>$kqht[$i],'maCDR1'=>$request->maCDR1,'ky_nang'=>$request->ky_nang]);
+        }
+        //phản hồi
+        alert()->success('Adding successfully!!','Message');
+        return back();
+    }
+    public function them_muc(Request $request)//thêm mục
     {
         //thêm mục mới
         muc::create($request->all());
@@ -247,23 +303,29 @@ class hocPhanController extends Controller
         alert()->success('Thêm nội dung thành công!!','Thông báo');
         return back();
     }
-    public function them_phuong_phap_giang_giay(Request $request)
+    public function them_phuong_phap_giang_giay(Request $request)//thêm phương pháp giảng dạy
     {
         //thêm bảng hocphan_ppGiangDay
         hocPhan_ppGiangDay::create(['maHocPhan'=>$request->maHocPhan,'maPP'=>$request->maPP,'dienGiai'=>$request->dienGiai]);
         //phản hồi
         alert()->success('Thêm phương pháp giảng dạy thành công!!','Thông báo');
         return back();
-        
     }
-    public function them_hoc_phan_loaiHTDG(Request $request)
+    public function them_hoc_phan_loaiHTDG(Request $request)  //thêm học phần _ loại hình thức đánhg giá
     {
-        $tile=  $hocPhan_loaiHTDG=hocPhan_loaiHTDanhGia::where('isDelete',false)->where('maHocPhan',$request->maHocPhan)->sum('trongSo');
-        if($tile==100){
-            alert()->warning('Tỉ lệ đã đạt 100%, không thể thêm phương thức đánh giá!!','Cảnh báo');
+        $tile_group1=hocPhan_loaiHTDanhGia::where('isDelete',false)->where('groupCT',1)->where('maHocPhan',$request->maHocPhan)->sum('trongSo');
+        $tile_group2=hocPhan_loaiHTDanhGia::where('isDelete',false)->where('groupCT',2)->where('maHocPhan',$request->maHocPhan)->sum('trongSo');
+        if($tile_group1==100 && $request->groupCT==1){
+            alert()->warning('Tỉ lệ công thức 1 đã đạt 100%, không thể thêm phương thức đánh giá!!','Cảnh báo');
             return back();
         }
-        hocPhan_loaiHTDanhGia::create(['maHocPhan'=>$request->maHocPhan,'maLoaiDG'=>$request->maLoaiDG,'maLoaiHTDG'=>$request->maLoaiHTDG,'trongSo'=>$request->trongSo]);
+        if($tile_group2==100 && $request->groupCT==2){
+            alert()->warning('Tỉ lệ công thức 2 đã đạt 100%, không thể thêm phương thức đánh giá!!','Cảnh báo');
+            return back();
+        }
+
+        
+        hocPhan_loaiHTDanhGia::create(['maHocPhan'=>$request->maHocPhan,'maLoaiDG'=>$request->maLoaiDG,'maLoaiHTDG'=>$request->maLoaiHTDG,'trongSo'=>$request->trongSo,'groupCT'=>$request->groupCT]);
         //phản hồi
         alert()->success('Thêm phương thức đánh giá thành công!!','Thông báo');
         return back();

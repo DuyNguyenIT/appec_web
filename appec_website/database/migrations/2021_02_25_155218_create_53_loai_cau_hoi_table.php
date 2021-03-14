@@ -15,7 +15,7 @@ class Create53LoaiCauHoiTable extends Migration
     {
         Schema::create('loai_cau_hoi', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('tenLoaiCauHoi')->nullable()->default('text');
+            $table->text('tenLoaiCauHoi')->nullable()->default(null);
             $table->boolean('isdelete')->nullable()->default(false);
             $table->timestamps();
         });

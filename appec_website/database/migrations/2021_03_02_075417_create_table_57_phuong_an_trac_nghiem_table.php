@@ -18,6 +18,7 @@ class CreateTable57PhuongAnTracNghiemTable extends Migration
             $table->longText('noiDungPA')->nullable()->default('text');
             $table->float('diemPA')->nullable()->default(0.0);
             $table->integer('maCauHoi')->unsigned()->nullable()->default(1);
+            $table->boolean('isCorrect')->nullable()->default(false);
             $table->integer('maCDR3')->unsigned()->nullable()->default(12);
             $table->timestamps();
             $table->foreign('maCauHoi')->references('maCauHoi')->on('CAU_HOI')->onDelete('cascade');

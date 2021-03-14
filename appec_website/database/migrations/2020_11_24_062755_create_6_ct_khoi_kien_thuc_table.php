@@ -14,11 +14,11 @@ class Create6CtKhoiKienThucTable extends Migration
     public function up()
     {
         Schema::create('ct_khoi_kien_thuc', function (Blueprint $table) {
-            $table->string('maCTKhoiKT',255)->unique();
+            $table->string('maCTKhoiKT',191)->unique();
             $table->primary('maCTKhoiKT');
-            $table->text('tenCTKhoiKT')->nullable()->default('text');
-            $table->integer('tongTinChiLT')->unsigned()->nullable()->default(12);
-            $table->integer('tongTinChiTH')->unsigned()->nullable()->default(12);
+            $table->text('tenCTKhoiKT')->nullable()->default(null);
+            $table->integer('tongTinChiLT')->unsigned()->nullable()->default(1);
+            $table->integer('tongTinChiTH')->unsigned()->nullable()->default(1);
            
             $table->boolean('isDelete')->nullable()->default(false);
             $table->string('maKhoiKT',255);

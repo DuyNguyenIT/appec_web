@@ -32,11 +32,7 @@ class GVCauHoiTuLuanController extends Controller
     {
         try {
              //thêm câu hỏi mới, điểm câu hỏi thêm mặc định 12
-            cauHoi::create(['noiDungCauHoi'=>$request->noiDungCauHoi,'diemCauHoi'=>12,'maKQHT'=>$request->maKQHT,'maLoaiHTDG'=>'T1','id_loaiCH'=>'1']);
-            //thêm chuong_cauhoi
-            $cauhoi=cauHoi::where('isDelete',false)->orderBy('maCauHoi','desc')->first();
-            chuong_cauhoi::create(['maChuong'=>$request->maChuong,'maCauHoi'=>$cauhoi->maCauHoi]);
-            $chuong=chuong::where('id',$request->maChuong)->first();
+            cauHoi::create(['noiDungCauHoi'=>$request->noiDungCauHoi,'diemCauHoi'=>12,'maKQHT'=>$request->maKQHT,'maLoaiHTDG'=>'T1','id_loaiCH'=>'1','id_muc'=>Session::get('maMuc')]);
             alert()->success('Thêm thành công', 'Thông báo');
             return back();
         } catch (\Throwable $th) {

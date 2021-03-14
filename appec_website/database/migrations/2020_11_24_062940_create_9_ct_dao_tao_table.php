@@ -15,11 +15,11 @@ class Create9CtDaoTaoTable extends Migration
     {
         Schema::create('CT_DAO_TAO', function (Blueprint $table) {
             $table->increments('maCT');
-            $table->text('tenCT')->nullable()->default('text');
+            $table->text('tenCT')->nullable()->default(null);
           
-            $table->string('maBac',255);
-            $table->integer('maCNganh')->unsigned()->nullable()->default(12);
-            $table->string('maHe',255);
+            $table->string('maBac',191);
+            $table->integer('maCNganh')->unsigned()->nullable()->default(1);
+            $table->string('maHe',191);
             $table->boolean('isDelete')->nullable()->default(false);
 
             $table->timestamps();

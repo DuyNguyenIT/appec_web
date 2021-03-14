@@ -20,6 +20,15 @@ Route::group(['middleware' =>'App\Http\Middleware\isAdmin'], function (){
         Route::post('sua/', 'nganhController@sua');
         Route::get('xoa/{maNganh}', 'nganhController@xoa');
     });
+    //PTTMai thêm 
+    //chuyên ngành
+    Route::group(['prefix' => 'chuyen-nganh'], function () {
+        Route::get('/', 'cNganhController@index');
+        Route::post('them', 'cNganhController@them');
+        Route::post('sua', 'cNganhController@sua');
+        Route::get('xoa/{maCNganh}', 'cNganhController@xoa');
+    });
+    //Hết PTTMai thêm
     //hệ
     Route::group(['prefix' => 'he'], function () {
         Route::get('/', 'heController@index');
@@ -58,7 +67,10 @@ Route::group(['middleware' =>'App\Http\Middleware\isAdmin'], function (){
     //loại học phần
     Route::group(['prefix' => 'hoc-phan'], function () {
         Route::get('/', 'hocPhanController@index');
-        Route::post('them', 'hocPhanController@them_hp');
+        Route::post('them', 'hocPhanController@them');
+        Route::post('sua', 'hocPhanController@sua');
+        Route::get('xoa/{maHocPhan}', 'hocPhanController@xoa')
+        ;
         Route::prefix('/de-cuong-mon-hoc')->group(function () {
             Route::get('/{maHocPhan}','hocPhanController@de_cuong_mon_hoc');
             Route::get('/in-de-cuong-mon-hoc/{maHocPhan}','AdWordController@in_de_cuong_mon_hoc');
@@ -72,6 +84,7 @@ Route::group(['middleware' =>'App\Http\Middleware\isAdmin'], function (){
             Route::post('/sua_tai_lieu_khac','hocPhanController@them_tai_lieu_khac');
             Route::post('/them_phuong_phap_giang_day','hocPhanController@them_phuong_phap_giang_giay');
             Route::post('/them_mon_tien_quyet','hocPhanController@them_mon_tien_quyet');
+            Route::post('/them_muc_do_ky_nang_uti','hocPhanController@them_muc_do_ky_nang_uti');
             Route::post('/them_noi_dung_mon_hoc','hocPhanController@them_noi_dung_mon_hoc');
             Route::post('/them_noi_dung_muc_chuong','hocPhanController@them_muc');
             Route::post('/them_phuong_phap_danh_gia','hocPhanController@them_hoc_phan_loaiHTDG');

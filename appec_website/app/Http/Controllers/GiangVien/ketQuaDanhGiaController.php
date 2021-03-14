@@ -3,21 +3,22 @@
 namespace App\Http\Controllers\GiangVien;
 
 use Session;
+use App\Models\lop;
 use App\Models\CDR3;
 use App\Models\deThi;
+use App\Models\danhGia;
 use App\Models\hocPhan;
 use App\Models\giangDay;
+use App\Models\sinhVien;
 use App\Models\giangVien;
 use App\Models\noiDungQH;
+use App\Models\phieu_cham;
 use App\Models\loaiDanhGia;
 use Illuminate\Http\Request;
 use App\Models\loaiHTDanhGia;
+use App\Models\tieuChiChamDiem;
 use App\Models\ct_bai_quy_hoach;
 use App\Http\Controllers\Controller;
-use App\Models\danhGia;
-use App\Models\phieu_cham;
-use App\Models\sinhVien;
-use App\Models\tieuChiChamDiem;
 
 class ketQuaDanhGiaController extends Controller
 {
@@ -86,7 +87,26 @@ class ketQuaDanhGiaController extends Controller
             $gv2->tenGV="Nhiều giảng viên";
         }
 
+        if($loaiHTDG->maLoaiHTDG=="T1"){ //kết quả tự luận
+            //thông tin học phần
+            $hp=hocPhan::where('maHocPhan',Session::get('maHocPhan'))
+            ->where('isDelete',false)->first();
+            //danh sách đề thi
+            $deThi=deThi::where('isDelete',false)->where('maCTBaiQH',$maCTBaiQH)->get();
+            //danh sách sinh viên
+            $dssv=sinhVien::where('isDelete',false)->where('maLop',Session::get('maLop'))->get();
+            //
+            return view('giangvien.ketqua.tuluan.ketquatuluan',compact('hp','dssv','deThi'));
+        }
+
+        if($loaiHTDG->maLoaiHTDG=="T2"){ //kết quả trắc nghiệm
+            return view('giangvien.ketqua.tracnghiem.ketquatracnghiem');
+        }
         
+        if($loaiHTDG->maLoaiHTDG=="T3"){ //kết quả thực hành
+            return view('giangvien.ketqua.thuchanh.ketquathuchanh');
+        }
+
         if($loaiHTDG->maLoaiHTDG=="T8") /// nếu kết quả là đồ án
         {
 
@@ -122,14 +142,12 @@ class ketQuaDanhGiaController extends Controller
                     ->where('phieu_cham.isDelete',false);
                 })->first();
                 $md->diemCB2=$temp->diemSo;
-                
             }
             
              //ct_bai_QH
             return view('giangvien.ketqua.ketquadoan',['hp'=>$hp,'gv'=>$gv,'gv2'=>$gv2,
             'deThi'=>$maDe]);
         }
-
         return view('giangvien.error');
     }
 
@@ -407,5 +425,13 @@ class ketQuaDanhGiaController extends Controller
     
         return view('giangvien.ketqua.xemKetQuaCham',['tieuchi'=>$ndQh,'sv'=>$sv,'gv'=>$gv,'deTai'=>$deTai]);
 
+    }
+
+    ####-----------------------------TỰ LUẬN---------------
+    public function them_phieu_cham_tu_luan(Request $request)
+    {
+        return $request;
+        //thêm phiếu châm tự luạn
+        //
     }
 }

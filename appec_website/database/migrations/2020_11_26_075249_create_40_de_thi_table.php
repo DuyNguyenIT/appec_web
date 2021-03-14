@@ -15,12 +15,12 @@ class Create40DeThiTable extends Migration
     {
         Schema::create('DE_THI', function (Blueprint $table) {
             $table->increments('maDe');
-            $table->string('maDeVB',255);
-            $table->integer('soCauHoi')->unsigned()->nullable()->default(12);
-            $table->text('tenDe')->nullable()->default('text');
+            $table->string('maDeVB',191);
+            $table->integer('soCauHoi')->unsigned()->nullable()->default(1);
+            $table->text('tenDe')->nullable()->default(null);
             $table->integer('thoiGian')->unsigned()->nullable()->default(30);
-            $table->integer('maCTBaiQH')->unsigned()->nullable()->default(12);
-            $table->text('ghiChu')->nullable()->default('text');
+            $table->integer('maCTBaiQH')->unsigned()->nullable()->default(1);
+            $table->text('ghiChu')->nullable()->default(null);
             $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
             $table->foreign('maCTBaiQH')->references('maCTBaiQH')->on('ct_bai_quy_hoach')->onDelete('cascade');

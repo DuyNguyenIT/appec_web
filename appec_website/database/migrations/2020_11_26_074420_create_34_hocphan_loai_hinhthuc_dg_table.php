@@ -14,25 +14,19 @@ class Create34HocphanLoaiHinhthucDgTable extends Migration
     public function up()
     {
         Schema::create('HOCPHAN_LOAI_HINHTHUC_DG', function (Blueprint $table) {
+            $table->increments('id');
             $table->string('maHocPhan',20);
             $table->integer('maLoaiDG')->unsigned()->nullable()->default(12);
-            $table->string('maLoaiHTDG',255);
+            $table->string('maLoaiHTDG',191);
             $table->integer('groupCT')->nullable()->default(1);
             $table->integer('trongSo')->unsigned()->nullable()->default(12);
-            $table->primary(['maHocPhan','maLoaiDG','maLoaiHTDG']);
             $table->boolean('isDelete')->nullable()->default(false);
 
             $table->timestamps();
 
-            $table->foreign('maHocPhan')->references('maHocPhan')->on('HOC_PHAN')
-            ->onUpdate('restrict')
-            ->onDelete('cascade');
-            $table->foreign('maLoaiDG')->references('maLoaiDG')->on('LOAI_DANH_GIA')
-            ->onUpdate('restrict')
-            ->onDelete('cascade');
-            $table->foreign('maLoaiHTDG')->references('maLoaiHTDG')->on('LOAI_HT_DANHGIA')
-            ->onUpdate('restrict')
-            ->onDelete('cascade');
+            $table->foreign('maHocPhan')->references('maHocPhan')->on('HOC_PHAN')->onUpdate('restrict')->onDelete('cascade');
+            $table->foreign('maLoaiDG')->references('maLoaiDG')->on('LOAI_DANH_GIA')->onUpdate('restrict')->onDelete('cascade');
+            $table->foreign('maLoaiHTDG')->references('maLoaiHTDG')->on('LOAI_HT_DANHGIA')->onUpdate('restrict')->onDelete('cascade');
         });
     }
 

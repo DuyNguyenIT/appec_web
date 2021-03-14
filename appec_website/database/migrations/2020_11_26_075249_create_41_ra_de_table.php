@@ -15,11 +15,10 @@ class Create41RaDeTable extends Migration
     {
         Schema::create('RA_DE', function (Blueprint $table) {
             $table->increments('id_RaDe');
-            $table->integer('maDe')->unsigned()->nullable()->default(12);
-            
-            $table->string('maGV',255);
-            $table->string('maHocPhan',255);
-            $table->string('maLop',255);
+            $table->integer('maDe')->unsigned()->nullable()->default(1);
+            $table->string('maGV',191);
+            $table->string('maHocPhan',191);
+            $table->string('maLop',191);
             $table->integer('lanThu')->unsigned()->nullable()->default(0);
             $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
@@ -27,7 +26,6 @@ class Create41RaDeTable extends Migration
             $table->foreign('maGV')->references('maGV')->on('GIANG_VIEN')->onDelete('cascade');
             $table->foreign('maHocPhan')->references('maHocPhan')->on('HOC_PHAN')->onDelete('cascade');
             $table->foreign('maLop')->references('maLop')->on('LOP')->onDelete('cascade');
-
         });
     }
 

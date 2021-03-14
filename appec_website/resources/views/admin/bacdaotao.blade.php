@@ -1,3 +1,4 @@
+  
 @extends('admin.master')
 
 @section('content')
@@ -9,7 +10,7 @@
             <div class="row mb-2">
               <div class="col-sm-6">
                 <h1 class="m-0 text-dark">
-                  Education level<noscript></noscript>
+                  Education level Management<noscript></noscript>
                   <nav></nav>
                 </h1>
               </div>
@@ -36,7 +37,7 @@
                 <div class="card">
                   <div class="card-header">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                      <i class="fas fa-plus"></i>
+                      <i class="fas fa-plus"></i>Add
                     </button>
 
                     <!-- Modal -->
@@ -53,11 +54,11 @@
                             </div>
                             <div class="modal-body">
                                 <div class="form-group">
-                                  <label for="">Nhập mã bậc đào tạo</label>
+                                  <label for="">Education level ID</label>
                                   <input type="text" name="maBac" class="form-control">
                                 </div>
                                 <div class="form-group">
-                                  <label for="">Nhập tên bậc đào tạo</label>
+                                  <label for="">Education level Name</label>
                                   <input type="text" name="tenBac" class="form-control">
                                 </div>
                             </div>
@@ -78,10 +79,10 @@
                     <table id="example2" class="table table-bordered table-hover" >
                       <thead>
                         <tr>
-                          <th>Order</th>
-                          <th>ID</th>
-                          <th>education level name</th>
-                          <th>Option</th>
+                          <th>No.</th>
+                          <th>Education level ID</th>
+                          <th>Education level Name</th>
+                          <th>Management Functions</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -95,7 +96,7 @@
                               <td>{{$item->tenBac}}</td>
                               <td>
                                   
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit_{{$item->maBac}}">
+                                    <button title="Edit" type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit_{{$item->maBac}}">
                                         <i class="fas fa-edit"></i>
                                     </button>
 
@@ -107,7 +108,7 @@
                                           @csrf
                                           <div class="modal-content">
                                             <div class="modal-header">
-                                              <h5 class="modal-title" id="exampleModalLabel">Chỉnh sửa</h5>
+                                              <h5 class="modal-title" id="exampleModalLabel">Editing Education level Information</h5>
                                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                               </button>
@@ -117,13 +118,13 @@
                                               <input type="text" class="form-control" hidden name="maBac" value="{{$item->maBac}}">
                                               </div>
                                               <div class="form-group">
-                                                <label for="">Tên bậc đào tạo</label>
+                                                <label for="">Education level Name</label>
                                                 <input type="text" name="tenBac" class="form-control" value="{{$item->tenBac}}">
                                               </div>
                                             </div>
                                             <div class="modal-footer">
-                                              <button type="submit" class="btn btn-primary">Lưu</button>
-                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                              <button type="submit" class="btn btn-primary">Update</button>
+                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                             </div>
                                           </div>
                                         </form>
@@ -132,7 +133,7 @@
                                     </div>
                                     <!-- end Modal edit-->
 
-                                  <a class="btn btn-danger" onclick="return confirm('Bạn có muốn xóa {{$item->tenBac}}?')" href="{{ asset('quan-ly/bac-dao-tao/xoa/'.$item->maBac) }}"><i class="fa fa-trash"></i></a>
+                                  <a title="Delete" class="btn btn-danger" onclick="return confirm('Do you want to delete {{$item->tenBac}}?')" href="{{ asset('quan-ly/bac-dao-tao/xoa/'.$item->maBac) }}"><i class="fa fa-trash"></i></a>
                               </td>
                             </tr>
                         @endforeach

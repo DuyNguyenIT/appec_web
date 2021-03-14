@@ -7,15 +7,15 @@
       <div class="row mb-2">
         <div class="col-sm-6">
           <h1 class="m-0 text-dark">
-            Hệ đào tạo<noscript></noscript>
+            Forms of training Management<noscript></noscript>
             <nav></nav>
           </h1>
         </div>
         <!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-            <li class="breadcrumb-item active">Hệ đào tạo</li>
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Form of training</li>
           </ol>
         </div>
         <!-- /.col -->
@@ -36,7 +36,7 @@
             <div class="card-header">
               <h3 class="card-title"></h3>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                  <i class="fas fa-plus"></i>Thêm
+                  <i class="fas fa-plus"></i>Add
               </button>
 
                 <!-- Modal -->
@@ -46,24 +46,24 @@
                     @csrf
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Thêm hệ </h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Adding a new Form of training </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">×</span>
                         </button>
                       </div>
                       <div class="modal-body">
                           <div class="form-group">
-                            <label for="">Nhập mã hệ:</label>
+                            <label for="">Form of training ID</label>
                             <input type="text" name="maHe" class="form-control">
                           </div>
                           <div class="form-group">
-                            <label for="">Nhập tên hệ:</label>
+                            <label for="">Form of training Name</label>
                             <input type="text" class="form-control" name="tenHe">
                           </div>
                       </div>
                       <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Lưu</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                       </div>
                     </div>
                     </form>
@@ -77,10 +77,10 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                   <tr>
-                    <th>STT</th>
-                    <th>Mã hệ</th>
-                    <th>Tên hệ đào tạo</th>
-                    <th>Tùy chọn</th>
+                    <th>No.</th>
+                    <th>Form of training ID</th>
+                    <th>Form of training Name</th>
+                    <th>Management Functions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -94,11 +94,11 @@
                     <td>{{$h->tenHe}}</td>
                     <td>
                       
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#edit_{{$h->maHe}}">
+                        <button title="Edit" class="btn btn-primary" data-toggle="modal" data-target="#edit_{{$h->maHe}}">
                           <i class="fas fa-edit"></i>
                         </button>
 
-                        <a class="btn btn-danger" onclick="return confirm('Bạn có muốn xóa {{$h->tenHe}}?')" href="{{ asset('quan-ly/he/xoa/'.$h->maHe) }}"><i class="fa fa-trash"></i></a>
+                        <a title="Delete" class="btn btn-danger" onclick="return confirm('Do you want to delete {{$h->tenHe}}?')" href="{{ asset('quan-ly/he/xoa/'.$h->maHe) }}"><i class="fa fa-trash"></i></a>
 
 
 
@@ -109,7 +109,7 @@
                               <div class="modal-content">
                                 <div class="modal-header">
                                   <h5 class="modal-title" id="exampleModalLabel">
-                                    Sửa hệ
+                                    Editing Form of training Information
                                   </h5>
                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">×</span>
@@ -118,16 +118,16 @@
                                 <div class="modal-body">
                                   <input type="text" name="maHe" value="{{$h->maHe}}" hidden>
                                   <div class="form-group">
-                                    <label for="">Nhập tên hệ:</label>
+                                    <label for="">Form of training Name</label>
                                     <input type="text" name="tenHe" class="form-control" value="{{$h->tenHe}}" placeholder="">
                                   </div>
                                 </div>
                                 <div class="modal-footer">
                                   <button type="submit" class="btn btn-primary">
-                                    Lưu
+                                    Update
                                   </button>
                                   <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                    Hủy
+                                    Cancel
                                   </button>
                                 </div>
                               </div>

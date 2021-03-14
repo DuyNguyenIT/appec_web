@@ -126,11 +126,6 @@
                       <td>{{$i++}}</td>
                       <td>{{$nd->tenNoiDungQH}}</td>
                       <td>
-                        <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-quy-hoach/chuong/'.$nd->maNoiDungQH) }}">
-                          <button class="btn btn-success">
-                          <i class="fas fa-info-circle"></i> Quy hoạch chương
-                          </button>
-                        </a>
                       </td>
                     </tr>
                    @endforeach

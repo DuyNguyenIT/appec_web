@@ -16,11 +16,11 @@ class Create29SinhVienTable extends Migration
         Schema::create('SINH_VIEN', function (Blueprint $table) {
             $table->string('maSSV',20)->unique();
             $table->primary('maSSV');
-            $table->text('HoSV')->nullable()->default('text');
-            $table->text('TenSV')->nullable()->default('text');
-            $table->text('Phai')->nullable()->default('text');
-            $table->text('NgaySinh')->nullable()->default('text');
-            $table->string('maLop',255);
+            $table->text('HoSV')->nullable()->default(null);
+            $table->text('TenSV')->nullable()->default(null);
+            $table->text('Phai')->nullable()->default(null);
+            $table->text('NgaySinh')->nullable()->default(null);
+            $table->string('maLop',191);
             $table->foreign('maLop')->references('maLop')->on('LOP')->onDelete('cascade');
             $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();

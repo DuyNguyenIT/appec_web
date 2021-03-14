@@ -15,7 +15,7 @@ class Create25PpGiangdayTable extends Migration
     {
         Schema::create('PP_GIANGDAY', function (Blueprint $table) {
             $table->increments('maPP');
-            $table->text('tenPP')->nullable()->default('text');
+            $table->text('tenPP')->nullable()->default(null);
             $table->boolean('isDelete')->nullable()->default(false);
             $table->timestamps();
         });

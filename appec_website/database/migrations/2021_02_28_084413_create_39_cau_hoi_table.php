@@ -15,11 +15,11 @@ class Create39CauHoiTable extends Migration
     {
         Schema::create('CAU_HOI', function (Blueprint $table) {
             $table->increments('maCauHoi');
-            $table->text('noiDungCauHoi')->nullable()->default('text');
-            $table->float('diemCauHoi')->nullable()->default(123.45);
-            $table->integer('maKQHT')->unsigned()->nullable()->default(12);
+            $table->text('noiDungCauHoi')->nullable()->default(null);
+            $table->float('diemCauHoi')->nullable()->default(0.0);
+            $table->integer('maKQHT')->unsigned()->nullable()->default(1);
             $table->boolean('isDelete')->nullable()->default(false);
-            $table->string('maLoaiHTDG',255);
+            $table->string('maLoaiHTDG',191);
             $table->integer('id_muc')->unsigned()->nullable()->default(1);
             $table->foreign('id_muc')->references('id')->on('muc')->onDelete('cascade');
             $table->foreign('maKQHT')->references('maKQHT')->on('KQHT_HP')->onDelete('cascade');

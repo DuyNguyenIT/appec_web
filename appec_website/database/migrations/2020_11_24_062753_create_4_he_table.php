@@ -14,7 +14,7 @@ class Create4HeTable extends Migration
     public function up()
     {
         Schema::create('HE', function (Blueprint $table) {
-            $table->string('maHe',255)->unique();
+            $table->string('maHe',191)->unique();
             $table->text('tenHe')->nullable()->default('text');
             $table->primary('maHe');
             $table->boolean('isDelete')->nullable()->default(false);

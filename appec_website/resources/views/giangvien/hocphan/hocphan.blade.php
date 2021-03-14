@@ -7,15 +7,15 @@
       <div class="row mb-2">
         <div class="col-sm-6">
           <h1 class="m-0 text-dark">
-            Học phần<noscript></noscript>
+            Course<noscript></noscript>
             <nav></nav>
           </h1>
         </div>
         <!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-            <li class="breadcrumb-item active">Học phần</li>
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Course</li>
           </ol>
         </div>
         <!-- /.col -->
@@ -129,19 +129,17 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                   <tr>
-                    <th >STT</th>
-                    <th >Tên học phần</th>
+                    <th >Order</th>
+                    <th >Course name</th>
                     
-                    <th >Học kì</th>
-                    <th >Năm học</th>
-                    <th >Mã lớp</th>
-                    <th >Tùy chọn</th></tr>
+                    <th >Semester</th>
+                    <th >Year</th>
+                    <th >Class ID</th>
+                    <th >Option</th></tr>
 
                 </thead>
                 <tbody>
-                  
-               
-
+              
                   @php
                       $i=1;
                   @endphp
@@ -158,11 +156,16 @@
                       </a>
                     </td>
                     <td style='white-space: nowrap'>
-                        <button class="btn btn-primary">
-                          <i class="fas fa-print"></i>
-                          Xem đề cương chi tiết
-                        </button>
+                        <a class="btn btn-primary" href="{{ asset('/giang-vien/hoc-phan/in-de-cuong-mon-hoc/'.$item->maHocPhan) }}">
+                          <i class="far fa-file-word"></i>
+                              Printing Course Syllabus
+                        </a>
+                         
+                        <a href="{{ asset('/giang-vien/hoc-phan/chuong/'.$item->maHocPhan) }}" class="btn btn-success">
+                          <i class="fas fa-list-ol"></i> Chapter
+                        </a>
                     </td>
+                 
                   </tr>
                   @endforeach
                     

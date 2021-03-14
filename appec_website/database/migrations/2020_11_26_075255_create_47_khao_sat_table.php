@@ -15,11 +15,11 @@ class Create47KhaoSatTable extends Migration
     {
         Schema::create('KHAO_SAT', function (Blueprint $table) {
             
-            $table->string('maPhieuKS',255);
+            $table->string('maPhieuKS',191);
             $table->integer('maMD')->default(1);
-            $table->string('maSSV',255);
+            $table->string('maSSV',191);
             $table->string('maHocPhan',20);
-            $table->integer('maCDR3')->unsigned()->nullable()->default(12);
+            $table->integer('maCDR3')->unsigned()->nullable()->default(1);
             $table->boolean('isDelete')->nullable()->default(false);
             $table->primary(['maPhieuKS','maMD','maSSV','maHocPhan','maCDR3']);
             
