@@ -17,41 +17,49 @@ class chuanDauRaController extends Controller
         ->get();
         return view('admin.chuandaura.chuanDR1',['chuandaura'=>$cdr1]);
     }
- ////-----------------chuẩn đầu ra 1
-    public function them_cdr_submit(Request $request)
-    {
-        try {
-            $cdr=CDR1::create($request->all());
-            return redirect('/quan-ly/chuan-dau-ra')->with('success','Thêm thành công!');
-        } catch (\Throwable $th) {
-            return redirect('/quan-ly/chuan-dau-ra')->with('warning','Lỗi: '.$th);
-        }
-    }
+ ////-----------------chuẩn đầu ra 1 PTTMai có sửa
+ public function them_cdr_submit(Request $request)
+ {
+     try {
+         $cdr=CDR1::create($request->all());
+         alert()->success('Added successfully', 'Message')->persistent('Close');
+         return redirect('/quan-ly/chuan-dau-ra');
+     } catch (\Throwable $th) {
+         alert()->error('Error:'.$th, 'Can not add this entry');
+         return redirect('/quan-ly/chuan-dau-ra');
+     }
+ }
 
-    public function sua_cdr_submit(Request $request)
-    {
-        try {
-            $cdr=CDR1::where('maCDR1',$request->maCDR1)->first();
-            $cdr->maCDR1VB=$request->maCDR1VB;
-            $cdr->tenCDR1=$request->tenCDR1;
-            $cdr->update();
-            return redirect('/quan-ly/chuan-dau-ra')->with('success','Thêm thành công!');
-        } catch (\Throwable $th) {
-            return redirect('/quan-ly/chuan-dau-ra')->with('warning','Lỗi: '.$th);
-        }
-    }
+ public function sua_cdr_submit(Request $request)
+ {
+     try {
+         $cdr=CDR1::where('maCDR1',$request->maCDR1)->first();
+         $cdr->maCDR1VB=$request->maCDR1VB;
+         $cdr->tenCDR1=$request->tenCDR1;
+         $cdr->update();
+         //return redirect('/quan-ly/chuan-dau-ra')->with('success','Thêm thành công!');
+         alert()->success('Updated successfully', 'Message')->persistent('Close');;
+         return redirect('/quan-ly/chuan-dau-ra');
+     } catch (\Throwable $th) {
+         alert()->error('Error:'.$th, 'Update failed')->persistent('Close');;
+         return redirect('/quan-ly/chuan-dau-ra');
+         //return redirect('/quan-ly/chuan-dau-ra')->with('warning','Lỗi: '.$th);
+     }
+ }
 
-    public function xoa_cdr_submit($maCDR1)
-    {
-        try {
-            $cdr=CDR1::where('maCDR1',$maCDR1)->first();
-            $cdr->isdelete=false;
-            $cdr->update();
-            return redirect('/quan-ly/chuan-dau-ra')->with('success','Thêm thành công!');
-        } catch (\Throwable $th) {
-            return redirect('/quan-ly/chuan-dau-ra')->with('warning','Lỗi: '.$th);
-        }
-    }
+ public function xoa_cdr_submit($maCDR1)
+ {
+     try {
+         $cdr=CDR1::where('maCDR1',$maCDR1)->first();
+         $cdr->isdelete=true;
+         $cdr->update();
+         alert()->success('Deleted successful', 'Message') ->persistent('Close');;
+         return redirect('/quan-ly/chuan-dau-ra');
+     } catch (\Throwable $th) {
+         alert()->error('Error:'.$th, 'Delete failed') ->persistent('Close');;
+         return redirect('/quan-ly/chuan-dau-ra');
+     }
+ }
 
 //////------------------chuẩn đầu ra 2
     public function chuanDR2($maCDR1)
