@@ -8,14 +8,14 @@
       <div class="row mb-2">
         <div class="col-sm-6">
           <h1 class="m-0 text-dark">
-            Curriculums Management<noscript></noscript>
+            Curriculum<noscript></noscript>
             <nav></nav>
           </h1>
         </div>
         <!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ asset('/quan-ly') }}">Home</a></li>
             <li class="breadcrumb-item active">Curriculum</li>
           </ol>
         </div>
@@ -36,7 +36,7 @@
   @if(session('warning'))
     <div class="alert alert-warning alert-dismissible">
       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-      <h5><i class="icon fas fa-exclamation-triangle"></i>  Notification!</h5>
+      <h5><i class="icon fas fa-exclamation-triangle"></i> Notification!</h5>
       {{session('warning')}}
     </div>
   @endif
@@ -60,19 +60,19 @@
                     @csrf
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">Adding a new Curriculum</h5>
+                          <h5 class="modal-title" id="exampleModalLabel">Adding a new curriculum</h5>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
                         </div>
                         <div class="modal-body">
                           <div class="form-group">
-                            <label for="">Curriculum Name</label>
-                            <input type="text" name="tenCT" class="form-control">
+                            <label for="">Curriculum name</label>
+                            <input type="text" name="tenCT" class="form-control" required>
                           </div>
                           <div class="form-group">
                             <label for="">Education level</label>
-                            <select name="maBac" id="" class="form-control">
+                            <select name="maBac" id="" class="form-control" required>
                               @foreach ($bac as $x)
                                   <option value="{{$x->maBac}}">{{$x->tenBac}}</option>
                               @endforeach
@@ -80,15 +80,15 @@
                           </div>
                           <div class="form-group">
                             <label for="">Specialized</label>
-                            <select name="maCNganh" id="" class="form-control">
+                            <select name="maCNganh" id="" class="form-control" required>
                               @foreach ($chuyennganh as $y)
                                   <option value="{{$y->maCNganh}}">{{$y->tenCNganh}}</option>  
                               @endforeach
                             </select>
                           </div>
                           <div class="form-group">
-                              <label for="">Form of training</label>
-                              <select name="maHe" id="" class="form-control">
+                              <label for="">Forms of training</label>
+                              <select name="maHe" id="" class="form-control" required>
                                 @foreach ($he as $z)
                                     <option value="{{$z->maHe}}">{{$z->tenHe}}</option>  
                                 @endforeach
@@ -97,7 +97,7 @@
                         </div>
                         <div class="modal-footer">
                           <button type="submit" class="btn btn-primary">Save</button>
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancle</button>
                         </div>
                       </div>
                   </form>
@@ -115,7 +115,7 @@
                 <thead>
                   <tr>
                     <th>No.</th>
-                    <th>Curriculum Name</th>
+                    <th>Curriculum name</th>
                     <th>Education level</th>
                     <th>Specialized</th>
                     <th>Form of training</th>
@@ -146,7 +146,7 @@
                               @csrf
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModalLabel">Editing Curriculum Information</h5>
+                                  <h5 class="modal-title" id="exampleModalLabel">Editing the curriculum</h5>
                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                   </button>
@@ -154,12 +154,12 @@
                                 <div class="modal-body">
                                   <input type="text" name="maCT" value="{{$ct->maCT}}" class="form-control" hidden>
                                   <div class="form-group">
-                                    <label for="">Curriculum Name</label>
-                                    <input type="text" name="tenCT" class="form-control" value="{{$ct->tenCT}}">
+                                    <label for="">Curriculum name</label>
+                                    <input type="text" name="tenCT" class="form-control" value="{{$ct->tenCT}}" required>
                                   </div>
                                   <div class="form-group">
                                     <label for="">Education level</label>
-                                    <select name="maBac" id="" class="form-control">
+                                    <select name="maBac" id="" class="form-control" required>
                                       @foreach ($bac as $x)
                                         @if ($ct->maBac==$x->maBac)
                                         <option value="{{$x->maBac}}" selected>{{$x->tenBac}}</option>
@@ -172,7 +172,7 @@
                                   </div>
                                   <div class="form-group">
                                     <label for="">Specialized</label>
-                                    <select name="maCNganh" id="" class="form-control">
+                                    <select name="maCNganh" id="" class="form-control" required>
                                       @foreach ($chuyennganh as $y)
                                         @if ($ct->maCNganh==$y->maCNganh)
                                           <option value="{{$y->maCNganh}}" selected>{{$y->tenCNganh}}</option>  
@@ -186,7 +186,7 @@
                                   </div>
                                   <div class="form-group">
                                       <label for="">Form of training</label>
-                                      <select name="maHe" id="" class="form-control">
+                                      <select name="maHe" id="" class="form-control" required>
                                         @foreach ($he as $z)
                                           @if ($ct->maHe==$z->maHe)
                                             <option value="{{$z->maHe}}" selected>{{$z->tenHe}}</option>  

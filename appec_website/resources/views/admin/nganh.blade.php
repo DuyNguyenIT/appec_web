@@ -8,15 +8,15 @@
             <div class="row mb-2">
               <div class="col-sm-6">
                 <h1 class="m-0 text-dark">
-                  Major Management<noscript></noscript>
+                  Majors<noscript></noscript>
                   <nav></nav>
                 </h1>
               </div>
               <!-- /.col -->
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                  <li class="breadcrumb-item"><a href="#">Home</a></li>
-                  <li class="breadcrumb-item active">Major</li>
+                  <li class="breadcrumb-item"><a href="{{ asset('quan-ly') }}">Home</a></li>
+                  <li class="breadcrumb-item active">Majors</li>
                 </ol>
               </div>
               <!-- /.col -->
@@ -61,18 +61,18 @@
                               @csrf
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModalLabel">Adding a new Major</h5>
+                                  <h5 class="modal-title" id="exampleModalLabel">Adding a new majors</h5>
                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                   </button>
                                 </div>
                                 <div class="modal-body">
                                       <div class="form-group">
-                                        <label for="">Major ID</label>
+                                        <label for="">Major ID:</label>
                                         <input type="text" name="maNganh" class="form-control" required>
                                       </div>
                                       <div class="form-group">
-                                        <label for="">Major Name</label>
+                                        <label for="">Major name:</label>
                                         <input type="text" name="tenNganh" class="form-control" required>
                                       </div>
                                 </div>
@@ -98,8 +98,8 @@
                         <tr>
                           <th>No.</th>
                           <th>Major ID</th>
-                          <th>Major Name</th>
-                          <th>Management Functions</th>
+                          <th>Major name</th>
+                          <th>Option</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -118,11 +118,11 @@
                                     {{$x->tenNganh}}
                                   </td>
                                   <td>
-                                    <button title="Edit" type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit_{{$x->maNganh}}">
-                                      <i class="fa fa-edit" ></i>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit_{{$x->maNganh}}">
+                                      <i class="fa fa-edit"></i>
                                     </button>
-                                    <a title="Delete" class="btn btn-danger" onclick="return confirm('Do you want to delete {{$x->tenNganh}}?')" href="{{ asset('quan-ly/nganh-hoc/xoa/'.$x->maNganh) }}" ><i class="fa fa-trash" ></i></a>
-                                    <!-- Button trigger modal -->
+                                    <a class="btn btn-danger" onclick="return confirm('Confirming delete {{$x->tenNganh}}?')" href="{{ asset('quan-ly/nganh-hoc/xoa/'.$x->maNganh) }}"><i class="fa fa-trash"></i></a>
+                                    <!-- Button trigger modal --> 
                                     <!-- Modal -->
                                     <div class="modal fade" id="edit_{{$x->maNganh}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                       <div class="modal-dialog" role="document">
@@ -130,7 +130,7 @@
                                           @csrf
                                            <div class="modal-content">
                                               <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Editing Major Information</h5>
+                                                <h5 class="modal-title" id="exampleModalLabel">Editing majors information</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                   <span aria-hidden="true">&times;</span>
                                                 </button>
@@ -138,13 +138,13 @@
                                               <div class="modal-body">
                                                 <input type="text" name="maNganh" value="{{$x->maNganh}}" hidden>
                                                 <div class="form-group">
-                                                  <label for="">Major Name</label>
+                                                  <label for="">Major name:</label>
                                                   <input type="text" name="tenNganh" class="form-control" value="{{$x->tenNganh}}" required>
                                                 </div>
                                               </div>
                                               <div class="modal-footer">
-                                                <button type="submit" class="btn btn-primary">Update</button>
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                <button type="submit" class="btn btn-primary">Lưu</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
                                               </div>
                                             </div>
                                         </form>
