@@ -535,7 +535,7 @@
                             @php
                                 $rs=$kqht->where('maCDR1',$cdr1->maCDR1)->where('maKQHT',$x->maKQHT)->count(); 
                                 
-                                if($bienchay>$rs || $rs>$cur_rs){
+                                if($bienchay>=$rs || $rs>$cur_rs){
                                   $cur_rs=$rs;  
                                   $bienchay=1;
                                 }

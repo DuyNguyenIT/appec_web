@@ -108,5 +108,17 @@ Route::group(['middleware' =>'App\Http\Middleware\isAdmin'], function (){
         Route::post('/sua', 'ppGiangDayController@sua');
         // Route::post('xoa/{id}', '');
     });
+
+    //quản lý tài khoản
+    Route::prefix('tai-khoan')->group(function () {
+        Route::get('/','AdAccountController@index');
+        Route::post('/them', 'AdAccountController@them');
+        Route::post('/sua', 'AdAccountController@sua');
+        Route::get('/xoa/{username}','AdAccountController@xoa');
+        Route::get('/khoa/{username}','AdAccountController@khoa');
+
+        Route::get('/mo-khoa/{username}','AdAccountController@mo_khoa');
+
+    });
 });
  });

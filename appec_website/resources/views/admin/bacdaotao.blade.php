@@ -55,11 +55,11 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                   <label for="">Education level ID</label>
-                                  <input type="text" name="maBac" class="form-control">
+                                  <input type="text" name="maBac" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                   <label for="">Education level Name</label>
-                                  <input type="text" name="tenBac" class="form-control">
+                                  <input type="text" name="tenBac" class="form-control" required>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -119,7 +119,7 @@
                                               </div>
                                               <div class="form-group">
                                                 <label for="">Education level Name</label>
-                                                <input type="text" name="tenBac" class="form-control" value="{{$item->tenBac}}">
+                                                <input type="text" name="tenBac" class="form-control" value="{{$item->tenBac}}" required>
                                               </div>
                                             </div>
                                             <div class="modal-footer">

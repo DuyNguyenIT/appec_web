@@ -32,18 +32,20 @@ class loginController extends Controller
         if($Users){
             Session::put('user_permission',$Users->permission);
             Session::put('user_name',$Users->username);
-            if(Session::get('user_permission') == 1)	 
+            if(Session::get('user_permission') == 1)	 //quản trị
                 return redirect('/quan-ly'); 
-            if(Session::get('user_permission') == 2){
+            if(Session::get('user_permission') == 2){  //giảng viên
                 $gv=giangVien::where('username',$request->username)->first();
                 Session::put('maGV',$gv->maGV);
                 Session::put('hoGV',$gv->hoGV);
                 Session::put('tenGV',$gv->tenGV);
-
                 return redirect('/giang-vien');
             }    
-            if(Session::get('user_permission') == 3){  
+            if(Session::get('user_permission') == 3){   //giáo vụ
                 return redirect('/giao-vu');
+            }
+            if(Session::get('user_permission')==4){//bộ môn
+                
             }
        }
             return back()->with('warning','Đăng nhập không thành công!!!');;

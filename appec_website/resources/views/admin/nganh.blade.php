@@ -15,7 +15,7 @@
               <!-- /.col -->
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li class="breadcrumb-item"><a href="{{ asset('quan-ly') }}">Home</a></li>
                   <li class="breadcrumb-item active">Majors</li>
                 </ol>
               </div>
@@ -68,18 +68,18 @@
                                 </div>
                                 <div class="modal-body">
                                       <div class="form-group">
-                                        <label for="">Nhập mã ngành:</label>
+                                        <label for="">Major ID:</label>
                                         <input type="text" name="maNganh" class="form-control" required>
                                       </div>
                                       <div class="form-group">
-                                        <label for="">Nhập tên ngành:</label>
+                                        <label for="">Major name:</label>
                                         <input type="text" name="tenNganh" class="form-control" required>
                                       </div>
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="submit" class="btn btn-primary">Lưu</button>
+                                  <button type="submit" class="btn btn-primary">Save</button>
 
-                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                 </div>
                               </div>
                             </form>
@@ -96,10 +96,10 @@
                     >
                       <thead>
                         <tr>
-                          <th>STT</th>
-                          <th>Mã ngành</th>
-                          <th>Tên ngành</th>
-                          <th>Tùy chọn</th>
+                          <th>No.</th>
+                          <th>Major ID</th>
+                          <th>Major name</th>
+                          <th>Option</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -121,8 +121,8 @@
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit_{{$x->maNganh}}">
                                       <i class="fa fa-edit"></i>
                                     </button>
-                                    <a class="btn btn-danger" onclick="return confirm('Bạn có muốn xóa {{$x->tenNganh}}?')" href="{{ asset('quan-ly/nganh-hoc/xoa/'.$x->maNganh) }}"><i class="fa fa-trash"></i></a>
-                                    <!-- Button trigger modal -->
+                                    <a class="btn btn-danger" onclick="return confirm('Confirming delete {{$x->tenNganh}}?')" href="{{ asset('quan-ly/nganh-hoc/xoa/'.$x->maNganh) }}"><i class="fa fa-trash"></i></a>
+                                    <!-- Button trigger modal --> 
                                     <!-- Modal -->
                                     <div class="modal fade" id="edit_{{$x->maNganh}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                       <div class="modal-dialog" role="document">
@@ -138,7 +138,7 @@
                                               <div class="modal-body">
                                                 <input type="text" name="maNganh" value="{{$x->maNganh}}" hidden>
                                                 <div class="form-group">
-                                                  <label for="">Nhâp tên ngành:</label>
+                                                  <label for="">Major name:</label>
                                                   <input type="text" name="tenNganh" class="form-control" value="{{$x->tenNganh}}" required>
                                                 </div>
                                               </div>

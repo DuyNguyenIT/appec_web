@@ -15,7 +15,6 @@ class chuongTrinhDTController extends Controller
 {
     public function index(Type $var = null)
     {
-        
         $ctdt=ctDaoTao::where('isDelete',false)->orderBy('maCT','desc')->with('bac')->with('cnganh')->with('he')->get();
          $bac=bacDaoTao::where('isDelete',false)->orderBy('maBac','desc')->get();
          $cn=cNganh::where('isDelete',false)->orderBy('maCNganh','desc')->get();
@@ -36,7 +35,6 @@ class chuongTrinhDTController extends Controller
             );
         }
         return $excel->download(new ctdtExport,'ctdt.xlsx');
-      
     }
 
     public function them(Request $request)

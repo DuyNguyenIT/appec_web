@@ -74,11 +74,11 @@
                         <div class="modal-body">
                           <div class="form-group">
                             <label for="">Course ID</label>
-                            <input type="text" name="maHocPhan" class="form-control">
+                            <input type="text" name="maHocPhan" class="form-control" required>
                           </div>
                           <div class="form-group">
                             <label for="">Course Name</label>
-                            <input type="text" name="tenHocPhan" class="form-control">
+                            <input type="text" name="tenHocPhan" class="form-control" required>
                           </div>
                           <!-- <div class="form-group">
                             <label for="">Tổng tín chỉ</label>
@@ -86,15 +86,15 @@
                           </div>-->
                           <div class="form-group">
                             <label for="">Number of Theory Credits</label>
-                            <input type="number" name="tinChiLyThuyet" class="form-control">
+                            <input type="number" name="tinChiLyThuyet" class="form-control" required>
                           </div>
                           <div class="form-group">
                             <label for="">Number of Practice Credits</label>
-                            <input type="number" name="tinChiThucHanh" class="form-control">
+                            <input type="number" name="tinChiThucHanh" class="form-control" required>
                           </div>
                           <div class="form-group">
                             <label for="">Knowledge block</label>
-                            <select name="maCTKhoiKT" id="" class="form-control">
+                            <select name="maCTKhoiKT" id="" class="form-control" required>
                               @foreach ($ctkhoi as $x)
                                   <option value="{{$x->maCTKhoiKT}}">{{$x->maCTKhoiKT}} - {{$x->tenCTKhoiKT}}</option>
                               @endforeach
@@ -145,9 +145,9 @@
                           <td>{{$hp->tinChiLyThuyet}}</td>
                           <td>{{$hp->tinChiThucHanh}}</td>
                           <td>{{$hp->ctkhoi->tenCTKhoiKT}}</td>
-                          <td>
+                          <td style='white-space: nowrap'> 
                             <a href=" {{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.$hp->maHocPhan) }}" class="btn btn-success">
-                              <i class="fas fa-align-justify"></i> Đề cương môn học
+                              <i class="fas fa-align-justify"></i> Course Syllabus
                             </a>
   
                               <button title="Edit" class="btn btn-success" data-toggle="modal" data-target="#edit_{{$hp->maHocPhan}}">
@@ -170,19 +170,19 @@
                                     <input type="text" name="maHocPhan" value="{{$hp->maHocPhan}}" class="form-control" hidden>
                                     <div class="form-group">
                                       <label for="">Course Name</label>
-                                      <input type="text" name="tenHocPhan" class="form-control" value="{{$hp->tenHocPhan}}">
+                                      <input type="text" name="tenHocPhan" class="form-control" value="{{$hp->tenHocPhan}}" required>
                                     </div>
                                     <div class="form-group">
                                       <label for="">Number of Theory Credits</label>
-                                      <input type="number" name="tinChiLyThuyet" class="form-control" value="{{$hp->tinChiLyThuyet}}">
+                                      <input type="number" name="tinChiLyThuyet" class="form-control" value="{{$hp->tinChiLyThuyet}}" required>
                                     </div>
                                     <div class="form-group">
                                       <label for="">Number of Practice Credits</label>
-                                      <input type="number" name="tinChiThucHanh" class="form-control" value="{{$hp->tinChiThucHanh}}">
+                                      <input type="number" name="tinChiThucHanh" class="form-control" value="{{$hp->tinChiThucHanh}}" required>
                                     </div>
                                     <div class="form-group">
                                       <label for="">Knowledge block</label>
-                                      <select name="maCTKhoiKT" id="" class="form-control">
+                                      <select name="maCTKhoiKT" id="" class="form-control" required>
                                         @foreach ($ctkhoi as $x)
                                           @if ($hp->ctkhoi->maCTKhoiKT==$x->maCTKhoiKT)
                                           <option value="{{$x->maCTKhoiKT}}" selected>{{$x->maCTKhoiKT}} - {{$x->tenCTKhoiKT}}</option>

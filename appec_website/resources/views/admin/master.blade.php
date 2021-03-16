@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Quản lý hệ thống</title>
+    <title>Administration</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link
@@ -58,10 +58,7 @@
             ></a>
           </li>
           <li class="nav-item d-none d-sm-inline-block">
-            <a href="giang_vien.html" class="nav-link">Home</a>
-          </li>
-          <li class="nav-item d-none d-sm-inline-block">
-            <a href="#" class="nav-link">Contact</a>
+            <a href="{{ asset('quan-ly') }}" class="nav-link">Home</a>
           </li>
         </ul>
 
@@ -102,7 +99,7 @@
       <!-- Main Sidebar Container -->
       <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a href="index.html" class="brand-link">
+        <a href="{{ asset('quan-ly') }}" class="brand-link">
           <img
             src="{{ asset('dist/img/AdminLTELogo.png') }}"
             alt="AdminLTE Logo"
@@ -189,7 +186,7 @@
               <li class="nav-item">
                 <a href="{{ asset('/quan-ly/chuong-trinh-dao-tao') }}" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
-                  <p>Program Curriculum</p>
+                  <p>Curriculum</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -220,6 +217,12 @@
                 <a href="{{ asset('/quan-ly/phuong-phap-giang-day') }}" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
                   <p>Teaching methods</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ asset('/quan-ly/tai-khoan') }}" class="nav-link">
+                  <i class="nav-icon  fas fa-users-cog"></i>
+                  <p>Accounts</p>
                 </a>
               </li>
             </ul>

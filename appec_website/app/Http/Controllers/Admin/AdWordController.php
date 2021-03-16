@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\CDR1;
 use App\Models\hocPhan;
 use Illuminate\Http\Request;
+use App\Models\hocPhan_kqHTHP;
 use App\Models\hocPhan_ppGiangDay;
 use App\Models\tai_lieu_tham_khao;
 use App\Http\Controllers\Controller;
@@ -33,6 +35,8 @@ class AdWordController extends Controller
         $cellHCentered = array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER);
         $cellVCentered = array('valign' => 'center');
         
+        $spanTableStyleName = 'Colspan Rowspan';
+        $phpWord->addTableStyle($spanTableStyleName, $fancyTableStyle);
         
         $section = $phpWord->addSection();
         // Add first page header
@@ -63,8 +67,7 @@ class AdWordController extends Controller
         ////------------------------------------------1/ thông tin chung---------------------------------------------
         $section->addText('1. Thông tin chung',$headding1,array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::LEFT));
         
-        $spanTableStyleName = 'Colspan Rowspan';
-        $phpWord->addTableStyle($spanTableStyleName, $fancyTableStyle);
+
         $table = $section->addTable($spanTableStyleName);
 
         $table->addRow(); //tiêu đề bảng thông tin chung
@@ -155,16 +158,39 @@ class AdWordController extends Controller
         $html = $hocPhan->moTaHocPhan;
         \PhpOffice\PhpWord\Shared\Html::addHtml($section, $html, false, false);
         //--------------------------------------4. Chuẩn đầu ra học phần------------------------------------------------------------
+        $CDR1=CDR1::all();//biến này để in chủ đề
+        $kqht=hocPhan_kqHTHP::where('hocphan_kqht_hp.isDelete',false) //biến này chạy nội dung trong bảng chuẩn đầu ra môn học
+        ->where('hocphan_kqht_hp.maHocPhan',$maHocPhan)
+        ->join('kqht_hp',function($y){
+            $y->on('kqht_hp.maKQHT','=','hocphan_kqht_hp.maKQHT')
+            ->where('kqht_hp.isDelete',false);
+        })
+        ->join('cdr_cd3',function($t){
+            $t->on('cdr_cd3.maCDR3','=','hocphan_kqht_hp.maCDR3')
+            ->where('cdr_cd3.isDelete',false);
+        })
+        ->join('cdr_cd2',function($t){
+            $t->on('cdr_cd2.maCDR2','=','cdr_cd3.maCDR2')
+            ->where('cdr_cd2.isDelete',false);
+        })
+        ->join('cdr_cd1',function($t){
+            $t->on('cdr_cd1.maCDR1','=','cdr_cd2.maCDR1')
+            ->where('cdr_cd1.isDelete',false);
+        })
+        ->get();
+
         $section->addText('4. Chuẩn đầu ra học phần:',$headding1);
         $section->addText('Sau khi hoàn thành học phần, sinh viên có thể:',$normalText);
         
         $table_chuandaura = $section->addTable(array('borderSize' => 6, 'borderColor' => '000000'));
         $table_chuandaura->addRow();
-        $cell2 = $table_chuandaura->addCell(2000);
-        $cell2->addText('A');
-        $cell2 = $table_chuandaura->addCell(2000,array('vMerge'=>'continue'));
-        $cell2 = $table_chuandaura->addCell(2000,$cellRowSpan);
-        $cell2->addText('B');
+        $table_chuandaura->addCell(8000);
+        $cell = $table_chuandaura->addCell(4000,$cellRowSpan);
+        $cell->addText('Đáp ứng CĐR của CTĐR');
+
+        foreach ($CDR1 as $cdr) {
+
+        }
         //--------------------------------------5. Nội dung học phần----------------------------------------------------------------
         $section->addText('5. Nội dung học phần:',$headding1);
         //--------------------------------------6. Phương pháp giảng dạy:-----------------------------------------------------------
