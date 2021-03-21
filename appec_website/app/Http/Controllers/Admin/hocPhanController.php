@@ -10,6 +10,7 @@ use App\Models\chuong;
 use App\Models\cNganh;
 use App\Models\kqHTHP;
 use App\Models\hocPhan;
+use App\Models\ctDaoTao;
 use App\Models\ctKhoiKT;
 use App\Models\bacDaoTao;
 use App\Models\ppGiangDay;
@@ -37,16 +38,20 @@ class hocPhanController extends Controller
         $hocphan=hocPhan::where('isDelete',false)->orderBy('maHocPhan','desc')->with('ctkhoi')->get();
         
         $ctkhoi=ctKhoiKT::where('isDelete',false)->orderBy('maCTKhoiKT','asc')->get();
-        return view('admin.hocphan.hocphan',['ctkhoi'=>$ctkhoi,'hocphan'=>$hocphan]);
+        $ctdt=ctDaoTao::all();
+        $loaihp=loaiHocPhan::all();
+        return view('admin.hocphan.hocphan',compact('hocphan','ctkhoi','ctdt','loaihp')     );
     }
 
     public function them(Request $request) //thêm học phần mới
     {
+
         //tính tổng số tín chỉ
         $request->tongSoTinChi=$request->tinChiLyThuyet+$request->tinChiThucHanh;
         //tạo học phần
         hocPhan::create(['maHocPhan'=>$request->maHocPhan,'tenHocPhan'=>$request->tenHocPhan,'tongSoTinChi'=>$request->tongSoTinChi,
         'tinChiLyThuyet'=>$request->tinChiLyThuyet,'tinChiThucHanh'=>$request->tinChiThucHanh,'maCTKhoiKT'=>$request->maCTKhoiKT]);
+        hocPhan_ctDaoTao::create($request->all());
         //phản hồi
         alert()->success('Thêm thành công','Thông báo');
         return redirect('quan-ly/hoc-phan');

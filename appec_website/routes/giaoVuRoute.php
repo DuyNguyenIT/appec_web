@@ -10,8 +10,9 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiaoVu'], function (){
               Route::group(['prefix' => 'quan-ly-lop'], function () {
                      Route::get('/', 'lopController@index');
                      Route::get('xem-danh-sach-sinh-vien/{maLop}', 'lopController@xem_danh_sach_sinh_vien');
-              //     Route::post('chinh-sua/{id}', '');
-              //     Route::post('xoa/{id}', '');
+                     Route::post('cap-nhat-ds-sinh-vien-bang-excel', 'dsSinhVienImportController@import');
+                     Route::get('tai-file-mau', 'dsSinhVienImportController@download_template');
+                     Route::post('them-lop', 'lopController@addClass');
               });
               //học phần
               Route::group(['prefix' => 'hoc-phan-giang-day'], function () {

@@ -49,11 +49,12 @@ Route::group(['middleware' =>'App\Http\Middleware\isAdmin'], function (){
     //chuẩn đầu ra
     Route::group(['prefix' => 'chuan-dau-ra'], function () {
         Route::get('/', 'chuanDauRaController@index');
-        Route::post('them', 'chuanDauRaController@them_cdr_submit');
+        Route::post('/them', 'chuanDauRaController@them_cdr_submit');
+        Route::post('sua', 'chuanDauRaController@sua_cdr_submit');
+        Route::get('xoa/{maCDR1}', 'chuanDauRaController@xoa_cdr_submit');
         Route::get('/chuan-dau-ra-2/{maCDR1}', 'chuanDauRaController@chuanDR2');
         Route::get('/chuan-dau-ra-3/{maCDR2}', 'chuanDauRaController@chuanDR3');
-        // Route::post('sua/{id}', '');
-        // Route::post('xoa/{id}', '');
+
     });
 
     //loại học phần

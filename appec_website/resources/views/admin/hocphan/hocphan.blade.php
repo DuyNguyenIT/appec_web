@@ -61,7 +61,7 @@
                 </h3>
                 <!-- PTTMai thêm -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
+                  <div class="modal-dialog modal-lg" role="document">
                     <form action="{{ asset('quan-ly/hoc-phan/them') }}" method="post">
                     @csrf
                       <div class="modal-content">
@@ -97,6 +97,26 @@
                             <select name="maCTKhoiKT" id="" class="form-control" required>
                               @foreach ($ctkhoi as $x)
                                   <option value="{{$x->maCTKhoiKT}}">{{$x->maCTKhoiKT}} - {{$x->tenCTKhoiKT}}</option>
+                              @endforeach
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <label for="">Curriculum</label>
+                            <select name="maCT" id="" class="form-control" required>
+                              @foreach ($ctdt as $y)
+                                <option value="{{$y->maCT}}" > {{$y->tenCT}}</option>
+                              @endforeach
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <label for="">Phân phối học kì</label>
+                            <input type="number" min="1" max="4" name="phanPhoiHocKy" class="form-control"  required>
+                          </div>
+                          <div class="form-group">
+                            <label for="">Course Type</label>
+                            <select name="maLoaiHocPhan" id="" class="form-control" required>
+                              @foreach ($loaihp as $z)
+                                <option value="{{$z->maLoaiHocPhan}}"> {{$z->tenLoaiHocPhan}}</option>
                               @endforeach
                             </select>
                           </div>
@@ -193,6 +213,7 @@
                                         @endforeach
                                       </select>
                                     </div>
+                                    
                                     <div class="form-group">
                                       <label for="">Course Description</label>
                                       <textarea name="moTaHocPhan" class="form-control" >{{$hp->moTaHocPhan}}</textarea>

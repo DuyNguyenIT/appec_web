@@ -55,6 +55,7 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiangVien'], function (){
                Route::get('/quy-hoach-ket-qua/{maHocPhan}/{maBaiQH}/{maHK}/{namHoc}/{maLop}', 'quyhoachController@quy_hoach_ket_qua_hoc_tap');
                Route::post('/them-quy-hoach', 'quyhoachController@them_quy_hoach');
                Route::post('/chon-nhom-cong-thuc','quyhoachController@chon_nhom_cong_thuc');
+               
                //nội dung quy hoạch
                Route::group(['prefix' => 'noi-dung-quy-hoach'], function () {
                     Route::get('/{maCTBaiQH}','quyhoachController@noi_dung_quy_hoach');

@@ -14,9 +14,8 @@
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ asset('/') }}">Trang chủ</a></li>
               <li class="breadcrumb-item "><a href="quyhoachKQHT.html">Đồ án</a></li>
-              <li class="breadcrumb-item "><a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gianoi-dung-danh-gia/xem-noi-dung-danh-gia/'.Session::get('maCTBaiQH')) }}">Nội dung đánh giá</a></li>
+              <li class="breadcrumb-item "><a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/'.Session::get('maCTBaiQH')) }}">Nội dung đánh giá</a></li>
               <li class="breadcrumb-item active">Nhóm tiêu chí đánh giá</li>
-
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -143,5 +142,5 @@
         <!-- /.container-fluid -->
       </section>
       <!-- /.content -->
-
+  </div>
 @endsection

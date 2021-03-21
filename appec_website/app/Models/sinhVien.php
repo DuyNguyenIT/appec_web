@@ -9,4 +9,6 @@ class sinhVien extends Model
 {
     use HasFactory;
     protected $table='sinh_vien';
+
+    protected $fillable = ['maSSV','HoSV','TenSV','Phai','NgaySinh','maLop'];
 }

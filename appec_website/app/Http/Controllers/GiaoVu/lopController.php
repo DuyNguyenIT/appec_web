@@ -16,10 +16,23 @@ class lopController extends Controller
         return view('giaovu.lop.lop',['lop'=>$lop]);
     }
 
+    public function addClass(Request $request)
+    {
+        $lop=lop::where('maLop',$request->maLop)->first();
+        if($lop){
+            alert()->waring('Class is exist','Warning');
+            return back();
+        }
+        lop::create($request->all());
+        alert()->success('Adding successfully','Message');
+        return back();
+    }
+
     public function xem_danh_sach_sinh_vien($maLop)
     {
         $dssv=sinhVien::where('isDelete',false)
+        ->where('maLop',$maLop)
         ->get();
-        return view('giaovu.lop.danhsachSV',['dssv'=>$dssv,'maLop'=>$maLop]);
+        return view('giaovu.lop.danhsachsv',['dssv'=>$dssv,'maLop'=>$maLop]);
     }
 }

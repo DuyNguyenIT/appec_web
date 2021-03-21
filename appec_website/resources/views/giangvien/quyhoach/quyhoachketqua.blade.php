@@ -86,12 +86,13 @@
                                       @endif
                                     @endforeach
                                   </option>
-                                  <option value="2" >
-
-                                    @php
+                                  @php
                                         $n=$hocphan_loai_htdg_array->where('groupCT',2)->count();
                                         $cr=0;
-                                    @endphp
+                                  @endphp
+                                  @if ($n>0)
+                                  <option value="2" >
+
                                     @foreach ($hocphan_loai_htdg_array as $data)
                                       @if ($cr!=0 && $cr<$n && $data->groupCT==2)
                                           +
@@ -107,6 +108,8 @@
                                       @endif
                                     @endforeach
                                   </option>
+                                  @endif
+                                
                                 </select>
                               </div>
                               <button type="submit" class="btn btn-primary"  >

@@ -88,7 +88,7 @@
                               </select>
                             </div> --}}
 
-
+                           
                             <div class="form-group">
                               <label for="">Chọn học phần:</label>
                               <select name="maHocPhan" id="" class="form-control">
@@ -123,7 +123,9 @@
                             <div class="form-group">
                               <label for="">Nhập năm học:</label>
                               <select name="namHoc" id="" class="form-control">
-                                <option value="2020-2021">2020-2021</option>
+                                @foreach ($years_array as $data)
+                                    <option value="{{ $data }}">{{ $data }}</option>
+                                @endforeach
                               </select>
                             </div>
                         </div>
@@ -153,9 +155,6 @@
                     <th>Tên học phần</th>
                     <th>Lớp</th>
                     <th>Tên giảng viên</th>
-                   
-                   
-                   
                     <th>Tùy chọn</th>
                   </tr>
                 </thead>
@@ -175,9 +174,6 @@
                               <li>{{$gv->hoGV}} {{$gv->tenGV}}</li>
                               @endforeach
                           </td>
-                        
-                         
-                         
                           <td>
                             <button class="btn btn-success">
                                 CDR3

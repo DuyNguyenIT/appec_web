@@ -109,7 +109,14 @@ class quyhoachController extends Controller
         }
         $ndqh=noiDungQH::where('isDelete',false)->where('maCTBaiQH',$maCTBaiQH)->get();
         //kết quả học tập
-        $kqht=kqHTHP::where('isDelete',false)->get();
+        $kqht=hocPhan_kqHTHP::where('hocphan_kqht_hp.isDelete',false) //biến này chạy nội dung trong bảng chuẩn đầu ra môn học
+        ->where('hocphan_kqht_hp.maHocPhan',Session::get('maHocPhan'))
+        ->join('kqht_hp',function($y){
+            $y->on('kqht_hp.maKQHT','=','hocphan_kqht_hp.maKQHT')
+            ->where('kqht_hp.isDelete',false);
+        })
+        ->get();
+        
         //mức độ đánh giá
         $mdg=mucDoDanhGia::where('isDelete',false)->get();
 
@@ -651,17 +658,17 @@ class quyhoachController extends Controller
         if($ct_bqh->maGV_2){
             if($ct_bqh->maGV_2!='00000'){ //nếu không cần mời thêm cán bộ 2 ( mã CB 2 =0000)
                 //cb1
-                phieuCham::create(['maGV'=>Session::get('maGV'),'loaiCB'=>1,'maSSV'=>$request->maSSV,'maDe'=>$request->maDe]);
+                phieu_cham::create(['maGV'=>Session::get('maGV'),'loaiCB'=>1,'maSSV'=>$request->maSSV,'maDe'=>$request->maDe]);
                 //cb2
-                phieuCham::create(['maGV'=>$ct_bqh->maGV_2,'loaiCB'=>2,'maSSV'=>$request->maSSV,'maDe'=>$request->maDe]);
+                phieu_cham::create(['maGV'=>$ct_bqh->maGV_2,'loaiCB'=>2,'maSSV'=>$request->maSSV,'maDe'=>$request->maDe]);
                 alert()->success('Thêm thành công!!','Thông báo');
                 return redirect('giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/'.Session::get('maCTBaiQH'));
             }
             else{
                 //cb1
-                phieuCham::create(['maGV'=>Session::get('maGV'),'loaiCB'=>1,'maSSV'=>$request->maSSV,'maDe'=>$request->maDe]);
+                phieu_cham::create(['maGV'=>Session::get('maGV'),'loaiCB'=>1,'maSSV'=>$request->maSSV,'maDe'=>$request->maDe]);
                 //cb2
-                phieuCham::create(['maGV'=>$request->maGV_2,'loaiCB'=>2,'maSSV'=>$request->maSSV,'maDe'=>$request->maDe]);
+                phieu_cham::create(['maGV'=>$request->maGV_2,'loaiCB'=>2,'maSSV'=>$request->maSSV,'maDe'=>$request->maDe]);
                 return redirect('giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/'.Session::get('maCTBaiQH'))->with('success','Thêm thành công!');
             }
         }
@@ -674,7 +681,6 @@ class quyhoachController extends Controller
     //xem tiêu chí đánh giá
     public function xem_tieu_chi_danh_gia($maCTBaiQH)
     {
-        
              //ct_bai-quy_hoach->noi_dung_quy_hoach
              $ndQh=noiDungQH::where('noi_dung_quy_hoach.isDelete',false)
              ->where('noi_dung_quy_hoach.maCTBaiQH',$maCTBaiQH)
@@ -726,15 +732,19 @@ class quyhoachController extends Controller
         })
         //->get();
         ->get(['cdr_cd3.maCDR3','cdr_cd3.maCDR3VB','cdr_cd3.tenCDR3']);
+
+
      
+
         //kqht
-        $kqht=hocPhan_kqHTHP::where('hocphan_kqht_hp.isDelete',false)
+        //kết quả học tập
+        $kqht=hocPhan_kqHTHP::where('hocphan_kqht_hp.isDelete',false) //biến này chạy nội dung trong bảng chuẩn đầu ra môn học
         ->where('hocphan_kqht_hp.maHocPhan',Session::get('maHocPhan'))
-        ->groupBy('hocphan_kqht_hp.maKQHT')->distinct()
-        ->join('kqht_hp',function($x){
-            $x->on('kqht_hp.maKQHT','=','hocphan_kqht_hp.maKQHT')
+        ->join('kqht_hp',function($y){
+            $y->on('kqht_hp.maKQHT','=','hocphan_kqht_hp.maKQHT')
             ->where('kqht_hp.isDelete',false);
-        })->get(['kqht_hp.maKQHT','kqht_hp.tenKQHT']);
+        })
+        ->get();
         
         //loai ht dg
         $loai_htdg=loaiHTDanhGia::where('isDelete',false)->get();
@@ -759,13 +769,11 @@ class quyhoachController extends Controller
         return response()->json($data);
     }
 
-
     public function them_tieu_chuan_submit(Request $request)
     {
-        tieuChiChamDiem::create(['tenTCDG'=>$request->tenTCDG,'maNoiDungQH'=>$request->maNoiDungQH,'diem'=>$request->diemTCDG]);
+        tieuChuanDanhGia::create(['tenTCDG'=>$request->tenTCDG,'maNoiDungQH'=>$request->maNoiDungQH,'diem'=>$request->diemTCDG]);
         return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/them-tieu-chi-danh-gia/'.Session::get('maCTBaiQH'));
     }
-
 
     public function them_tieu_chi_danh_gian_submit(Request $request) // submit form thêm tiêu chí đánh giá mới
     {

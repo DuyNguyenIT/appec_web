@@ -19,7 +19,7 @@ class CreateTable56PhuongAnTuLuanTable extends Migration
             $table->float('diemPA')->nullable()->default(0.0);
             $table->integer('maCDR3')->unsigned()->nullable()->default(12);
             $table->foreign('maCDR3')->references('maCDR3')->on('cdr_cd3')->onDelete('cascade');
-
+            $table->timestamps();
         });
     }
 

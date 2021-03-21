@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\GiaoVu;
 
-use App\Http\Controllers\Controller;
-use App\Models\baiQuyHoach;
+use Carbon\Carbon;
+use App\Models\lop;
+use App\Models\hocPhan;
 use App\Models\giangDay;
 use App\Models\giangVien;
-use App\Models\hocPhan;
-use App\Models\lop;
+use App\Models\baiQuyHoach;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class hocPhanController extends Controller
 {
@@ -35,6 +36,16 @@ class hocPhanController extends Controller
         ->distinct()
         ->get(['hoc_phan.maHocPhan','maHK','namHoc','hoc_phan.tenHocPhan','giangday.maLop']);
         
+        //------tạo combobox năm học
+        $date = new Carbon();   
+        $current_year=$date->year;
+        $years_array=[];
+        for ($i=1; $i<=5 ; $i++) { 
+            array_push($years_array,($current_year-1).'-'.($current_year));
+            $current_year=$current_year-1;
+        }
+        
+
         foreach ($gd_rs as $x) {
             $gv=[];
             foreach ($gd_data as $y) {
@@ -53,8 +64,9 @@ class hocPhanController extends Controller
             }
         }
        
+
         return view('giaovu.hocphan.hocphan',['giangday'=>$gd_rs,'hocphan'=>$hp,
-        'giangvien'=>$giangvien,'lop'=>$lop]);
+        'giangvien'=>$giangvien,'lop'=>$lop,'years_array'=>$years_array]);
     }
 
     public function them_hoc_phan_giang_day(Request  $request)
@@ -73,7 +85,6 @@ class hocPhanController extends Controller
         $gd->namHoc=$request->namHoc;
         $gd->maBaiQH=$bqh->maBaiQH;
         $gd->maCDR3=1;
-        
         $gd->save();
 
         return redirect('/giao-vu/hoc-phan-giang-day')->with('success','Thêm thành công!!!');

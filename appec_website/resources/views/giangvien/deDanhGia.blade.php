@@ -1,7 +1,7 @@
-@extends('giangvien.master')
+ư@extends('giangvien.master')
 @section('content')
 <div class="content-wrapper" style="min-height: 123px;">
-  <!-- Content Header (Page header) -->
+  <!-- Content Header (Page header) -->ư
   <div class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">

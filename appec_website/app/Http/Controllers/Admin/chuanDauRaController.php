@@ -22,7 +22,8 @@ class chuanDauRaController extends Controller
     {
         try {
             $cdr=CDR1::create($request->all());
-            return redirect('/quan-ly/chuan-dau-ra')->with('success','Thêm thành công!');
+            alert()->success('Adding successfully','Message');
+            return redirect('/quan-ly/chuan-dau-ra');
         } catch (\Throwable $th) {
             return redirect('/quan-ly/chuan-dau-ra')->with('warning','Lỗi: '.$th);
         }
@@ -35,9 +36,11 @@ class chuanDauRaController extends Controller
             $cdr->maCDR1VB=$request->maCDR1VB;
             $cdr->tenCDR1=$request->tenCDR1;
             $cdr->update();
-            return redirect('/quan-ly/chuan-dau-ra')->with('success','Thêm thành công!');
+            alert()->success('Editing successfully','Message');
+            return redirect('/quan-ly/chuan-dau-ra');
         } catch (\Throwable $th) {
-            return redirect('/quan-ly/chuan-dau-ra')->with('warning','Lỗi: '.$th);
+            alert()->success('Error:'.$th,'Notification');
+            return redirect('/quan-ly/chuan-dau-ra');
         }
     }
 
@@ -45,11 +48,13 @@ class chuanDauRaController extends Controller
     {
         try {
             $cdr=CDR1::where('maCDR1',$maCDR1)->first();
-            $cdr->isdelete=false;
+            $cdr->isdelete=true;
             $cdr->update();
-            return redirect('/quan-ly/chuan-dau-ra')->with('success','Thêm thành công!');
+            alert()->success('Deleting successfully','Message');
+            return redirect('/quan-ly/chuan-dau-ra');
         } catch (\Throwable $th) {
-            return redirect('/quan-ly/chuan-dau-ra')->with('warning','Lỗi: '.$th);
+            alert()->success('Error:'.$th,'Notification');
+            return redirect('/quan-ly/chuan-dau-ra');
         }
     }
 
@@ -64,7 +69,8 @@ class chuanDauRaController extends Controller
             ->where('cdr_cd1.isDelete',false);
         })
         ->get();
-        return view('admin.chuandaura.chuanDR2',['chuandaura2'=>$cdr2]);
+        $cdr1=CDR1::where('maCDR1',$maCDR1)->first();
+        return view('admin.chuandaura.chuanDR2',['chuandaura2'=>$cdr2,'cdr1'=> $cdr1]);
     }
 
     public function them_cdr2_submit(Request $request)
@@ -120,7 +126,8 @@ class chuanDauRaController extends Controller
                 ->where('cdr_cd2.isDelete',false);
             })
             ->get();
-            return view('admin.chuandaura.chuanDR3',['chuandaura3'=>$cdr3]);
+            $cdr2=CDR2::where('maCDR2',$maCDR2)->first();
+            return view('admin.chuandaura.chuanDR3',['chuandaura3'=>$cdr3,'cdr2'=>$cdr2]);
         } catch (\Throwable $th) {
             return redirect('/quan-ly/chuan-dau-ra')->with('warning','Lỗi: '.$th);
         }
