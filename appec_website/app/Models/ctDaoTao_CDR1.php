@@ -9,4 +9,6 @@ class ctDaoTao_CDR1 extends Model
 {
     use HasFactory;
     protected $table='ctdt_cdrcd1';
+    public $fillable=['maCT','maCDR1','isDelete'];
+    
 }

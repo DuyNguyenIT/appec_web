@@ -11,7 +11,7 @@ class ctDaoTao extends Model
     protected $table='ct_dao_tao';
     protected $primaryKey='maCT';
     public $incrementing=false;
-
+    protected $fillable = ['maCT','tenCT','maBac','maCNganh','maHe','isDelete'];
     public function bac()
     {
         return $this->hasOne('App\Models\bacDaoTao', 'maBac', 'maBac');
