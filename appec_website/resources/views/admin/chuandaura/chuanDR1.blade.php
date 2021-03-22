@@ -135,6 +135,12 @@
                                     </div>
                                     <div class="modal-body">
                                       <input type="text" name="maCDR1" value="{{$cdr->maCDR1}}" class="form-control" hidden>
+                                      <!-- PTTMai thêm -->
+                                      <div class="form-group">
+                                        <label for="">Level-1 Student Outcome ID (number):</label>
+                                        <input type="text" name="maCDR1VB" class="form-control" value="{{$cdr->maCDR1VB}}">
+                                      </div> 
+                                      <!-- hết PTTMai thêm -->
                                       <div class="form-group">
                                         <label for="">Level-1 Student Outcome Name</label>
                                         <input type="text" name="tenCDR1" class="form-control" value="{{$cdr->tenCDR1}}">
