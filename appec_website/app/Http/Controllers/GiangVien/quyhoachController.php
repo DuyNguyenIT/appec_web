@@ -389,6 +389,7 @@ class quyhoachController extends Controller
         ##tính điểm câu hỏi
         for ($i=0; $i < count($noidung); $i++) { 
             $diem=dethi_cauhoituluan::where('maCauHoi',$noidung[$i]->maCauHoi)
+            ->where('de_thi_cauhoi_tuluan.maDe',$maDe)
             ->join('phuong_an_tu_luan','phuong_an_tu_luan.id','=','de_thi_cauhoi_tuluan.maPATL')
             ->sum('phuong_an_tu_luan.diemPA');
             $noidung[$i]->diem=$diem;  

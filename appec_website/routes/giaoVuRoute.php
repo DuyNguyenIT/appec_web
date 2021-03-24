@@ -36,6 +36,8 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiaoVu'], function (){
                Route::group(['prefix' => 'thong-ke'], function () {
                    Route::get('/', 'thongKeController@index');
                    Route::group(['prefix' => 'thong-ke-theo-hoc-phan'], function () {
+
+                           
                         Route::get('/{maGV}/{maHocPhan}/{maHK}/{namHoc}/{maLop}', 'thongKeController@thong_ke_theo_hoc_phan');
                         Route::get('/thong-ke-theo-xep-hang/{maCTBaiQH}/{maCanBo}', 'thongKeController@thong_ke_theo_xep_hang');
                         Route::get('/get-xep-hang','thongKeController@get_xep_hang');
@@ -51,6 +53,28 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiaoVu'], function (){
                         Route::get('/get-diem-chu-kl','thongKeController@get_diem_chu_kl');
                         Route::get('/thong-ke-theo-tieu-chi-kl/{maCanBo}','thongKeController@thong_ke_theo_tieu_chi_kl');
                         Route::get('/get-tieu-chi-kl','thongKeController@get_tieu_chi_kl');
+
+
+                        Route::prefix('thuc-hanh')->group(function () {
+                            Route::get('thong-ke-theo-xep-hang/{maCTBaiQH}', 'thongKeController@thong_ke_theo_xep_hang_thuc_hanh');
+                            Route::get('get-xep-hang','thongKeController@get_xep_hang_thuc_hanh');
+                            Route::get('/thong-ke-theo-diem-chu/{maCTBaiQH}', 'thongKeController@thong_ke_theo_diem_chu_thuc_hanh');
+                            Route::get('/get-diem-chu','thongKeController@get_diem_chu_thuc_hanh');
+                            Route::get('/thong-ke-theo-tieu-chi/{maCTBaiQH}', 'thongKeController@thong_ke_theo_tieu_chi_thuc_hanh');
+                            Route::get('/get-tieu-chi','thongKeController@get_tieu_chi_thuc_hanh'); 
+                        }); 
+                        
+
+                        Route::prefix('tu-luan')->group(function () {
+                            Route::get('thong-ke-theo-xep-hang/{maCTBaiQH}', 'thongKeController@thong_ke_theo_xep_hang_tu_luan');
+                            Route::get('get-xep-hang','thongKeController@get_xep_hang_tu_luan');
+                            Route::get('/thong-ke-theo-diem-chu/{maCTBaiQH}', 'thongKeController@thong_ke_theo_diem_chu_tu_luan');
+                            Route::get('/get-diem-chu','thongKeController@get_diem_chu_tu_luan');
+                            Route::get('/thong-ke-theo-tieu-chi/{maCTBaiQH}', 'thongKeController@thong_ke_theo_tieu_chi_tu_luan');
+                            Route::get('/get-tieu-chi','thongKeController@get_tieu_chi_tu_luan'); 
+                        });
+
+                        
                    });
               });
           });

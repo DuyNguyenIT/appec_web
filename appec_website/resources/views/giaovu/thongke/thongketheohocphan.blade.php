@@ -129,29 +129,58 @@
                           </td>
                         </tr>
                       @else
+                        @if ($x->maLoaiHTDG='T1')
                         <tr>
                           <td>{{$i++}}</td>
                           <td>{{$x->tenLoaiDG}}</td>
                           <td>{{$x->trongSo}}%</td>
                           <td>{{$x->tenLoaiHTDG}}</td>
                           <td>
-                            <a href="{{ asset('/giao-vu/thong-ke/thong-ke-theo-hoc-phan/thong-ke-theo-tieu-chi/'.$x->maCTBaiQH) }}">
+                            <a href="{{ asset('/giao-vu/thong-ke/thong-ke-theo-hoc-phan/tu-luan/thong-ke-theo-tieu-chi/'.$x->maCTBaiQH) }}">
                               <button class="btn btn-primary"> 
                                 <i class="fas fa-chart-line"></i>Thống kê theo tiêu chí
                             </button>
                             </a>
-                            <a href="{{ asset('giao-vu/thong-ke/thong-ke-theo-hoc-phan/thong-ke-theo-xep-hang/'.$x->maCTBaiQH) }}">
+                            <a href="{{ asset('giao-vu/thong-ke/thong-ke-theo-hoc-phan/tu-luan/thong-ke-theo-xep-hang/'.$x->maCTBaiQH) }}">
                               <button class="btn btn-primary"> 
                                 <i class="fas fa-chart-line"></i>Thống kê theo xếp hạng
                             </button>
                             </a>
-                            <a href="{{ asset('giao-vu/thong-ke/thong-ke-theo-hoc-phan/thong-ke-theo-diem-chu/'.$x->maCTBaiQH) }}">
+                            <a href="{{ asset('giao-vu/thong-ke/thong-ke-theo-hoc-phan/tu-luan/thong-ke-theo-diem-chu/'.$x->maCTBaiQH) }}">
                               <button class="btn btn-primary"> 
                                 <i class="fas fa-chart-line"></i>Thống kê theo điểm chữ
                             </button>
                             </a>
                           </td>
                         </tr>
+                        @else
+                            @if ($x->maLoaiHTDG='T3')
+                            <tr>
+                              <td>{{$i++}}</td>
+                              <td>{{$x->tenLoaiDG}}</td>
+                              <td>{{$x->trongSo}}%</td>
+                              <td>{{$x->tenLoaiHTDG}}</td>
+                              <td>
+                                <a href="{{ asset('/giao-vu/thong-ke/thong-ke-theo-hoc-phan/thuc-hanh/thong-ke-theo-tieu-chi/'.$x->maCTBaiQH) }}">
+                                  <button class="btn btn-primary"> 
+                                    <i class="fas fa-chart-line"></i>Thống kê theo tiêu chí
+                                </button>
+                                </a>
+                                <a href="{{ asset('giao-vu/thong-ke/thong-ke-theo-hoc-phan/thuc-hanh/thong-ke-theo-xep-hang/'.$x->maCTBaiQH) }}">
+                                  <button class="btn btn-primary"> 
+                                    <i class="fas fa-chart-line"></i>Thống kê theo xếp hạng
+                                </button>
+                                </a>
+                                <a href="{{ asset('giao-vu/thong-ke/thong-ke-theo-hoc-phan/thuc-hanh/thong-ke-theo-diem-chu/'.$x->maCTBaiQH) }}">
+                                  <button class="btn btn-primary"> 
+                                    <i class="fas fa-chart-line"></i>Thống kê theo điểm chữ
+                                </button>
+                                </a>
+                              </td>
+                            </tr>
+                            @endif
+                        @endif
+                       
                       @endif
                     
                       @endforeach

@@ -70,7 +70,7 @@
                         $sum=0;
                         for ($t=1; $t <7 ; $t++) { 
                           # code...
-                          $sum+=intval($bd[$t]);
+                           $sum+=intval($bd[$t]);
                         }
                     @endphp
                     <tr>
@@ -137,7 +137,7 @@
                 var kem=[];
         $.ajax({
             type:'GET',
-            url:'/giao-vu/thong-ke/thong-ke-theo-hoc-phan/get-tieu-chi',
+            url:'/giao-vu/thong-ke/thong-ke-theo-hoc-phan/tu-luan/get-tieu-chi',
             success:function(data) {
                
                 for (let i = 0; i < data.length; i++) {

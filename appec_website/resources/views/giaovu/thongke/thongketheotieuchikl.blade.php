@@ -57,6 +57,7 @@
                      <th>Trung Bình</th>
                      <th>Yếu</th>
                      <th>Kém</th>
+                     <th>Tổng</th>
 
                   </tr>
                   </thead>
@@ -65,6 +66,13 @@
                         $i=1;
                     @endphp
                     @foreach ($bieuDo as $bd)
+                    @php
+                        $sum=0;
+                        for ($t=1; $t <7 ; $t++) { 
+                          # code...
+                          $sum+=intval($bd[$t]);
+                        }
+                    @endphp
                     <tr>
                         <td>{{$i++}}</td>
                         <td>{{$bd[0]}}</td>
@@ -74,6 +82,7 @@
                         <td>{{$bd[4]}}</td>
                         <td>{{$bd[5]}}</td>
                         <td>{{$bd[6]}}</td>
+                        <td>{{ $sum }}</td>
                     </tr>
                     @endforeach
                  </tbody>

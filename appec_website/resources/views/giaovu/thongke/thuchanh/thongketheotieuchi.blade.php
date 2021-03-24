@@ -67,6 +67,10 @@
                     @endphp
                     @foreach ($bieuDo as $bd)
                     @php
+                        $i=1;
+                    @endphp
+                    @foreach ($bieuDo as $bd)
+                    @php
                         $sum=0;
                         for ($t=1; $t <7 ; $t++) { 
                           # code...

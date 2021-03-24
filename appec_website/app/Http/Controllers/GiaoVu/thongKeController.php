@@ -1,23 +1,23 @@
 <?php
 
 namespace App\Http\Controllers\GiaoVu;
-
 use Session;
-use App\Models\hocPhan;
-use App\Models\giangDay;
-use App\Models\loaiDanhGia;
-use Illuminate\Http\Request;
-use App\Models\loaiHTDanhGia;
-use App\Models\ct_bai_quy_hoach;
-use App\Http\Controllers\Controller;
-use App\Models\baiQuyHoach;
+use App\Models\deThi;
 use App\Models\cauHoi;
 use App\Models\danhGia;
-use App\Models\deThi;
-use App\Models\deThi_cauHoi;
-use App\Models\noiDungQH;
-use App\Models\tieuChuanDanhGia;
+use App\Models\hocPhan;
+use App\Models\giangDay;
 use App\Models\giangVien;
+use App\Models\noiDungQH;
+use App\Models\baiQuyHoach;
+use App\Models\loaiDanhGia;
+use App\Models\deThi_cauHoi;
+use Illuminate\Http\Request;
+use App\Models\loaiHTDanhGia;
+use App\Models\danhgia_tuluan;
+use App\Models\ct_bai_quy_hoach;
+use App\Models\tieuChuanDanhGia;
+use App\Http\Controllers\Controller;
 
 
 class thongKeController extends Controller
@@ -87,12 +87,11 @@ class thongKeController extends Controller
         ->where('giangday.maHocPhan',$maHocPhan)
         ->where('giangday.maHK',$maHK)
         ->where('giangday.namHoc',$namHoc)
-        ->distinct()
+        ->where('giangday.maLop',$maLop)
         ->get('maBaiQH');    
 
         $qh=[];
-        
-        
+
         if($baiQH->count()>1){ //loại đồ án chuyên ngành hoặc  khóa luận
             foreach ($baiQH as  $value) {
                 $qh=ct_bai_quy_hoach::where('ct_bai_quy_hoach.isDelete',false)
@@ -107,7 +106,7 @@ class thongKeController extends Controller
                 })
                 ->get();
             }
-
+      
             return view('giaovu.thongke.thongketheodoan',['qh'=>$qh,'hp'=>$hp,
             'ldg'=>$ldg,'lhtdg'=>$lhtdg]);
             
@@ -123,14 +122,756 @@ class thongKeController extends Controller
                 ->where('loai_ht_danhgia.isDelete',false);
             })
             ->get();
-            //return $qh;
             return view('giaovu.thongke.thongketheohocphan',['qh'=>$qh,'hp'=>$hp,
             'ldg'=>$ldg,'lhtdg'=>$lhtdg]);
         }
        
     }
 
-    //________________________________________________________
+    //_________________________________________________________________________________________________________________________________
+    ####-------------------------------------------------------THỐNG KÊ CỦA THỰC HÀNH
+    //__________________________________________________________________________________________________________________________________
+    //___________________________________________________________THỰC HÀNH theo xếp hạng
+    public function thong_ke_theo_xep_hang_thuc_hanh($maCTBaiQH)
+    {
+        Session::put('maCTBaiQH',$maCTBaiQH);
+        //học phần
+        
+         //ct bai quy hoach
+         $ct_baiQH=ct_bai_quy_hoach::where('ct_bai_quy_hoach.isDelete',false)
+         ->where('maCTBaiQH',$maCTBaiQH)
+         ->leftjoin('loai_ht_danhgia',function($x){
+             $x->on('ct_bai_quy_hoach.maLoaiHTDG','=','ct_bai_quy_hoach.maLoaiHTDG')
+             ->where('ct_bai_quy_hoach.isDelete',false);
+         })
+         ->first();
+
+         //đề thi
+         $dethi=deThi::where('de_thi.isDelete',false)
+         ->where('maCTBaiQH',$maCTBaiQH)
+         ->join('phieu_cham',function($x){
+             $x->on('phieu_cham.maDe','=','de_thi.maDe')
+             ->where('phieu_cham.maGV',Session::get('maGV'))
+             ->where('phieu_cham.isDelete',false);
+         })
+         ->get(['maPhieuCham','xepHang']);
+        
+
+         //xếp hạng
+        $xepHang=[];
+        $tiLe=[];
+        for ($i=1; $i <=5 ; $i++) { 
+            array_push($xepHang,$dethi->where('xepHang',$i)->count());
+            $rate=$dethi->where('xepHang',$i)->count()*100/$dethi->count('maPhieuCham');
+            array_push($tiLe,$rate);
+        }
+
+        return view('giaovu.thongke.tuluan.thongkexephang',['xepHang'=>$xepHang,'tiLe'=>$tiLe]);
+
+
+    }
+    public function get_xep_hang_thuc_hanh()
+    {
+        $dethi=deThi::where('de_thi.isDelete',false)
+            ->where('maCTBaiQH',Session('maCTBaiQH'))
+            ->join('phieu_cham',function($x){
+                $x->on('phieu_cham.maDe','=','de_thi.maDe')
+                ->where('phieu_cham.maGV',Session::get('maGV'))
+                ->where('phieu_cham.isDelete',false);
+            })
+            ->get(['maPhieuCham','xepHang']);
+            $xepHang=[];
+            $tiLe=[];
+            for ($i=1; $i <=5 ; $i++) { 
+                array_push($xepHang,$dethi->where('xepHang',$i)->count());
+                $rate=$dethi->where('xepHang',$i)->count()*100/$dethi->count('maPhieuCham');
+                array_push($tiLe,$rate);
+            }
+            return response()->json($xepHang);
+    }
+    //____________________________________________________________THỰC HÀNH theo điểm chữ
+    public function thong_ke_theo_diem_chu_thuc_hanh($maCTBaiQH)
+    {
+
+        Session::put('maCTBaiQH',$maCTBaiQH);
+
+        //học phần 
+        $hp=hocPhan::where('isDelete',false)
+        ->where('maHocPhan',Session::get('maHocPhan'))
+        ->first();
+        //ct bai quy hoach
+        $ct_baiQH=ct_bai_quy_hoach::where('ct_bai_quy_hoach.isDelete',false)
+        ->where('maCTBaiQH',$maCTBaiQH)
+        ->leftjoin('loai_ht_danhgia',function($x){
+            $x->on('ct_bai_quy_hoach.maLoaiHTDG','=','ct_bai_quy_hoach.maLoaiHTDG')
+            ->where('ct_bai_quy_hoach.isDelete',false);
+        })
+        ->first();
+        
+        //đề thi
+        $dethi=deThi::where('de_thi.isDelete',false)
+        ->where('maCTBaiQH',$maCTBaiQH)
+        ->join('phieu_cham',function($x){
+            $x->on('phieu_cham.maDe','=','de_thi.maDe')
+            ->where('phieu_cham.maGV',Session::get('maGV'))
+            ->where('phieu_cham.isDelete',false);
+        })
+        ->get(['maPhieuCham','diemChu']);
+        if($dethi->count()==0)
+        {
+            alert()->warning('There are no examination!','Message');
+            return redirect()->back();
+        } 
+        $diemChu=[];
+        $tiLe=[];
+        $letter=['A','B+','B','C+','C','D+','D','F'];
+        foreach ($letter as  $lt) {
+            array_push($diemChu,$dethi->where('diemChu',$lt)->count());
+            array_push($tiLe,$dethi->where('diemChu',$lt)->count()*100/$dethi->count());
+        }
+        return view('giaovu.thongke.thongketheodiemchu',['diemChu'=>$diemChu,'tiLe'=>$tiLe,
+        'hp'=>$hp,'chu'=>$letter,'ct_baiQH'=>$ct_baiQH]);
+    }
+
+    public function get_diem_chu_thuc_hanh(Type $var = null)
+    {
+        $diemChu=[];
+        $dethi=deThi::where('de_thi.isDelete',false)
+        ->where('maCTBaiQH',Session::get('maCTBaiQH'))
+        ->join('phieu_cham',function($x){
+            $x->on('phieu_cham.maDe','=','de_thi.maDe')
+            ->where('phieu_cham.maGV',Session::get('maGV'))
+            ->where('phieu_cham.isDelete',false);
+        })
+        ->get(['maPhieuCham','diemChu']);
+       
+        $diemChu=[];
+        $letter=['A','B+','B','C+','C','D+','D','F'];
+        foreach ($letter as  $lt) {
+            array_push($diemChu,$dethi->where('diemChu',$lt)->count());
+        }
+        return response()->json($diemChu);
+    }
+
+    //___________________________________________________________THỰC HÀNH theo tiêu chí
+    public function thong_ke_theo_tieu_chi_thuc_hanh($maCTBaiQH)
+    {
+        Session::put('maCTBaiQH',$maCTBaiQH);
+        //lấy danh sách cdr3
+        ////maCTBaiQH-->noiDungQH
+        $ndqh=noiDungQH::where('isDelete',false)
+        ->where('maCTBaiQH',$maCTBaiQH)
+        ->get();
+        //ct bai quy hoach
+        $ct_baiQH=ct_bai_quy_hoach::where('ct_bai_quy_hoach.isDelete',false)
+        ->where('maCTBaiQH',$maCTBaiQH)
+        ->leftjoin('loai_ht_danhgia',function($x){
+            $x->on('ct_bai_quy_hoach.maLoaiHTDG','=','ct_bai_quy_hoach.maLoaiHTDG')
+            ->where('ct_bai_quy_hoach.isDelete',false);
+        })
+        ->first();
+
+        $chuan_dau_ra3=[];
+        $phuongan=[];
+
+        //ct_baiqh->de_thi->de_thi_cauhoi_tuluan-->cau_hoi
+        //                              |____________>phuong_an_tu_luan-->cdr_cd3
+        $chuan_dau_ra3=deThi::where('de_thi.isDelete',false)
+        ->where('maCTBaiQH',$maCTBaiQH)
+        ->join('de_thi_cauhoi_tuluan',function($x){
+            $x->on('de_thi_cauhoi_tuluan.maDe','=','de_thi.maDe');
+        })
+        ->join('phuong_an_tu_luan',function($x){
+            $x->on('de_thi_cauhoi_tuluan.maPATL','=','phuong_an_tu_luan.id');
+        })
+        ->join('cdr_cd3',function($x){
+            $x->on('cdr_cd3.maCDR3','=','phuong_an_tu_luan.maCDR3')
+            ->where('cdr_cd3.isDelete',false);
+        })
+        ->distinct(['cdr_cd3.maCDR3','cdr_cd3.tenCDR3'])
+        ->orderBy('cdr_cd3.maCDR3')
+        ->get(['cdr_cd3.maCDR3','cdr_cd3.maCDR3VB','cdr_cd3.tenCDR3']);
+        
+        $phuongan=deThi::where('de_thi.isDelete',false)
+        ->where('maCTBaiQH',$maCTBaiQH)
+        ->join('de_thi_cauhoi_tuluan',function($x){
+            $x->on('de_thi_cauhoi_tuluan.maDe','=','de_thi.maDe');
+        })
+        ->join('phuong_an_tu_luan',function($x){
+            $x->on('de_thi_cauhoi_tuluan.maPATL','=','phuong_an_tu_luan.id');
+        })
+        ->get(['phuong_an_tu_luan.id','phuong_an_tu_luan.noiDungPA','phuong_an_tu_luan.diemPA','phuong_an_tu_luan.maCDR3']);
+
+        $phieuCham=deThi::where('de_thi.isDelete',false)
+        ->where('maCTBaiQH',$maCTBaiQH)
+        ->join('phieu_cham',function($x){
+            $x->on('phieu_cham.maDe','=','de_thi.maDe')
+            ->where('phieu_cham.maGV',Session::get('maGV'))
+            ->where('phieu_cham.isDelete',false);
+        })
+        ->get(['phieu_cham.maPhieuCham']);
+
+
+        $bieuDo=[];
+        
+        foreach ($chuan_dau_ra3 as $cdr3) {
+
+            $temp=[];
+            array_push($temp,$cdr3->maCDR3VB);
+            array_push($temp,$cdr3->tenCDR3);
+
+            $gioi=0;
+            $kha=0;
+            $tb=0;
+            $yeu=0;
+            $kem=0;
+
+            $diem_tieu_chi=0;
+            //tính điểm tương ứng của chuẩn đầu ra 3
+            foreach ($phuongan as $tc) {
+                if($tc->maCDR3==$cdr3->maCDR3){
+                    $diem_tieu_chi=$diem_tieu_chi+$tc->diemPA;
+                }
+            }
+
+
+            foreach ($phieuCham as $pc) {
+                $t=$cdr3->maCDR3;
+                /////////
+                //điếm theo phiếu chấm
+
+                $dem=danhgia_tuluan::where('maPhieuCham',$pc->maPhieuCham)
+                ->join('phuong_an_tu_luan',function($x) use ($t){
+                    $x->on('phuong_an_tu_luan.id','=','danhgia_tuluan.maPATL')
+                    ->where('phuong_an_tu_luan.maCDR3',$t);
+                })
+                ->sum('danhgia_tuluan.diemDG');
+                $tile=$dem/$diem_tieu_chi;
+                if($tile<0.25){
+                    $kem++;
+                }else{
+                    if($tile>=0.25 && $tile<0.5){
+                        $yeu++;
+                    }else{
+                        if($tile>=0.5 && $tile<0.75){
+                            $tb++;
+                        }else{
+                            if($tile>=0.75 && $tile<1){
+                                $kha++;
+                            }else{
+                                $gioi++;
+                            }
+                        }
+                    }
+                }
+            }
+
+            array_push($temp,$gioi);
+            array_push($temp,$kha);
+            array_push($temp,$tb);
+            array_push($temp,$yeu);
+            array_push($temp,$kem);
+            array_push($bieuDo,$temp);
+        }
+
+        return view('giaovu.thongke.tuluan.thongketheotieuchi',['bieuDo'=>$bieuDo]);
+
+    }
+    public function get_tieu_chi_thuc_hanh()
+    {
+        $ndqh=noiDungQH::where('isDelete',false)
+        ->where('maCTBaiQH',Session::get('maCTBaiQH'))
+        ->get();
+        //ct bai quy hoach
+        $ct_baiQH=ct_bai_quy_hoach::where('ct_bai_quy_hoach.isDelete',false)
+        ->where('maCTBaiQH',Session::get('maCTBaiQH'))
+        ->leftjoin('loai_ht_danhgia',function($x){
+            $x->on('ct_bai_quy_hoach.maLoaiHTDG','=','ct_bai_quy_hoach.maLoaiHTDG')
+            ->where('ct_bai_quy_hoach.isDelete',false);
+        })
+        ->first();
+
+        $chuan_dau_ra3=[];
+        $phuongan=[];
+
+        //ct_baiqh->de_thi->de_thi_cauhoi_tuluan-->cau_hoi
+        //                              |____________>phuong_an_tu_luan-->cdr_cd3
+        $chuan_dau_ra3=deThi::where('de_thi.isDelete',false)
+        ->where('maCTBaiQH',Session::get('maCTBaiQH'))
+        ->join('de_thi_cauhoi_tuluan',function($x){
+            $x->on('de_thi_cauhoi_tuluan.maDe','=','de_thi.maDe');
+        })
+        ->join('phuong_an_tu_luan',function($x){
+            $x->on('de_thi_cauhoi_tuluan.maPATL','=','phuong_an_tu_luan.id');
+        })
+        ->join('cdr_cd3',function($x){
+            $x->on('cdr_cd3.maCDR3','=','phuong_an_tu_luan.maCDR3')
+            ->where('cdr_cd3.isDelete',false);
+        })
+        ->distinct(['cdr_cd3.maCDR3','cdr_cd3.tenCDR3'])
+        ->orderBy('cdr_cd3.maCDR3')
+        ->get(['cdr_cd3.maCDR3','cdr_cd3.maCDR3VB','cdr_cd3.tenCDR3']);
+        
+        $phuongan=deThi::where('de_thi.isDelete',false)
+        ->where('maCTBaiQH',Session::get('maCTBaiQH'))
+        ->join('de_thi_cauhoi_tuluan',function($x){
+            $x->on('de_thi_cauhoi_tuluan.maDe','=','de_thi.maDe');
+        })
+        ->join('phuong_an_tu_luan',function($x){
+            $x->on('de_thi_cauhoi_tuluan.maPATL','=','phuong_an_tu_luan.id');
+        })
+        ->get(['phuong_an_tu_luan.id','phuong_an_tu_luan.noiDungPA','phuong_an_tu_luan.diemPA','phuong_an_tu_luan.maCDR3']);
+
+        $phieuCham=deThi::where('de_thi.isDelete',false)
+        ->where('maCTBaiQH',Session::get('maCTBaiQH'))
+        ->join('phieu_cham',function($x){
+            $x->on('phieu_cham.maDe','=','de_thi.maDe')
+            ->where('phieu_cham.maGV',Session::get('maGV'))
+            ->where('phieu_cham.isDelete',false);
+        })
+        ->get(['phieu_cham.maPhieuCham']);
+
+
+        $bieuDo=[];
+        
+        foreach ($chuan_dau_ra3 as $cdr3) {
+
+            $temp=[];
+            array_push($temp,$cdr3->maCDR3VB);
+            array_push($temp,$cdr3->tenCDR3);
+
+            $gioi=0;
+            $kha=0;
+            $tb=0;
+            $yeu=0;
+            $kem=0;
+
+            $diem_tieu_chi=0;
+            //tính điểm tương ứng của chuẩn đầu ra 3
+            foreach ($phuongan as $tc) {
+                if($tc->maCDR3==$cdr3->maCDR3){
+                    $diem_tieu_chi=$diem_tieu_chi+$tc->diemPA;
+                }
+            }
+
+
+            foreach ($phieuCham as $pc) {
+                $t=$cdr3->maCDR3;
+                /////////
+                //điếm theo phiếu chấm
+
+                $dem=danhgia_tuluan::where('maPhieuCham',$pc->maPhieuCham)
+                ->join('phuong_an_tu_luan',function($x) use ($t){
+                    $x->on('phuong_an_tu_luan.id','=','danhgia_tuluan.maPATL')
+                    ->where('phuong_an_tu_luan.maCDR3',$t);
+                })
+                ->sum('danhgia_tuluan.diemDG');
+                $tile=$dem/$diem_tieu_chi;
+                if($tile<0.25){
+                    $kem++;
+                }else{
+                    if($tile>=0.25 && $tile<0.5){
+                        $yeu++;
+                    }else{
+                        if($tile>=0.5 && $tile<0.75){
+                            $tb++;
+                        }else{
+                            if($tile>=0.75 && $tile<1){
+                                $kha++;
+                            }else{
+                                $gioi++;
+                            }
+                        }
+                    }
+                }
+            }
+
+            array_push($temp,$gioi);
+            array_push($temp,$kha);
+            array_push($temp,$tb);
+            array_push($temp,$yeu);
+            array_push($temp,$kem);
+            array_push($bieuDo,$temp);
+        }
+        return response()->json($bieuDo);
+    }
+    //____________________________________________________________________________________________________________________________
+    ####---------------------------------------------------THỐNG KÊ CỦA TỰ LUẬN
+    //_____________________________________________________________________________________________________________________________
+    //__________________________________________________________TỰ LUẬN theo xếp hạng
+    public function thong_ke_theo_xep_hang_tu_luan($maCTBaiQH)
+    {
+        Session::put('maCTBaiQH',$maCTBaiQH);
+        //học phần
+        
+         //ct bai quy hoach
+         $ct_baiQH=ct_bai_quy_hoach::where('ct_bai_quy_hoach.isDelete',false)
+         ->where('maCTBaiQH',$maCTBaiQH)
+         ->leftjoin('loai_ht_danhgia',function($x){
+             $x->on('ct_bai_quy_hoach.maLoaiHTDG','=','ct_bai_quy_hoach.maLoaiHTDG')
+             ->where('ct_bai_quy_hoach.isDelete',false);
+         })
+         ->first();
+
+         //đề thi
+         $dethi=deThi::where('de_thi.isDelete',false)
+         ->where('maCTBaiQH',$maCTBaiQH)
+         ->join('phieu_cham',function($x){
+             $x->on('phieu_cham.maDe','=','de_thi.maDe')
+             ->where('phieu_cham.maGV',Session::get('maGV'))
+             ->where('phieu_cham.isDelete',false);
+         })
+         ->get(['maPhieuCham','xepHang']);
+         if($dethi->count()==0)
+         {
+             alert()->warning('There are no examination!','Message');
+             return redirect()->back();
+         } 
+
+         //xếp hạng
+        $xepHang=[];
+        $tiLe=[];
+        for ($i=1; $i <=5 ; $i++) { 
+            array_push($xepHang,$dethi->where('xepHang',$i)->count());
+            $rate=$dethi->where('xepHang',$i)->count()*100/$dethi->count('maPhieuCham');
+            array_push($tiLe,$rate);
+        }
+
+        return view('giaovu.thongke.tuluan.thongkexephang',['xepHang'=>$xepHang,'tiLe'=>$tiLe]);
+
+
+    }
+    public function get_xep_hang_tu_luan()
+    {
+        $dethi=deThi::where('de_thi.isDelete',false)
+            ->where('maCTBaiQH',Session('maCTBaiQH'))
+            ->join('phieu_cham',function($x){
+                $x->on('phieu_cham.maDe','=','de_thi.maDe')
+                ->where('phieu_cham.maGV',Session::get('maGV'))
+                ->where('phieu_cham.isDelete',false);
+            })
+            ->get(['maPhieuCham','xepHang']);
+            $xepHang=[];
+            $tiLe=[];
+            for ($i=1; $i <=5 ; $i++) { 
+                array_push($xepHang,$dethi->where('xepHang',$i)->count());
+                $rate=$dethi->where('xepHang',$i)->count()*100/$dethi->count('maPhieuCham');
+                array_push($tiLe,$rate);
+            }
+            return response()->json($xepHang);
+    }
+    //____________________________________________________________theo điểm chữ
+    public function thong_ke_theo_diem_chu_tu_luan($maCTBaiQH)
+    {
+
+        Session::put('maCTBaiQH',$maCTBaiQH);
+
+        //học phần 
+        $hp=hocPhan::where('isDelete',false)
+        ->where('maHocPhan',Session::get('maHocPhan'))
+        ->first();
+        //ct bai quy hoach
+        $ct_baiQH=ct_bai_quy_hoach::where('ct_bai_quy_hoach.isDelete',false)
+        ->where('maCTBaiQH',$maCTBaiQH)
+        ->leftjoin('loai_ht_danhgia',function($x){
+            $x->on('ct_bai_quy_hoach.maLoaiHTDG','=','ct_bai_quy_hoach.maLoaiHTDG')
+            ->where('ct_bai_quy_hoach.isDelete',false);
+        })  
+        ->first();
+        
+        //đề thi
+        $dethi=deThi::where('de_thi.isDelete',false)
+        ->where('maCTBaiQH',$maCTBaiQH)
+        ->join('phieu_cham',function($x){
+            $x->on('phieu_cham.maDe','=','de_thi.maDe')
+            ->where('phieu_cham.maGV',Session::get('maGV'))
+            ->where('phieu_cham.isDelete',false);
+        })
+        ->get(['maPhieuCham','diemChu']);
+       
+
+        if($dethi->count()==0)
+        {
+            alert()->warning('There are no examination!','Message');
+            return redirect()->back();
+        } 
+        $diemChu=[];
+        $tiLe=[];
+        $letter=['A','B+','B','C+','C','D+','D','F'];
+        foreach ($letter as  $lt) {
+            array_push($diemChu,$dethi->where('diemChu',$lt)->count());
+            array_push($tiLe,$dethi->where('diemChu',$lt)->count()*100/$dethi->count());
+        }
+        return view('giaovu.thongke.tuluan.thongketheodiemchu',['diemChu'=>$diemChu,'tiLe'=>$tiLe,
+        'hp'=>$hp,'chu'=>$letter,'ct_baiQH'=>$ct_baiQH]);
+    }
+
+    public function get_diem_chu_tu_luan(Type $var = null)
+    {
+        $diemChu=[];
+        $dethi=deThi::where('de_thi.isDelete',false)
+        ->where('maCTBaiQH',Session::get('maCTBaiQH'))
+        ->join('phieu_cham',function($x){
+            $x->on('phieu_cham.maDe','=','de_thi.maDe')
+            ->where('phieu_cham.maGV',Session::get('maGV'))
+            ->where('phieu_cham.isDelete',false);
+        })
+        ->get(['maPhieuCham','diemChu']);
+       
+        $diemChu=[];
+        $letter=['A','B+','B','C+','C','D+','D','F'];
+        foreach ($letter as  $lt) {
+            array_push($diemChu,$dethi->where('diemChu',$lt)->count());
+        }
+        return response()->json($diemChu);
+    }
+    //___________________________________________________________TỰ LUẬN theo tiêu chí
+    public function thong_ke_theo_tieu_chi_tu_luan($maCTBaiQH)
+    {
+        Session::put('maCTBaiQH',$maCTBaiQH);
+         //lấy danh sách cdr3
+        ////maCTBaiQH-->noiDungQH
+        $ndqh=noiDungQH::where('isDelete',false)
+        ->where('maCTBaiQH',$maCTBaiQH)
+        ->get();
+         //ct bai quy hoach
+         $ct_baiQH=ct_bai_quy_hoach::where('ct_bai_quy_hoach.isDelete',false)
+         ->where('maCTBaiQH',$maCTBaiQH)
+         ->leftjoin('loai_ht_danhgia',function($x){
+             $x->on('ct_bai_quy_hoach.maLoaiHTDG','=','ct_bai_quy_hoach.maLoaiHTDG')
+             ->where('ct_bai_quy_hoach.isDelete',false);
+         })
+         ->first();
+
+         $chuan_dau_ra3=[];
+         $phuongan=[];
+
+         //ct_baiqh->de_thi->de_thi_cauhoi_tuluan-->cau_hoi
+         //                              |____________>phuong_an_tu_luan-->cdr_cd3
+        $chuan_dau_ra3=deThi::where('de_thi.isDelete',false)
+        ->where('maCTBaiQH',$maCTBaiQH)
+        ->join('de_thi_cauhoi_tuluan',function($x){
+             $x->on('de_thi_cauhoi_tuluan.maDe','=','de_thi.maDe');
+        })
+        ->join('phuong_an_tu_luan',function($x){
+            $x->on('de_thi_cauhoi_tuluan.maPATL','=','phuong_an_tu_luan.id');
+        })
+        ->join('cdr_cd3',function($x){
+            $x->on('cdr_cd3.maCDR3','=','phuong_an_tu_luan.maCDR3')
+            ->where('cdr_cd3.isDelete',false);
+        })
+        ->distinct(['cdr_cd3.maCDR3','cdr_cd3.tenCDR3'])
+        ->orderBy('cdr_cd3.maCDR3')
+        ->get(['cdr_cd3.maCDR3','cdr_cd3.maCDR3VB','cdr_cd3.tenCDR3']);
+        
+         $phuongan=deThi::where('de_thi.isDelete',false)
+         ->where('maCTBaiQH',$maCTBaiQH)
+         ->join('de_thi_cauhoi_tuluan',function($x){
+             $x->on('de_thi_cauhoi_tuluan.maDe','=','de_thi.maDe');
+         })
+         ->join('phuong_an_tu_luan',function($x){
+            $x->on('de_thi_cauhoi_tuluan.maPATL','=','phuong_an_tu_luan.id');
+        })
+        ->get(['phuong_an_tu_luan.id','phuong_an_tu_luan.noiDungPA','phuong_an_tu_luan.diemPA','phuong_an_tu_luan.maCDR3']);
+
+        $phieuCham=deThi::where('de_thi.isDelete',false)
+        ->where('maCTBaiQH',$maCTBaiQH)
+        ->join('phieu_cham',function($x){
+            $x->on('phieu_cham.maDe','=','de_thi.maDe')
+            ->where('phieu_cham.maGV',Session::get('maGV'))
+            ->where('phieu_cham.isDelete',false);
+        })
+        ->get(['phieu_cham.maPhieuCham']);
+
+
+        $bieuDo=[];
+        
+        foreach ($chuan_dau_ra3 as $cdr3) {
+
+            $temp=[];
+            array_push($temp,$cdr3->maCDR3VB);
+            array_push($temp,$cdr3->tenCDR3);
+
+            $gioi=0;
+            $kha=0;
+            $tb=0;
+            $yeu=0;
+            $kem=0;
+
+            $diem_tieu_chi=0;
+            //tính điểm tương ứng của chuẩn đầu ra 3
+            foreach ($phuongan as $tc) {
+                if($tc->maCDR3==$cdr3->maCDR3){
+                    $diem_tieu_chi=$diem_tieu_chi+$tc->diemPA;
+                }
+            }
+
+
+            foreach ($phieuCham as $pc) {
+                $t=$cdr3->maCDR3;
+                /////////
+                //điếm theo phiếu chấm
+
+                $dem=danhgia_tuluan::where('maPhieuCham',$pc->maPhieuCham)
+                ->join('phuong_an_tu_luan',function($x) use ($t){
+                    $x->on('phuong_an_tu_luan.id','=','danhgia_tuluan.maPATL')
+                    ->where('phuong_an_tu_luan.maCDR3',$t);
+                })
+                ->sum('danhgia_tuluan.diemDG');
+                $tile=$dem/$diem_tieu_chi;
+                if($tile<0.25){
+                    $kem++;
+                }else{
+                    if($tile>=0.25 && $tile<0.5){
+                        $yeu++;
+                    }else{
+                        if($tile>=0.5 && $tile<0.75){
+                            $tb++;
+                        }else{
+                            if($tile>=0.75 && $tile<1){
+                                $kha++;
+                            }else{
+                                $gioi++;
+                            }
+                        }
+                    }
+                }
+            }
+
+            array_push($temp,$gioi);
+            array_push($temp,$kha);
+            array_push($temp,$tb);
+            array_push($temp,$yeu);
+            array_push($temp,$kem);
+            array_push($bieuDo,$temp);
+        }
+
+        return view('giaovu.thongke.tuluan.thongketheotieuchi',['bieuDo'=>$bieuDo]);
+
+    }
+    public function get_tieu_chi_tu_luan()
+    {
+        $ndqh=noiDungQH::where('isDelete',false)
+        ->where('maCTBaiQH',Session::get('maCTBaiQH'))
+        ->get();
+         //ct bai quy hoach
+         $ct_baiQH=ct_bai_quy_hoach::where('ct_bai_quy_hoach.isDelete',false)
+         ->where('maCTBaiQH',Session::get('maCTBaiQH'))
+         ->leftjoin('loai_ht_danhgia',function($x){
+             $x->on('ct_bai_quy_hoach.maLoaiHTDG','=','ct_bai_quy_hoach.maLoaiHTDG')
+             ->where('ct_bai_quy_hoach.isDelete',false);
+         })
+         ->first();
+
+         $chuan_dau_ra3=[];
+         $phuongan=[];
+
+         //ct_baiqh->de_thi->de_thi_cauhoi_tuluan-->cau_hoi
+         //                              |____________>phuong_an_tu_luan-->cdr_cd3
+        $chuan_dau_ra3=deThi::where('de_thi.isDelete',false)
+        ->where('maCTBaiQH',Session::get('maCTBaiQH'))
+        ->join('de_thi_cauhoi_tuluan',function($x){
+             $x->on('de_thi_cauhoi_tuluan.maDe','=','de_thi.maDe');
+        })
+        ->join('phuong_an_tu_luan',function($x){
+            $x->on('de_thi_cauhoi_tuluan.maPATL','=','phuong_an_tu_luan.id');
+        })
+        ->join('cdr_cd3',function($x){
+            $x->on('cdr_cd3.maCDR3','=','phuong_an_tu_luan.maCDR3')
+            ->where('cdr_cd3.isDelete',false);
+        })
+        ->distinct(['cdr_cd3.maCDR3','cdr_cd3.tenCDR3'])
+        ->orderBy('cdr_cd3.maCDR3')
+        ->get(['cdr_cd3.maCDR3','cdr_cd3.maCDR3VB','cdr_cd3.tenCDR3']);
+        
+         $phuongan=deThi::where('de_thi.isDelete',false)
+         ->where('maCTBaiQH',Session::get('maCTBaiQH'))
+         ->join('de_thi_cauhoi_tuluan',function($x){
+             $x->on('de_thi_cauhoi_tuluan.maDe','=','de_thi.maDe');
+         })
+         ->join('phuong_an_tu_luan',function($x){
+            $x->on('de_thi_cauhoi_tuluan.maPATL','=','phuong_an_tu_luan.id');
+        })
+        ->get(['phuong_an_tu_luan.id','phuong_an_tu_luan.noiDungPA','phuong_an_tu_luan.diemPA','phuong_an_tu_luan.maCDR3']);
+
+        $phieuCham=deThi::where('de_thi.isDelete',false)
+        ->where('maCTBaiQH',Session::get('maCTBaiQH'))
+        ->join('phieu_cham',function($x){
+            $x->on('phieu_cham.maDe','=','de_thi.maDe')
+            ->where('phieu_cham.maGV',Session::get('maGV'))
+            ->where('phieu_cham.isDelete',false);
+        })
+        ->get(['phieu_cham.maPhieuCham']);
+
+
+        $bieuDo=[];
+        
+        foreach ($chuan_dau_ra3 as $cdr3) {
+
+            $temp=[];
+            array_push($temp,$cdr3->maCDR3VB);
+            array_push($temp,$cdr3->tenCDR3);
+
+            $gioi=0;
+            $kha=0;
+            $tb=0;
+            $yeu=0;
+            $kem=0;
+
+            $diem_tieu_chi=0;
+            //tính điểm tương ứng của chuẩn đầu ra 3
+            foreach ($phuongan as $tc) {
+                if($tc->maCDR3==$cdr3->maCDR3){
+                    $diem_tieu_chi=$diem_tieu_chi+$tc->diemPA;
+                }
+            }
+
+
+            foreach ($phieuCham as $pc) {
+                $t=$cdr3->maCDR3;
+                /////////
+                //điếm theo phiếu chấm
+
+                $dem=danhgia_tuluan::where('maPhieuCham',$pc->maPhieuCham)
+                ->join('phuong_an_tu_luan',function($x) use ($t){
+                    $x->on('phuong_an_tu_luan.id','=','danhgia_tuluan.maPATL')
+                    ->where('phuong_an_tu_luan.maCDR3',$t);
+                })
+                ->sum('danhgia_tuluan.diemDG');
+                $tile=$dem/$diem_tieu_chi;
+                if($tile<0.25){
+                    $kem++;
+                }else{
+                    if($tile>=0.25 && $tile<0.5){
+                        $yeu++;
+                    }else{
+                        if($tile>=0.5 && $tile<0.75){
+                            $tb++;
+                        }else{
+                            if($tile>=0.75 && $tile<1){
+                                $kha++;
+                            }else{
+                                $gioi++;
+                            }
+                        }
+                    }
+                }
+            }
+
+            array_push($temp,$gioi);
+            array_push($temp,$kha);
+            array_push($temp,$tb);
+            array_push($temp,$yeu);
+            array_push($temp,$kem);
+            array_push($bieuDo,$temp);
+        }
+        return response()->json($bieuDo);
+    }
+
+    //______________________________________________________________________________________________________________________________
+    ####-----------------------------------------------------THỐNG KÊ CỦA ĐỒ ÁN
+    //______________________________________________________________________________________________________________________________
+    //________________________________________________________ĐỒ ÁN-theo xếp hạng
     public function thong_ke_theo_xep_hang($maCTBaiQH,$maCanBo)
     {
         Session::put('maCTBaiQH',$maCTBaiQH);
@@ -155,6 +896,11 @@ class thongKeController extends Controller
                 ->where('phieu_cham.isDelete',false);
             })
             ->get(['maPhieuCham','xepHang']);
+            if($dethi->count()==0)
+            {
+                alert()->warning('There are no examination!','Message');
+                return redirect()->back();
+            } 
         }
         else{
             $dethi=deThi::where('de_thi.isDelete',false)
@@ -165,6 +911,11 @@ class thongKeController extends Controller
                 ->where('phieu_cham.isDelete',false);
             })
             ->get(['maPhieuCham','xepHang']);
+            if($dethi->count()==0)
+            {
+                alert()->warning('There are no examination!','Message');
+                return redirect()->back();
+            } 
         }
        
 
@@ -211,7 +962,7 @@ class thongKeController extends Controller
         return response()->json($xepHang);
     }
 
-    ///_______________________________________________________
+    ///_______________________________________________________ĐỒ ÁN-theo điểm chữ
     public function thong_ke_theo_diem_chu($maCTBaiQH,$maCanBo)
     {
 
@@ -277,7 +1028,7 @@ class thongKeController extends Controller
              ->where('maCTBaiQH',Session::get('maCTBaiQH'))
              ->join('phieu_cham',function($x){
                  $x->on('phieu_cham.maDe','=','de_thi.maDe')
-                 ->where('phieu-cham.maGV',Session::get('maGV'))
+                 ->where('phieu_cham.maGV',Session::get('maGV'))
                  ->where('phieu_cham.isDelete',false);
              })
              ->get(['maPhieuCham','diemChu']);
@@ -301,7 +1052,7 @@ class thongKeController extends Controller
         return response()->json($diemChu);
     }
 
-    //_________________________________________________________
+    //_________________________________________________________ĐỒ ÁN-điểm tiêu chí
     public function thong_ke_theo_tieu_chi($maCTBaiQH,$maCanBo)
     {
         
@@ -341,7 +1092,8 @@ class thongKeController extends Controller
                 $y->on('cdr_cd3.maCDR3','=','tieu_chi_cham_diem.maCDR3')
                 ->where('cdr_cd3.isDelete',false);
             })
-            ->distinct()
+            ->distinct(['cdr_cd3.maCDR3','cdr_cd3.maCDR3VB','cdr_cd3.tenCDR3'])
+            ->orderBy('cdr_cd3.maCDR3')
             ->get(['cdr_cd3.maCDR3','cdr_cd3.maCDR3VB','cdr_cd3.tenCDR3']);
             
             $temp_tc=tieuChuanDanhGia::where('tieuchuan_danhgia.isDelete',false)
@@ -482,7 +1234,8 @@ class thongKeController extends Controller
                 $y->on('cdr_cd3.maCDR3','=','tieu_chi_cham_diem.maCDR3')
                 ->where('cdr_cd3.isDelete',false);
             })
-            ->distinct()
+            ->distinct(['cdr_cd3.maCDR3','cdr_cd3.maCDR3VB','cdr_cd3.tenCDR3'])
+            ->orderBy('cdr_cd3.maCDR3')
             ->get(['cdr_cd3.maCDR3','cdr_cd3.maCDR3VB','cdr_cd3.tenCDR3']);
 
 
@@ -1081,8 +1834,8 @@ class thongKeController extends Controller
                 $y->on('cdr_cd3.maCDR3','=','tieu_chi_cham_diem.maCDR3')
                 ->where('cdr_cd3.isDelete',false);
             })
-            ->distinct()
-            ->whereNotIn('cdr_cd3.maCDR3',$checkDup)
+            ->distinct(['cdr_cd3.maCDR3','cdr_cd3.maCDR3VB','cdr_cd3.tenCDR3'])
+            ->orderBy('cdr_cd3.maCDR3')
             ->get(['cdr_cd3.maCDR3','cdr_cd3.maCDR3VB','cdr_cd3.tenCDR3']);
             
 
@@ -1289,8 +2042,8 @@ class thongKeController extends Controller
                 $y->on('cdr_cd3.maCDR3','=','tieu_chi_cham_diem.maCDR3')
                 ->where('cdr_cd3.isDelete',false);
             })
-            ->distinct()
-            ->whereNotIn('cdr_cd3.maCDR3',$checkDup)
+            ->distinct(['cdr_cd3.maCDR3','cdr_cd3.maCDR3VB','cdr_cd3.tenCDR3'])
+            ->orderBy('cdr_cd3.maCDR3')
             ->get(['cdr_cd3.maCDR3','cdr_cd3.maCDR3VB','cdr_cd3.tenCDR3']);
             
 
