@@ -24,7 +24,8 @@ class dsSinhVienImport implements ToModel,WithHeadingRow
             'TenSV'=>$row['tensv'],
             'Phai'=>$row['phai'],
             'NgaySinh'=>$row['ngaysinh'],
-            'maLop'=>$row['malop']
+            'maLop'=>$row['malop'],
+            'isDelete'=>false
         ]);
     }
 }

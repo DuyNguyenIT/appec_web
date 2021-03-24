@@ -59,6 +59,7 @@
                     <th>Giảng viên giảng dạy</th>
                     <th>Học kì</th>
                     <th>Năm học</th>
+                    <th>Lớp</th>
                     <th>Trạng thái</th>
                     <th>Tùy chọn</th>
                   </tr>
@@ -75,6 +76,7 @@
                     <td>{{$hp[0]->hoGV}} {{$hp[0]->tenGV}}</td>
                     <td>{{$hp[0]->maHK}}</td>
                     <td>{{$hp[0]->namHoc}}</td>
+                    <td>{{$hp[0]->maLop}}</td>
                     <td>Đang chờ</td>
                     <td>
                       <a href="{{ asset('giang-vien/cham-diem-bao-cao/noi-dung-danh-gia/'.$hp[0]->maBaiQH.'/'.$hp[0]->maHocPhan) }}">

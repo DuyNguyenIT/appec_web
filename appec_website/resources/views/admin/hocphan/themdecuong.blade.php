@@ -52,20 +52,20 @@
               <div class="card-header">
                 <h3  style="text-align: center">
                   COURSE SYLLABUS <br>
-                Course : {{ $hocPhan->tenHocPhan }} <br>
-                Course code: {{ $hocPhan->maHocPhan }}
+                {{ __('Course') }}: {{ $hocPhan->tenHocPhan }} <br>
+                {{ __('Course code') }}: {{ $hocPhan->maHocPhan }}
                 </h3>
               </div>
-              <a class="btn btn-primary" href="{{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/in-de-cuong-mon-hoc/'.$hocPhan->maHocPhan) }}">IN Äá»€ CÆ¯Æ NG</a>
+              <a class="btn btn-primary" href="{{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/in-de-cuong-mon-hoc/'.$hocPhan->maHocPhan) }}">{{ __('Print') }}</a>
               <!-- /.card-header -->
               <div class="card-body">
-              <h5><b>1. General information</b></h5>    <!-- ----------------------------------1. ThÃ´ng tin chung-------------------- -->
+              <h5><b>1. {{ __('General information') }}</b></h5>    <!-- ----------------------------------1. ThÃ´ng tin chung-------------------- -->
               <table class="table table-bordered">
                 <thead class="thead-green" style="background-color: green">
                   <tr>
-                    <th>Course type</th>
-                    <th>Number of credits</th>
-                    <th>Number of learning periods</th>
+                    <th>{{ __('Course type') }}</th>
+                    <th>{{ __('Number of credits') }}</th>
+                    <th>{{ __('Number of learning periods') }}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -78,23 +78,23 @@
                       @endphp
                       @if (in_array($hocPhan->maCTKhoiKT,$daicuong))
                         <ul>
-                          <li>General   <i class="far fa-check-square"></i>
-                          <li>Basic   
-                          <li>Specialized 
+                          <li>{{ __('General ') }}  <i class="far fa-check-square"></i>
+                          <li>{{ __('Basic') }}  
+                          <li> {{ __('Specialized') }}
                         </ul>
                       @else
                           @if (in_array($hocPhan->maCTKhoiKT,$coso))
                             <ul>
-                              <li>General   
-                              <li>Basic    <i class="far fa-check-square"></i>
-                              <li>Specialized 
+                              <li>{{ __('General ') }}  
+                              <li>{{ __('Basic') }}    <i class="far fa-check-square"></i>
+                              <li>{{ __('Specialized') }}
                             </ul>
                           @else
                             @if (in_array($hocPhan->maCTKhoiKT,$chuyennganh))
                                 <ul>
-                                <li>General   
-                                <li>Basic   
-                                <li>Specialized  <i class="far fa-check-square"></i>
+                                <li>{{ __('General ') }}  
+                                <li>{{ __('Basic') }}   
+                                <li>{{ __('Specialized') }} <i class="far fa-check-square"></i>
                               </ul>
                             @endif
                           @endif
@@ -156,7 +156,7 @@
                     @csrf
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">ThÃªm mÃ´n tiÃªn quyáº¿t</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">{{ __('Adding a new prerequisites') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
@@ -164,7 +164,7 @@
                       <div class="modal-body">
 
                         <div class="form-group">
-                          <label for="">Chá»n mÃ´n tiÃªn quyáº¿t</label>
+                          <label for="">{{ __('Prerequisites') }}</label>
                           <input type="text" name="maHocPhan" value="{{ $hocPhan->maHocPhan }}" hidden>
                           <select name="maMonTienQuyet" id="" class="form-control">
                               @foreach ($monHoc as $data)
@@ -459,7 +459,7 @@
               </div>
            
 
-             <h5><b>4.{{ __('Course learning outcomes ') }}</b></h5>    <!-----------------------------------4. chuáº©n Ä‘áº§u ra cá»§a mÃ´n há»c--------------------------->
+             <h5><b>4.{{ __('Course learning outcomes ') }}</b></h5>    <!-----------------------------------4. Chuan dau ra mon hoc--------------------------->
               <table class="table table-bordered">
                 <thead>
                     <th colspan="2"></th>
@@ -474,14 +474,14 @@
                             <i class="fas fa-edit"></i>
                           </button>
 
-                          <!-- /////////////////// Modal thÃªm chuáº©n Ä‘áº§u ra Ä‘á» cÆ°Æ¡ng-->
+                          <!-- /////////////////// Modal them noi dung mon hoc-->
                           <div class="modal fade" id="chuDe_{{ $cdr1->maCDR1VB }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                               <form action="{{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/them_chuan_dau_ra_mon_hoc') }}" method="post">
                               @csrf
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModalLabel">Chá»§ Ä‘á» {{ $cdr1->maCDR1VB }}: {{ $cdr1->tenCDR1 }}</h5>
+                                  <h5 class="modal-title" id="exampleModalLabel">{{ __('Topic') }} {{ $cdr1->maCDR1VB }}: {{ $cdr1->tenCDR1 }}</h5>
                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                   </button>
@@ -491,11 +491,11 @@
                                     <input type="text" name="maHocPhan" value="{{ $hocPhan->maHocPhan }}" hidden>
                                   </div>
                                   <div class="form-group">
-                                      <label for=""> MÃ£ káº¿t quáº£ há»c táº­p:</label>
+                                      <label for=""> {{ _('Studying results ID') }}:</label>
                                       <input type="text" name="maKQHTVB" placeholder="L1,L2,..." class="form-control">
                                   </div>
                                   <div class="form-group">
-                                    <label for=""> Ná»™i dung káº¿t quáº£ há»c táº­p:</label>
+                                    <label for=""> {{ __('studying results content') }}:</label>
                                     <input type="text" name="tenKQHT" placeholder="PhÃ¢n tÃ­ch, khÃ¡i niá»‡m, mÃ´ táº£,.." class="form-control">
                                   </div>
                                   <div class="form-group">
@@ -510,8 +510,8 @@
                                   </div>
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="submit" class="btn btn-primary">LÆ°u</button>
-                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">ÄÃ³ng</button>
+                                  <button type="submit" class="btn btn-primary">Save</button>
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                 </div>
                               </div>
                               </form>
@@ -562,11 +562,11 @@
                 </tbody>
               </table>
 
-             <h5><b>5. Ná»™i dung mÃ´n há»c: </b></h5>    <!-----------------------------------5.Ná»™i dung mÃ´n há»c: --------------------------->
+             <h5><b>5. {{ __('Course content') }}: </b></h5>    <!-----------------------------------5.Noi dung mon hoc: --------------------------->
               <table class="table table-bordered">
                 <thead style="background-color: green">
                   <tr>
-                    <th rowspan="2">Ná»™i dung
+                    <th rowspan="2">{{ __('Course content') }}
                       <!-- Button trigger modal -->
                       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addChuong">
                         <i class="fas fa-edit"></i>
@@ -579,7 +579,7 @@
                           @csrf
                             <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">ThÃªm ná»™i dung</h5>
+                              <h5 class="modal-title" id="exampleModalLabel">{{ __('Adding a new content') }}</h5>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                               </button>
@@ -587,23 +587,23 @@
                             <div class="modal-body">
                               <input type="text" name="maHocPhan" value="{{ $hocPhan->maHocPhan }}" hidden>
                               <div class="form-group">
-                                <label for="">TÃªn chÆ°Æ¡ng:</label>
+                                <label for="">{{ __('Chapter name') }}:</label>
                                 <input type="text" name="tenchuong" class="form-control" required>
                               </div>
                               <div class="form-group">
-                                <label for="">Sá»‘ tiáº¿t lÃ½ thuyáº¿t:</label>
+                                <label for="">{{ __('Theory') }}:</label>
                                 <input type="number" min="0" name="soTietLT" class="form-control" required>
                               </div>
                               <div class="form-group">
-                                <label for="">Sá»‘ tiáº¿t thá»±c hÃ nh:</label>
+                                <label for="">{{ __('Practice') }}:</label>
                                 <input type="number" min="0" name="soTietTH" class="form-control" required>
                               </div>
                               <div class="form-group">
-                                <label for="">Sá»‘ tiáº¿t khÃ¡c:</label>
+                                <label for="">{{ __('Others') }}:</label>
                                 <input type="number" min="0" name="khÃ¡c" class="form-control" required>
                               </div>
                               <div class="form-group">
-                                <label for="">Chá»n káº¿t quáº£ há»c táº­p:</label>
+                                <label for="">{{ __('Studying results') }}:</label>
                                 <select name="maKQHT[]" id="" class="form-control" multiple required>
                                   @foreach ($getKQHT as $data)
                                       <option value="{{ $data->maKQHT }}">{{ $data->maKQHTVB }} -- {{ $data->tenKQHT }}</option>

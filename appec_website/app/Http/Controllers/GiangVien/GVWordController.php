@@ -206,8 +206,7 @@ class GVWordController extends Controller
         $cell = $table_chuandaura->addCell(4000,$cellRowSpan);
         $cell->addText('Đáp ứng CĐR của CTĐR');
 
-       
-
+    
         foreach ($CDR1 as $cdr) {
             $table_chuandaura->addRow();
             $table_chuandaura->addCell(1000);
@@ -292,15 +291,12 @@ class GVWordController extends Controller
             $cell3=$table_noidunghp->addCell(1000);
             $cell3->addText($data->soTietLT,$boldNormalText);
 
-
             $cell4=$table_noidunghp->addCell(1000);
             $cell4->addText($data->soTietTH,$boldNormalText);
-
 
             $cell5=$table_noidunghp->addCell(1000);
             $cell5->addText($data->soTietKhac,$boldNormalText);
             
-
             foreach ($data->muc as $m){
                 $table_noidunghp->addRow();
                 $cell1=$table_noidunghp->addCell(7000);
@@ -378,11 +374,11 @@ class GVWordController extends Controller
         ->get();
         foreach ($hocPhan_loaiHTDG as $data){
             $table_phuongthucdanhgia->addRow();
-            $cell1 = $table_phuongthucdanhgia->addCell(4000,);
+            $cell1 = $table_phuongthucdanhgia->addCell(4000);
             $textrun1 = $cell1->addTextRun($cellHCentered);
             $textrun1->addText($data->loai_danh_gia['tenLoaiDG'],$normalText);
 
-            $cell2 = $table_phuongthucdanhgia->addCell(4000,);
+            $cell2 = $table_phuongthucdanhgia->addCell(4000);
             $textrun2 = $cell2->addTextRun($cellHCentered);
             $textrun2->addText($data->loaiHTDanhGia['maLoaiHTDG'].$data->loaiHTDanhGia['tenLoaiHTDG'],$normalText);
 
@@ -540,6 +536,7 @@ class GVWordController extends Controller
             $noidung[$i]->diem=$diem;  
         }
 
+        $i=1;
         foreach ($noidung as $x) {
             $section->addText('Câu '.$i.': ('.$x->diem.' điểm)',array('bold'=>true,'name'=>'Times New Roman'));
             $html = $x->noiDungCauHoi;

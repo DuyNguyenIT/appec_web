@@ -63,14 +63,14 @@
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-7">
+                    {{-- <div class="col-7">
                       <div class="icheck-primary">
                         <input type="checkbox" id="remember" />
                         <label for="remember"> Remember </label>
                       </div>
-                    </div>
+                    </div> --}}
                     <!-- /.col -->
-                    <div class="col-5">
+                    <div class="col-12">
                       <button
                         type="submit"
                         class="btn btn-primary btn-block"
@@ -93,12 +93,12 @@
                 </div>
                 <!-- /.social-auth-links --> --}}
       
-                <p class="mb-1">
+                {{-- <p class="mb-1">
                   <a href="#">forget password</a>
                 </p>
                 <p class="mb-0">
                   <a href="#" class="text-center">Register</a>
-                </p>
+                </p> --}}
               </div>
               <!-- /.login-card-body -->
             </div>

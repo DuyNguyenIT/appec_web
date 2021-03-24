@@ -8,6 +8,7 @@ use App\Models\deThi;
 use App\Models\cauHoi;
 use App\Models\chuong;
 use App\Models\kqHTHP;
+use App\Models\danhGia;
 use App\Models\hocPhan;
 use App\Models\giangDay;
 use App\Models\sinhVien;
@@ -38,7 +39,6 @@ use App\Models\cauHoi_tieuChiChamDiem;
 
 class quyhoachController extends Controller
 {
-
     ///giang-vien/quy-hoach-danh-gia
     public function index()
     {
@@ -252,19 +252,19 @@ class quyhoachController extends Controller
             //-----------------------------tự luận
             if ($maLoaiHTDG->maLoaiHTDG=="T1") { 
                 $dethi=deThi::where('isDelete',false)->where('maCTBaiQH',$maCTBaiQH)->get();
-                return view('giangvien.quyhoach.noidungdanhgia.tuluan.xemnddanhgiatuluan',['dethi'=>$dethi]);
+                return view('giangvien.quyhoach.noidungdanhgia.tuluan.xemnddanhgiatuluan',compact('dethi','maCTBaiQH'));
             }
 
             //------------------------------trắc nghiệm
             if ($maLoaiHTDG->maLoaiHTDG=="T2") { 
                 $dethi=deThi::where('isDelete',false)->where('maCTBaiQH',$maCTBaiQH)->get();
-                return view('giangvien.quyhoach.noidungdanhgia.tracnghiem.xemnddanhgiatracnghiem',compact('dethi'));
+                return view('giangvien.quyhoach.noidungdanhgia.tracnghiem.xemnddanhgiatracnghiem',compact('dethi','maCTBaiQH'));
             }
 
             //------------------------------thực hành
             if ($maLoaiHTDG->maLoaiHTDG=="T3") { 
                 $dethi=deThi::where('isDelete',false)->where('maCTBaiQH',$maCTBaiQH)->get();
-                return view('giangvien.quyhoach.noidungdanhgia.thuchanh.xemnddanhgiathuchanh',compact('dethi'));
+                return view('giangvien.quyhoach.noidungdanhgia.thuchanh.xemnddanhgiathuchanh',compact('dethi','maCTBaiQH'));
             }
 
             //-------------------------------cho đồ án
@@ -429,6 +429,24 @@ class quyhoachController extends Controller
         return back();
     }
 
+    public function xoa_cau_hoi_de_tu_luan(Request $request,$maDe,$maCauHoi)
+    {
+        $cauhoi=dethi_cauhoituluan::where('maDe',$maDe)->where('maCauHoi',$maCauHoi)->first();
+
+        if($cauhoi){
+            $pa=phuongAnTuLuan::where('id',$cauhoi->maPATL)->first();
+            if($pa){
+                $pa->delete();
+             }
+            $cauhoi->delete(); 
+            alert()->success("Deleting successfully",'Message');
+            return back();
+        }
+        alert()->warning("Can't found question",'Warning!');
+        return back();
+    }
+    
+
     public function cau_truc_noi_dung_de_luan(Request $request,$maDe) //hàm này tạm không dùng
     {
         $md=deThi::findOrFail($maDe);
@@ -521,6 +539,23 @@ class quyhoachController extends Controller
           
         }
         alert()->success('Adding successfully','Message');
+        return back();
+    }
+
+    public function xoa_cau_hoi_de_thuc_hanh(Request $request,$maDe,$maCauHoi)
+    {
+        $cauhoi=dethi_cauhoituluan::where('maDe',$maDe)->where('maCauHoi',$maCauHoi)->first();
+
+        if($cauhoi){
+            $pa=phuongAnTuLuan::where('id',$cauhoi->maPATL)->first();
+            if($pa){
+                $pa->delete();
+             }
+            $cauhoi->delete(); 
+            alert()->success("Deleting successfully",'Message');
+            return back();
+        }
+        alert()->warning("Can't found question",'Warning!');
         return back();
     }
     //////////////////////////////////////////////////////////////////////////////////////
@@ -620,7 +655,6 @@ class quyhoachController extends Controller
         return back();
     }
 
-    
     //////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////KHU VỰC HÀM CHO BÁO CÁO///////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////
@@ -631,14 +665,15 @@ class quyhoachController extends Controller
         $ct_bqh=ct_bai_quy_hoach::where('isDelete',false)
         ->where('maCTBaiQH',Session::get('maCTBaiQH'))
         ->first();
-        if(!$ct_bqh->maGV_2){
+        if($ct_bqh){
             $ct_bqh->maGV_2=$request->maGV_2;
             $ct_bqh->update();
-            return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/'.Session::get('maCTBaiQH'))->with('success','Mời chấm báo cáo thành công!');
-        }else{
-            return back()->with('warning!','Đã mời 1 giảng viên cộng tác, không thể mời thêm!');
+            alert()->success('Inviting instructor successfully','Messsage');
+            return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/'.Session::get('maCTBaiQH'));
         }
-        //nếu chưa được mời thì tiến hành lưu dữ liệu
+        alert()->success('Errors','Warning');
+        return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/'.Session::get('maCTBaiQH'));
+        
     }
 
     //thêm đề tài mới
@@ -724,15 +759,28 @@ class quyhoachController extends Controller
         
         //Session maBaiQH, hocKi, namHoc, maHocPhan->maCDR3
 
-        $cdr3=giangDay::where('giangday.isDelete',false)
-        ->where('giangday.maBaiQH',Session::get('maBaiQH'))
-        ->leftjoin('cdr_cd3',function($x){
-            $x->on('cdr_cd3.maCDR3','=','giangday.maCDR3')
+        // $cdr3=giangDay::where('giangday.isDelete',false)
+        // ->where('giangday.maBaiQH',Session::get('maBaiQH'))
+        // ->leftjoin('cdr_cd3',function($x){
+        //     $x->on('cdr_cd3.maCDR3','=','giangday.maCDR3')
+        //     ->where('cdr_cd3.isDelete',false);
+        // })
+        //->get();
+        //->get(['cdr_cd3.maCDR3','cdr_cd3.maCDR3VB','cdr_cd3.tenCDR3']);
+
+
+        $cdr3=hocPhan_kqHTHP::where('hocphan_kqht_hp.isDelete',false) //biến này chạy nội dung trong bảng chuẩn đầu ra môn học
+        ->where('hocphan_kqht_hp.maHocPhan',Session::get('maHocPhan'))
+        ->join('kqht_hp',function($y){
+            $y->on('kqht_hp.maKQHT','=','hocphan_kqht_hp.maKQHT')
+            ->where('kqht_hp.isDelete',false);
+        })
+        ->join('cdr_cd3',function($t){
+            $t->on('cdr_cd3.maCDR3','=','hocphan_kqht_hp.maCDR3')
             ->where('cdr_cd3.isDelete',false);
         })
-        //->get();
-        ->get(['cdr_cd3.maCDR3','cdr_cd3.maCDR3VB','cdr_cd3.tenCDR3']);
-
+        ->distinct(['cdr_cd3.maCDR3','hocphan_kqht_hp.maHocPhan'])
+        ->get(['cdr_cd3.maCDR3','cdr_cd3.maCDR3VB','cdr_cd3.tenCDR3','hocphan_kqht_hp.maHocPhan']);
 
      
 
@@ -790,15 +838,47 @@ class quyhoachController extends Controller
         for ($i=0; $i < count($tenTCCD); $i++) { 
             tieuChiChamDiem::create(['tenTCCD'=>$tenTCCD[$i],'diemTCCD'=>$diemTCCD[$i],'maCDR3'=>$request->maCDR3]);
             $tccd=tieuChiChamDiem::orderBy('maTCCD','desc')->first();
-
             $ch_tccd=new cauHoi_tieuChiChamDiem();
             $ch_tccd->maCauHoi=$ch->maCauHoi;
             $ch_tccd->maTCCD=$tccd->maTCCD;
             $ch_tccd->maTCDG=$tc->maTCDG;
             $ch_tccd->save();
         }
-
         return redirect('giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-tieu-chi-danh-gia/'.Session::get('maCTBaiQH'));
+    }
+
+    public function xoa_phieu_cham($maDe,$maSSV)
+    {
+        $phieucham=phieu_cham::where('maDe',$maDe)->where('maSSV',$maSSV)->get();
+        if($phieucham){
+            $dg=danhGia::where('isDelete',false)->where('maPhieuCham',$phieucham->maPhieuCham)->get();
+            if($dg){
+                alert()->warning('Phiêu chấm có dữ liệu không thể xóa!','Message');
+                return back();
+            }else{
+                foreach ($phieucham as $pc) {
+                    $pc->delete();
+                }
+                alert()->success('Xóa thành công!','Message');
+                return back();
+            }
+        }else{
+            alert()->warning('Không thấy phiếu chấm!','Message');
+            return back();
+        }
+        return back();
+    }
+
+    public function sua_ten_de_tai(Request  $request)
+    {
+        $dethi=deThi::where('maDe',$request->maDe)->first();
+        if($dethi){
+            $dethi->tenDe=$request->tenDe;
+            $dethi->save();
+            alert()->success('Editing  successfully!','Message');
+            return back();
+        }
+
     }
     
 }

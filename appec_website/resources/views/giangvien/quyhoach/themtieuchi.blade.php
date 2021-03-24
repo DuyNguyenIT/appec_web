@@ -119,6 +119,9 @@
                         <div class="form-group">
                             <label for="">Chọn số tiêu chí cần nhập:</label>
                             <select name="" id="soTC" class="form-control" >
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="2">3</option>
                                 <option value="4">4</option>
                                 <option value="6">6</option>
                                 <option value="8">8</option>
@@ -135,7 +138,7 @@
                                     </tr>     
                                 </thead>
                                 <tbody id="tbl-content">
-                                @for ($i = 1; $i <= 4; $i++)
+                                @for ($i = 1; $i <= 1; $i++)
                                     <tr>
                                         <td>{{$i}}</td>
                                         <td>

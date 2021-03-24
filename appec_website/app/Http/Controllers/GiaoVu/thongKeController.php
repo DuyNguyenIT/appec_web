@@ -343,6 +343,7 @@ class thongKeController extends Controller
             })
             ->distinct()
             ->get(['cdr_cd3.maCDR3','cdr_cd3.maCDR3VB','cdr_cd3.tenCDR3']);
+            
             $temp_tc=tieuChuanDanhGia::where('tieuchuan_danhgia.isDelete',false)
             ->where('tieuchuan_danhgia.maNoiDungQH',$x->maNoiDungQH)
             ->join('cau_hoi_tcchamdiem',function($x){
