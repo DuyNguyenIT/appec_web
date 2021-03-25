@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Quản lý hệ thống</title>
+    <title>System management</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link
@@ -92,7 +92,7 @@
               href="{{ asset('/dang-xuat') }}"
               role="button"
             >
-              <i class="fas fa-sign-out-alt"></i> Logout
+              <i class="fas fa-sign-out-alt"></i> Sign out
             </a>
           </li>
         </ul>
@@ -109,7 +109,7 @@
             class="brand-image img-circle elevation-3"
             style="opacity: 0.8"
           />
-          <span class="brand-text font-weight-light">Administration</span>
+          <span class="brand-text font-weight-light">System management</span>
         </a>
 
         <!-- Sidebar -->
@@ -124,7 +124,7 @@
               />
             </div>
             <div class="info">
-              <a href="#" class="d-block">Administrator</a>
+              <a href="#" class="d-block">System management</a>
             </div>
           </div>
 
@@ -134,7 +134,7 @@
               <input
                 class="form-control form-control-sidebar"
                 type="search"
-                placeholder="Searching...."
+                placeholder="Search ...."
                 aria-label="Search"
               />
               <div class="input-group-append">
@@ -159,37 +159,43 @@
               <li class="nav-item">
                 <a href="{{ asset('/quan-ly') }}" class="nav-link">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
-                  <p>Bảng điều khiển</p>
+                  <p>Control panel</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ asset('/quan-ly/bac-dao-tao') }}" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
-                  <p>Bậc đào tạo</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ asset('/quan-ly/nganh-hoc') }}" class="nav-link">
-                  <i class="nav-icon fas fa-book-reader"></i>
-                  <p>Ngành học</p>
+                  <p>Education level</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ asset('/quan-ly/he') }}" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
-                  <p>Hệ</p>
+                  <p>Forms of training</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ asset('/quan-ly/nganh-hoc') }}" class="nav-link">
+                  <i class="nav-icon fas fa-book-reader"></i>
+                  <p>Majors</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ asset('/quan-ly/chuyen-nganh') }}" class="nav-link">
+                  <i class="nav-icon fas fa-book-reader"></i>
+                  <p>Specialized</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ asset('/quan-ly/chuong-trinh-dao-tao') }}" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
-                  <p>Chương trình đào tạo</p>
+                  <p>Curriculums</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ asset('/quan-ly/chuan-dau-ra') }}" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
-                  <p>Chuẩn đầu ra</p>
+                  <p>Student Outcomes</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -201,7 +207,7 @@
               <li class="nav-item">
                 <a href="{{ asset('/quan-ly/hoc-phan') }}" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
-                  <p>Học phần</p>
+                  <p>Courses</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -216,6 +222,20 @@
                   <p>Phương pháp giảng dạy</p>
                 </a>
               </li>
+              <!-- PTTMai thêm -->
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon fas fa-book-reader"></i>
+                  <p>Học phần trong chương trình đào tạo</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon fas fa-book-reader"></i>
+                  <p>Môn học tiên quyết</p>
+                </a>
+              </li>
+              <!-- Hết đoạn PTTMai thêm -->
             </ul>
           </nav>
           <!-- /.sidebar-menu -->

@@ -11,5 +11,10 @@ class hocPhan extends Model
     protected $table='hoc_phan';
     protected $primaryKey='maHocPhan';
     public $incrementing=false;
-    public $fillable=['maHocPhan','tenHocPhan','tongSoTinChi','tinChiLyThuyet','tinChiThucHanh','moTaHocPhan','dacTrung','isDelete','trangThai','maCTKhoiKT'];
+    protected $fillable = ['maHocPhan','tenHocPhan','tongSoTinChi','tinChiLyThuyet','tinChiThucHanh','moTaHocPhan','maCTKhoiKT','isDelete'];
+    public function ctkhoi()
+    {
+        return $this->hasOne('App\Models\ctKhoiKT', 'maCTKhoiKT', 'maCTKhoiKT');
+    }
+
 }

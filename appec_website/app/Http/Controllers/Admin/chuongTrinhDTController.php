@@ -15,11 +15,10 @@ class chuongTrinhDTController extends Controller
 {
     public function index(Type $var = null)
     {
-        
         $ctdt=ctDaoTao::where('isDelete',false)->orderBy('maCT','desc')->with('bac')->with('cnganh')->with('he')->get();
-         $bac=bacDaoTao::where('isDelete',false)->orderBy('maBac','desc')->get();
-         $cn=cNganh::where('isDelete',false)->orderBy('maCNganh','desc')->get();
-         $he=he::where('isDelete',false)->orderBy('maHe','desc')->get();
+        $bac=bacDaoTao::where('isDelete',false)->orderBy('maBac','desc')->get();
+        $cn=cNganh::where('isDelete',false)->orderBy('maCNganh','desc')->get();
+        $he=he::where('isDelete',false)->orderBy('maHe','desc')->get();
         return view('admin.chuongtrinhDT',['ctdaotao'=>$ctdt,'bac'=>$bac,'chuyennganh'=>$cn,'he'=>$he]);
     }
 
@@ -36,7 +35,6 @@ class chuongTrinhDTController extends Controller
             );
         }
         return $excel->download(new ctdtExport,'ctdt.xlsx');
-      
     }
 
     public function them(Request $request)
@@ -48,9 +46,11 @@ class chuongTrinhDTController extends Controller
             $ctdt->maCNganh=$request->maCNganh;
             $ctdt->maHe=$request->maHe;
             $ctdt->save();
-            return redirect('quan-ly/chuong-trinh-dao-tao')->with('success','Thêm thành công!!');
+            alert()->success('Added successfully', 'Message')->persistent('Close');
+            return redirect('/quan-ly/chuong-trinh-dao-tao');
         } catch (\Throwable $th) {      
-        return redirect('quan-ly/chuong-trinh-dao-tao')->with('warning','Lỗi :'.$th);
+            alert()->error('Error:'.$th, 'Can not add this entry');
+            return redirect('/quan-ly/chuong-trinh-dao-tao');
         }
         
     }
@@ -64,14 +64,16 @@ class chuongTrinhDTController extends Controller
                 $ctdt->maCNganh=$request->maCNganh;
                 $ctdt->maHe=$request->maHe;
                 $ctdt->update();
-                return redirect('quan-ly/chuong-trinh-dao-tao')->with('success','Sửa thành công!!');
+                alert()->success('Updated successfully', 'Message');
+                return redirect('/quan-ly/chuong-trinh-dao-tao');
             }else{
-                return redirect('quan-ly/chuong-trinh-dao-tao')->with('warning','Không tìm thấy chương tình đào tạo!!');
+                return redirect('quan-ly/chuong-trinh-dao-tao')->with('warning','Cannot found this entry!!');
 
             }
           
         } catch (\Throwable $th) { 
-            return redirect('quan-ly/chuong-trinh-dao-tao')->with('warning','Lỗi :'.$th);
+            alert()->error('Error:'.$th, 'Update failed');
+            return redirect('/quan-ly/chuong-trinh-dao-tao');
         }
     }
     public function xoa($maCT)
@@ -81,12 +83,14 @@ class chuongTrinhDTController extends Controller
             if($ctdt){
                 $ctdt->isdelete=true;
                 $ctdt->update();
-                return redirect('quan-ly/chuong-trinh-dao-tao')->with('success','Xóa thành công!!');
+                alert()->success('Deleted successful', 'Message');
+                return redirect('/quan-ly/chuong-trinh-dao-tao');
             }else{
-                return redirect('quan-ly/chuong-trinh-dao-tao')->with('warning','Không tìm thấy chương trình đào tạo!!');
+                return redirect('quan-ly/chuong-trinh-dao-tao')->with('warning','Cannot found this entry!!');
             }
         } catch (\Throwable $th) { 
-            return redirect('quan-ly/chuong-trinh-dao-tao')->with('warning','Lỗi :'.$th);
+            alert()->error('Error:'.$th, 'Delete failed');
+            return redirect('/quan-ly/chuong-trinh-dao-tao');
         }
     }
 }
