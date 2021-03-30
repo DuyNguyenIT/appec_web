@@ -16,14 +16,14 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Thống kê theo tiêu chí đánh giá<noscript></noscript><nav></nav></h1>
+            <h1 class="m-0 text-dark">Thống kê theo CDIO<noscript></noscript><nav></nav></h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
               <li class="breadcrumb-item "><a href="thongke.html">Thống kê</a></li>
               <li class="breadcrumb-item "><a href="thongketheohocphan.html">Hệ quản trị cơ sở dữ liệu</a></li>
-              <li class="breadcrumb-item active">Thống kê theo tiêu chí đánh giá</li>
+              <li class="breadcrumb-item active">Thống kê theo CDIO</li>
             
             </ol>
           </div><!-- /.col -->
@@ -40,8 +40,7 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">
-                 
-             
+                  
                 </h3>
               </div>
               <!-- /.card-header -->
@@ -51,12 +50,12 @@
                   <tr>
                     <th>STT</th>
                     <th>CĐR</th>
-                     <th>Chuẩn đầu ra</th>
-                     <th>Giỏi</th>
-                     <th>Khá</th>
-                     <th>Trung Bình</th>
-                     <th>Yếu</th>
-                     <th>Kém</th>
+                     <th>Chuẩn đầu ra CDIO</th>
+                     <th>85-100%</th>
+                     <th>75-85%</th>
+                     <th>50-75%</th>
+                     <th>25-50%</th>
+                     <th>0-25%</th>
                      <th>Tổng</th>
 
                   </tr>
@@ -70,7 +69,7 @@
                         $sum=0;
                         for ($t=1; $t <7 ; $t++) { 
                           # code...
-                          $sum+=intval($bd[$t]);
+                           $sum+=intval($bd[$t]);
                         }
                     @endphp
                     <tr>
@@ -137,9 +136,9 @@
                 var kem=[];
         $.ajax({
             type:'GET',
-            url:'/giao-vu/thong-ke/thong-ke-theo-hoc-phan/get-tieu-chi-kl',
+            url:'/giao-vu/thong-ke/thong-ke-theo-hoc-phan/get-tieu-chi',
             success:function(data) {
-               
+              
                 for (let i = 0; i < data.length; i++) {
                     label.push(data[i][0]);
                     gioi.push(data[i][2]);
@@ -153,7 +152,7 @@
                 labels  : label,
                 datasets: [
                     {
-                    label               : 'Giỏi',
+                    label               : '85-100%',
                     backgroundColor     : 'rgba(60,141,188,0.9)',
                     borderColor         : 'rgba(60,141,188,0.8)',
                     pointRadius          : false,
@@ -164,7 +163,7 @@
                     data                : gioi
                     },
                     {
-                    label               : 'Khá',
+                    label               : '75-85%',
                     backgroundColor     : 'rgba(210, 214, 222, 1)',
                     borderColor         : 'rgba(210, 214, 222, 1)',
                     pointRadius         : false,
@@ -174,7 +173,7 @@
                     pointHighlightStroke: 'rgba(220,220,220,1)',
                     data                : kha
                     },{
-                    label               : 'Trung bình',
+                    label               : '50-75%',
                     backgroundColor     : 'rgba(193,110,25, 0.8)',
                     borderColor         : 'rgba(193,110,25, 0.8)',
                     pointRadius          : false,
@@ -184,7 +183,7 @@
                     pointHighlightStroke: 'rgba(60,141,188,1)',
                     data                : tb
                     },{
-                    label               : 'yếu',
+                    label               : '25-50%',
                     backgroundColor     : 'rgba(30,124,137, 0.8)',
                     borderColor         : 'rgba(30,124,137, 0.8)',
                     pointRadius          : false,
@@ -194,7 +193,7 @@
                     pointHighlightStroke: 'rgba(60,141,188,1)',
                     data                : yeu
                     },{
-                    label               : 'kém',
+                    label               : '0-25%',
                     backgroundColor     : 'rgba(255,12,73, 0.8)',
                     borderColor         : 'rgba(255,12,73, 0.8)',
                     pointRadius          : false,

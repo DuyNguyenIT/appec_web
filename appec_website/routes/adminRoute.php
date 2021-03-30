@@ -76,6 +76,7 @@ Route::group(['middleware' =>'App\Http\Middleware\isAdmin'], function (){
             Route::get('/{maHocPhan}','hocPhanController@de_cuong_mon_hoc');
             Route::get('/in-de-cuong-mon-hoc/{maHocPhan}','AdWordController@in_de_cuong_mon_hoc');
             Route::post('/them_chuan_dau_ra_mon_hoc','hocPhanController@them_chuan_dau_ra_mon_hoc');
+            Route::post('/sua_chuan_dau_ra_mon_hoc','hocPhanController@sua_chuan_dau_ra_mon_hoc');
             
             Route::post('/sua_mo_ta_mon_hoc','hocPhanController@them_mo_ta_hoc_phan');
             Route::post('/sua_yeu_cau_mon_hoc','hocPhanController@them_yeu_cau_hoc_phan');

@@ -22,7 +22,6 @@ class CreateTable58DeThiCauhoiTuluan extends Migration
             $table->foreign('maDe')->references('maDe')->on('de_thi')->onDelete('cascade');
             $table->foreign('maCauHoi')->references('maCauHoi')->on('cau_hoi')->onDelete('cascade');
             $table->foreign('maPATL')->references('id')->on('phuong_an_tu_luan')->onDelete('cascade');
-
         });
     }
 

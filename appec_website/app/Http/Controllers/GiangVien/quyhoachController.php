@@ -522,7 +522,6 @@ class quyhoachController extends Controller
         compact('dethi','hocphan','cauhoi','cdr3','noidung'));
     }
 
-
     public function them_cau_hoi_de_thuc_hanh(Request $request) //nhấn nút thêm câu hỏi
     {
         if($request->maCauHoi==null){

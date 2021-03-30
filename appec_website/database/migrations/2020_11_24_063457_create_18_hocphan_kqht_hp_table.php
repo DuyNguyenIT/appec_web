@@ -19,6 +19,7 @@ class Create18HocphanKqhtHpTable extends Migration
             $table->integer('maKQHT')->unsigned()->nullable()->default(12);
             $table->integer('maCDR3')->unsigned()->nullable()->default(12);
             $table->boolean('isDelete')->nullable()->default(false);
+            $table->integer('maChuanAbet')->unsigned()->nullable()->default(12);
             $table->timestamps();
 
             $table->foreign('maHocPhan')->references('maHocPhan')->on('HOC_PHAN')
@@ -28,6 +29,9 @@ class Create18HocphanKqhtHpTable extends Migration
             ->onUpdate('restrict')
             ->onDelete('cascade');
             $table->foreign('maCDR3')->references('maCDR3')->on('CDR_CD3')->onDelete('cascade');
+            $table->foreign('maChuanAbet')->references('maChuanAbet')->on('chuan_abet')
+            ->onUpdate('restrict')
+            ->onDelete('cascade');
         });
     }
 

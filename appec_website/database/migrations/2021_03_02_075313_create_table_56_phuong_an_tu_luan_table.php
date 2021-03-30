@@ -20,6 +20,11 @@ class CreateTable56PhuongAnTuLuanTable extends Migration
             $table->integer('maCDR3')->unsigned()->nullable()->default(12);
             $table->foreign('maCDR3')->references('maCDR3')->on('cdr_cd3')->onDelete('cascade');
             $table->timestamps();
+            $table->integer('maChuanAbet')->unsigned()->nullable()->default(1);
+  
+            $table->foreign('maChuanAbet')->references('maChuanAbet')->on('chuan_abet')
+            ->onUpdate('restrict')
+            ->onDelete('cascade');
         });
     }
 

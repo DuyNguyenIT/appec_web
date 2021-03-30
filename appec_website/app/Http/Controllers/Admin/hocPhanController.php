@@ -13,6 +13,7 @@ use App\Models\hocPhan;
 use App\Models\ctDaoTao;
 use App\Models\ctKhoiKT;
 use App\Models\bacDaoTao;
+use App\Models\chuan_abet;
 use App\Models\ppGiangDay;
 use App\Models\chuong_kqht;
 use App\Models\loaiDanhGia;
@@ -128,6 +129,10 @@ class hocPhanController extends Controller
 
         $kqht=hocPhan_kqHTHP::where('hocphan_kqht_hp.isDelete',false) //biến này chạy nội dung trong bảng chuẩn đầu ra môn học
         ->where('hocphan_kqht_hp.maHocPhan',$maHocPhan)
+        ->join('chuan_abet',function($y){
+            $y->on('chuan_abet.maChuanAbet','=','hocphan_kqht_hp.maChuanAbet')
+            ->where('chuan_abet.isDelete',false);
+        })
         ->join('kqht_hp',function($y){
             $y->on('kqht_hp.maKQHT','=','hocphan_kqht_hp.maKQHT')
             ->where('kqht_hp.isDelete',false);
@@ -145,6 +150,9 @@ class hocPhanController extends Controller
             ->where('cdr_cd1.isDelete',false);
         })
         ->get();
+
+
+        $chuan_abet=chuan_abet::all();//combobox chuẩn abet
 
         //5 nội dung môn học
         $kqht_hp=hocPhan_kqHTHP::where('hocphan_kqht_hp.isDelete',false) 
@@ -192,7 +200,7 @@ class hocPhanController extends Controller
         return view('admin.hocphan.themdecuong',['hocPhan'=>$hocPhan,'monHoc'=>$mon,'hocphan_ctdaotao'=>$hocphan_ctdaotao,
         'monTQ'=>$monTQ,'tailieu'=>$tailieu,
         'he'=>$he,'bac'=>$bac,'CNganh'=>$CNganh,'nganh'=>$nganh,
-        'CDR1'=>$cdr1,'cdr'=>$cdr,'kqht'=>$kqht,'getKQHT'=>$getKQHT,'mudokynangUIT'=>$mudokynangUIT,
+        'CDR1'=>$cdr1,'cdr'=>$cdr,'kqht'=>$kqht,'getKQHT'=>$getKQHT,'mudokynangUIT'=>$mudokynangUIT,'chuan_abet'=>$chuan_abet,
         'ppGiangDay'=>$ppgd,'hocPhan_ppGiangDay'=>$hp_ppgd,
         'noidung'=>$noidung,'loaiDG'=>$loaiDG, 'mucDoDG'=>$mucDoDG,
         'loaiHTDG'=>$loaiHTDG,'hocPhan_loaiHTDG'=>$hocPhan_loaiHTDG]);
@@ -262,11 +270,23 @@ class hocPhanController extends Controller
         //3.thêm hocphan_kqht
         $arrray_maCDR3=$request->maCDR3;
         foreach ($arrray_maCDR3 as $maCDR3) {
-            hocPhan_kqHTHP::create(['maHocPhan'=>$request->maHocPhan,'maKQHT'=>$kqht->maKQHT,'maCDR3'=>$maCDR3]);
+            hocPhan_kqHTHP::create(['maHocPhan'=>$request->maHocPhan,'maKQHT'=>$kqht->maKQHT,'maCDR3'=>$maCDR3,'maChuanAbet'=>$request->maChuanAbet]);
         }
 
         //phản hồi
         alert()->success('Thêm chuẩn đầu ra thành công!!','Thông báo');
+        return back();
+    }
+
+    public function sua_chuan_dau_ra_mon_hoc(Request $request)
+    {
+        # 1. Sửa KQht
+        //1.thêm kết quả học tập
+        kqHTHP::updateOrCreate(['maKQHT'=>$request->maKQHT],['maKQHTVB'=>$request->maKQHTVB,'tenKQHT'=>$request->tenKQHT]);
+        // sửa học phần kqht chuẩn đầu ra cdio và chuẩn đầu ra abet
+        hocPhan_kqHTHP::updateOrCreate(['id'=>$request->id],['maHocPhan'=>$request->maHocPhan,'maKQHT'=>$request->maKQHT,'maCDR3'=>$request->maCDR3,'maChuanAbet'=>$request->maChuanAbet]);
+        //phản hồi
+        //alert()->success('Thêm chuẩn đầu ra thành công!!','Thông báo');
         return back();
     }
 

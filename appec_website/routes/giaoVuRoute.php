@@ -62,6 +62,9 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiaoVu'], function (){
                             Route::get('/get-diem-chu','thongKeController@get_diem_chu_thuc_hanh');
                             Route::get('/thong-ke-theo-tieu-chi/{maCTBaiQH}', 'thongKeController@thong_ke_theo_tieu_chi_thuc_hanh');
                             Route::get('/get-tieu-chi','thongKeController@get_tieu_chi_thuc_hanh'); 
+                            Route::get('/thong-ke-theo-abet/{maCTBaiQH}', 'thongKeController@thong_ke_theo_abet_tu_luan');
+                            Route::get('/get-abet','thongKeController@get_abet_tu_luan'); 
+
                         }); 
                         
 
@@ -72,6 +75,8 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiaoVu'], function (){
                             Route::get('/get-diem-chu','thongKeController@get_diem_chu_tu_luan');
                             Route::get('/thong-ke-theo-tieu-chi/{maCTBaiQH}', 'thongKeController@thong_ke_theo_tieu_chi_tu_luan');
                             Route::get('/get-tieu-chi','thongKeController@get_tieu_chi_tu_luan'); 
+                            Route::get('/thong-ke-theo-abet/{maCTBaiQH}', 'thongKeController@thong_ke_theo_abet_tu_luan');
+                            Route::get('/get-abet','thongKeController@get_abet_tu_luan'); 
                         });
 
                         

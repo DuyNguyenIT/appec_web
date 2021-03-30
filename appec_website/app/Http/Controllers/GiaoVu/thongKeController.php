@@ -356,7 +356,7 @@ class thongKeController extends Controller
                         if($tile>=0.5 && $tile<0.75){
                             $tb++;
                         }else{
-                            if($tile>=0.75 && $tile<1){
+                            if($tile>=0.75 && $tile<0.85){
                                 $kha++;
                             }else{
                                 $gioi++;
@@ -435,7 +435,6 @@ class thongKeController extends Controller
         $bieuDo=[];
         
         foreach ($chuan_dau_ra3 as $cdr3) {
-
             $temp=[];
             array_push($temp,$cdr3->maCDR3VB);
             array_push($temp,$cdr3->tenCDR3);
@@ -476,7 +475,7 @@ class thongKeController extends Controller
                         if($tile>=0.5 && $tile<0.75){
                             $tb++;
                         }else{
-                            if($tile>=0.75 && $tile<1){
+                            if($tile>=0.75 && $tile<0.85){
                                 $kha++;
                             }else{
                                 $gioi++;
@@ -495,6 +494,8 @@ class thongKeController extends Controller
         }
         return response()->json($bieuDo);
     }
+
+
     //____________________________________________________________________________________________________________________________
     ####---------------------------------------------------THỐNG KÊ CỦA TỰ LUẬN
     //_____________________________________________________________________________________________________________________________
@@ -728,7 +729,7 @@ class thongKeController extends Controller
                         if($tile>=0.5 && $tile<0.75){
                             $tb++;
                         }else{
-                            if($tile>=0.75 && $tile<1){
+                            if($tile>=0.75 && $tile<0.85){
                                 $kha++;
                             }else{
                                 $gioi++;
@@ -848,7 +849,7 @@ class thongKeController extends Controller
                         if($tile>=0.5 && $tile<0.75){
                             $tb++;
                         }else{
-                            if($tile>=0.75 && $tile<1){
+                            if($tile>=0.75 && $tile<0.85){
                                 $kha++;
                             }else{
                                 $gioi++;
@@ -867,7 +868,253 @@ class thongKeController extends Controller
         }
         return response()->json($bieuDo);
     }
+//___________________________________________________________TỰ LUẬN theo abet
+    public function thong_ke_theo_abet_tu_luan($maCTBaiQH)
+    {
+        Session::put('maCTBaiQH',$maCTBaiQH);
+         //lấy danh sách cdr3
+        ////maCTBaiQH-->noiDungQH
+        $ndqh=noiDungQH::where('isDelete',false)
+        ->where('maCTBaiQH',$maCTBaiQH)
+        ->get();
+         //ct bai quy hoach
+         $ct_baiQH=ct_bai_quy_hoach::where('ct_bai_quy_hoach.isDelete',false)
+         ->where('maCTBaiQH',$maCTBaiQH)
+         ->leftjoin('loai_ht_danhgia',function($x){
+             $x->on('ct_bai_quy_hoach.maLoaiHTDG','=','ct_bai_quy_hoach.maLoaiHTDG')
+             ->where('ct_bai_quy_hoach.isDelete',false);
+         })
+         ->first();
 
+         $chuan_abet=[];
+         $phuongan=[];
+
+         //ct_baiqh->de_thi->de_thi_cauhoi_tuluan-->cau_hoi
+         //                              |____________>phuong_an_tu_luan-->cdr_cd3
+        $chuan_abet=deThi::where('de_thi.isDelete',false)
+        ->where('maCTBaiQH',$maCTBaiQH)
+        ->join('de_thi_cauhoi_tuluan',function($x){
+             $x->on('de_thi_cauhoi_tuluan.maDe','=','de_thi.maDe');
+        })
+        ->join('phuong_an_tu_luan',function($x){
+            $x->on('de_thi_cauhoi_tuluan.maPATL','=','phuong_an_tu_luan.id');
+        })
+        ->join('chuan_abet',function($x){
+            $x->on('chuan_abet.maChuanAbet','=','phuong_an_tu_luan.maChuanAbet')
+            ->where('chuan_abet.isDelete',false);
+        })
+        ->distinct(['chuan_abet.maChuanAbet','chuan_abet.tenChuanAbet'])
+        ->orderBy('chuan_abet.maChuanAbet')
+        ->get(['chuan_abet.maChuanAbet','chuan_abet.maChuanAbetVB','chuan_abet.tenChuanAbet']);
+        
+         $phuongan=deThi::where('de_thi.isDelete',false)
+         ->where('maCTBaiQH',$maCTBaiQH)
+         ->join('de_thi_cauhoi_tuluan',function($x){
+             $x->on('de_thi_cauhoi_tuluan.maDe','=','de_thi.maDe');
+         })
+         ->join('phuong_an_tu_luan',function($x){
+            $x->on('de_thi_cauhoi_tuluan.maPATL','=','phuong_an_tu_luan.id');
+        })
+        ->get(['phuong_an_tu_luan.id','phuong_an_tu_luan.noiDungPA','phuong_an_tu_luan.diemPA','phuong_an_tu_luan.maChuanAbet']);
+
+
+        $phieuCham=deThi::where('de_thi.isDelete',false)
+        ->where('maCTBaiQH',$maCTBaiQH)
+        ->join('phieu_cham',function($x){
+            $x->on('phieu_cham.maDe','=','de_thi.maDe')
+            ->where('phieu_cham.maGV',Session::get('maGV'))
+            ->where('phieu_cham.isDelete',false);
+        })
+        ->get(['phieu_cham.maPhieuCham']);
+
+
+        $bieuDo=[];
+        
+        foreach ($chuan_abet as $abet) {
+
+            $temp=[];
+            array_push($temp,$abet->maChuanAbetVB);
+            array_push($temp,$abet->tenChuanAbet);
+
+            $gioi=0;
+            $kha=0;
+            $tb=0;
+            $yeu=0;
+            $kem=0;
+
+            $diem_tieu_chi=0;
+            //tính điểm tương ứng của chuẩn đầu ra 3
+            foreach ($phuongan as $tc) {
+                if($tc->maChuanAbet==$abet->maChuanAbet){
+                    $diem_tieu_chi=$diem_tieu_chi+$tc->diemPA;
+                }
+            }
+
+
+            foreach ($phieuCham as $pc) {
+                $t=$abet->maChuanAbet;
+                /////////
+                //điếm theo phiếu chấm
+
+                $dem=danhgia_tuluan::where('maPhieuCham',$pc->maPhieuCham)
+                ->join('phuong_an_tu_luan',function($x) use ($t){
+                    $x->on('phuong_an_tu_luan.id','=','danhgia_tuluan.maPATL')
+                    ->where('phuong_an_tu_luan.maChuanAbet',$t);
+                })
+                ->sum('danhgia_tuluan.diemDG');
+                $tile=$dem/$diem_tieu_chi;
+                if($tile<0.25){
+                    $kem++;
+                }else{
+                    if($tile>=0.25 && $tile<0.5){
+                        $yeu++;
+                    }else{
+                        if($tile>=0.5 && $tile<0.75){
+                            $tb++;
+                        }else{
+                            if($tile>=0.75 && $tile<0.85){
+                                $kha++;
+                            }else{
+                                $gioi++;
+                            }
+                        }
+                    }
+                }
+            }
+
+            array_push($temp,$gioi);
+            array_push($temp,$kha);
+            array_push($temp,$tb);
+            array_push($temp,$yeu);
+            array_push($temp,$kem);
+            array_push($bieuDo,$temp);
+        }
+
+
+
+        return view('giaovu.thongke.tuluan.thongketheoabet',['bieuDo'=>$bieuDo]);
+
+    }
+
+    public function get_abet_tu_luan()
+    {
+        $ndqh=noiDungQH::where('isDelete',false)
+        ->where('maCTBaiQH',Session::get('maCTBaiQH'))
+        ->get();
+         //ct bai quy hoach
+         $ct_baiQH=ct_bai_quy_hoach::where('ct_bai_quy_hoach.isDelete',false)
+         ->where('maCTBaiQH',Session::get('maCTBaiQH'))
+         ->leftjoin('loai_ht_danhgia',function($x){
+             $x->on('ct_bai_quy_hoach.maLoaiHTDG','=','ct_bai_quy_hoach.maLoaiHTDG')
+             ->where('ct_bai_quy_hoach.isDelete',false);
+         })
+         ->first();
+
+         $chuan_abet=[];
+         $phuongan=[];
+
+         //ct_baiqh->de_thi->de_thi_cauhoi_tuluan-->cau_hoi
+         //                              |____________>phuong_an_tu_luan-->cdr_cd3
+        $chuan_abet=deThi::where('de_thi.isDelete',false)
+        ->where('maCTBaiQH',Session::get('maCTBaiQH'))
+        ->join('de_thi_cauhoi_tuluan',function($x){
+             $x->on('de_thi_cauhoi_tuluan.maDe','=','de_thi.maDe');
+        })
+        ->join('phuong_an_tu_luan',function($x){
+            $x->on('de_thi_cauhoi_tuluan.maPATL','=','phuong_an_tu_luan.id');
+        })
+        ->join('chuan_abet',function($x){
+            $x->on('chuan_abet.maChuanAbet','=','phuong_an_tu_luan.maChuanAbet')
+            ->where('chuan_abet.isDelete',false);
+        })
+        ->distinct(['chuan_abet.maChuanAbet','chuan_abet.tenChuanAbet'])
+        ->orderBy('chuan_abet.maChuanAbet')
+        ->get(['chuan_abet.maChuanAbet','chuan_abet.maChuanAbetVB','chuan_abet.tenChuanAbet']);
+        
+         $phuongan=deThi::where('de_thi.isDelete',false)
+         ->where('maCTBaiQH',Session::get('maCTBaiQH'))
+         ->join('de_thi_cauhoi_tuluan',function($x){
+             $x->on('de_thi_cauhoi_tuluan.maDe','=','de_thi.maDe');
+         })
+         ->join('phuong_an_tu_luan',function($x){
+            $x->on('de_thi_cauhoi_tuluan.maPATL','=','phuong_an_tu_luan.id');
+        })
+        ->get(['phuong_an_tu_luan.id','phuong_an_tu_luan.noiDungPA','phuong_an_tu_luan.diemPA','phuong_an_tu_luan.maChuanAbet']);
+
+
+        $phieuCham=deThi::where('de_thi.isDelete',false)
+        ->where('maCTBaiQH',Session::get('maCTBaiQH'))
+        ->join('phieu_cham',function($x){
+            $x->on('phieu_cham.maDe','=','de_thi.maDe')
+            ->where('phieu_cham.maGV',Session::get('maGV'))
+            ->where('phieu_cham.isDelete',false);
+        })
+        ->get(['phieu_cham.maPhieuCham']);
+
+
+        $bieuDo=[];
+        
+        foreach ($chuan_abet as $abet) {
+
+            $temp=[];
+            array_push($temp,$abet->maChuanAbetVB);
+            array_push($temp,$abet->tenChuanAbet);
+
+            $gioi=0;
+            $kha=0;
+            $tb=0;
+            $yeu=0;
+            $kem=0;
+
+            $diem_tieu_chi=0;
+            //tính điểm tương ứng của chuẩn đầu ra 3
+            foreach ($phuongan as $tc) {
+                if($tc->maChuanAbet==$abet->maChuanAbet){
+                    $diem_tieu_chi=$diem_tieu_chi+$tc->diemPA;
+                }
+            }
+
+
+            foreach ($phieuCham as $pc) {
+                $t=$abet->maChuanAbet;
+                /////////
+                //điếm theo phiếu chấm
+
+                $dem=danhgia_tuluan::where('maPhieuCham',$pc->maPhieuCham)
+                ->join('phuong_an_tu_luan',function($x) use ($t){
+                    $x->on('phuong_an_tu_luan.id','=','danhgia_tuluan.maPATL')
+                    ->where('phuong_an_tu_luan.maChuanAbet',$t);
+                })
+                ->sum('danhgia_tuluan.diemDG');
+                $tile=$dem/$diem_tieu_chi;
+                if($tile<0.25){
+                    $kem++;
+                }else{
+                    if($tile>=0.25 && $tile<0.5){
+                        $yeu++;
+                    }else{
+                        if($tile>=0.5 && $tile<0.75){
+                            $tb++;
+                        }else{
+                            if($tile>=0.75 && $tile<0.85){
+                                $kha++;
+                            }else{
+                                $gioi++;
+                            }
+                        }
+                    }
+                }
+            }
+
+            array_push($temp,$gioi);
+            array_push($temp,$kha);
+            array_push($temp,$tb);
+            array_push($temp,$yeu);
+            array_push($temp,$kem);
+            array_push($bieuDo,$temp);
+        }
+        return response()->json($bieuDo);
+    }
     //______________________________________________________________________________________________________________________________
     ####-----------------------------------------------------THỐNG KÊ CỦA ĐỒ ÁN
     //______________________________________________________________________________________________________________________________
@@ -1187,7 +1434,7 @@ class thongKeController extends Controller
                         if($tile>=0.5 && $tile<0.75){
                             $tb++;
                         }else{
-                            if($tile>=0.75 && $tile<1){
+                            if($tile>=0.75 && $tile<0.85){
                                 $kha++;
                             }else{
                                 $gioi++;
@@ -1217,6 +1464,7 @@ class thongKeController extends Controller
         ////noiDungQh->(tieuchuan+tieuChi+cdr3)
         $chuan_dau_ra3=[];
         $tieuchi=[];
+ 
         foreach ($ndqh as $key => $x) {
             ////noiDungQh->(tieuchuan+tieuChi+cdr3)
             $temp=tieuChuanDanhGia::where('tieuchuan_danhgia.isDelete',false)
@@ -1319,7 +1567,7 @@ class thongKeController extends Controller
                         if($tile>=0.5 && $tile<0.75){
                             $tb++;
                         }else{
-                            if($tile>=0.75 && $tile<1){
+                            if($tile>=0.75 && $tile<0.85){
                                 $kha++;
                             }else{
                                 $gioi++;
@@ -1335,6 +1583,7 @@ class thongKeController extends Controller
             array_push($temp,$kem);
             array_push($bieuDo,$temp);
         }
+        
 
         return response()->json($bieuDo);
     }
@@ -1959,7 +2208,7 @@ class thongKeController extends Controller
                         if($tile>=0.5 && $tile<0.75){
                             $tb++;
                         }else{
-                            if($tile>=0.75 && $tile<1){
+                            if($tile>=0.75 && $tile<0.85){
                                 $kha++;
                             }else{
                                 $gioi++;
@@ -2167,7 +2416,7 @@ class thongKeController extends Controller
                         if($tile>=0.5 && $tile<0.75){
                             $tb++;
                         }else{
-                            if($tile>=0.75 && $tile<1){
+                            if($tile>=0.75 && $tile<0.85){
                                 $kha++;
                             }else{
                                 $gioi++;
