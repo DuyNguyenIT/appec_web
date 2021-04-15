@@ -29,7 +29,7 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">
-                <!-- Button trigger modal -->
+                     <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addClass">
                   Adding class
                 </button>
@@ -41,7 +41,7 @@
                   @csrf
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                      <h5 class="modal-title" id="exampleModalLabel">Adding a new class</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -69,12 +69,12 @@
                   
                 </div>
               </div>
-   
-                <!-- Button trigger modal -->
+                  <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#importExcel">
                   Import excel
                 </button>
                 <a href="{{ asset('/giao-vu/quan-ly-lop/tai-file-mau') }}">Template file excel</a>
+
                 <!-- Modal -->
                 <div class="modal fade" id="importExcel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog" role="document">
@@ -101,7 +101,7 @@
                     
                   </div>
                 </div>
-                  
+               
                 </h3>
               </div>
               <!-- /.card-header -->
@@ -131,6 +131,8 @@
                                     Danh sách sinh viên
                                     </button>
                               </a>
+                            
+                            
                           </td>
                       </tr>
                     @endforeach

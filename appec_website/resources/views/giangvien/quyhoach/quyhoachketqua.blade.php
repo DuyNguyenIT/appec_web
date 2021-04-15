@@ -86,7 +86,7 @@
                                       @endif
                                     @endforeach
                                   </option>
-                                  @php
+                                 @php
                                         $n=$hocphan_loai_htdg_array->where('groupCT',2)->count();
                                         $cr=0;
                                   @endphp
@@ -109,7 +109,6 @@
                                     @endforeach
                                   </option>
                                   @endif
-                                
                                 </select>
                               </div>
                               <button type="submit" class="btn btn-primary"  >

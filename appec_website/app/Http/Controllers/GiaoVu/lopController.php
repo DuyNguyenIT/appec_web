@@ -16,7 +16,7 @@ class lopController extends Controller
         return view('giaovu.lop.lop',['lop'=>$lop]);
     }
 
-    public function addClass(Request $request)
+   public function addClass(Request $request)
     {
         $lop=lop::where('maLop',$request->maLop)->first();
         if($lop){

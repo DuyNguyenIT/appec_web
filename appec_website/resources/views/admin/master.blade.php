@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -192,7 +191,7 @@
               <li class="nav-item">
                 <a href="{{ asset('/quan-ly/chuan-dau-ra') }}" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
-                  <p>Course Learning Outcomes</p>
+                  <p>{{__('Student Outcomes')}}</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -223,6 +222,12 @@
                 <a href="{{ asset('/quan-ly/tai-khoan') }}" class="nav-link">
                   <i class="nav-icon  fas fa-users-cog"></i>
                   <p>Accounts</p>
+                </a>
+              </li>
+             <li class="nav-item">
+                <a href="{{ asset('/quan-ly/thong-ke') }}" class="nav-link">
+                  <i class="nav-icon  fas fa-chart-bar"></i>
+                  <p> Statistics</p>
                 </a>
               </li>
             </ul>

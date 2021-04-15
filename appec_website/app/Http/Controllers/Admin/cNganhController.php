@@ -33,11 +33,11 @@ class cNganhController extends Controller
             $cnganh=cNganh::updateOrCreate(['maCNganh'=>$request->maCNganh],['tenCNganh'=>$request->tenCNganh,'maNganh'=>$request->maNganh,'isDelete'=>false]);
             //return $request->all();
             
-            alert()->success('Updated successfully', 'Message')->persistent('Close');;
+            alert()->success('Updated successfully', 'Message')->persistent('Close');
             return redirect('/quan-ly/chuyen-nganh');
         } catch (\Throwable $th) {
             
-            alert()->error('Error:'.$th, 'Update failed')->persistent('Close');;
+            alert()->error('Error:'.$th, 'Update failed')->persistent('Close');
             return redirect('/quan-ly/chuyen-nganh');
         }
     }
@@ -45,10 +45,10 @@ class cNganhController extends Controller
     {
         try {
             $cnganh=cNganh::updateOrCreate(['maCNganh'=>$macnganh],['isDelete'=>true]);
-            alert()->success('Deleted successful', 'Message') ->persistent('Close');;
+            alert()->success('Deleted successful', 'Message') ->persistent('Close');
             return redirect('/quan-ly/chuyen-nganh');
         } catch (\Throwable $th) {
-            alert()->error('Error:'.$th, 'Delete failed') ->persistent('Close');;
+            alert()->error('Error:'.$th, 'Delete failed') ->persistent('Close');
             return redirect('/quan-ly/chuyen-nganh');
         }
     }

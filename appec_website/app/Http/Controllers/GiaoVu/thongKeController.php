@@ -435,6 +435,7 @@ class thongKeController extends Controller
         $bieuDo=[];
         
         foreach ($chuan_dau_ra3 as $cdr3) {
+
             $temp=[];
             array_push($temp,$cdr3->maCDR3VB);
             array_push($temp,$cdr3->tenCDR3);

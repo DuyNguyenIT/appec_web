@@ -257,41 +257,41 @@
                             <td rowspan={{$demTenDT}}>{{$i++}}</td>
                             <td rowspan={{$demTenDT}}>{{$dt->maDeVB}}</td>
                             <td rowspan={{$demTenDT}}>{{$dt->tenDe}}
-                            
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editTen_{{ $dt->maDe }}">
-                              <i class="fas fa-edit"></i>
-                            </button>
 
-                            <!-- Modal -->
-                            <div class="modal fade" id="editTen_{{ $dt->maDe }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                              <div class="modal-dialog" role="document">
-                                <form action="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/sua-ten-de-tai') }}" method="post">
-                                @csrf
-                              <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                      </button>
-                                    </div>
-                                    <div class="modal-body">
-                                      <input type="text" name="maDe" id="" hidden value="{{ $dt->maDe }}">
-                                      <div class="form-group">
-                                        <label for="">Tên đề tài:</label>
-                                      <input type="text" class="form-control" name="tenDe" id=""  value="{{ $dat->tenDe }}">
-                                      </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                      <button type="submit" class="btn btn-primary">Save</button>
+                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editTen_{{ $dt->maDe }}">
+  
+<i class="fas fa-edit"></i>
+</button>
 
-                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    </div>
-                                  </div>
-                                </form>
-                              </div>
-                            </div>
-                            </td>
+<!-- Modal -->
+<div class="modal fade" id="editTen_{{ $dt->maDe }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form action="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/sua-ten-de-tai') }}" method="post">
+    @csrf
+  <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input type="text" name="maDe" id="" hidden value="{{ $dt->maDe }}">
+          <div class="form-group">
+            <label for="">T�n &#273;&#7873; t�i:</label>
+          <input type="text" class="form-control" name="tenDe" id="" value="{{ $dt->tenDe }}">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save</button>
+
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+</td>
                             
                             <td>{{$dt->HoSV}} {{$dt->TenSV}}</td>
                             <td>{{$dt->maSSV}}</td>
@@ -300,7 +300,8 @@
                               <button class="btn btn-primary">
                                 <i class="fas fa-edit"></i> Chỉnh sửa
                               </button>
-                              <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xoa-phieu-cham-do-an/'.$dt->maDe.'/'.$dt->maSSV) }}" onclick="confirm('xác nhận xóa?')"><i class="fas fa-trash"></i></a>
+                              <a class="btn btn-danger" href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xoa-phieu-cham-do-an/'.$dt->maDe.'/'.$dt->maSSV) }}" onclick="confirm('x�c nh&#7853;n x�a?')"><i class="fas fa-trash"></i></a>
+
                             </td>
                         </tr>
                         @else
@@ -312,7 +313,7 @@
                             <button class="btn btn-primary">
                               <i class="fas fa-edit"></i> Chỉnh sửa
                             </button>
-                            <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xoa-phieu-cham-do-an/'.$dt->maDe.'/'.$dt->maSSV) }}" onclick="confirm('xác nhận xóa?')"><i class="fas fa-trash"></i></a>
+                              <a class="btn btn-danger" href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xoa-phieu-cham-do-an/'.$dt->maDe.'/'.$dt->maSSV) }}" onclick="confirm('x�c nh&#7853;n x�a?')"><i class="fas fa-trash"></i></a>
 
                           </td>
                         @endif

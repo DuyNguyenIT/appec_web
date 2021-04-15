@@ -16,7 +16,7 @@ class AdAccountController extends Controller
 
     public function them(Request $request)
     {
-        $user=users::find($request->username)->first();
+        $user=users::where('username',$request->username)->first();
         if($user){
             alert()->warning('Username is used', 'Message')->persistent('Close');
             return back();
@@ -39,7 +39,7 @@ class AdAccountController extends Controller
     public function xoa($username)
     {
         users::updateOrCreate(['username'=>$username],['isDelete'=>true]);
-        alert()->success('Edited successfully', 'Message')->persistent('Close');
+        alert()->success('Deleted successfully', 'Message')->persistent('Close');
         return back();
 
     }

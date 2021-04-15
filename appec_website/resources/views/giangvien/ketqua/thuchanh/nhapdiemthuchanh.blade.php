@@ -100,7 +100,6 @@
                           $demPA_CauHoi=$noidung->where('maCauHoi',$tc->maCauHoi)->count('maPATL');
                           $diemCauHoi=$noidung->where('maCauHoi',$tc->maCauHoi)->sum('diemPA');
                           $demTC_CDR=$noidung->where('maPATL',$tc->maPATL)->where('maCDR3',$tc->maCDR3)->count('noiDungPA');
-                          
                         @endphp 
                       
                       

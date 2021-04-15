@@ -23,11 +23,6 @@ class CreateTable57PhuongAnTracNghiemTable extends Migration
             $table->timestamps();
             $table->foreign('maCauHoi')->references('maCauHoi')->on('CAU_HOI')->onDelete('cascade');
             $table->foreign('maCDR3')->references('maCDR3')->on('cdr_cd3')->onDelete('cascade');
-            
-            $table->integer('maChuanAbet')->unsigned()->nullable()->default(1);
-            $table->foreign('maChuanAbet')->references('maChuanAbet')->on('chuan_abet')
-            ->onUpdate('restrict')
-            ->onDelete('cascade');
 
         });
     }

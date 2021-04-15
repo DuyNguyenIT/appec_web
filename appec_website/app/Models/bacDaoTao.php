@@ -12,6 +12,6 @@ class bacDaoTao extends Model
     public $incrementing = false;
     protected $table='bac_dao_tao';
     protected $primaryKey = 'maBac';
-    protected $fillable = ['maBac','tenBac'];
+    protected $fillable = ['maBac','tenBac','isDelete'];
     
 }

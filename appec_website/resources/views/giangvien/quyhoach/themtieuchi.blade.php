@@ -42,7 +42,7 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-              <form action="{{ asset('giang-vien/quy-hoach-danh-gia/them-tieu-chi-submit') }}" method="post">
+              <form action="{{ asset('giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/them-tieu-chi-submit') }}" method="post">
                 @csrf
                
                 <div class="card">
@@ -67,7 +67,7 @@
                             
                             <select name="maKQHT" id="" class="form-control">
                                 @foreach ($kqht as $y)
-                                    <option value="{{$y->maKQHT}}">{{$y->tenKQHT}}</option>
+                                    <option value="{{$y->maKQHT}}">{{$y->maKQHTVB}}--{{$y->tenKQHT}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -121,7 +121,7 @@
                             <select name="" id="soTC" class="form-control" >
                                 <option value="1">1</option>
                                 <option value="2">2</option>
-                                <option value="2">3</option>
+                                <option value="3">3</option>
                                 <option value="4">4</option>
                                 <option value="6">6</option>
                                 <option value="8">8</option>
@@ -163,7 +163,7 @@
             </form>
             
 
-            <form action="{{ asset('/giang-vien/quy-hoach-danh-gia/them-tieu-chuan') }}" method="post">
+            <form action="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/them-tieu-chuan') }}" method="post">
                 @csrf
                 <!-- Modal -->
                 <div class="modal fade" id="themTieuChuan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

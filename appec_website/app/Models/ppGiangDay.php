@@ -9,7 +9,6 @@ class ppGiangDay extends Model
 {
     use HasFactory;
     protected $table='pp_giangday';
-
     protected $primaryKey = 'maPP';
     public $fillable=['tenPP','isDelete'];
 }

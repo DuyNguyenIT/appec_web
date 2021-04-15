@@ -14,7 +14,7 @@
           <!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ asset('quan-ly') }}">Home</a></li>
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
               <li class="breadcrumb-item active">Level-1 Student Outcomes</li>
             </ol>
           </div>
@@ -29,15 +29,15 @@
 
       @if(session('success'))
         <div class="alert alert-success alert-dismissible">
-          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">Ã—</button>
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
           <h5><i class="icon fas fa-check"></i> Message!</h5>
           {{session('success')}}
         </div>
       @endif
       @if(session('warning'))
           <div class="alert alert-warning alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">Ã—</button>
-            <h5><i class="icon fas fa-exclamation-triangle"></i> Notification!</h5>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h5><i class="icon fas fa-exclamation-triangle"></i>Notification!</h5>
             {{session('warning')}}
           </div>
       @endif
@@ -59,45 +59,49 @@
                 <!-- Modal -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog" role="document">
-                  <form action="{{ asset('quan-ly/chuan-dau-ra/them') }}" method="post">
-                  @csrf
-                   <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Adding a new Level-1 Student Outcomes</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">Ã—</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <div class="form-group">
-
-                        <label for="">Level-1 Student Outcome ID (number):</label>
-                        <input type="text" name="maCDR1VB" class="form-control" placeholder="" required>
-                      </div>
-                        <div class="form-group">
-                          <label for="">Level-1 Student Outcome Name:</label>
-                          <input type="text" name="tenCDR1" class="form-control" placeholder="" required>
+                    <form action="{{ asset('quan-ly/chuan-dau-ra/them') }}" method="post">
+                    @csrf
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Adding a new Level-1 Student Outcomes</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                          </button>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="submit" class="btn btn-primary">Save</button>
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    </div>
-                  </div>
-                  </form>
-                 
-                  </div>
+                        <div class="modal-body">
+                          <div class="form-group">
+
+                            <label for="">Level-1 Student Outcome ID (number):</label>
+                            <input type="text" name="maCDR1VB" class="form-control" placeholder="">
+                          </div>
+                            <div class="form-group">
+                              <label for="">Level-1 Student Outcome Name (Vietnamese):</label>
+                              <input type="text" name="tenCDR1" class="form-control" placeholder="">
+                            </div>
+                            <div class="form-group">
+                              <label for="">Level-1 Student Outcome Name (English):</label>
+                              <input type="text" name="tenCDR1EN" class="form-control" placeholder="">
+                            </div>
+                        </div>
+                        <div class="modal-footer"> 
+                          <button type="submit" class="btn btn-primary">Save</button>
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        </div>
+                      </div>
+                    </form>
                 </div>
-                 
+                </div> 
                 </h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-              <table id="example2" class="table table-bordered table-hover">
+                <table id="example2" class="table table-bordered table-hover">
                   <thead>
                     <tr>
                       <th>No.</th>
-                      <th>Level-1 Student Outcomes Name</th>
+                      <th>Level-1 Student Outcomes ID</th>
+                      <th>Level-1 Student Outcomes Name (Vietnamese)</th>
+                      <th>Level-1 Student Outcomes Name (English)</th>
                       <th>Management Functions</th>
                     </tr>
                   </thead>
@@ -108,50 +112,62 @@
                     @foreach ($chuandaura as $cdr)
                       <tr>
                         <td>{{$i++}}</td>
+                        <td>{{$cdr->maCDR1VB}}</td>
                         <td>{{$cdr->tenCDR1}}</td>
-                        <td style='white-space: nowrap'>
-                          
+                        <td>{{$cdr->tenCDR1EN}}</td>
+                        <td>
                           <button title="Edit" class="btn btn-success" data-toggle="modal" data-target="#edit_{{$cdr->maCDR1}}">
-                              <i class="fas fa-edit"></i> 
-                            </button>
-                          <a title="Delete" class="btn btn-danger" onclick="return confirm('Do you want ro delete {{$cdr->tenCDR1}}?')" href="{{ asset('quan-ly/chuan-dau-ra/xoa/'.$cdr->maCDR1) }}"><i class="fa fa-trash"></i></a>
-                          <a href="{{ asset('/quan-ly/chuan-dau-ra/chuan-dau-ra-2/'.$cdr->maCDR1) }}">
-                            <!-- <button class="btn btn-primary">Chuáº©n Ä‘áº§u ra 2</button>-->
-                          <button title="Level-2 Student Outcomes Management"  class="btn btn-primary" data-toggle="modal" data-target="#addModal">
-                              <i class="fas fa-align-justify"></i>Level-2 Student Outcomes
+                            <i class="fas fa-edit"></i> 
                           </button>
-                        </a>  
-
-                            <div class="modal fade" id="edit_{{$cdr->maCDR1}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                              <div class="modal-dialog" role="document">
-                                <form action="{{ asset('quan-ly/chuan-dau-ra/sua') }}" method="post">
-                                @csrf
-
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">
-                                      Editing Level-1 Student Outcome Information
-                                    </h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                      <span aria-hidden="true">Ã—</span>
-                                    </button>
-                                  </div>
-                                  <div class="modal-body">
-                                    <input type="text" name="maCDR1" value="{{$cdr->maCDR1}}" class="form-control" hidden>
-                                    <div class="form-group">
-                                      <label for="">Level-1 Student Outcome Name</label>
-                                      <input type="text" name="tenCDR1" class="form-control" value="{{$cdr->tenCDR1}}">
+                          <a title="Delete" class="btn btn-danger" onclick="return confirm('Do you want to delete {{$cdr->tenCDR1}}?')" href="{{ asset('quan-ly/chuan-dau-ra/xoa/'.$cdr->maCDR1) }}"><i class="fa fa-trash"></i></a>
+                          <a href="{{ asset('/quan-ly/chuan-dau-ra/chuan-dau-ra-2/'.$cdr->maCDR1) }}">
+                              <!-- <button class="btn btn-primary">Chu&#7849;n &#273;&#7847;u ra 2</button>-->
+                            <button title="Level-2 Student Outcomes Management"  class="btn btn-success" data-toggle="modal" data-target="#addModal">
+                                <i class="fas fa-align-justify"></i>Level-2 Student Outcomes
+                            </button>
+                          </a>  
+                         
+                              <div class="modal fade" id="edit_{{$cdr->maCDR1}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                  <form action="{{ asset('quan-ly/chuan-dau-ra/sua') }}" method="post">
+                                  @csrf
+                              
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLabel">
+                                        Editing Level-1 Student Outcome Information
+                                      </h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                      </button>
                                     </div>
-                                  </div> <!-- end modal-body-->
-                                </form>
-                                  <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">Update</button>
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                  </div> 
+                                    <div class="modal-body">
+                                      <input type="text" name="maCDR1" value="{{$cdr->maCDR1}}" class="form-control" hidden>
+                                      <!-- PTTMai thêm -->
+                                      <div class="form-group">
+                                        <label for="">Level-1 Student Outcome ID (number):</label>
+                                        <input type="text" name="maCDR1VB" class="form-control" value="{{$cdr->maCDR1VB}}">
+                                      </div> 
+                                      
+                                      <div class="form-group">
+                                        <label for="">Level-1 Student Outcome Name (Vietnamese)</label>
+                                        <input type="text" name="tenCDR1" class="form-control" value="{{$cdr->tenCDR1}}">
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="">Level-1 Student Outcome Name (English)</label>
+                                        <input type="text" name="tenCDR1EN" class="form-control" value="{{$cdr->tenCDR1EN}}">
+                                      </div>
+                                      <!-- h&#7871;t PTTMai thêm -->
+                                    </div> <!-- end modal-body-->
+                                  </form>
+                                    <div class="modal-footer">
+                                      <button type="submit" class="btn btn-primary">Update</button>
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    </div> 
+                                </div>
                               </div>
-                            </div>
-                        </div>
-                          
+                          </div>
                         </td>
                       </tr>
                     @endforeach

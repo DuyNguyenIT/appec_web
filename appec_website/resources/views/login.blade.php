@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Login</title>
+    <title>{{__('Login')}}</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link
@@ -26,7 +26,7 @@
         
         <div class="login-box">
             <div class="login-logo">
-              <a href="#"><b>Login</b></a>
+              <a href="#"><b>{{__('Login')}}</b></a>
             </div>
             <!-- /.login-logo -->
             <div class="card">
@@ -63,12 +63,12 @@
                     </div>
                   </div>
                   <div class="row">
-                    {{-- <div class="col-7">
+                    <!--<div class="col-7">
                       <div class="icheck-primary">
                         <input type="checkbox" id="remember" />
                         <label for="remember"> Remember </label>
                       </div>
-                    </div> --}}
+                    </div>-->
                     <!-- /.col -->
                     <div class="col-12">
                       <button
@@ -93,13 +93,13 @@
                 </div>
                 <!-- /.social-auth-links --> --}}
       
-                {{-- <p class="mb-1">
+                <!--<p class="mb-1">
                   <a href="#">forget password</a>
                 </p>
                 <p class="mb-0">
                   <a href="#" class="text-center">Register</a>
-                </p> --}}
-              </div>
+                </p>
+              </div>-->
               <!-- /.login-card-body -->
             </div>
           </div>

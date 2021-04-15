@@ -62,7 +62,7 @@
                                 @if ($i==1)
                                   <option value="{{$kqht->maKQHT}}" selected >{{$kqht->maKQHTVB}}--{{$kqht->tenKQHT}}</option>
                                 @else
-                                  <option value="{{$kqht->maKQHT}}"> {{$kqht->maKQHTVB}}--{{$kqht->tenKQHT}}</option>
+                                  <option value="{{$kqht->maKQHT}}">{{$kqht->maKQHTVB}}--{{$kqht->tenKQHT}}</option>
                                 @endif
                                 @php
                                     $i++;

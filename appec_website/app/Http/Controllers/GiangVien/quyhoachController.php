@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\GiangVien;
 
 use Session;
+use Carbon\Carbon;
 use App\Models\CDR3;
 use App\Models\deThi;
 use App\Models\cauHoi;
@@ -14,6 +15,7 @@ use App\Models\giangDay;
 use App\Models\sinhVien;
 use App\Models\giangVien;
 use App\Models\noiDungQH;
+use App\Models\chuan_abet;
 use App\Models\phieu_cham;
 use App\Models\baiQuyHoach;
 use App\Models\chuong_ndqh;
@@ -37,18 +39,31 @@ use App\Models\hocPhan_loaiHTDanhGia;
 use App\Models\cauHoi_tieuChiChamDiem;
 
 
+
 class quyhoachController extends Controller
 {
     ///giang-vien/quy-hoach-danh-gia
     public function index()
     {
         $gd=giangDay::where('giangday.isDelete',false)->where('maGV',Session::get('maGV'))
+        ->orderBy('giangday.namHoc','desc')
         ->join('hoc_phan',function($q){
             $q->on('hoc_phan.maHocPhan','=','giangday.maHocPhan')
             ->where('hoc_phan.isDelete',false);
         })->groupBy('maBaiQH')->distinct()->get();
-        return view('giangvien.quyhoach.quyhoach',['gd'=>$gd]);
+        //tạo combobox  năm học
+        $date = new Carbon();   
+        $current_year=$date->year;
+        $years_array=[];
+        for ($i=1; $i<=5 ; $i++) { 
+            array_push($years_array,($current_year-1).'-'.($current_year));
+            $current_year=$current_year-1;
+        }
+
+        return view('giangvien.quyhoach.quyhoach',compact('gd','years_array'));
     }
+
+    
 
     ///giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/220104/1/HK1/2020-2021/DA16TT
     public function quy_hoach_ket_qua_hoc_tap(Request $request,$maHocPhan,$maBaiQH,$maHK,$namHoc,$maLop)
@@ -379,20 +394,30 @@ class quyhoachController extends Controller
             ->where('cdr_cd3.isDelete',false);
         })
         ->get(['hocphan_kqht_hp.maCDR3','cdr_cd3.maCDR3VB','cdr_cd3.tenCDR3']);
+
         #nội dung đề thi tự luận
         $noidung=deThi::where('de_thi.isDelete',false)->where('de_thi.maDe',$maDe)
-        ->join('de_thi_cauhoi_tuluan','de_thi_cauhoi_tuluan.maDe','=','de_thi.maDe')
-        ->join('cau_hoi','cau_hoi.maCauHoi','=','de_thi_cauhoi_tuluan.maCauHoi')
-        ->join('phuong_an_tu_luan','phuong_an_tu_luan.id','=','de_thi_cauhoi_tuluan.maPATL')
+        ->Leftjoin('de_thi_cauhoi_tuluan','de_thi_cauhoi_tuluan.maDe','=','de_thi.maDe')
+        ->Leftjoin('cau_hoi','cau_hoi.maCauHoi','=','de_thi_cauhoi_tuluan.maCauHoi')
+        //->Leftjoin('phuong_an_tu_luan','phuong_an_tu_luan.id','=','de_thi_cauhoi_tuluan.maPATL')
         ->distinct('cau_hoi.maCauHoi')
         ->get(['cau_hoi.maCauHoi','cau_hoi.noiDungCauHoi']);
+        
+
         ##tính điểm câu hỏi
         for ($i=0; $i < count($noidung); $i++) { 
             $diem=dethi_cauhoituluan::where('maCauHoi',$noidung[$i]->maCauHoi)
             ->where('de_thi_cauhoi_tuluan.maDe',$maDe)
             ->join('phuong_an_tu_luan','phuong_an_tu_luan.id','=','de_thi_cauhoi_tuluan.maPATL')
             ->sum('phuong_an_tu_luan.diemPA');
+            $phuongAnTL=dethi_cauhoituluan::where('maCauHoi',$noidung[$i]->maCauHoi)
+            ->where('de_thi_cauhoi_tuluan.maDe',$maDe)
+            ->join('phuong_an_tu_luan','phuong_an_tu_luan.id','=','de_thi_cauhoi_tuluan.maPATL')
+            ->join('cdr_cd3','phuong_an_tu_luan.maCDR3','=','cdr_cd3.maCDR3')
+            ->join('chuan_abet','phuong_an_tu_luan.maChuanAbet','=','chuan_abet.maChuanAbet')
+            ->get();
             $noidung[$i]->diem=$diem;  
+            $noidung[$i]->phuongAn=$phuongAnTL;
         }
         ##tạo mảng các câu hỏi đã chọn->chỉ duyệt những câu hỏi chưa được chọn
         $cauhoidachon=dethi_cauhoituluan::where('maDe',$maDe)->distinct('maCauHoi')->pluck('maCauHoi');
@@ -405,9 +430,12 @@ class quyhoachController extends Controller
                  array_push($cauhoi,$ch);
              }
          }
+        #combobox abet
+        $abet=chuan_abet::all();
+        
          #phản hồi kết quả
         return view('giangvien.quyhoach.noidungdanhgia.tuluan.cautrucde',
-        compact('dethi','hocphan','cauhoi','cdr3','noidung'));
+        compact('dethi','hocphan','cauhoi','cdr3','noidung','abet'));
     }
 
     public function them_cau_hoi_de_luan(Request $request) //hàm này thêm câu hỏi vào đề thi tự luận
@@ -444,6 +472,19 @@ class quyhoachController extends Controller
             return back();
         }
         alert()->warning("Can't found question",'Warning!');
+        return back();
+    }
+
+    public function chinh_sua_phuong_an_tu_luan(Request $request)
+    {
+        $patl=phuongAnTuLuan::find($request->id);
+        if($patl){
+            $patl->noiDungPA=$request->noiDungPA;
+            $patl->diemPA=$request->diemPA;
+            $patl->maCDR3=$request->maCDR3;
+            $patl->maChuanAbet=$request->maChuanAbet;
+            $patl->update();
+        }
         return back();
     }
     
@@ -493,19 +534,30 @@ class quyhoachController extends Controller
             ->where('cdr_cd3.isDelete',false);
         })
         ->get(['hocphan_kqht_hp.maCDR3','cdr_cd3.maCDR3VB','cdr_cd3.tenCDR3']);
-        #nội dung đề thi tự luận
-        $noidung=deThi::where('de_thi.isDelete',false)->where('de_thi.maDe',$maDe)
-        ->join('de_thi_cauhoi_tuluan','de_thi_cauhoi_tuluan.maDe','=','de_thi.maDe')
-        ->join('cau_hoi','cau_hoi.maCauHoi','=','de_thi_cauhoi_tuluan.maCauHoi')
-        ->distinct('cau_hoi.maCauHoi')
-        ->get(['cau_hoi.maCauHoi','cau_hoi.noiDungCauHoi']);
-        ##tính điểm câu hỏi
-        for ($i=0; $i < count($noidung); $i++) { 
-            $diem=dethi_cauhoituluan::where('maCauHoi',$noidung[$i]->maCauHoi)
-            ->join('phuong_an_tu_luan','phuong_an_tu_luan.id','=','de_thi_cauhoi_tuluan.maPATL')
-            ->sum('phuong_an_tu_luan.diemPA');
-            $noidung[$i]->diem=$diem;  
-        }
+          #nội dung đề thi thực hành
+          $noidung=deThi::where('de_thi.isDelete',false)->where('de_thi.maDe',$maDe)
+          ->Leftjoin('de_thi_cauhoi_tuluan','de_thi_cauhoi_tuluan.maDe','=','de_thi.maDe')
+          ->Leftjoin('cau_hoi','cau_hoi.maCauHoi','=','de_thi_cauhoi_tuluan.maCauHoi')
+          //->Leftjoin('phuong_an_tu_luan','phuong_an_tu_luan.id','=','de_thi_cauhoi_tuluan.maPATL')
+          ->distinct('cau_hoi.maCauHoi')
+          ->get(['cau_hoi.maCauHoi','cau_hoi.noiDungCauHoi']);
+          
+  
+          ##tính điểm câu hỏi
+          for ($i=0; $i < count($noidung); $i++) { 
+              $diem=dethi_cauhoituluan::where('maCauHoi',$noidung[$i]->maCauHoi)
+              ->where('de_thi_cauhoi_tuluan.maDe',$maDe)
+              ->join('phuong_an_tu_luan','phuong_an_tu_luan.id','=','de_thi_cauhoi_tuluan.maPATL')
+              ->sum('phuong_an_tu_luan.diemPA');
+              $phuongAnTL=dethi_cauhoituluan::where('maCauHoi',$noidung[$i]->maCauHoi)
+              ->where('de_thi_cauhoi_tuluan.maDe',$maDe)
+              ->join('phuong_an_tu_luan','phuong_an_tu_luan.id','=','de_thi_cauhoi_tuluan.maPATL')
+              ->join('cdr_cd3','phuong_an_tu_luan.maCDR3','=','cdr_cd3.maCDR3')
+              ->join('chuan_abet','phuong_an_tu_luan.maChuanAbet','=','chuan_abet.maChuanAbet')
+              ->get();
+              $noidung[$i]->diem=$diem;  
+              $noidung[$i]->phuongAn=$phuongAnTL;
+          }
         ##tạo mảng các câu hỏi đã chọn->chỉ duyệt những câu hỏi chưa được chọn
         $cauhoidachon=dethi_cauhoituluan::where('maDe',$maDe)->distinct('maCauHoi')->pluck('maCauHoi');
          #thông tin câu hỏi
@@ -517,9 +569,11 @@ class quyhoachController extends Controller
                  array_push($cauhoi,$ch);
              }
          }
+         #combobox abet
+         $abet=chuan_abet::all();
          #phản hồi kết quả
         return view('giangvien.quyhoach.noidungdanhgia.thuchanh.cautrucde',
-        compact('dethi','hocphan','cauhoi','cdr3','noidung'));
+        compact('dethi','hocphan','cauhoi','cdr3','abet','noidung'));
     }
 
     public function them_cau_hoi_de_thuc_hanh(Request $request) //nhấn nút thêm câu hỏi
@@ -556,6 +610,19 @@ class quyhoachController extends Controller
             return back();
         }
         alert()->warning("Can't found question",'Warning!');
+        return back();
+    }
+
+    public function chinh_sua_phuong_an_thuc_hanh(Request $request)
+    {
+        $patl=phuongAnTuLuan::find($request->id);
+        if($patl){
+            $patl->noiDungPA=$request->noiDungPA;
+            $patl->diemPA=$request->diemPA;
+            $patl->maCDR3=$request->maCDR3;
+            $patl->maChuanAbet=$request->maChuanAbet;
+            $patl->update();
+        }
         return back();
     }
     //////////////////////////////////////////////////////////////////////////////////////

@@ -31,14 +31,14 @@
     @if(session('success'))
         <div class="alert alert-success alert-dismissible">
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
-          <h5><i class="icon fas fa-check"></i> Thông báo</h5>
+          <h5><i class="icon fas fa-check"></i> Th�ng b�o</h5>
           {{session('success')}}
         </div>
       @endif
       @if(session('warning'))
         <div class="alert alert-warning alert-dismissible">
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
-          <h5><i class="icon fas fa-exclamation-triangle"></i> Thông báo</h5>
+          <h5><i class="icon fas fa-exclamation-triangle"></i> Th�ng b�o</h5>
           {{session('warning')}}
         </div>
       @endif
@@ -52,20 +52,20 @@
               <div class="card-header">
                 <h3  style="text-align: center">
                   COURSE SYLLABUS <br>
-                {{ __('Course') }}: {{ $hocPhan->tenHocPhan }} <br>
-                {{ __('Course code') }}: {{ $hocPhan->maHocPhan }}
+                Course : {{ $hocPhan->tenHocPhan }} <br>
+                Course code: {{ $hocPhan->maHocPhan }}
                 </h3>
               </div>
-              <a class="btn btn-primary" href="{{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/in-de-cuong-mon-hoc/'.$hocPhan->maHocPhan) }}">{{ __('Print') }}</a>
+              <a class="btn btn-primary" href="{{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/in-de-cuong-mon-hoc/'.$hocPhan->maHocPhan) }}">IN ĐỀ CƯƠNG</a>
               <!-- /.card-header -->
               <div class="card-body">
-              <h5><b>1. {{ __('General information') }}</b></h5>    <!-- ----------------------------------1. ThÃ´ng tin chung-------------------- -->
+              <h5><b>1. General information</b></h5>    <!-- ----------------------------------1. Thông tin chung-------------------- -->
               <table class="table table-bordered">
                 <thead class="thead-green" style="background-color: green">
                   <tr>
-                    <th>{{ __('Course type') }}</th>
-                    <th>{{ __('Number of credits') }}</th>
-                    <th>{{ __('Number of learning periods') }}</th>
+                    <th>Course type</th>
+                    <th>Number of credits</th>
+                    <th>Number of learning periods</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -78,23 +78,23 @@
                       @endphp
                       @if (in_array($hocPhan->maCTKhoiKT,$daicuong))
                         <ul>
-                          <li>{{ __('General ') }}  <i class="far fa-check-square"></i>
-                          <li>{{ __('Basic') }}  
-                          <li> {{ __('Specialized') }}
+                          <li>General   <i class="far fa-check-square"></i>
+                          <li>Basic   
+                          <li>Specialized 
                         </ul>
                       @else
                           @if (in_array($hocPhan->maCTKhoiKT,$coso))
                             <ul>
-                              <li>{{ __('General ') }}  
-                              <li>{{ __('Basic') }}    <i class="far fa-check-square"></i>
-                              <li>{{ __('Specialized') }}
+                              <li>General   
+                              <li>Basic    <i class="far fa-check-square"></i>
+                              <li>Specialized 
                             </ul>
                           @else
                             @if (in_array($hocPhan->maCTKhoiKT,$chuyennganh))
                                 <ul>
-                                <li>{{ __('General ') }}  
-                                <li>{{ __('Basic') }}   
-                                <li>{{ __('Specialized') }} <i class="far fa-check-square"></i>
+                                <li>General   
+                                <li>Basic   
+                                <li>Specialized  <i class="far fa-check-square"></i>
                               </ul>
                             @endif
                           @endif
@@ -156,7 +156,7 @@
                     @csrf
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">{{ __('Adding a new prerequisites') }}</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Thêm môn tiên quyết</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
@@ -164,7 +164,7 @@
                       <div class="modal-body">
 
                         <div class="form-group">
-                          <label for="">{{ __('Prerequisites') }}</label>
+                          <label for="">Chọn môn tiên quyết</label>
                           <input type="text" name="maHocPhan" value="{{ $hocPhan->maHocPhan }}" hidden>
                           <select name="maMonTienQuyet" id="" class="form-control">
                               @foreach ($monHoc as $data)
@@ -243,7 +243,7 @@
                 </td>
                </tr>
              </table>
-             <h5><b>2.{{ __('Learning resources') }}</b></h5>    <!-----------------------------------2. TÃ i liá»‡u tham kháº£o--------------------------->
+             <h5><b>2.{{ __('Learning resources') }}</b></h5>    <!-----------------------------------2. Tài liệu tham khảo--------------------------->
              <table class="table table-bordered">
                <tr>
                  <td>{{ __('Books ') }}</td>
@@ -313,7 +313,7 @@
                       <i class="fas fa-edit"></i>
                     </button>
       
-                    <!--///////////////////////////// Modal thÃªm tÃ i liá»‡u tham kháº£o thÃªm-->
+                    <!--///////////////////////////// Modal thêm tài liệu tham khảo thêm-->
                     <div class="modal fade" id="addthamKhaoThem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                       <div class="modal-dialog modal-lg" role="document">
                         <form action="{{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/sua_tai_lieu_tham_khao_them') }}" method="post">
@@ -368,7 +368,7 @@
                 <i class="fas fa-edit"></i>
               </button>
 
-              <!--//////////////////////// Modal thÃªm cÃ¡c loáº¡i tÃ i liá»‡u khÃ¡c -->
+              <!--//////////////////////// Modal thêm các loại tài liệu khác -->
               <div class="modal fade" id="addtaiLieuKhac" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                   <form action="{{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/sua_tai_lieu_khac') }}" method="post">
@@ -411,7 +411,7 @@
                   </td>
                </tr>
              </table>
-             <h5><b>3.{{ __('Course description') }}</b></h5>    <!-----------------------------------3. MÃ´ táº£ mÃ´n há»c--------------------------->
+             <h5><b>3.{{ __('Course description') }}</b></h5>    <!-----------------------------------3. Mô tả môn học--------------------------->
              <!-- Button trigger modal -->
       
               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addMoTa">
@@ -419,7 +419,7 @@
               </button> <br>
 
               {!! $hocPhan->moTaHocPhan !!}
-              <!-- /////////////////////Modal thÃªm mÃ´ táº£ há»c pháº§n-->
+              <!-- /////////////////////Modal thêm mô tả học phần-->
 
               <div class="modal fade" id="addMoTa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
@@ -446,6 +446,7 @@
                                     filebrowserUploadMethod: 'form'
                                 } );
                             </script>
+                        
                         </div>
                       </div>
                       <div class="modal-footer">
@@ -458,17 +459,16 @@
               </div>
            
 
-             <h5>
-               <b>4.{{ __('Course learning outcomes ') }}</b></h5>    <!-----------------------------------4. Chuan dau ra mon hoc--------------------------->
+             <h5><b>4.{{ __('Course learning outcomes ') }}</b></h5>    <!-----------------------------------4. chuẩn đầu ra của môn học--------------------------->
               <table class="table table-bordered">
                 <thead>
                     <th colspan="2"></th>
-                    <th style="background-color: green">{{ __('Satisfy LOs of the program') }}</th>    
+                    <th style="background-color: green">{{ __('Satisfy LOs of the program') }}</th> 
                     <th style="background-color: green">{{ __('Satisfy Abet') }}</th> 
-                    <th style="background-color: green">Option</th>     
+                    <th style="background-color: green">Option</th>                     
                 </thead>
                 <tbody>
-                  @foreach ($CDR1 as $cdr1)
+                   @foreach ($CDR1 as $cdr1)
                       <tr>
                         <td colspan="3"><b>{{ __('Topic') }} {{ $cdr1->maCDR1VB }}: {{ $cdr1->tenCDR1 }}:</b> 
                           <!-- Button trigger modal -->
@@ -498,7 +498,7 @@
                                   </div>
                                   <div class="form-group">
                                     <label for=""> {{ __('studying results content') }}:</label>
-                                    <input type="text" name="tenKQHT" placeholder="Phân tích, khái niệm, mô tả,..." class="form-control">
+                                    <input type="text" name="tenKQHT" placeholder="Ph�n t�ch, kh�i ni&#7879;m, m� t&#7843;,..." class="form-control">
                                   </div>
                                   <div class="form-group">
                                     <label for=""> {{ __('Level-3 outcome') }}:</label>
@@ -602,7 +602,7 @@
                                 </div>
                                 <div class="form-group">
                                   <label for=""> {{ __('studying results content') }}:</label>
-                                  <input type="text" name="tenKQHT" placeholder="Phân tích, khái niệm, mô tả,..." class="form-control" value="{{ $x->tenKQHT }}">
+                                  <input type="text" name="tenKQHT" placeholder="Ph�n t�ch, kh�i ni&#7879;m, m� t&#7843;,..." class="form-control" value="{{ $x->tenKQHT }}">
                                 </div>
                                 <div class="form-group">
                                   <label for=""> {{ __('Level-3 outcome') }}:</label>
@@ -650,24 +650,24 @@
                 </tbody>
               </table>
 
-             <h5><b>5. {{ __('Course content') }}: </b></h5>    <!-----------------------------------5.Noi dung mon hoc: --------------------------->
+             <h5><b>5. Nội dung môn học: </b></h5>    <!-----------------------------------5.Nội dung môn học: --------------------------->
               <table class="table table-bordered">
                 <thead style="background-color: green">
                   <tr>
-                    <th rowspan="2">{{ __('Course content') }}
+                    <th rowspan="2">Nội dung
                       <!-- Button trigger modal -->
                       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addChuong">
                         <i class="fas fa-edit"></i>
                       </button>
 
-                      <!-- Modal thÃªm ná»™i dung mÃ´n há»c-->
+                      <!-- Modal thêm nội dung môn học-->
                       <div class="modal fade" id="addChuong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                           <form action="{{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/them_noi_dung_mon_hoc') }}" method="post">
                           @csrf
                             <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">{{ __('Adding a new content') }}</h5>
+                              <h5 class="modal-title" id="exampleModalLabel">Thêm nội dung</h5>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                               </button>
@@ -675,23 +675,23 @@
                             <div class="modal-body">
                               <input type="text" name="maHocPhan" value="{{ $hocPhan->maHocPhan }}" hidden>
                               <div class="form-group">
-                                <label for="">{{ __('Chapter name') }}:</label>
+                                <label for="">Tên chương:</label>
                                 <input type="text" name="tenchuong" class="form-control" required>
                               </div>
                               <div class="form-group">
-                                <label for="">{{ __('Theory') }}:</label>
+                                <label for="">Số tiết lý thuyết:</label>
                                 <input type="number" min="0" name="soTietLT" class="form-control" required>
                               </div>
                               <div class="form-group">
-                                <label for="">{{ __('Practice') }}:</label>
+                                <label for="">Số tiết thực hành:</label>
                                 <input type="number" min="0" name="soTietTH" class="form-control" required>
                               </div>
                               <div class="form-group">
-                                <label for="">{{ __('Others') }}:</label>
-                                <input type="number" min="0" name="khÃ¡c" class="form-control" required>
+                                <label for="">Số tiết khác:</label>
+                                <input type="number" min="0" name="khác" class="form-control" required>
                               </div>
                               <div class="form-group">
-                                <label for="">{{ __('Studying results') }}:</label>
+                                <label for="">Chọn kết quả học tập:</label>
                                 <select name="maKQHT[]" id="" class="form-control" multiple required>
                                   @foreach ($getKQHT as $data)
                                       <option value="{{ $data->maKQHT }}">{{ $data->maKQHTVB }} -- {{ $data->tenKQHT }}</option>
@@ -716,7 +716,7 @@
                   <tr>
                     <th>Lý thuyết</th>
                     <th>Thực hành</th>
-                    <th>KhÃ¡c</th>
+                    <th>Khác</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -724,13 +724,13 @@
                   <tr>
                     <td><b>{{ $data->tenchuong }}</b>
                       
-                    <!-- Button thÃªm má»¥c -->
+                    <!-- Button thêm mục -->
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addMuc_{{ $data->id  }}">
                       <i class="fas fa-plus"></i>Adding item
                     </button>
 
 
-                    <!-- Modal thÃªm má»¥c -->
+                    <!-- Modal thêm mục -->
                     <div class="modal fade" id="addMuc_{{ $data->id  }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                       <div class="modal-dialog" role="document">
                         <form action="{{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/them_noi_dung_muc_chuong') }}" method="POST">
@@ -766,7 +766,7 @@
                       </div>
                     </div>
 
-                    {{-- Button thÃªm ká»¹ nÄƒng UIT --}}
+                    {{-- Button thêm kỹ năng UIT --}}
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addMucDoKyNangUIT_{{ $data->id }}">
                       <i class="fas fa-plus"></i>Adding level of skill
                     </button>
@@ -863,20 +863,20 @@
 
                 </tbody>
               </table>
-             <h5><b>6. PhÆ°Æ¡ng phÃ¡p giáº£ng dáº¡y </b></h5>    <!----------------------------------6. PhÆ°Æ¡ng phÃ¡p giáº£ng dáº¡y: --------------------------->
+             <h5><b>6. Phương pháp giảng dạy </b></h5>    <!----------------------------------6. Phương pháp giảng dạy: --------------------------->
              <!-- Button trigger modal -->
               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ppgiangday">
                 <i class="fas fa-edit"></i>
               </button>
 
-              <!-- Modal thÃªm phÆ°Æ¡ng phÃ¡p giáº£ng dáº¡y-->
+              <!-- Modal thêm phương pháp giảng dạy-->
               <div class="modal fade" id="ppgiangday" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <form action="{{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/them_phuong_phap_giang_day') }}" method="post">
                   @csrf
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">ThÃªm phÆ°Æ¡ng phÃ¡p giáº£ng dáº¡y</h5>
+                      <h5 class="modal-title" id="exampleModalLabel">Thêm phương pháp giảng dạy</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -886,7 +886,7 @@
                         <input type="text" name="maHocPhan" value="{{ $hocPhan->maHocPhan }}" hidden>
                       </div>
                       <div class="form-group">
-                        <label for="">Chá»n phÆ°Æ¡ng phÃ¡p giáº£ng dáº¡y:</label>
+                        <label for="">Chọn phương pháp giảng dạy:</label>
                         <select name="maPP" id="" class="form-control">
                           @foreach ($ppGiangDay as $data)
                               <option value="{{ $data->maPP }}">{{ $data->tenPP }}</option>
@@ -894,13 +894,13 @@
                         </select>
                       </div>
                       <div class="form-group">
-                        <label for="">Diá»…n giáº£i:</label>
+                        <label for="">Diễn giải:</label>
                         <input type="text" name="dienGiai" class="form-control">
                       </div>
                     </div>
                     <div class="modal-footer">
-                      <button type="submit" class="btn btn-primary">LÆ°u</button>
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Há»§y</button>
+                      <button type="submit" class="btn btn-primary">Lưu</button>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
                     </div>
                   </div>
                   </form>
@@ -910,9 +910,9 @@
              <table class="table table-bordered">
                <thead style="background-color: green">
                    <tr>
-                     <th>MÃ£ sá»‘</th>
-                     <th>PhÆ°Æ¡ng phÃ¡p/ ká»¹ thuáº­t giáº£ng dáº¡y</th>
-                     <th>Diá»…n giáº£i</th>
+                     <th>Mã số</th>
+                     <th>Phương pháp/ kỹ thuật giảng dạy</th>
+                     <th>Diễn giải</th>
                    </tr>
                </thead>
                <tbody>
@@ -930,21 +930,21 @@
                  
                </tbody>
              </table>
-             <h5><b>7. PhÆ°Æ¡ng thá»©c Ä‘Ã¡nh giÃ¡ </b></h5>    <!----------------------------------7. PhÆ°Æ¡ng thá»©c Ä‘Ã¡nh giÃ¡: --------------------------->
+             <h5><b>7. Phương thức đánh giá </b></h5>    <!----------------------------------7. Phương thức đánh giá: --------------------------->
             
              <!-- Button trigger modal -->
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addHocPhan_loaiHTDG">
               <i class="fas fa-edit"></i>
             </button>
 
-            <!-- Modal thÃªm hÃ¬nh thá»©c Ä‘Ã¡nh giÃ¡ -->
+            <!-- Modal thêm hình thức đánh giá -->
             <div class="modal fade" id="addHocPhan_loaiHTDG" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document">
                 <form action="{{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/them_phuong_phap_danh_gia') }}" method="post">
                   @csrf
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Cáº­p nháº­t phÆ°Æ¡ng thá»©c Ä‘Ã¡nh giÃ¡</h5>
+                      <h5 class="modal-title" id="exampleModalLabel">Cập nhật phương thức đánh giá</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -952,7 +952,7 @@
                     <div class="modal-body">
                       <input type="text" name="maHocPhan" value="{{ $hocPhan->maHocPhan }}" hidden>
                       <div class="form-group">
-                        <label for="">Chá»n hÃ¬nh thá»©c Ä‘Ã¡nh giÃ¡</label>
+                        <label for="">Chọn hình thức đánh giá</label>
                         <select name="maLoaiHTDG" id="" class="form-control" required>
                           @foreach ($loaiHTDG as $data)
                               <option value="{{ $data->maLoaiHTDG }}">{{ $data->tenLoaiHTDG }}</option>
@@ -960,7 +960,7 @@
                         </select>
                       </div>
                       <div class="form-group">
-                        <label for="">Chá»n loáº¡i hÃ¬nh thá»©c Ä‘Ã¡nh giÃ¡</label>
+                        <label for="">Chọn loại hình thức đánh giá</label>
                         <select name="maLoaiDG" id="" class="form-control" required>
                           @foreach ($loaiDG as $data)
                               <option value="{{ $data->maLoaiDG }}">{{ $data->tenLoaiDG }}</option>
@@ -968,7 +968,7 @@
                         </select>
                       </div>
                       <div class="form-group">
-                        <label for="">Tá»‰ lá»‡</label>
+                        <label for="">Tỉ lệ</label>
                         <input type="number" min="25" name="trongSo" class="form-control" required>
                       </div>
                       <div class="form-group">
@@ -990,9 +990,9 @@
              <table class="table table-bordered">
               <thead style="background-color: green">
                 <th>STT</th>
-                <th>HÃ¬nh thá»©c Ä‘Ã¡nh giÃ¡</th>
-                <th>Loáº¡i hÃ¬nh thá»©c Ä‘Ã¡nh giÃ¡</th>
-                <th>Tá»‰ lá»‡</th>
+                <th>Hình thức đánh giá</th>
+                <th>Loại hình thức đánh giá</th>
+                <th>Tỉ lệ</th>
               </thead>
               <tbody> 
                 @php
@@ -1008,7 +1008,7 @@
                 @endforeach
               </tbody>
               <tr>
-                <td colspan="2">Ghi chÃº cÃ´ng thá»©c tÃ­nh Ä‘iá»ƒm</td>
+                <td colspan="2">Ghi chú công thức tính điểm</td>
                 <td colspan="2">
                   @php
                       $n=$hocPhan_loaiHTDG->where('groupCT',1)->count();
@@ -1029,7 +1029,7 @@
                   @endif
                    
                   @endforeach
-                  <br>  hoáº·c <br>
+                  <br>  hoặc <br>
                   {{-- groupCT==2 --}}
                   @php
                   $n=$hocPhan_loaiHTDG->where('groupCT',2)->count();
@@ -1055,7 +1055,7 @@
             </table>
 
 
-             <h5><b>8. Course requirements and expectations: </b></h5>    <!----------------------------------8. CÃ¡c quy Ä‘á»‹nh chung --------------------------->
+             <h5><b>8. Course requirements and expectations: </b></h5>    <!----------------------------------8. Các quy định chung --------------------------->
              <h6><b>8.1 Requirements on attendance</b></h6>
             <ul>
               <li>Students are responsible for attending all classes. In case of absence due to force majeure circumstances, there must be sufficient and reasonable evidence.</li>

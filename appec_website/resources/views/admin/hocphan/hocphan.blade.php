@@ -109,7 +109,7 @@
                             </select>
                           </div>
                           <div class="form-group">
-                            <label for="">Phân phối học kì</label>
+                            <label for="">Ph�n ph&#7889;i h&#7885;c k�</label>
                             <input type="number" min="1" max="4" name="phanPhoiHocKy" class="form-control"  required>
                           </div>
                           <div class="form-group">
@@ -213,7 +213,6 @@
                                         @endforeach
                                       </select>
                                     </div>
-                                    
                                     <div class="form-group">
                                       <label for="">Course Description</label>
                                       <textarea name="moTaHocPhan" class="form-control" >{{$hp->moTaHocPhan}}</textarea>

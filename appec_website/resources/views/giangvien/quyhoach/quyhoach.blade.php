@@ -51,11 +51,11 @@
                   </div>
                   <div class="form-group">
                     <label for="">Nhập năm học:</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="VD: 2018-2019"
-                    />
+                    <select name="namHoc" id="" class="form-control">
+                        @foreach ($years_array as $data)
+                            <option value="{{ $data }}">{{ $data }}</option>
+                        @endforeach
+                    </select>
                   </div>
                   <button class="btn btn-success">
                     <i class="fas fa-filter"></i> Lọc

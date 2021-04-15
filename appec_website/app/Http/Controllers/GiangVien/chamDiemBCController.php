@@ -40,6 +40,7 @@ class chamDiemBCController extends Controller
         }
 
 
+        
 
         //kiểm tra được mời trong các đồ án, khóa luận
         $pc=phieu_cham::where('isDelete',false)
@@ -47,6 +48,7 @@ class chamDiemBCController extends Controller
         ->where('maGV',Session::get('maGV'))
         ->where('loaiCB',2)
         ->get();
+
 
 
         if($pc->count()>0){
@@ -75,11 +77,14 @@ class chamDiemBCController extends Controller
             }
         }
 
+       
         $gd=[];
         foreach ($baiQH as $y) {
+        if($y){
             $temp=giangDay::where('giangday.isDelete',false)
             ->where('giangday.maBaiQH',$y->maBaiQH)
             ->groupBy('giangday.maBaiQH')
+            ->distinct()
             ->join('hoc_phan',function($x){
                 $x->on('hoc_phan.maHocPhan','=','giangday.maHocPhan')
                 ->where('hoc_phan.isDelete',false);
@@ -88,11 +93,13 @@ class chamDiemBCController extends Controller
                 $x->on('giang_vien.maGV','=','giangday.maGV')
                 ->where('giang_vien.isDelete',false);
             })
-            ->distinct()
             ->get();
             array_push($gd,$temp);
         }
+       }
+        
 
+        
         return view('giangvien.chambc.chamdiembc',['hocPhan'=>$gd]);
     }
 
@@ -284,6 +291,7 @@ class chamDiemBCController extends Controller
             $pc->diemChu="A";
             $pc->xepHang=1;
         }
+
         
         $pc->trangThai=true;
         $pc->diemSo=$diem;
@@ -304,7 +312,8 @@ class chamDiemBCController extends Controller
             ->where('de_thi.isDelete',false);
         })
         ->first();
-    
+        
+
          //giảng viên
          $gv=phieu_cham::where('phieu_cham.isDelete',false)
          ->where('phieu_cham.maPhieuCham',$maPhieuCham)
@@ -313,6 +322,7 @@ class chamDiemBCController extends Controller
              ->where('giang_vien.isDelete',false);
          })
          ->first(['giang_vien.maGV','hoGV','tenGV','phieu_cham.maPhieuCham']);
+        
 
         //sinh viên
         $sv=phieu_cham::where('phieu_cham.isDelete',false)

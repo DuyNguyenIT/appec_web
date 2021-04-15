@@ -12,5 +12,5 @@ class CDR1 extends Model
     protected $primaryKey='maCDR1';
     public $incrementing=false;
 
-    protected $fillable=['maCDR1VB','tenCDR1','isDelete'];
+    protected $fillable=['maCDR1VB','tenCDR1','tenCDR1EN','isDelete'];
 }

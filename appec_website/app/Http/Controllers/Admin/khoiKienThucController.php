@@ -21,9 +21,11 @@ class khoiKienThucController extends Controller
             $kkt->maKhoiKT=$request->maKhoiKT;
             $kkt->tenKhoiKT=$request->tenKhoiKT;
             $kkt->save();
-            return redirect('/quan-ly/khoi-kien-thuc')->with('success','Thêm thành công!');
+            alert()->success('Added successfully', 'Message')->persistent('Close');
+            return redirect('/quan-ly/khoi-kien-thuc');
         } catch (\Throwable $th) {
-            return redirect('/quan-ly/khoi-kien-thuc')->with('warning','Lỗi: '.$th);
+            alert()->error('Error:'.$th, 'Can not add this entry');
+            return redirect('/quan-ly/khoi-kien-thuc');
         }
     }
 
@@ -33,9 +35,11 @@ class khoiKienThucController extends Controller
             $kkt=khoiKienThuc::where('maKhoiKT',$request->maKhoiKT)->first();
             $kkt->tenKhoiKT=$request->tenKhoiKT;
             $kkt->update();
-            return redirect('/quan-ly/khoi-kien-thuc')->with('success','Sửa thành công!');
+            alert()->success('Updated successfully', 'Message');
+            return redirect('/quan-ly/khoi-kien-thuc');
         } catch (\Throwable $th) {
-            return redirect('/quan-ly/khoi-kien-thuc')->with('warning','Lỗi: '.$th);
+            alert()->error('Error:'.$th, 'Update failed');
+            return redirect('/quan-ly/khoi-kien-thuc');
         }
     }
 
@@ -45,9 +49,11 @@ class khoiKienThucController extends Controller
             $kkt=khoiKienThuc::where('maKhoiKT',$maKhoiKT)->first();
             $kkt->isDelete=true;
             $kkt->update();
-            return redirect('/quan-ly/khoi-kien-thuc')->with('sucess','Xóa thành công!');
+            alert()->success('Deleted successful', 'Message');
+            return redirect('/quan-ly/khoi-kien-thuc');
         } catch (\Throwable $th) {
-            return redirect('/quan-ly/khoi-kien-thuc')->with('warning','Lỗi: '.$th);
+            alert()->error('Error:'.$th, 'Delete failed');
+            return redirect('/quan-ly/khoi-kien-thuc');
         }
     }
 }

@@ -11,7 +11,8 @@ Route::group(['middleware' =>'App\Http\Middleware\isAdmin'], function (){
         Route::get('/', 'bacDaoTaoController@index');
         Route::post('them', 'bacDaoTaoController@them');
         Route::post('sua', 'bacDaoTaoController@sua');
-        Route::get('xoa/{id}', 'bacDaoTaoController@xoa');
+        //PTTMai có s&#7917;a ph&#7847;n xóa
+        Route::get('xoa/{maBac}', 'bacDaoTaoController@xoa');
     });
     //ngÃ nh há»c
     Route::group(['prefix' => 'nganh-hoc'], function () {
@@ -47,15 +48,23 @@ Route::group(['middleware' =>'App\Http\Middleware\isAdmin'], function (){
     });
 
     //chuáº©n Ä‘áº§u ra
-    Route::group(['prefix' => 'chuan-dau-ra'], function () {
-        Route::get('/', 'chuanDauRaController@index');
-        Route::post('/them', 'chuanDauRaController@them_cdr_submit');
-        Route::post('sua', 'chuanDauRaController@sua_cdr_submit');
-        Route::get('xoa/{maCDR1}', 'chuanDauRaController@xoa_cdr_submit');
-        Route::get('/chuan-dau-ra-2/{maCDR1}', 'chuanDauRaController@chuanDR2');
-        Route::get('/chuan-dau-ra-3/{maCDR2}', 'chuanDauRaController@chuanDR3');
-
-    });
+    //chu&#7849;n &#273;&#7847;u ra PTTMai có s&#7917;a
+        Route::group(['prefix' => 'chuan-dau-ra'], function () {
+            Route::get('/', 'chuanDauRaController@index');
+            Route::post('them', 'chuanDauRaController@them_cdr_submit');
+            Route::post('sua', 'chuanDauRaController@sua_cdr_submit');
+            Route::get('xoa/{maCDR1}', 'chuanDauRaController@xoa_cdr_submit');
+            Route::get('/chuan-dau-ra-2/{maCDR1}', 'chuanDauRaController@chuanDR2');
+            Route::post('/chuan-dau-ra-2/them', 'chuanDauRaController@them_cdr2_submit');
+            Route::post('/chuan-dau-ra-2/sua', 'chuanDauRaController@sua_cdr2_submit');
+            Route::get('/chuan-dau-ra-2/xoa/{maCDR2}', 'chuanDauRaController@xoa_cdr2_submit');
+            Route::get('/chuan-dau-ra-3/{maCDR2}', 'chuanDauRaController@chuanDR3');
+            Route::post('/chuan-dau-ra-3/them', 'chuanDauRaController@them_cdr3_submit');
+            Route::post('/chuan-dau-ra-3/sua', 'chuanDauRaController@sua_cdr3_submit');
+            Route::get('/chuan-dau-ra-3/xoa/{maCDR3}', 'chuanDauRaController@xoa_cdr3_submit');
+            // Route::post('sua/{id}', '');
+            // Route::post('xoa/{id}', '');
+        });
 
     //loáº¡i há»c pháº§n
     Route::group(['prefix' => 'loai-hoc-phan'], function () {
@@ -122,5 +131,31 @@ Route::group(['middleware' =>'App\Http\Middleware\isAdmin'], function (){
         Route::get('/mo-khoa/{username}','AdAccountController@mo_khoa');
 
     });
+
+    //PTTMai thêm, th&#7889;ng kê admin
+        Route::group(['prefix' => 'thong-ke'], function () {
+            Route::get('/', 'thongKeController@index');
+            Route::group(['prefix' => 'thong-ke-cap-chuong-trinh'], function () {
+               
+                Route::get('/abet/{maCT}', 'thongKeController@thong_ke_CT_theo_CDR3_Abet');
+                Route::get('/get-chuan-dau-ra-3-chuong-trinh','thongKeController@get_CDR3_chuong_trinh');
+                Route::get('/thong-ke-abet','thongKeController@get_Abet_chuong_trinh');
+                Route::get('/{maCT}', 'thongKeController@thong_ke_CT_theo_CDR3');
+                //Route::get('/thong-ke-theo-diem-chu/{maCTBaiQH}/{maCanBo}', 'thongKeController@thong_ke_theo_diem_chu');
+                //Route::get('/get-diem-chu','thongKeController@get_diem_chu');
+                //Route::get('/thong-ke-theo-tieu-chi/{maCTBaiQH}/{maCanBo}', 'thongKeController@thong_ke_theo_tieu_chi');
+                //Route::get('/get-tieu-chi','thongKeController@get_tieu_chi'); 
+
+
+                //Route::get('/thong-ke-theo-xep-hang-kl/{maCanBo}','thongKeController@thong_ke_theo_xep_hang_kl');
+                //Route::get('/get-xep-hang-kl','thongKeController@get_xep_hang_kl');
+                //Route::get('/thong-ke-theo-diem-chu-kl/{maCanBo}','thongKeController@thong_ke_theo_diem_chu_kl');
+                //Route::get('/get-diem-chu-kl','thongKeController@get_diem_chu_kl');
+                //Route::get('/thong-ke-theo-tieu-chi-kl/{maCanBo}','thongKeController@thong_ke_theo_tieu_chi_kl');
+                //
+                
+            });
+        });
+        //H&#7871;t ph&#7847;n PTTMai thêm
 });
  });

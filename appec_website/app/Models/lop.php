@@ -9,6 +9,5 @@ class lop extends Model
 {
     use HasFactory;
     protected $table='lop';
-
     protected $fillable = ['maLop','tenLop','namTS'];
 }

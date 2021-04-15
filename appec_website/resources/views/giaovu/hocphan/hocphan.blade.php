@@ -88,7 +88,7 @@
                               </select>
                             </div> --}}
 
-                           
+
                             <div class="form-group">
                               <label for="">Chọn học phần:</label>
                               <select name="maHocPhan" id="" class="form-control">
@@ -155,6 +155,9 @@
                     <th>Tên học phần</th>
                     <th>Lớp</th>
                     <th>Tên giảng viên</th>
+                   
+                   
+                   
                     <th>Tùy chọn</th>
                   </tr>
                 </thead>
@@ -174,6 +177,9 @@
                               <li>{{$gv->hoGV}} {{$gv->tenGV}}</li>
                               @endforeach
                           </td>
+                        
+                         
+                         
                           <td>
                             <button class="btn btn-success">
                                 CDR3

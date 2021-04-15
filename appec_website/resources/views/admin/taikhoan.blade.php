@@ -14,7 +14,7 @@
         <!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ asset('quan-ly') }}">Home</a></li>
             <li class="breadcrumb-item active">Accounts</li>
           </ol>
         </div>
@@ -36,7 +36,7 @@
             <div class="card-header">
               <h3 class="card-title"></h3>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                  <i class="fas fa-plus"></i>Add a new account
+                  <i class="fas fa-plus"></i>Add
               </button>
 
                 <!-- Modal -->
@@ -134,10 +134,10 @@
                           <i class="fas fa-edit"></i>
                         </button>
                         @if ($u->isBlock==0)
-                        <a href="{{ asset('quan-ly/tai-khoan/khoa/'.$u->username) }}" class="btn btn-warning"><i class="fa fa-lock"></i></a>
+                        <a title="Block" href="{{ asset('quan-ly/tai-khoan/khoa/'.$u->username) }}" class="btn btn-warning"><i class="fa fa-lock"></i></a>
                             
                         @else
-                        <a href="{{ asset('quan-ly/tai-khoan/mo-khoa/'.$u->username) }}" class="btn btn-info"><i class="fas fa-lock-open"></i></a>
+                        <a title="unBlock" href="{{ asset('quan-ly/tai-khoan/mo-khoa/'.$u->username) }}" class="btn btn-info"><i class="fas fa-lock-open"></i></a>
                         @endif
                         <a title="Delete" class="btn btn-danger" onclick="return confirm('Do you want to delete {{$u->username}}?')" href="{{ asset('quan-ly/tai-khoan/xoa/'.$u->username) }}"><i class="fa fa-trash"></i></a>
 
