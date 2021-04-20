@@ -25,4 +25,5 @@ class chuong extends Model
     {
         return $this->hasMany('App\Models\chuong_kqht', 'machuong', 'id');
     }
+
 }

@@ -162,11 +162,13 @@ class hocPhanController extends Controller
         $getKQHT=kqHTHP::whereIn('maKQHT',$kqht_hp)->get(); //biến hiện combobox kqht thêm chương (vì select distinct không chạy nên dùng wherein)
         
         $mucDoDG=mucDoDanhGia::where('isDelete',false)->get();  //hiện combobox mức độ đánh giá trong chương
+        
         $noidung=chuong::where('chuong.isdelete',false)->where('chuong.maHocPhan',$maHocPhan)
         ->orderBy('chuong.id','asc')
         ->with('muc')
         ->with('chuong_kqht')
         ->get();
+        
         $chuong_array=chuong::where('chuong.isdelete',false)->where('chuong.maHocPhan',$maHocPhan)
         ->orderBy('chuong.id','asc')
         ->pluck('id');

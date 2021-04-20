@@ -51,6 +51,7 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiangVien'], function (){
           //quy hoạch đánh giá
           Route::group(['prefix' => 'quy-hoach-danh-gia'], function () {
                Route::get('/', 'quyhoachController@index');
+               Route::post('/loc','quyhoachController@filter');
                Route::get('/quy-hoach-ket-qua/{maHocPhan}/{maBaiQH}/{maHK}/{namHoc}/{maLop}', 'quyhoachController@quy_hoach_ket_qua_hoc_tap');
                Route::post('/them-quy-hoach', 'quyhoachController@them_quy_hoach');
                Route::post('/chon-nhom-cong-thuc','quyhoachController@chon_nhom_cong_thuc');
@@ -113,9 +114,6 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiangVien'], function (){
           //đề đánh giá
           Route::group(['prefix' => 'de-danh-gia'], function () {
                Route::get('/', 'deDanhGiaController@index');
-          //   Route::post('them', '');
-          //   Route::post('chinh-sua/{id}', '');
-          //   Route::post('xoa/{id}', '');
            });
       
           //chấm điểm báo cáo
@@ -127,7 +125,6 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiangVien'], function (){
                Route::post('/cham-diem-submit', 'chamDiemBCController@cham_diem_submit');
                Route::get('/xem-ket-qua-danh-gia/{maPhieuCham}','chamDiemBCController@xem_ket_qua_danh_gia');
           });
-
           //kết quả đánh giá
           Route::group(['prefix' => 'ket-qua-danh-gia'], function () {
                Route::get('/', 'ketQuaDanhGiaController@index');
@@ -154,7 +151,8 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiangVien'], function (){
                });
 
                Route::prefix('trac-nghiem')->group(function () {
-                   
+                    Route::post('/them-mot-phieu-cham', 'ketQuaDanhGiaController@them_mot_phieu_cham_trac_nghiem');
+                    Route::post('/them-nhieu-phieu-cham', 'ketQuaDanhGiaController@them_nhieu_phieu_cham_trac_nghiem');
                });
           });
      });

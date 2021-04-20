@@ -42,7 +42,7 @@
                       <h4 class="">
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addOne">
-                                Chọn đề cho từng sinh viên
+                              Chọn đề cho từng sinh viên
                             </button>
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">

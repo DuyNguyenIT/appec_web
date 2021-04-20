@@ -7,15 +7,15 @@
       <div class="row mb-2">
         <div class="col-sm-6">
           <h1 class="m-0 text-dark">
-            Dashboard<noscript></noscript>
+            {{ __('Dashboard') }}<noscript></noscript>
             <nav></nav>
           </h1>
         </div>
         <!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Dashboard</li>
+            <li class="breadcrumb-item"><a href="{{ asset('/giang-vien') }}">{{ __('Home') }}</a></li>
+            <li class="breadcrumb-item active">{{ __('Dashboard') }}</li>
           </ol>
         </div>
         <!-- /.col -->
@@ -37,12 +37,12 @@
             <div class="inner">
               <h3>1</h3>
 
-              <p>Học phần</p>
+              <p>{{ __('Courses') }}</p>
             </div>
             <div class="icon">
               <i class="icon ion-document"></i>
             </div>
-            <a href="#" class="small-box-footer">Chi tiết <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="#" class="small-box-footer">{{ __('Details') }} <i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ---------------------------------------->

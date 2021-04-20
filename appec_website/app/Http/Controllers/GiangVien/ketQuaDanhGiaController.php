@@ -47,8 +47,7 @@ class ketQuaDanhGiaController extends Controller
            $ldg=loaiDanhGia::where('isDelete',false)->get();
            $lhtdg=loaiHTDanhGia::where('isDelete',false)->get();
            
-           $hp=hocPhan::where('maHocPhan',$maHocPhan)
-           ->where('isDelete',false)->first();
+           $hp=hocPhan::getHocPhanByMaHocPhan($maHocPhan);
 
            $qh=ct_bai_quy_hoach::where('ct_bai_quy_hoach.isDelete',false)
            ->where('ct_bai_quy_hoach.maBaiQH',$maBaiQH)
@@ -92,8 +91,7 @@ class ketQuaDanhGiaController extends Controller
 
         if($loaiHTDG->maLoaiHTDG=="T1"){ //kết quả tự luận
             //thông tin học phần
-            $hp=hocPhan::where('maHocPhan',Session::get('maHocPhan'))
-            ->where('isDelete',false)->first();
+            $hp=hocPhan::getHocPhanByMaHocPhan(Session::get('maHocPhan'));
             //danh sách đề thi
             $deThi=deThi::where('isDelete',false)->where('maCTBaiQH',$maCTBaiQH)->get();
             //check sinh vien da chon
@@ -102,39 +100,38 @@ class ketQuaDanhGiaController extends Controller
             //->Leftjoin('sinh_vien','sinh_vien.maSSV','=','phieu_cham.maSSV')
             ->pluck('phieu_cham.maSSV');
 
-
             //danh sách sinh viên
             $dssv=sinhVien::where('isDelete',false)->where('maLop',Session::get('maLop'))->whereNotIn('maSSV',$svdachon)->get();
 
             //phiếu chấm
-            $phieucham=deThi::where('de_thi.isDelete',false)
-            ->where('de_thi.maCTBaiQH',$maCTBaiQH)
-            ->Join('phieu_cham',function($x){
-                $x->on('phieu_cham.maDe','=','de_thi.maDe')
-                ->where('phieu_cham.maGV',Session::get('maGV'))
-                ->where('phieu_cham.isDelete',false);
-            })
-            ->leftJoin('sinh_vien',function($y){
-                $y->on('phieu_cham.maSSV','=','sinh_vien.maSSV')
-                ->where('sinh_vien.isDelete',false);
-            })
-            ->orderBy('phieu_cham.maDe','desc')
-            ->get(['de_thi.maDeVB','de_thi.maDe','de_thi.tenDe','sinh_vien.maSSV','sinh_vien.HoSV','sinh_vien.TenSV','phieu_cham.maPhieuCham','phieu_cham.trangThai','phieu_cham.diemSo']);
+            $phieucham=deThi::getPhieuChamByCTBQH($maCTBaiQH,Session::get('maGV'));
             //return $phieucham;
             return view('giangvien.ketqua.tuluan.ketquatuluan',compact('hp','dssv','deThi','phieucham'));
         }
 
         if($loaiHTDG->maLoaiHTDG=="T2"){ //kết quả trắc nghiệm
-
-
-            return view('giangvien.ketqua.tracnghiem.ketquatracnghiem');
+             //thông tin học phần
+             $hp=hocPhan::getHocPhanByMaHocPhan(Session::get('maHocPhan'));
+             //danh sách đề thi
+             $deThi=deThi::where('isDelete',false)->where('maCTBaiQH',$maCTBaiQH)->get();
+             //check sinh vien da chon
+             $svdachon=deThi::where('de_thi.isDelete',false)->where('de_thi.maCTBaiQH',$maCTBaiQH)
+             ->join('phieu_cham','phieu_cham.maDe','=','de_thi.maDe')
+             //->Leftjoin('sinh_vien','sinh_vien.maSSV','=','phieu_cham.maSSV')
+             ->pluck('phieu_cham.maSSV');
+ 
+             //danh sách sinh viên
+             $dssv=sinhVien::where('isDelete',false)->where('maLop',Session::get('maLop'))->whereNotIn('maSSV',$svdachon)->get();
+ 
+             //phiếu chấm
+             $phieucham=deThi::getPhieuChamByCTBQH($maCTBaiQH,Session::get('maGV'));
+            return view('giangvien.ketqua.tracnghiem.ketquatracnghiem',compact('hp','dssv','deThi','phieucham'));
         }
         
         if($loaiHTDG->maLoaiHTDG=="T3"){ //kết quả thực hành
 
             //thông tin học phần
-            $hp=hocPhan::where('maHocPhan',Session::get('maHocPhan'))
-            ->where('isDelete',false)->first();
+            $hp=hocPhan::getHocPhanByMaHocPhan(Session::get('maHocPhan'));
             //danh sách đề thi
             $deThi=deThi::where('isDelete',false)->where('maCTBaiQH',$maCTBaiQH)->get();
             //check sinh vien da chon
@@ -148,19 +145,7 @@ class ketQuaDanhGiaController extends Controller
             $dssv=sinhVien::where('isDelete',false)->where('maLop',Session::get('maLop'))->whereNotIn('maSSV',$svdachon)->get();
 
             //phiếu chấm
-            $phieucham=deThi::where('de_thi.isDelete',false)
-            ->where('de_thi.maCTBaiQH',$maCTBaiQH)
-            ->Join('phieu_cham',function($x){
-                $x->on('phieu_cham.maDe','=','de_thi.maDe')
-                ->where('phieu_cham.maGV',Session::get('maGV'))
-                ->where('phieu_cham.isDelete',false);
-            })
-            ->leftJoin('sinh_vien',function($y){
-                $y->on('phieu_cham.maSSV','=','sinh_vien.maSSV')
-                ->where('sinh_vien.isDelete',false);
-            })
-            ->orderBy('phieu_cham.maDe','desc')
-            ->get(['de_thi.maDeVB','de_thi.maDe','de_thi.tenDe','sinh_vien.maSSV','sinh_vien.HoSV','sinh_vien.TenSV','phieu_cham.maPhieuCham','phieu_cham.trangThai','phieu_cham.diemSo']);
+            $phieucham=deThi::getPhieuChamByCTBQH($maCTBaiQH,Session::get('maGV'));
             //return $phieucham;
             return view('giangvien.ketqua.thuchanh.ketquathuchanh',compact('hp','dssv','deThi','phieucham'));
         }
@@ -174,19 +159,7 @@ class ketQuaDanhGiaController extends Controller
             ->first();
 
              //?maCTBaiQH->maDe
-             $maDe=deThi::where('de_thi.isDelete',false)
-             ->where('de_thi.maCTBaiQH',$maCTBaiQH)
-             ->Join('phieu_cham',function($x){
-                 $x->on('phieu_cham.maDe','=','de_thi.maDe')
-                 ->where('phieu_cham.maGV',Session::get('maGV'))
-                 ->where('phieu_cham.isDelete',false);
-             })
-             ->leftJoin('sinh_vien',function($y){
-                 $y->on('phieu_cham.maSSV','=','sinh_vien.maSSV')
-                 ->where('sinh_vien.isDelete',false);
-             })
-             ->orderBy('phieu_cham.maDe','desc')
-             ->get(['de_thi.maDeVB','de_thi.maDe','de_thi.tenDe','sinh_vien.maSSV','sinh_vien.HoSV','sinh_vien.TenSV','phieu_cham.maPhieuCham','phieu_cham.trangThai','phieu_cham.diemSo']);
+             $maDe=deThi::getPhieuChamByCTBQH($maCTBaiQH,Session::get('maGV'));
             
             
             foreach ($maDe as $md) {
@@ -491,7 +464,6 @@ class ketQuaDanhGiaController extends Controller
     
     public function them_mot_phieu_cham_thuc_hanh(Request $request)
     {
-
         foreach ($request->dssv as $sv) {
             phieu_cham::create(['maGV'=>Session::get('maGV'),'maSSV'=>$sv,'maDe'=>$request->maDe]);
         }
@@ -694,17 +666,15 @@ class ketQuaDanhGiaController extends Controller
 
     }
 
-    ###-----------------------------tự luận----------------
+    ###-----------------------------trac nghiem----------------
     public function them_mot_phieu_cham_tu_luan(Request $request)
     {
-
         foreach ($request->dssv as $sv) {
             phieu_cham::create(['maGV'=>Session::get('maGV'),'maSSV'=>$sv,'maDe'=>$request->maDe]);
         }
         alert()->success('Adding successfully','Message');
         return back();
         //thêm phiếu châm tự luạn
-
     }
 
     public function them_nhieu_phieu_cham_tu_luan(Request $request)
@@ -902,4 +872,40 @@ class ketQuaDanhGiaController extends Controller
 
     }
 
+    ###--------------------------trac nghiem-------------------
+
+    public function them_mot_phieu_cham_trac_nghiem(Request $request)
+    {
+        # code...
+        foreach ($request->dssv as $sv) {
+            phieu_cham::create(['maGV'=>Session::get('maGV'),'maSSV'=>$sv,'maDe'=>$request->maDe]);
+        }
+        alert()->success('Adding successfully','Message');
+        return back();
+    }
+
+    public function them_nhieu_phieu_cham_trac_nghiem(Request $request)
+    {
+        # code...
+        //danh sach sinh vien da co ma de
+        $svdachon=deThi::where('de_thi.isDelete',false)->where('de_thi.maCTBaiQH',Session::get('maCTBaiQH'))
+        ->Leftjoin('phieu_cham','phieu_cham.maDe','=','de_thi.maDe')
+        ->pluck('phieu_cham.maSSV');
+
+        //danh sach sinh vien
+        if($svdachon){
+            $dssv=sinhVien::where('isDelete',false)->where('maLop',Session::get('maLop'))->whereNotIn('maSSV',$svdachon)->get();
+        }else{
+            $dssv=sinhVien::where('isDelete',false)->where('maLop',Session::get('maLop'))->get();
+        }
+
+
+        foreach ($dssv as $data) {
+            phieu_cham::create(['maGV'=>Session::get('maGV'),'maSSV'=>$data->maSSV,'maDe'=>$request->maDe]);
+        }
+        alert()->success('Adding successfully','Message');
+        return back();
+    }
+
+    
 }

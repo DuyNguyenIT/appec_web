@@ -9,4 +9,8 @@ class loaiDanhGia extends Model
 {
     use HasFactory;
     protected $table='loai_danh_gia';
+    protected $fillable = ['tenLoaiDG','isDelete'];
+
+    
+
 }

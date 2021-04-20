@@ -13,4 +13,21 @@ class deThi extends Model
     public $incrementing = false;
     public $fillable=['maDeVB','soCauHoi','tenDe','thoiGian','maCTBaiQH','ghiChu','isDelete'];
     
+
+    public static function getPhieuChamByCTBQH($maCTBaiQH,$maGV)
+    {
+        return self::where('de_thi.isDelete',false)
+        ->where('de_thi.maCTBaiQH',$maCTBaiQH)
+        ->Join('phieu_cham',function($x) use($maGV){
+            $x->on('phieu_cham.maDe','=','de_thi.maDe')
+            ->where('phieu_cham.maGV',$maGV)
+            ->where('phieu_cham.isDelete',false);
+        })
+        ->leftJoin('sinh_vien',function($y){
+            $y->on('phieu_cham.maSSV','=','sinh_vien.maSSV')
+            ->where('sinh_vien.isDelete',false);
+        })
+        ->orderBy('phieu_cham.maDe','desc')
+        ->get(['de_thi.maDeVB','de_thi.maDe','de_thi.tenDe','sinh_vien.maSSV','sinh_vien.HoSV','sinh_vien.TenSV','phieu_cham.maPhieuCham','phieu_cham.trangThai','phieu_cham.diemSo']);
+    }
 }

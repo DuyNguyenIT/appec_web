@@ -13,7 +13,6 @@ class cauHoi extends Model
 
     protected $table='cau_hoi';
     protected $primaryKey='maCauHoi';
-    
     protected $fillable=['noiDungCauHoi','diemCauHoi','maKQHT','maLoaiHTDG','isdelete','id_muc'];
 
     public function phuong_an_trac_nghiem()

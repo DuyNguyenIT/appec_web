@@ -4,6 +4,7 @@ namespace App\Http\Controllers\GiangVien;
 
 use Session;
 use App\Models\CDR3;
+use App\Models\hocPhan;
 use App\Models\giangDay;
 use App\Models\sinhVien;
 use Illuminate\Http\Request;
@@ -15,12 +16,15 @@ class GVHocPhanController extends Controller
 {
     public function index(Type $var = null)
     {
-        $gd=giangDay::where('giangday.isDelete',false)->where('maGV',Session::get('maGV'))
+        $mhp_arr=giangDay::where('giangday.isDelete',false)->where('maGV',Session::get('maGV'))
         ->join('hoc_phan',function($q){
             $q->on('hoc_phan.maHocPhan','=','giangday.maHocPhan')
                 ->where('hoc_phan.isDelete',false);
-        })->groupBy('maBaiQH')->distinct()
-        ->get();
+        })->groupBy('maBaiQH')->distinct('maHocPhan')
+        ->pluck('giangday.maHocPhan');
+        
+        $gd=hocPhan::where('isDelete',false)->whereIn('maHocPhan',$mhp_arr)->get();
+       
         return view('giangvien.hocphan.hocphan',['gd'=>$gd]);
     }
     ////////////////---------------Xem kết quả học tập của học phần
@@ -53,7 +57,7 @@ class GVHocPhanController extends Controller
 
     ////////////////---------------Sửa kết quả học tập của học phần
 
-    public function sửa_ket_qua_hoc_tap(Request $request)
+    public function sua_ket_qua_hoc_tap(Request $request)
     {
         # code...
     }

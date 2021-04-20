@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Administration</title>
+    <title>{{ __('Administration') }}</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link
@@ -12,10 +12,10 @@
     />
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}" />
+    <!-- flag-icon-css -->
+  <link rel="stylesheet" href="{{ asset('/plugins/flag-icon-css/css/flag-icon.min.css') }}">
     <!-- Ionicons -->
-    <link
-      rel="stylesheet"
-      href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
     />
     <!-- Tempusdominus Bootstrap 4 -->
     <link
@@ -80,15 +80,37 @@
 
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
+           <!-- Language Dropdown Menu -->
+          <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+              @if (Session::has('language') && Session::get('language')=='vi')
+                <i class="flag-icon flag-icon-vn"></i>
+              @else
+              <i class="flag-icon flag-icon-us"></i>
+              @endif
+            </a>
+            <div class="dropdown-menu dropdown-menu-right p-0">
+              @if (Session::has('language') && Session::get('language')=='vi')
+                <a href="{{ asset('/language/en') }}" class="dropdown-item ">
+                  <i class="flag-icon flag-icon-us mr-2"></i> {{ __('English') }}
+                </a>
+                <a href="{{ asset('/language/vi') }}" class="dropdown-item active">
+                  <i class="flag-icon flag-icon-vn mr-2"></i> {{ __('Vietnamese') }}
+                </a>  
+              @else
+                <a href="{{ asset('/language/en') }}" class="dropdown-item active">
+                  <i class="flag-icon flag-icon-us mr-2"></i> {{ __('English') }}
+                </a>
+                <a href="{{ asset('/language/vi') }}" class="dropdown-item">
+                  <i class="flag-icon flag-icon-vn mr-2"></i> {{ __('Vietnamese') }}
+                </a>
+              @endif
+            </div>
+          </li>
           <!-- Messages Dropdown Menu -->
           <li class="nav-item">
-            <a
-              class="nav-link"
-              data-widget="fullscreen"
-              href="{{ asset('/dang-xuat') }}"
-              role="button"
-            >
-              <i class="fas fa-sign-out-alt"></i> Logout
+            <a class="nav-link" data-widget="fullscreen" href="{{ asset('/dang-xuat') }}" role="button">
+              <i class="fas fa-sign-out-alt"></i> {{ __('Logout') }}
             </a>
           </li>
         </ul>
@@ -105,7 +127,7 @@
             class="brand-image img-circle elevation-3"
             style="opacity: 0.8"
           />
-          <span class="brand-text font-weight-light">Administration</span>
+          <span class="brand-text font-weight-light">{{ __('Administration') }}</span>
         </a>
 
         <!-- Sidebar -->
@@ -120,7 +142,7 @@
               />
             </div>
             <div class="info">
-              <a href="#" class="d-block">Administrator</a>
+              <a href="#" class="d-block">{{ __('Administrator') }}</a>
             </div>
           </div>
 
@@ -130,7 +152,7 @@
               <input
                 class="form-control form-control-sidebar"
                 type="search"
-                placeholder="Searching...."
+                placeholder="{{ __('Search') }}...."
                 aria-label="Search"
               />
               <div class="input-group-append">
@@ -155,37 +177,37 @@
               <li class="nav-item">
                 <a href="{{ asset('/quan-ly') }}" class="nav-link">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
-                  <p>Dashboard</p>
+                  <p>{{ __('Dashboard') }}</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ asset('/quan-ly/bac-dao-tao') }}" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
-                  <p>Education level</p>
+                  <p>{{ __('Education level') }}</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ asset('/quan-ly/nganh-hoc') }}" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
-                  <p>Majors</p>
+                  <p>{{ __('Majors') }}</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ asset('/quan-ly/chuyen-nganh') }}" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
-                  <p>Specialized</p>
+                  <p>{{ __('Specialized') }}</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ asset('/quan-ly/he') }}" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
-                  <p>Forms of training</p>
+                  <p>{{ __('Forms of training') }}</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ asset('/quan-ly/chuong-trinh-dao-tao') }}" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
-                  <p>Curriculum</p>
+                  <p>{{ __('Curriculum') }}</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -197,37 +219,37 @@
               <li class="nav-item">
                 <a href="{{ asset('/quan-ly/loai-hoc-phan') }}" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
-                  <p>Course type</p>
+                  <p>{{ __('Course type') }}</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ asset('/quan-ly/hoc-phan') }}" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
-                  <p>Courses</p>
+                  <p>{{ __('Courses') }}</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ asset('/quan-ly/khoi-kien-thuc') }}" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
-                  <p>Knowledge block</p>
+                  <p>{{ __('Knowledge block') }}</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ asset('/quan-ly/phuong-phap-giang-day') }}" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
-                  <p>Teaching methods</p>
+                  <p>{{ __('Teaching methods') }}</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ asset('/quan-ly/tai-khoan') }}" class="nav-link">
                   <i class="nav-icon  fas fa-users-cog"></i>
-                  <p>Accounts</p>
+                  <p>{{ __('Accounts') }}</p>
                 </a>
               </li>
              <li class="nav-item">
                 <a href="{{ asset('/quan-ly/thong-ke') }}" class="nav-link">
                   <i class="nav-icon  fas fa-chart-bar"></i>
-                  <p> Statistics</p>
+                  <p>{{ __('Statistics') }} </p>
                 </a>
               </li>
             </ul>

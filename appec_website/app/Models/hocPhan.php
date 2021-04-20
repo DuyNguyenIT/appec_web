@@ -12,8 +12,20 @@ class hocPhan extends Model
     protected $primaryKey='maHocPhan';
     public $incrementing=false;
     public $fillable=['maHocPhan','tenHocPhan','tongSoTinChi','tinChiLyThuyet','tinChiThucHanh','moTaHocPhan','dacTrung','isDelete','trangThai','maCTKhoiKT'];
+    
+    
+    public static function getListHocPhan()
+    {
+        return self::where('isDelete',false)->get();
+    }
+    
     public function ctkhoi()
     {
         return $this->hasOne('App\Models\ctKhoiKT', 'maCTKhoiKT', 'maCTKhoiKT');
+    }
+
+    public static function getHocPhanByMaHocPhan($maHocPhan)
+    {
+        return self::where('maHocPhan',$maHocPhan)->where('isDelete',false)->first();
     }
 }

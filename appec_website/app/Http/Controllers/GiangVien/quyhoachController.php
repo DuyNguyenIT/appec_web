@@ -63,7 +63,56 @@ class quyhoachController extends Controller
         return view('giangvien.quyhoach.quyhoach',compact('gd','years_array'));
     }
 
-    
+    public function filter(Request $request)
+    { 
+        // năm và học kì đều chọn all
+        if($request->namHoc=="all" && $request->maHK=="all"){
+            $gd=giangDay::where('giangday.isDelete',false)->where('maGV',Session::get('maGV'))
+            ->orderBy('giangday.namHoc','desc')
+            ->join('hoc_phan',function($q){
+                $q->on('hoc_phan.maHocPhan','=','giangday.maHocPhan')
+                ->where('hoc_phan.isDelete',false);
+            })->groupBy('maBaiQH')->distinct()->get();
+        }else{
+            if($request->namHoc=="all" && $request->maHK!="all"){//chỉ năm all 
+                $gd=giangDay::where('giangday.isDelete',false)->where('maGV',Session::get('maGV'))
+                    ->where('maHK',$request->maHK)
+                    ->orderBy('giangday.namHoc','desc')
+                    ->join('hoc_phan',function($q){
+                        $q->on('hoc_phan.maHocPhan','=','giangday.maHocPhan')
+                        ->where('hoc_phan.isDelete',false);
+                    })->groupBy('maBaiQH')->distinct()->get();
+            }else{
+                if($request->namHoc!="all" && $request->maHK=="all"){//chỉ học kì all
+                    $gd=giangDay::where('giangday.isDelete',false)->where('maGV',Session::get('maGV'))
+                    ->where('namHoc',$request->namHoc)
+                    ->orderBy('giangday.namHoc','desc')
+                    ->join('hoc_phan',function($q){
+                        $q->on('hoc_phan.maHocPhan','=','giangday.maHocPhan')
+                        ->where('hoc_phan.isDelete',false);
+                    })->groupBy('maBaiQH')->distinct()->get();
+                }else{  //có chọn năm và học kì
+                    $gd=giangDay::where('giangday.isDelete',false)->where('maGV',Session::get('maGV'))
+                    ->where('namHoc',$request->namHoc)->where('maHK',$request->maHK)
+                    ->orderBy('giangday.namHoc','desc')
+                    ->join('hoc_phan',function($q){
+                        $q->on('hoc_phan.maHocPhan','=','giangday.maHocPhan')
+                        ->where('hoc_phan.isDelete',false);
+                    })->groupBy('maBaiQH')->distinct()->get();
+                }
+            }
+        }
+        
+        //tạo combobox  năm học
+        $date = new Carbon();   
+        $current_year=$date->year;
+        $years_array=[];
+        for ($i=1; $i<=5 ; $i++) { 
+            array_push($years_array,($current_year-1).'-'.($current_year));
+            $current_year=$current_year-1;
+        }
+        return view('giangvien.quyhoach.quyhoach',compact('gd','years_array'));
+    }
 
     ///giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/220104/1/HK1/2020-2021/DA16TT
     public function quy_hoach_ket_qua_hoc_tap(Request $request,$maHocPhan,$maBaiQH,$maHK,$namHoc,$maLop)
@@ -213,7 +262,6 @@ class quyhoachController extends Controller
     }
 
     // ------------------------NỌI DUNG ĐÁNH GIÁ
-    
 
     // /giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/3
     public function xem_noi_dung_danh_gia(Request $request,$maCTBaiQH)

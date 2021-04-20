@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Lecture</title>
+    <title>{{ __('Lecture') }}</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link
@@ -13,6 +13,8 @@
     />
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}" />
+     <!-- flag-icon-css -->
+  <link rel="stylesheet" href="{{ asset('/plugins/flag-icon-css/css/flag-icon.min.css') }}">
     <!-- Ionicons -->
     <link
       rel="stylesheet"
@@ -59,10 +61,7 @@
             ></a>
           </li>
           <li class="nav-item d-none d-sm-inline-block">
-            <a href="giang_vien.html" class="nav-link">Home</a>
-          </li>
-          <li class="nav-item d-none d-sm-inline-block">
-            <a href="#" class="nav-link">Contact</a>
+            <a href="{{ asset('/giang-vien') }}" class="nav-link">{{ __('Home') }}</a>
           </li>
         </ul>
 
@@ -70,10 +69,8 @@
         <form class="form-inline ml-3">
           <div class="input-group input-group-sm">
             <input
-              class="form-control form-control-navbar"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
+              class="form-control form-control-navbar" type="search"
+              placeholder="Search" aria-label="Search"
             />
             <div class="input-group-append">
               <button class="btn btn-navbar" type="submit">
@@ -85,15 +82,40 @@
 
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
+          <!-- Language Dropdown Menu -->
+          <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+              @if (Session::has('language') && Session::get('language')=='vi')
+                <i class="flag-icon flag-icon-vn"></i>
+              @else
+              <i class="flag-icon flag-icon-us"></i>
+              @endif
+            </a>
+            <div class="dropdown-menu dropdown-menu-right p-0">
+              @if (Session::has('language') && Session::get('language')=='vi')
+                <a href="{{ asset('/language/en') }}" class="dropdown-item ">
+                  <i class="flag-icon flag-icon-us mr-2"></i> {{ __('English') }}
+                </a>
+                <a href="{{ asset('/language/vi') }}" class="dropdown-item active">
+                  <i class="flag-icon flag-icon-vn mr-2"></i> {{ __('Vietnamese') }}
+                </a>  
+              @else
+                <a href="{{ asset('/language/en') }}" class="dropdown-item active">
+                  <i class="flag-icon flag-icon-us mr-2"></i> {{ __('English') }}
+                </a>
+                <a href="{{ asset('/language/vi') }}" class="dropdown-item">
+                  <i class="flag-icon flag-icon-vn mr-2"></i> {{ __('Vietnamese') }}
+                </a>
+              @endif
+            </div>
+          </li>
           <!-- Messages Dropdown Menu -->
           <li class="nav-item">
-            <a
-              class="nav-link"
-              data-widget="fullscreen"
+            <a class="nav-link" data-widget="fullscreen"
               href="{{ asset('/dang-xuat') }}"
               role="button"
             >
-              <i class="fas fa-sign-out-alt"></i> Login
+              <i class="fas fa-sign-out-alt"></i> {{ __('Logout') }}
             </a>
           </li>
         </ul>
@@ -106,11 +128,9 @@
         <a href="index.html" class="brand-link">
           <img
             src="{{ asset('dist/img/AdminLTELogo.png') }}"
-            alt="AdminLTE Logo"
-            class="brand-image img-circle elevation-3"
-            style="opacity: 0.8"
+            alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: 0.8"
           />
-          <span class="brand-text font-weight-light">Lecture</span>
+          <span class="brand-text font-weight-light">{{ __('Lecture') }}</span>
         </a>
 
         <!-- Sidebar -->
@@ -118,10 +138,8 @@
           <!-- Sidebar user panel (optional) -->
           <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-              <img
-                src="{{ asset('dist/img/avatar3.png') }}"
-                class="img-circle elevation-2"
-                alt="User Image"
+              <img src="{{ asset('dist/img/avatar3.png') }}"
+                class="img-circle elevation-2" alt="User Image"
               />
             </div>
             <div class="info">
@@ -132,12 +150,8 @@
           <!-- SidebarSearch Form -->
           <div class="form-inline">
             <div class="input-group" data-widget="sidebar-search">
-              <input
-                class="form-control form-control-sidebar"
-                type="search"
-                placeholder="Tìm kiếm...."
-                aria-label="Search"
-              />
+              <input  class="form-control form-control-sidebar"
+                type="search" placeholder="Tìm kiếm...." aria-label="Search"/>
               <div class="input-group-append">
                 <button class="btn btn-sidebar">
                   <i class="fas fa-search fa-fw"></i>
@@ -148,37 +162,29 @@
 
           <!-- Sidebar Menu -->
           <nav class="mt-2">
-            <ul
-              class="nav nav-pills nav-sidebar flex-column"
-              data-widget="treeview"
-              role="menu"
-              data-accordion="false"
-            >
+            <ul class="nav nav-pills nav-sidebar flex-column"  data-widget="treeview"
+              role="menu" data-accordion="false">
               <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
               <li class="nav-item">
                 <a href="{{ asset('/giang-vien') }}" class="nav-link">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
-                  <p>Dashboard</p>
+                  <p>{{ __('Dashboard') }}</p>
                 </a>
               </li>
 
               <li class="nav-item">
                 <a href="{{ asset('/giang-vien/hoc-phan') }}" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
-                  <p>Course</p>
+                  <p>{{ __('Courses') }}</p>
                 </a>
               </li>
 
               <li class="nav-item">
-                <a
-                  href="{{ asset('/giang-vien/quy-hoach-danh-gia') }}"
-                  class="nav-link"
-                >
+                <a href="{{ asset('/giang-vien/quy-hoach-danh-gia') }}" class="nav-link">
                   <i class="nav-icon fas fa-gavel"></i>
-
-                  <p>Assessment Planing</p>
+                  <p>{{ __('Assessment Planing') }}</p>
                 </a>
               </li>
 
@@ -192,14 +198,14 @@
               <li class="nav-item">
                 <a href="{{ asset('/giang-vien/ket-qua-danh-gia') }}" class="nav-link">
                   <i class="nav-icon fas fa-user-friends"></i>
-                  <p>Assessment Result</p>
+                  <p>{{ __('Assessment Result') }}</p>
                 </a>
               </li>
 
               <li class="nav-item">
                 <a href="{{ asset('/giang-vien/cham-diem-bao-cao') }}" class="nav-link">
                   <i class="fas fa-balance-scale-left"></i>
-                  <p>Instructor</p>
+                  <p>{{ __('Instructor') }}</p>
                 </a>
               </li>
             </ul>

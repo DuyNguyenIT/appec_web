@@ -9,7 +9,7 @@
             <div class="row mb-2">
               <div class="col-sm-6">
                 <h1 class="m-0 text-dark">
-                  Multiple Choice Exam<noscript></noscript>
+                  {{ __('Multiple Choice Exam') }}<noscript></noscript>
                   <nav></nav>
                 </h1>
               </div>
@@ -17,13 +17,13 @@
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                   <li class="breadcrumb-item">
-                    <a href="{{ asset('/giang-vien') }}">Home</a>
+                    <a href="{{ asset('/giang-vien') }}">{{ __('Home') }}</a>
                   </li>
                   <li class="breadcrumb-item">
-                    <a href="#">Essay</a>
+                    <a href="#">{{ __('Multiple Choice Exam') }}</a>
                   </li>
-                  <li class="breadcrumb-item"><a href="#">Assessment Content</a></li>
-                  <li class="breadcrumb-item active">Viewing assessment content</li>
+                  <li class="breadcrumb-item"><a href="#">{{ __('Assessment Content') }}</a></li>
+                  <li class="breadcrumb-item active">{{ __('Viewing') }} {{ __('Assessment content') }}</li>
                 </ol>
               </div>
               <!-- /.col -->
@@ -48,7 +48,7 @@
 
                           <!-- Button trigger modal -->
                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                            <i class="fas fa-plus"></i>Adding a new Exam
+                            <i class="fas fa-plus"></i>{{ __('Adding a new Exam') }}
                           </button>
                           <!-- Modal -->
                           <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -57,22 +57,22 @@
                               @csrf
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModalLabel">Adding a new exame</h5>
+                                  <h5 class="modal-title" id="exampleModalLabel">{{ __('Adding a new Exam') }}</h5>
                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                   </button>
                                 </div>
                                 <div class="modal-body">
                                   <div class="form-group">
-                                    <label for="">Exame ID</label>
+                                    <label for="">{{ __('Exame ID') }}</label>
                                     <input type="text" class="form-control" name="maDeVB" required>
                                   </div>
                                   <div class="form-group">
-                                    <label for="">Title</label>
+                                    <label for="">{{ __('Title') }}</label>
                                     <input type="text" class="form-control" name="tenDe" required>
                                   </div>
                                   <div class="form-group">
-                                    <label for="">Duration (minutes)</label>
+                                    <label for="">{{ __('Duration') }} ({{ __('minutes') }})</label>
                                     <input type="number" class="form-control"  name="thoiGian" min="30" max="180">
                                   </div>
                                   <div class="form-group">

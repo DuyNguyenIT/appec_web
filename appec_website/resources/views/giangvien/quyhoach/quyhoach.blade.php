@@ -37,29 +37,29 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">
-                  
-                  <div class="from-group">
-                    <label for="">Chọn học kì</label>
-                    <select
-                      name=""
-                      id=""
-                      class="form-control custom-select"
-                    >
-                      <option value="">Học kì 1</option>
-                      <option value="">Học kì 2</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="">Nhập năm học:</label>
-                    <select name="namHoc" id="" class="form-control">
-                        @foreach ($years_array as $data)
-                            <option value="{{ $data }}">{{ $data }}</option>
-                        @endforeach
-                    </select>
-                  </div>
-                  <button class="btn btn-success">
-                    <i class="fas fa-filter"></i> Lọc
-                  </button>
+                  <form action="{{ asset('/giang-vien/quy-hoach-danh-gia/loc') }}" method="post">
+                    @csrf
+                      <div class="from-group">
+                        <label for="">{{ __('Semester') }}:</label>
+                        <select name="maHK" id="" class="form-control custom-select">
+                          <option value="all">{{ __('All') }}</option>
+                          <option value="HK1">{{ __('Semester') }} 1</option>
+                          <option value="HK2">{{ __('Semester') }} 2</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="">{{ __('Academic year') }}:</label>
+                        <select name="namHoc" id="" class="form-control">
+                          <option value="all">{{ __('All') }}</option>
+                            @foreach ($years_array as $data)
+                                <option value="{{$data}}">{{$data}}</option>
+                            @endforeach
+                        </select>
+                      </div>
+                      <button class="btn btn-success" type="submit">
+                        <i class="fas fa-filter"></i> {{ __('Filter') }}
+                      </button>
+                  </form>
                 </h3>
               </div>
               <!-- /.card-header -->
@@ -88,7 +88,9 @@
                     <td>{{$item->maHK}}</td>
                     <td>{{$item->namHoc}}</td>
                     <td>
+                      <a href="{{ asset('giang-vien/hoc-phan/xem-ds-sv/'.$item->maLop) }}">
                         {{$item->maLop}}
+                      </a>
                     </td>
                       <td>
                       
