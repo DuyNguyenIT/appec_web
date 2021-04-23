@@ -30,18 +30,41 @@ use App\Models\hocPhan_ppGiangDay;
 use App\Models\tai_lieu_tham_khao;
 use App\Http\Controllers\Controller;
 use App\Models\hocPhan_loaiHTDanhGia;
+use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\CommonController;
 
 class hocPhanController extends Controller
 {
     public function index(Type $var = null)
     {
-        $hocphan=hocPhan::where('isDelete',false)->orderBy('maHocPhan','desc')->with('ctkhoi')->get();
-        
+        $hocphan=hocPhan::where('isDelete',false)->orderBy('maHocPhan','desc')->with('hocphan_ctdt')->with('ctkhoi')->get();
         $ctkhoi=ctKhoiKT::where('isDelete',false)->orderBy('maCTKhoiKT','asc')->get();
         $ctdt=ctDaoTao::all();
         $loaihp=loaiHocPhan::all();
-        return view('admin.hocphan.hocphan',compact('hocphan','ctkhoi','ctdt','loaihp')     );
+
+        foreach ($hocphan as $hp) {
+            foreach ($hp->hocphan_ctdt as $hp_ctdt) {
+                $ct=ctDaoTao::where('maCT',$hp_ctdt->maCT)->first();
+                $hp_ctdt->tenCT=$ct->tenCT;
+               
+            }
+        }
+        // return $hocphan[0];
+        return view('admin.hocphan.hocphan',compact('hocphan','ctkhoi','ctdt','loaihp'));
+    }
+
+
+    public function them_hoc_phan_ctdt(Request $request)
+    {
+
+        $ct= hocPhan_ctDaoTao::where('maHocPhan',$request->maHocPhan)->where('maCT',$request->maCT)->first();
+        if($ct){
+            alert()->warning('Chương trình đã được chọn','Thông báo');
+            return redirect('quan-ly/hoc-phan');
+        }
+        hocPhan_ctDaoTao::create($request->all());
+        alert()->success('Thêm thành công','Thông báo');
+        return redirect('quan-ly/hoc-phan');
     }
 
     public function them(Request $request) //thêm học phần mới
@@ -90,6 +113,37 @@ class hocPhanController extends Controller
          }
      }
      //Hết đoạn PTTMai thêm
+    /////----------------------------------HỌC PHẦN - CHƯƠNG TRÌNH ĐÀO TẠO////////////////////
+    public function hocphan_ctdtao($mahocphan)
+    {
+        Session::put('mahocphan',$mahocphan);
+        //học phần
+        $hp=hocPhan::where('isDelete',false)->where('maHocPhan',$mahocphan)->first();
+        //học phần ctdao
+        $hp_ctdt=hocPhan_ctDaoTao::where('isDelete',false)->where('maHocPhan',$mahocphan)
+        ->with('ctDaoTao')
+        ->with('loaiHocPhan')
+        ->get();
+
+        ///---------tao combobox edit
+        $ctdt=ctDaoTao::where('isDelete',false)->get();
+        $loaihp=loaiHocPhan::where('isDelete',false)->get();
+      //return $hp_ctdt[0]->ctDaoTao;
+        return view('admin.hocphan.hocphan_ctdaotao', compact('hp_ctdt','hp','ctdt','loaihp'));
+    }
+    public function sua_hocphan_ctdtao(Request $request)
+    {
+        if($request){
+            hocPhan_ctDaoTao::updateOrCreate(['id'=>$request->id],['maHocPhan'=>$request->maHocPhan,'maCT'=>$request->maCT,
+            'phanPhoiHocKy'=>$request->phanPhoiHocKy,'maLoaiHocPhan'=>$request->maLoaiHocPhan,'maHocPhan'=>$request->maHocPhan]);
+        }
+        return redirect('/quan-ly/hoc-phan/hoc-phan-ct-dao-tao/'.Session::get('mahocphan'));
+    }
+    public function xoa_hocphan_ctdtao($id){
+        $ct=hocPhan_ctDaoTao::find($id);
+        $ct->delete();
+        return redirect('/quan-ly/hoc-phan/hoc-phan-ct-dao-tao/'.Session::get('mahocphan'));
+    }
     //////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////HIỂN THỊ ĐỀ CƯƠNG MÔN HỌC//////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////

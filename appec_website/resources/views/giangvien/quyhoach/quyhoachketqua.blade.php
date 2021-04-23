@@ -8,7 +8,7 @@
                 <div class="row mb-2">
                   <div class="col-sm-6">
                     <h1 class="m-0 text-dark">
-                      Quy hoạch đánh giá kết quả học tập<noscript></noscript>
+                      {{ __('Assessment Planning') }}<noscript></noscript>
                       <nav></nav>
                     </h1>
                   </div>
@@ -16,16 +16,15 @@
                   <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                       <li class="breadcrumb-item">
-                        <a href="{{ asset('giang-vien') }}">Trang chủ</a>
+                        <a href="{{ asset('giang-vien') }}">{{ __('Home') }}</a>
                       </li>
                       <li class="breadcrumb-item">
-                        <a href="{{ asset('giang-vien/quy-hoach-danh-gia') }}"
-                          >{{$hp->tenHocPhan}}</a
-                        >
+                        <a href="{{ asset('giang-vien/quy-hoach-danh-gia') }}">
+                          {{$hp->tenHocPhan}}</a>
                       </li>
     
                       <li class="breadcrumb-item active">
-                        Quy hoạch đánh giá kết quả học tập
+                        {{ __('Assessment Planning') }}
                       </li>
                     </ol>
                   </div>
@@ -50,8 +49,6 @@
                 {{session('warning')}}
               </div>
             @endif
-
-
             <section class="content">
               <div class="container-fluid">
                 <div class="row">
@@ -59,7 +56,6 @@
                     <div class="card">
                       <div class="card-header">
                         <h3 class="card-title">
-                          
                         @if ($count_ct==0)
                           <form action="{{ asset('/giang-vien/quy-hoach-danh-gia/chon-nhom-cong-thuc') }}" method="post">
                           @csrf   
@@ -92,7 +88,6 @@
                                   @endphp
                                   @if ($n>0)
                                   <option value="2" >
-
                                     @foreach ($hocphan_loai_htdg_array as $data)
                                       @if ($cr!=0 && $cr<$n && $data->groupCT==2)
                                           +
@@ -112,28 +107,22 @@
                                 </select>
                               </div>
                               <button type="submit" class="btn btn-primary"  >
-                                <i class="fas fa-plus"></i> Choose
+                                <i class="fas fa-plus"></i> {{ __('Choose') }}
                               </button>
                         @endif
-                         
                       </form>
-                       
                         </h3>
                       </div>
                       <!-- /.card-header -->
                       <div class="card-body">
-                        <table
-                          id="example2"
-                          class="table table-bordered table-hover"
-                        >
+                        <table id="example2" class="table table-bordered table-hover">
                           <thead>
                             <tr>
-                              <th>STT</th>
-                              <th>Hình thức đánh giá</th>
-                              
-                              <th>Tỉ lệ (%)</th>
-                              <th>Phương pháp đánh giá</th>
-                              <th>Tùy chọn</th>
+                              <th>{{ __('No.') }}</th>
+                              <th>{{ __('Assessment activity') }}</th>
+                              <th>{{ __('Weight') }} (%)</th>
+                              <th>{{ __('Assessment methods') }}</th>
+                              <th>{{ __('Option') }}</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -143,18 +132,30 @@
                               @foreach ($qh as $x)
                               <tr>
                                 <td>{{$i++}}</td>
-                                <td>{{$x->tenLoaiDG}}</td>
+                                <td>
+                                  @if (Session::has('language') && Session::get('language')=='en')
+                                       {{$x->tenLoaiDG_EN}}
+                                  @else
+                                  {{$x->tenLoaiDG}}
+                                  @endif
+                                 </td>
                                 <td>{{$x->trongSo}}%</td>
                              
-                                <td>{{$x->tenLoaiHTDG}}</td>
+                                <td>
+                                  @if (Session::has('language') && Session::get('language')=='en')
+                                      {{$x->tenLoaiHTDG_EN}}
+                                  @else
+                                     {{$x->tenLoaiHTDG}}
+                                  @endif
+                                  
+                                </td>
                                 <td style='white-space: nowrap'>
                                   <a href="{{ asset('giang-vien/quy-hoach-danh-gia/noi-dung-quy-hoach/'.$x->maCTBaiQH) }}" class="btn btn-success">
-                                    <i class="fas fa-align-justify"></i> Nội dung quy hoạch               
+                                    <i class="fas fa-align-justify"></i> {{ __('Planning Content') }}               
                                 </a>
                                   <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/'.$x->maCTBaiQH) }}">
                                     <button class="btn btn-success">
-                                      <i class="fas fa-info-circle"></i> Nội dung đánh
-                                      giá
+                                      <i class="fas fa-info-circle"></i> {{ __('Assessment content') }}
                                     </button>
                                   </a>
                                   <button class="btn btn-primary">
@@ -163,8 +164,6 @@
                                 </td>
                               </tr>
                               @endforeach
-                            
-                            
                           </tbody>
                           <tfoot></tfoot>
                         </table>

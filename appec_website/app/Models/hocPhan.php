@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\hocPhan_ctDaoTao;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class hocPhan extends Model
 {
@@ -22,6 +23,12 @@ class hocPhan extends Model
     public function ctkhoi()
     {
         return $this->hasOne('App\Models\ctKhoiKT', 'maCTKhoiKT', 'maCTKhoiKT');
+    }
+
+
+    public function hocphan_ctdt()
+    {
+        return $this->hasMany(hocPhan_ctDaoTao::class, 'maHocPhan', 'maHocPhan');
     }
 
     public static function getHocPhanByMaHocPhan($maHocPhan)

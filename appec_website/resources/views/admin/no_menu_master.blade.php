@@ -66,7 +66,7 @@
         <!-- Left navbar links -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a href="{{ asset('/quan-tri') }}" class="nav-link">Home</a>
+            <a href="{{ asset('/quan-ly') }}" class="nav-link">Home</a>
           </li>
         
          

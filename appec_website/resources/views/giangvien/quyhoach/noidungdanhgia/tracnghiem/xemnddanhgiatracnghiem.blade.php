@@ -40,16 +40,20 @@
                 <div class="col-12">
                   <div class="card">
                     <div class="card-header">
-                      <h3 class=""></h3>
+                      <h3 class="">
+                           <!-- Button trigger modal -->
+                           <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">
+                            <i class="fas fa-plus"></i>{{ __('Adding a new Exam') }}
+                          </button>
+                        <a class="btn btn-outline-primary" href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/ngan-hang-cau-hoi') }}">{{ __('Questions store') }}</a>
+
+                      </h3>
                          {{-- <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/them-de-thi-tu-luan') }}" class="btn btn-primary">
                            <i class="fas fa-plus"></i>Thêm đề thi
                          </a> --}}
                          <!-- Button trigger modal -->
 
-                          <!-- Button trigger modal -->
-                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                            <i class="fas fa-plus"></i>{{ __('Adding a new Exam') }}
-                          </button>
+                       
                           <!-- Modal -->
                           <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">

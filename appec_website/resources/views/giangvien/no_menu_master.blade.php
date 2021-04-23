@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Lecture</title>
+    <title>{{ __('Lecture') }}</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link
@@ -55,7 +55,7 @@
     <div class="container">
       <a href="../../index3.html" class="navbar-brand">
         <img    src="{{ asset('dist/img/avatar5.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">Lecture</span>
+        <span class="brand-text font-weight-light">{{ __('Lecture') }}</span>
       </a>
 
       <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,18 +66,16 @@
         <!-- Left navbar links -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a href="index3.html" class="nav-link">Home</a>
+            <a href="{{ asset('/giang-vien') }}" class="nav-link">{{ __('Home') }}</a>
           </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">Contact</a>
-          </li>
+        
          
         </ul>
 
         <!-- SEARCH FORM -->
         <form class="form-inline ml-0 ml-md-3">
           <div class="input-group input-group-sm">
-            <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+            <input class="form-control form-control-navbar" type="search" placeholder="{{ __('Search') }}" aria-label="Search">
             <div class="input-group-append">
               <button class="btn btn-navbar" type="submit">
                 <i class="fas fa-search"></i>
@@ -97,7 +95,7 @@
             href="{{ asset('/dang-xuat') }}"
             role="button"
           >
-            <i class="fas fa-sign-out-alt"></i> Logout
+            <i class="fas fa-sign-out-alt"></i> {{ __('Logout') }}
           </a>
         </li>
       </ul>

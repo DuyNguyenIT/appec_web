@@ -127,7 +127,16 @@ class quyhoachController extends Controller
            $ldg=loaiDanhGia::where('isDelete',false)->get();
            $lhtdg=loaiHTDanhGia::where('isDelete',false)->get();
            $hp=hocPhan::where('maHocPhan',$maHocPhan)->where('isDelete',false)->first();
-
+           $gd=giangDay::where('giangday.isDelete',false)->where('maGV',Session::get('maGV'))
+           ->where('giangday.maLop',$maLop)
+           ->where('giangday.namHoc',$namHoc)
+           ->where('giangday.maHK',$maHK)
+           ->where('giangday.maHocPhan',$maHocPhan)
+           ->join('hoc_phan',function($q){
+               $q->on('hoc_phan.maHocPhan','=','giangday.maHocPhan')
+               ->where('hoc_phan.isDelete',false);
+           })->get(['giangday.namHoc','giangday.maHK','giangday.maLop','hoc_phan.tenHocPhan']);
+        
            $qh=ct_bai_quy_hoach::where('ct_bai_quy_hoach.isDelete',false)
            ->where('ct_bai_quy_hoach.maBaiQH',$maBaiQH)
            ->join('loai_danh_gia',function($x){
@@ -144,11 +153,17 @@ class quyhoachController extends Controller
           //đếm số group trong hocphan_loai_hinhthuc_dg
           $count_groupCT=hocPhan_loaiHTDanhGia::where('isDelete',false)->where('maHocPhan',$maHocPhan)->distinct('groupCT')->count();
           $hocphan_loai_htdg_array=hocPhan_loaiHTDanhGia::where('isDelete',false)->where('maHocPhan',$maHocPhan)->get();
-            
+        ///chương
+        $chuong=chuong::where('isdelete',false)->where('maHocPhan',$maHocPhan)->orderBy('id','asc')->with('muc')->get(); 
 
-           return view('giangvien.quyhoach.quyhoachketqua',['qh'=>$qh,'hp'=>$hp,
-           'ldg'=>$ldg,'lhtdg'=>$lhtdg,'count_ct'=>$count_ct,'count_groupCT'=>$count_groupCT,
-           'hocphan_loai_htdg_array'=>$hocphan_loai_htdg_array]);
+       
+        //    return view('giangvien.quyhoach.quyhoachketqua',['qh'=>$qh,'hp'=>$hp,
+        //    'ldg'=>$ldg,'lhtdg'=>$lhtdg,'count_ct'=>$count_ct,'count_groupCT'=>$count_groupCT,
+        //    'hocphan_loai_htdg_array'=>$hocphan_loai_htdg_array]);
+
+       
+        return view('giangvien.quyhoach.quyhoach2',compact('hp','gd','qh','ldg','lhtdg','count_ct','count_groupCT','hocphan_loai_htdg_array','chuong'));
+        
 
     }
     public function chon_nhom_cong_thuc(Request $request)
@@ -831,6 +846,7 @@ class quyhoachController extends Controller
     //xem tiêu chí đánh giá
     public function xem_tieu_chi_danh_gia($maCTBaiQH)
     {
+             Session::put('maCTBaiQH',$maCTBaiQH);
              //ct_bai-quy_hoach->noi_dung_quy_hoach
              $ndQh=noiDungQH::where('noi_dung_quy_hoach.isDelete',false)
              ->where('noi_dung_quy_hoach.maCTBaiQH',$maCTBaiQH)

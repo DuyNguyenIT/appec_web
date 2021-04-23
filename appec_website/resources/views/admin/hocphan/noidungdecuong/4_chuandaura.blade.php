@@ -4,7 +4,7 @@
       <th colspan="2"></th>
       <th style="background-color: green">{{ __('Satisfy LOs of the program') }}</th> 
       <th style="background-color: green">{{ __('Satisfy Abet') }}</th> 
-      <th style="background-color: green">Option</th>                     
+      <th style="background-color: green">{{ __('Option') }}</th>                     
   </thead>
   <tbody>
      @foreach ($CDR1 as $cdr1)
@@ -33,11 +33,11 @@
                     </div>
                     <div class="form-group">
                         <label for=""> {{ _('Studying results ID') }}:</label>
-                        <input type="text" name="maKQHTVB" placeholder="L1,L2,..." class="form-control">
+                        <input type="text" name="maKQHTVB" placeholder="" class="form-control">
                     </div>
                     <div class="form-group">
                       <label for=""> {{ __('studying results content') }}:</label>
-                      <input type="text" name="tenKQHT" placeholder="Ph�n t�ch, kh�i ni&#7879;m, m� t&#7843;,..." class="form-control">
+                      <input type="text" name="tenKQHT" placeholder="" class="form-control">
                     </div>
                     <div class="form-group">
                       <label for=""> {{ __('Level-3 outcome') }}:</label>
@@ -63,8 +63,8 @@
                     </div>
                   </div>
                   <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Save</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Cancel') }}</button>
                   </div>
                 </div>
                 </form>

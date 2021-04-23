@@ -20,7 +20,7 @@ class GVMucController extends Controller
         Session::put('maChuong',$maChuong);
         $chuong=chuong::where('id',$maChuong)->first();
         $muc=muc::where('id_chuong',$maChuong)->with('chuong')->get();
-        $hocphan=hocPhan::where('maHocPhan',session::get('maHocPhan_chuong'))->first();
+        $hocphan=hocPhan::where('maHocPhan',session::get('maChuong'))->first();
         return view('giangvien.hocphan.chuong.muc.index',compact('muc','chuong','hocphan'));
     }
 
@@ -28,10 +28,12 @@ class GVMucController extends Controller
     public function cau_hoi_tu_luan($maMuc)
     {
         Session::put('maMuc',$maMuc);
-        // return Session::get('maHocPhan_chuong');
-        $hocphan=hocPhan::where('maHocPhan',session::get('maHocPhan_chuong'))->first();
+        $muc=muc::where('id',$maMuc)->first();  
+        $chuong=chuong::where('id',$muc->id_chuong)->first();
+        Session::put('maChuong',$muc->id_chuong);
+        $hocphan=hocPhan::where('maHocPhan',$chuong->maHocPhan)->first();
         $kqht_arr=hocPhan_kqHTHP::where('hocphan_kqht_hp.isDelete',false)
-        ->where('hocphan_kqht_hp.maHocPhan',Session::get('maHocPhan_chuong'))
+        ->where('hocphan_kqht_hp.maHocPhan',$chuong->maHocPhan)
         ->distinct('hocphan_kqht_hp.maKQHT')
         ->join('kqht_hp',function($x){
             $x->on('hocphan_kqht_hp.maKQHT','=','kqht_hp.maKQHT')
@@ -40,9 +42,7 @@ class GVMucController extends Controller
         ->pluck('hocphan_kqht_hp.maKQHT');
         $kqht=kqHTHP::whereIn('maKQHT',$kqht_arr)->get();
         $cauhoi =cauHoi::where('id_muc',$maMuc)->where('maLoaiHTDG','T1')->get();
-
-        $chuong=chuong::where('id',Session::get('maChuong'))->first();
-        $muc=muc::where('id',$maMuc)->first();  
+      
         return view('giangvien.hocphan.chuong.muc.cauhoi.index_tuluan',
         compact('hocphan','kqht','cauhoi','muc','chuong'));
     }
@@ -73,12 +73,15 @@ class GVMucController extends Controller
     public function cau_hoi_trac_nghiem(Request $request,$maMuc)
     {
         $request->session()->put('maMuc', $maMuc);
-        # code...
-        $hocphan=hocPhan::where('maHocPhan',session::get('maHocPhan_chuong'))->first();
-        $cauHoi=cauHoi::where('id_muc',$maMuc)->where('maLoaiHTDG','T2')->with('phuong_an_trac_nghiem')->get();
-        $chuong=chuong::where('id',Session::get('maChuong'))->first();
         $muc=muc::where('id',$maMuc)->first();  
-        $cdr3=hocPhan::where('hoc_phan.maHocPhan',Session::get('maHocPhan_chuong'))
+        $chuong=chuong::where('id',$muc->id_chuong)->first();
+        Session::put('maChuong',$muc->id_chuong);
+        # code...
+        $hocphan=hocPhan::where('maHocPhan',$chuong->maHocPhan)->first();
+        $cauHoi=cauHoi::where('id_muc',$maMuc)->where('maLoaiHTDG','T2')->with('phuong_an_trac_nghiem')->get();
+        
+      
+        $cdr3=hocPhan::where('hoc_phan.maHocPhan',$chuong->maHocPhan)
         ->join('hocphan_kqht_hp',function($x){
             $x->on('hocphan_kqht_hp.maHocPhan','=','hoc_phan.maHocPhan')
             ->where('hocphan_kqht_hp.isDelete',false);
@@ -89,8 +92,9 @@ class GVMucController extends Controller
             ->where('cdr_cd3.isDelete',false);
         })
         ->get(['hocphan_kqht_hp.maCDR3','cdr_cd3.maCDR3VB','cdr_cd3.tenCDR3']);
+        
         $kqht_arr=hocPhan_kqHTHP::where('hocphan_kqht_hp.isDelete',false)
-        ->where('hocphan_kqht_hp.maHocPhan',Session::get('maHocPhan_chuong'))
+        ->where('hocphan_kqht_hp.maHocPhan',$chuong->maHocPhan)
         ->distinct('hocphan_kqht_hp.maKQHT')
         ->join('kqht_hp',function($x){
             $x->on('hocphan_kqht_hp.maKQHT','=','kqht_hp.maKQHT')
@@ -150,11 +154,14 @@ class GVMucController extends Controller
     public function cau_hoi_thuc_hanh(Request $request,$maMuc)
     {
         $request->session()->put('maMuc', $maMuc);
+        $muc=muc::where('id',$maMuc)->first();  
+        $chuong=chuong::where('id',$muc->id_chuong)->first();
+        Session::put('maChuong',$muc->id_chuong);
         # code...
-        $hocphan=hocPhan::where('maHocPhan',session::get('maHocPhan_chuong'))->first();
+        $hocphan=hocPhan::where('maHocPhan',$chuong->maHocPhan)->first();
         $cauhoi=cauHoi::where('id_muc',$maMuc)->where('maLoaiHTDG','T3')->with('kqht')->get();
         $kqht_arr=hocPhan_kqHTHP::where('hocphan_kqht_hp.isDelete',false)
-        ->where('hocphan_kqht_hp.maHocPhan',Session::get('maHocPhan_chuong'))
+        ->where('hocphan_kqht_hp.maHocPhan',$chuong->maHocPhan)
         ->distinct('hocphan_kqht_hp.maKQHT')
         ->join('kqht_hp',function($x){
             $x->on('hocphan_kqht_hp.maKQHT','=','kqht_hp.maKQHT')
@@ -162,8 +169,8 @@ class GVMucController extends Controller
         })
         ->pluck('hocphan_kqht_hp.maKQHT');
         $kqht=kqHTHP::whereIn('maKQHT',$kqht_arr)->get();
-        $chuong=chuong::where('id',Session::get('maChuong'))->first();
-        $muc=muc::where('id',$maMuc)->first();  
+      
+        
         return view('giangvien.hocphan.chuong.muc.cauhoi.index_thuchanh',
         compact('hocphan','cauhoi','kqht','chuong','muc'));
     }

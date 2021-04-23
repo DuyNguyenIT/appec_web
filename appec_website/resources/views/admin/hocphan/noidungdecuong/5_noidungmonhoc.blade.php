@@ -59,12 +59,12 @@
 
       </th>
       <th rowspan="2">Chuẩn đầu ra học phần lý thuyết</th>
-      <th colspan="3"> Số tiết</th>
+      <th colspan="3"> {{ __('Number of learning periods') }}</th>
     </tr>
     <tr>
-      <th>Lý thuyết</th>
-      <th>Thực hành</th>
-      <th>Khác</th>
+      <th>{{ __('Theory') }}</th>
+      <th>{{ __('Practice') }}</th>
+      <th>{{ __('Others') }}</th>
     </tr>
   </thead>
   <tbody>
@@ -105,8 +105,8 @@
 
               </div>
               <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Save</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Cancel') }}</button>
               </div>
             </div>
           </form>
@@ -161,8 +161,8 @@
 
               </div>
               <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Save</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Cancel') }}</button>
               </div>
             </div>
           </form>
@@ -195,7 +195,7 @@
     @endforeach
    @foreach ($CDR1 as $x)
     <tr>
-        <td><b>Topic: {{ $x->tenCDR1 }}</b></td>
+        <td><b>{{ __('Topic') }}: {{ $x->tenCDR1 }}</b></td>
         <td colspan="4">
           @foreach ($mudokynangUIT as $uit)
             @if ($uit->maCDR1==$x->maCDR1 && $uit->id_chuong==$data->id)

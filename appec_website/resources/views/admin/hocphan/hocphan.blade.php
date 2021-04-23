@@ -7,7 +7,7 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1 class="m-0 text-dark">
-              Course Management<noscript></noscript>
+              {{ __('Course') }}<noscript></noscript>
               <nav></nav>
               
             </h1>
@@ -15,8 +15,8 @@
           <!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ asset('/quan-ly') }}">Home</a></li>
-              <li class="breadcrumb-item active">Course</li>
+              <li class="breadcrumb-item"><a href="{{ asset('/quan-ly') }}">{{ __('Home') }}</a></li>
+              <li class="breadcrumb-item active">{{ __('Course') }}</li>
             </ol>
           </div>
           <!-- /.col -->
@@ -54,7 +54,7 @@
                      <!-- <button type="button" class="btn btn-primary">
                         <i class="fas fa-plus"></i>-->
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                          <i class="fas fa-plus"></i>Add
+                          <i class="fas fa-plus"></i>{{ __('Add') }}
                       </button>
                   <!-- </a>-->
 
@@ -66,18 +66,18 @@
                     @csrf
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">Adding a new course</h5>
+                          <h5 class="modal-title" id="exampleModalLabel">{{ __('Adding a new course') }}</h5>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
                         </div>
                         <div class="modal-body">
                           <div class="form-group">
-                            <label for="">Course ID</label>
+                            <label for="">{{ __('Course ID') }}</label>
                             <input type="text" name="maHocPhan" class="form-control" required>
                           </div>
                           <div class="form-group">
-                            <label for="">Course Name</label>
+                            <label for="">{{ __('Course Name') }}</label>
                             <input type="text" name="tenHocPhan" class="form-control" required>
                           </div>
                           <!-- <div class="form-group">
@@ -85,15 +85,15 @@
                             <input type="number" name="tongSoTinChi" class="form-control">
                           </div>-->
                           <div class="form-group">
-                            <label for="">Number of Theory Credits</label>
+                            <label for="">{{ __('Number of Theory Credits') }}</label>
                             <input type="number" name="tinChiLyThuyet" class="form-control" required>
                           </div>
                           <div class="form-group">
-                            <label for="">Number of Practice Credits</label>
+                            <label for="">{{ __('Number of Practice Credits') }}</label>
                             <input type="number" name="tinChiThucHanh" class="form-control" required>
                           </div>
                           <div class="form-group">
-                            <label for="">Knowledge block</label>
+                            <label for="">{{ __('Knowledge block') }}</label>
                             <select name="maCTKhoiKT" id="" class="form-control" required>
                               @foreach ($ctkhoi as $x)
                                   <option value="{{$x->maCTKhoiKT}}">{{$x->maCTKhoiKT}} - {{$x->tenCTKhoiKT}}</option>
@@ -101,7 +101,7 @@
                             </select>
                           </div>
                           <div class="form-group">
-                            <label for="">Curriculum</label>
+                            <label for="">{{ __('Curriculum') }}</label>
                             <select name="maCT" id="" class="form-control" required>
                               @foreach ($ctdt as $y)
                                 <option value="{{$y->maCT}}" > {{$y->tenCT}}</option>
@@ -109,11 +109,11 @@
                             </select>
                           </div>
                           <div class="form-group">
-                            <label for="">Phân ph&#7889;i h&#7885;c kì</label>
-                            <input type="number" min="1" max="4" name="phanPhoiHocKy" class="form-control"  required>
+                            <label for="">{{ __('Semester') }}</label>
+                            <input type="number" min="1" max="8" name="phanPhoiHocKy" class="form-control"  required>
                           </div>
                           <div class="form-group">
-                            <label for="">Course Type</label>
+                            <label for="">{{ __('Course Type') }}</label>
                             <select name="maLoaiHocPhan" id="" class="form-control" required>
                               @foreach ($loaihp as $z)
                                 <option value="{{$z->maLoaiHocPhan}}"> {{$z->tenLoaiHocPhan}}</option>
@@ -121,13 +121,13 @@
                             </select>
                           </div>
                           <div class="form-group">
-                            <label for="">Course Description</label>
+                            <label for="">{{ __('Course Description') }}</label>
                             <textarea name="moTaHocPhan" class="form-control"></textarea>
                           </div>
                         </div>
                         <div class="modal-footer">
-                          <button type="submit" class="btn btn-primary">Save</button>
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                          <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Cancel') }}</button>
                         </div>
                       </div>
                   </form>
@@ -142,14 +142,15 @@
                 <table id="example2" class="table table-bordered table-hover">
                   <thead>
                     <tr>
-                      <th>No.</th>
-                      <th>Course ID</th>
-                      <th>Course Name</th>
-                      <th>Total Credits</th>
-                      <th>Number of Theory Credits</th>
-                      <th>Number of Practice Credits</th>
-                      <th>Knowledge block</th>
-                      <th>Management Functions</th>
+                      <th>{{ __('No.') }}</th>
+                      <th>{{ __('Course ID') }}</th>
+                      <th>{{ __('Course Name') }}</th>
+                      <th>{{ __('Total Credits') }}</th>
+                      <th>{{ __('Number of Theory Credits') }}</th>
+                      <th>{{ __('Number of Practice Credits') }}</th>
+                      <th>{{ __('Knowledge block') }}</th>
+                      <th>{{ __('Curriculum') }}</th>
+                      <th>{{ __('Option') }}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -164,10 +165,75 @@
                           <td>{{$hp->tongSoTinChi}}</td>
                           <td>{{$hp->tinChiLyThuyet}}</td>
                           <td>{{$hp->tinChiThucHanh}}</td>
-                          <td>{{$hp->ctkhoi->tenCTKhoiKT}}</td>
-                          <td style='white-space: nowrap'> 
+                          <td>
+                            @if (Session::has('language')&& Session::get('language'))
+                                {{$hp->ctkhoi->tenCTKhoiKTEN}}
+                            @else
+                               {{$hp->ctkhoi->tenCTKhoiKT}}
+                            @endif
+                            
+                          </td>
+                          <td>
+
+                            @foreach ($hp->hocphan_ctdt as $item)
+                               <li>{{ $item->tenCT }}- <b>HK {{ $item->phanPhoiHocKy }}</b> ; </li> 
+                            @endforeach
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_CT_{{$hp->maHocPhan }}">
+                              <i class="fas fa-plus"></i>
+                            </button>
+                            <a href="{{ asset('quan-ly/hoc-phan/hoc-phan-ct-dao-tao/'.$hp->maHocPhan) }}" class="btn btn-primary">...</a>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="add_CT_{{$hp->maHocPhan }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <form action="{{ asset('quan-ly/hoc-phan/them-hoc-phan-ctdt') }}" method="post">
+                                  @csrf
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLabel">{{ __('Add') }}</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <input type="text" name="maHocPhan" value="{{ $hp->maHocPhan }}" hidden>
+                                      <div class="form-group">
+                                        <label for="">{{ __('Curriculum') }}</label>
+                                        <select name="maCT" id="" class="form-control" required>
+                                          @foreach ($ctdt as $y)
+                                            <option value="{{$y->maCT}}" > {{$y->tenCT}}</option>
+                                          @endforeach
+                                        </select>
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="">{{ __('Semester') }}</label>
+                                        <input type="number" min="1" max="8" name="phanPhoiHocKy" class="form-control"  required>
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="">{{ __('Course Type') }}</label>
+                                        <select name="maLoaiHocPhan" id="" class="form-control" required>
+                                          @foreach ($loaihp as $z)
+                                            <option value="{{$z->maLoaiHocPhan}}"> {{$z->tenLoaiHocPhan}}</option>
+                                          @endforeach
+                                        </select>
+                                      </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Cancle') }}</button>
+                                     
+                                    </div>
+                                  </div>
+                                </form>
+                                
+                              </div>
+                            </div>
+
+                          </td>
+                          <td> 
                             <a href=" {{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.$hp->maHocPhan) }}" class="btn btn-success">
-                              <i class="fas fa-align-justify"></i> Course Syllabus
+                              <i class="fas fa-align-justify"></i> {{ __('Course Syllabus') }}
                             </a>
   
                               <button title="Edit" class="btn btn-success" data-toggle="modal" data-target="#edit_{{$hp->maHocPhan}}">
@@ -189,19 +255,19 @@
                                   <div class="modal-body">
                                     <input type="text" name="maHocPhan" value="{{$hp->maHocPhan}}" class="form-control" hidden>
                                     <div class="form-group">
-                                      <label for="">Course Name</label>
+                                      <label for="">{{ __('Course Name') }}</label>
                                       <input type="text" name="tenHocPhan" class="form-control" value="{{$hp->tenHocPhan}}" required>
                                     </div>
                                     <div class="form-group">
-                                      <label for="">Number of Theory Credits</label>
+                                      <label for="">{{ __('Number of Theory Credits') }}</label>
                                       <input type="number" name="tinChiLyThuyet" class="form-control" value="{{$hp->tinChiLyThuyet}}" required>
                                     </div>
                                     <div class="form-group">
-                                      <label for="">Number of Practice Credits</label>
+                                      <label for="">{{ __('Number of Practice Credits') }}</label>
                                       <input type="number" name="tinChiThucHanh" class="form-control" value="{{$hp->tinChiThucHanh}}" required>
                                     </div>
                                     <div class="form-group">
-                                      <label for="">Knowledge block</label>
+                                      <label for="">{{ __('Knowledge block') }}</label>
                                       <select name="maCTKhoiKT" id="" class="form-control" required>
                                         @foreach ($ctkhoi as $x)
                                           @if ($hp->ctkhoi->maCTKhoiKT==$x->maCTKhoiKT)
@@ -214,7 +280,7 @@
                                       </select>
                                     </div>
                                     <div class="form-group">
-                                      <label for="">Course Description</label>
+                                      <label for="">{{ __('Course Description') }}</label>
                                       <textarea name="moTaHocPhan" class="form-control" >{{$hp->moTaHocPhan}}</textarea>
                                     </div>
                                   </div>

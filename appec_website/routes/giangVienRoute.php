@@ -90,6 +90,9 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiangVien'], function (){
                     
 
                     Route::prefix('xem-noi-dung-danh-gia')->group(function () {
+                         //ngân hàng câu hỏi
+                         Route::get('ngan-hang-cau-hoi', 'GVChuongController@ngan_hang_cau_hoi');
+                         
                          //xem nội dung
                          Route::get('/{maCTBaiQH}', 'quyhoachController@xem_noi_dung_danh_gia');
                          //tự luận
@@ -109,7 +112,10 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiangVien'], function (){
                          Route::post('/them-cau-hoi-trac-nghiem','quyhoachController@them_cau_hoi_de_trac_nghiem');
                          Route::get('/in-de-trac-nghiem/{maDe}/{maHocPhan}','GVWordController@in_de_thi_trac_nghiem');
                     });
+
                }); 
+
+               
            });
           //đề đánh giá
           Route::group(['prefix' => 'de-danh-gia'], function () {

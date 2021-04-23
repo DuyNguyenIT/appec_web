@@ -45,8 +45,8 @@
                           </div>
                         </div>
                         <div class="modal-footer">
-                          <button type="submit" class="btn btn-primary">Save</button>
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                          <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Cancel') }}</button>
                         </div>
                       </div>
                     </form>
@@ -100,8 +100,8 @@
                             </div>
                           </div>
                           <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Save</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Cancel') }}</button>
                           </div>
                         </div>
                         </form>
@@ -111,7 +111,7 @@
                 </td>
                </tr>
                <tr>
-                  <td>{{ __('Other learning materials ') }}</td>
+                  <td>{{ __('Other learning materials') }}</td>
                   <td>
                     @if ($tailieu)
                          {!! $tailieu->taiLieuKhac  !!}
@@ -155,8 +155,8 @@
                       </div>
                     </div>
                     <div class="modal-footer">
-                      <button type="submit" class="btn btn-primary">Save</button>
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                      <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Cancel') }}</button>
                     </div>
                   </div>
                   </form>

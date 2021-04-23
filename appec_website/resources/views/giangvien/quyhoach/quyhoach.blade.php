@@ -9,16 +9,16 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1 class="m-0 text-dark">
-              Quy hoạch đánh giá KQHT<noscript></noscript>
+              {{ __('Assessment Planning') }}<noscript></noscript>
               <nav></nav>
             </h1>
           </div>
           <!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+              <li class="breadcrumb-item"><a href="{{ asset('/giang-vien') }}">{{ __('Home') }}</a></li>
               <li class="breadcrumb-item active">
-                Quy hoạch đánh giá KQHT
+                {{ __('Assessment Planning') }}
               </li>
             </ol>
           </div>
@@ -69,12 +69,12 @@
                   class="table table-bordered table-hover">
                 <thead>
                   <tr>
-                    <th >STT</th>
-                    <th >Tên học phần</th>
-                    <th >Học kì</th>
-                    <th >Năm học</th>
-                    <th >Mã lớp</th>
-                    <th >Tùy chọn</th></tr>
+                    <th >{{ __('No.') }}</th>
+                    <th >{{ __('Course name') }}</th>
+                    <th >{{ __('Semester') }}</th>
+                    <th >{{ __('Academic year') }}</th>
+                    <th >{{ __('Class ID') }}</th>
+                    <th >{{ __('Option') }}</th></tr>
                 </thead>
                 <tbody>
                
@@ -95,7 +95,7 @@
                       <td>
                       
                         <a href="{{ asset('giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/'.$item->maHocPhan.'/'.$item->maBaiQH.'/'.$item->maHK.'/'.$item->namHoc.'/'.$item->maLop) }}" class="btn btn-success">
-                            <i class="fas fa-align-justify"></i> Quy hoạch KQHT                  
+                            <i class="fas fa-align-justify"></i> {{ __('Assessment Planning') }}            
                         </a>
                       </td>
                     </tr>

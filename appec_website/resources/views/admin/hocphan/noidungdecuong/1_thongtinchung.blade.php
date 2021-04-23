@@ -1,10 +1,10 @@
-<h5><b>1. General information</b></h5>    <!-- ----------------------------------1. Thông tin chung-------------------- -->
+<h5><b>1. {{ __('General information') }}</b></h5>    <!-- ----------------------------------1. Thông tin chung-------------------- -->
               <table class="table table-bordered">
                 <thead class="thead-green" style="background-color: green">
                   <tr>
-                    <th>Course type</th>
-                    <th>Number of credits</th>
-                    <th>Number of learning periods</th>
+                    <th>{{ __('Course type') }}</th>
+                    <th>{{ __('Number of credits') }}</th>
+                    <th>{{ __('Number of learning periods') }}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -17,23 +17,23 @@
                       @endphp
                       @if (in_array($hocPhan->maCTKhoiKT,$daicuong))
                         <ul>
-                          <li>General   <i class="far fa-check-square"></i>
-                          <li>Basic   
-                          <li>Specialized 
+                          <li>{{ __('General ') }}   <i class="far fa-check-square"></i>
+                          <li>{{ __('Basic ') }}   
+                          <li>{{ __('Specialized ') }}
                         </ul>
                       @else
                           @if (in_array($hocPhan->maCTKhoiKT,$coso))
                             <ul>
-                              <li>General   
-                              <li>Basic    <i class="far fa-check-square"></i>
-                              <li>Specialized 
+                              <li>{{ __('General ') }}   
+                              <li>{{ __('Basic ') }}    <i class="far fa-check-square"></i>
+                              <li>{{ __('Specialized ') }}
                             </ul>
                           @else
                             @if (in_array($hocPhan->maCTKhoiKT,$chuyennganh))
                                 <ul>
-                                <li>General   
-                                <li>Basic   
-                                <li>Specialized  <i class="far fa-check-square"></i>
+                                <li>{{ __('General ') }}   
+                                <li>{{ __('Basic ') }}   
+                                <li>{{ __('Specialized ') }} <i class="far fa-check-square"></i>
                               </ul>
                             @endif
                           @endif
@@ -95,7 +95,7 @@
                     @csrf
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Thêm môn tiên quyết</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">{{ __('Adding prerequisites') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
@@ -103,7 +103,7 @@
                       <div class="modal-body">
 
                         <div class="form-group">
-                          <label for="">Chọn môn tiên quyết</label>
+                          <label for="">{{ __('Choosing prerequisites') }}</label>
                           <input type="text" name="maHocPhan" value="{{ $hocPhan->maHocPhan }}" hidden>
                           <select name="maMonTienQuyet" id="" class="form-control">
                               @foreach ($monHoc as $data)
@@ -113,8 +113,8 @@
                         </div>
                       </div>
                       <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Save </button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">{{ __('Save') }} </button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Cancel') }}</button>
                       </div>
                     </div>
                     

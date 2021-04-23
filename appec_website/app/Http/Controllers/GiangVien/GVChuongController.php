@@ -14,11 +14,18 @@ class GVChuongController extends Controller
     public function index($maHocPhan)
     {
         Session::put('maHocPhan_chuong',$maHocPhan);
-        $chuong=chuong::where('isdelete',false)->where('maHocPhan',$maHocPhan)->orderBy('id','asc')->with('hocphan')->get();
+        $chuong=chuong::where('isdelete',false)->where('maHocPhan',$maHocPhan)->orderBy('id','asc')->with('muc')->get();
         $hocphan=hocPhan::where('maHocPhan',$maHocPhan)->first();
         return view('giangvien.hocphan.chuong.index',['chuong'=>$chuong,'hocPhan'=>$hocphan]);
     }
 
+    public function ngan_hang_cau_hoi()
+    {
+        $chuong=chuong::where('isdelete',false)->where('maHocPhan',Session::get('maHocPhan'))->orderBy('id','asc')->with('muc')->get();
+        $hocphan=hocPhan::where('maHocPhan',Session::get('maHocPhan'))->first();
+        //return $chuong[0];
+        return view('giangvien.quyhoach.noidungdanhgia.nganHangCauHoi',['chuong'=>$chuong,'hocPhan'=>$hocphan]);
+    }
     public function them(Request $request)
     {
         try {
@@ -26,7 +33,6 @@ class GVChuongController extends Controller
             'tenkhongdau'=>CommonController::con_str($request->tenchuong),
             'mota'=>$request->mota,
             'maHocPhan'=>Session::get('maHocPhan_chuong')]);
-
             return redirect('giang-vien/hoc-phan/chuong/'.Session::get('maHocPhan_chuong'))->with('success','Thêm thành công');
         } catch (\Throwable $th) {
             return redirect('giang-vien/hoc-phan/chuong/'.Session::get('maHocPhan_chuong'))->with('warning','Có lỗi '.$th);

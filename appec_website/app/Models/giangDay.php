@@ -11,4 +11,5 @@ class giangDay extends Model
     use HasFactory;
     protected $table='giangday';
     public $fillable=['maHocPhan','maLop','maGV','maHK','namHoc','maBaiQH','maCDR3'];
+    
 }

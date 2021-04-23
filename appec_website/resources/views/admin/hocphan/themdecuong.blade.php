@@ -1,5 +1,7 @@
 @extends('admin.no_menu_master')
 @section('content')
+<link rel="stylesheet" href="{{ asset('dist/css/themdecuong.css') }}">
+
 <div class="content-wrapper" style="min-height: 22px;">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -59,22 +61,57 @@
               <a class="btn btn-primary" href="{{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/in-de-cuong-mon-hoc/'.$hocPhan->maHocPhan) }}">{{ __('Printing') }}</a>
               <!-- /.card-header -->
               <div class="card-body">
-                {{-- 1.Thong tin chung --}}
+              <button class="tablink" onclick="openPage('P1', this, 'blue')" id="defaultOpen">1. {{ __('General information') }}</button>
+              <button class="tablink" onclick="openPage('P2', this, 'blue')" >2. {{ __('Learning resources') }}</button>
+              <button class="tablink" onclick="openPage('P3', this, 'blue')">3. {{ __('Course description') }}</button>
+              <button class="tablink" onclick="openPage('P4', this, 'blue')">4. {{ __('Course learning outcomes') }} (CLOs)</button>
+              <button class="tablink" onclick="openPage('P5', this, 'blue')">5. {{ __('Course contents') }}</button>
+              <button class="tablink" onclick="openPage('P6', this, 'blue')">6. {{ __('Teaching and learning methods') }}</button>
+              <button class="tablink" onclick="openPage('P7', this, 'blue')">7. {{ __('Course assessment') }}</button>
+              <button class="tablink" onclick="openPage('P8', this, 'blue')">8. {{ __('Course requirements and expectations') }}</button>
+              
+              <div id="P1" class="tabcontent">
+                 {{-- 1.Thong tin chung --}}
               @include('admin.hocphan.noidungdecuong.1_thongtinchung')
-                  {{-- 2--tai lieu tham khao --}}
+              </div>
+              
+              <div id="P2" class="tabcontent">
+                   {{-- 2--tai lieu tham khao --}}
               @include('admin.hocphan.noidungdecuong.2_tailieuthamkhao')
-                {{-- 3--Mo ta hoc phan --}}
+              </div>
+              
+              <div id="P3" class="tabcontent">
+                  {{-- 3--Mo ta hoc phan --}}
               @include('admin.hocphan.noidungdecuong.3_motahocphan')
-                  {{-- 4 chuan dau ra mon hoc --}}
+              </div>
+              
+              <div id="P4" class="tabcontent">
+                 {{-- 4 chuan dau ra mon hoc --}}
               @include('admin.hocphan.noidungdecuong.4_chuandaura')
+              </div>
+              <div id="P5" class="tabcontent">
+                     
                 {{-- 5--Noi dung mon hoc --}}
               @include('admin.hocphan.noidungdecuong.5_noidungmonhoc')
+              </div>
+              <div id="P6" class="tabcontent">
               {{-- 6---Phương pháp giảng dạy --}}
               @include('admin.hocphan.noidungdecuong.6_phuongphapgiangday')
+              </div>
+              <div id="P7" class="tabcontent">
               {{-- 7 phuong thuc danh gia --}}
               @include('admin.hocphan.noidungdecuong.7_phuongthucdanhgia')
-                {{-- 8 cac quy dinh chung --}}
+              </div>
+              <div id="P8" class="tabcontent">
+              {{-- 8 cac quy dinh chung --}}
               @include('admin.hocphan.noidungdecuong.8_cacquydinhchung')
+              </div>
+               
+              
+           
+           
+         
+              
            
               </div>
               <!-- /.card-body -->
@@ -89,4 +126,22 @@
     </section>
     <!-- /.content -->
   </div>
+  <script>
+    function openPage(pageName,elmnt,color) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablink");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].style.backgroundColor = "";
+      }
+      document.getElementById(pageName).style.display = "block";
+      elmnt.style.backgroundColor = color;
+    }
+    
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+    </script>
 @endsection

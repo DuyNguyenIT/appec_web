@@ -48,6 +48,12 @@
    <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+   
+    <!-- jQuery -->
+    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
   </head>
   <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
@@ -66,7 +72,7 @@
         </ul>
 
         <!-- SEARCH FORM -->
-        <form class="form-inline ml-3">
+        {{-- <form class="form-inline ml-3">
           <div class="input-group input-group-sm">
             <input
               class="form-control form-control-navbar" type="search"
@@ -78,7 +84,7 @@
               </button>
             </div>
           </div>
-        </form>
+        </form> --}}
 
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
@@ -195,12 +201,12 @@
                 </a>
               </li> --}}
               
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a href="{{ asset('/giang-vien/ket-qua-danh-gia') }}" class="nav-link">
                   <i class="nav-icon fas fa-user-friends"></i>
                   <p>{{ __('Assessment Result') }}</p>
                 </a>
-              </li>
+              </li> --}}
 
               <li class="nav-item">
                 <a href="{{ asset('/giang-vien/cham-diem-bao-cao') }}" class="nav-link">
@@ -237,11 +243,7 @@
     </div>
     <!-- ./wrapper -->
 
-    <!-- jQuery -->
-    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
-    <!-- jQuery UI 1.11.4 -->
-    <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
-    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+
     <script>
       $.widget.bridge("uibutton", $.ui.button);
     </script>

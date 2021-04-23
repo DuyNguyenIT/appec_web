@@ -56,9 +56,9 @@
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                   <tr>
-                    <th>Order</th>
-                    <th>Item name</th>
-                    <th>Option</th>
+                    <th>{{ __('No.') }}</th>
+                    <th>{{ __('Item name') }}</th>
+                    <th>{{ __('Option') }}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -70,15 +70,10 @@
                     <td>{{$i++}}</td>
                     <td>{{ $data->tenMuc }}</td>
                     <td>
-                      <a href="{{ asset('/giang-vien/hoc-phan/chuong/muc/cau-hoi-tu-luan/'.$data->id) }}" class="btn btn-primary">Câu hỏi tự luận</a>
-                      <a href="{{ asset('/giang-vien/hoc-phan/chuong/muc/cau-hoi-trac-nghiem/'.$data->id) }}" class="btn btn-success">Câu hỏi trắc nghiệm</a>
-                      <a href="{{ asset('/giang-vien/hoc-phan/chuong/muc/cau-hoi-thuc-hanh/'.$data->id) }}" class="btn btn-info">Câu hỏi thực hành</a>
+                        
                     </td>
                   </tr>
                   @endforeach
-                 
-                  
-                  
                 </tbody>
                 <tfoot></tfoot>
               </table>
