@@ -10,15 +10,15 @@
             <div class="row mb-2">
               <div class="col-sm-6">
                 <h1 class="m-0 text-dark">
-                  Education level Management<noscript></noscript>
+                  {{ __('Education level') }}<noscript></noscript>
                   <nav></nav>
                 </h1>
               </div>
               <!-- /.col -->
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                  <li class="breadcrumb-item"><a href="#">Home</a></li>
-                  <li class="breadcrumb-item active">Education level</li>
+                  <li class="breadcrumb-item"><a href="{{ asset('quan-ly') }}">{{ __('Home') }}</a></li>
+                  <li class="breadcrumb-item active">{{ __('Education level') }}</li>
                 </ol>
               </div>
               <!-- /.col -->
@@ -37,7 +37,7 @@
                 <div class="card">
                   <div class="card-header">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                      <i class="fas fa-plus"></i>Add
+                      <i class="fas fa-plus"></i>{{ __('Add') }}
                     </button>
 
                     <!-- Modal -->
@@ -47,25 +47,24 @@
                             @csrf
                             <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Adding a new education level</h5>
+                              <h5 class="modal-title" id="exampleModalLabel">{{ __('Adding a new') }} {{ __('education level') }}</h5>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                               </button>
                             </div>
                             <div class="modal-body">
                                 <div class="form-group">
-                                  <label for="">Education level ID</label>
+                                  <label for="">{{ __('Education level ID') }}</label>
                                   <input type="text" name="maBac" class="form-control" required>
                                 </div>
                                 <div class="form-group">
-                                  <label for="">Education level Name</label>
+                                  <label for="">{{ __('Education level Name') }}</label>
                                   <input type="text" name="tenBac" class="form-control" required>
                                 </div>
                             </div>
                             <div class="modal-footer">
-                              <button type="submit" class="btn btn-primary">Save</button>
-
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                              <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Cancel') }}</button>
                             </div>
                           </div>
                         </form>
@@ -79,10 +78,10 @@
                     <table id="example2" class="table table-bordered table-hover" >
                       <thead>
                         <tr>
-                          <th>No.</th>
-                          <th>Education level ID</th>
-                          <th>Education level Name</th>
-                          <th>Management Functions</th>
+                          <th>{{ __('No.') }}</th>
+                          <th>{{ __('Education level ID') }}</th>
+                          <th>{{ __('Education level Name') }}</th>
+                          <th>{{ __('Option') }}</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -108,7 +107,7 @@
                                           @csrf
                                           <div class="modal-content">
                                             <div class="modal-header">
-                                              <h5 class="modal-title" id="exampleModalLabel">Editing Education level Information</h5>
+                                              <h5 class="modal-title" id="exampleModalLabel">{{ __('Editing') }} {{ __('Education level') }} </h5>
                                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                               </button>
@@ -118,13 +117,13 @@
                                               <input type="text" class="form-control" hidden name="maBac" value="{{$item->maBac}}">
                                               </div>
                                               <div class="form-group">
-                                                <label for="">Education level Name</label>
+                                                <label for="">{{ __('Education level Name') }}</label>
                                                 <input type="text" name="tenBac" class="form-control" value="{{$item->tenBac}}" required>
                                               </div>
                                             </div>
                                             <div class="modal-footer">
-                                              <button type="submit" class="btn btn-primary">Update</button>
-                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                              <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
+                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Cancel') }}</button>
                                             </div>
                                           </div>
                                         </form>

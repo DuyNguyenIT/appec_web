@@ -191,7 +191,7 @@
                                                                                         <i class="expanded"><i class="far fa-folder-open"></i></i> {{ $ch->tenchuong }}</a></span>
                                                                                         <ul><div id="chapter_{{ $x->maLoaiHTDG }}_{{ $ch->id }}" class="collapse">
                                                                                             @foreach ($ch->muc as $m)
-                                                                                                <li><span><i class="far fa-file"></i><a href="{{ asset('giang-vien/hoc-phan/chuong/muc/cau-hoi-trac-nghiem/'.$m->id) }}"> {{ $m->maMucVB }} {{ $m->tenMuc }}</a></span></li>
+                                                                                                <li><span><i class="far fa-file"></i><a href="{{ asset('giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/ngan-hang-cau-hoi-trac-nghiem/'.$m->id) }}"> {{ $m->maMucVB }} {{ $m->tenMuc }}</a></span></li>
                                                                                             @endforeach
                                                                                         </ul>
                                                                                     </li>

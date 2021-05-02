@@ -4,13 +4,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Quản lý hệ thống</title>
+    <title>{{ __('Administration') }}</title>
 
     <!-- Google Font: Source Sans Pro -->
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"
-    />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"/>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}" />
     <!-- Ionicons -->
@@ -66,7 +63,7 @@
         <!-- Left navbar links -->
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a href="{{ asset('/quan-ly') }}" class="nav-link">Home</a>
+            <a href="{{ asset('/quan-ly') }}" class="nav-link">{{ __('Home') }}</a>
           </li>
         
          

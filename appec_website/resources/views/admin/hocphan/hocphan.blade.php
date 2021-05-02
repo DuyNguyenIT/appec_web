@@ -50,6 +50,7 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">
+
                   <!-- <a href="themhocphan.html">-->
                      <!-- <button type="button" class="btn btn-primary">
                         <i class="fas fa-plus"></i>-->
@@ -57,8 +58,10 @@
                           <i class="fas fa-plus"></i>{{ __('Add') }}
                       </button>
                   <!-- </a>-->
+                  
 
                 </h3>
+               
                 <!-- PTTMai thêm -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog modal-lg" role="document">

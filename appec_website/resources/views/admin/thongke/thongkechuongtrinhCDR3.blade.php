@@ -66,8 +66,8 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ asset('/quan-ly') }}">Home</a></li>
-              <li class="breadcrumb-item "><a href="{{ asset('/quan-ly/thong-ke') }}">Statistics</a></li>
+              <li class="breadcrumb-item"><a href="{{ asset('/quan-ly') }}">{{ __('Home') }}</a></li>
+              <li class="breadcrumb-item "><a href="{{ asset('/quan-ly/thong-ke') }}">{{ __('Statistics') }}</a></li>
               <li class="breadcrumb-item active">{{$ctdt->tenCT}}</li>
             
             </ol>
@@ -95,8 +95,8 @@
                   
                   <thead>  
                 <tr>
-                  <th class="first" >No.</th>
-                  <th class="second" >Course Name</th>
+                  <th class="first" >{{ __('No.') }}</th>
+                  <th class="second" >{{ __('Course Name') }}</th>
                   @php
                       $tongmon_dapung=[];//biến lưu tổng theo cột CDR3
                     @endphp

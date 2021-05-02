@@ -49,6 +49,7 @@
           <div class="card">
             <div class="card-header">
               <h3 class="card-title">
+                <a href="{{ asset('/giang-vien/hoc-phan/chuong/muc/them-cau-hoi-trac-nghiem/?maMuc='.Session::get('maMuc')) }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addCHTN">
                   <i class="fas fa-plus"></i>

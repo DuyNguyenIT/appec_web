@@ -8,15 +8,15 @@
             <div class="row mb-2">
               <div class="col-sm-6">
                 <h1 class="m-0 text-dark">
-                    Specialized Management<noscript></noscript>
+                    {{ __('Specialized') }} <noscript></noscript>
                   <nav></nav>
                 </h1>
               </div>
               <!-- /.col -->
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                  <li class="breadcrumb-item"><a href="{{ asset('/quan-ly') }}">Home</a></li>
-                  <li class="breadcrumb-item active">Specialized</li>
+                  <li class="breadcrumb-item"><a href="{{ asset('/quan-ly') }}">{{ __('Home') }}</a></li>
+                  <li class="breadcrumb-item active">{{ __('Specialized') }}</li>
                 </ol>
               </div>
               <!-- /.col -->
@@ -27,20 +27,20 @@
         </div>
         <!-- /.content-header -->
         
-    @if(session('success'))
-    <div class="alert alert-success alert-dismissible">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-      <h5><i class="icon fas fa-check"></i> Message!</h5>
-      {{session('success')}}
-    </div>
-  @endif
-  @if(session('warning'))
-    <div class="alert alert-warning alert-dismissible">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-      <h5><i class="icon fas fa-exclamation-triangle"></i> Notification!</h5>
-      {{session('warning')}}
-    </div>
-  @endif
+        @if(session('success'))
+          <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h5><i class="icon fas fa-check"></i> Message!</h5>
+            {{session('success')}}
+          </div>
+        @endif
+        @if(session('warning'))
+          <div class="alert alert-warning alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h5><i class="icon fas fa-exclamation-triangle"></i> Notification!</h5>
+            {{session('warning')}}
+          </div>
+        @endif
         <!-- Main content -->
 
         <section class="content">
@@ -51,7 +51,7 @@
                   <div class="card-header">
                     <h3 class="card-title">
                       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal"  data-toggle="modal">
-                        <i class="fas fa-plus"></i>Add
+                        <i class="fas fa-plus"></i>{{ __('Add') }}
                       </button>
 
                         <!-- Modal -->
@@ -61,19 +61,19 @@
                               @csrf
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModalLabel">Adding a new Specialized</h5>
+                                  <h5 class="modal-title" id="exampleModalLabel">{{ __('Adding a new') }} {{ __('Specialized') }}</h5>
                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                   </button>
                                 </div>
                                 <div class="modal-body">
                                       <div class="form-group">
-                                        <label for="">Specialized Name</label>
+                                        <label for="">{{ __('Specialized Name') }}</label>
                                         <input type="text" name="tenCNganh" class="form-control" required>
                                       </div>
                                 
                                     <div class="form-group">
-                                        <label for="">Major</label>
+                                        <label for="">{{ __('Major') }}</label>
                                         <select name="maNganh" id="" class="form-control">
                                         @foreach ($nganh as $x)
                                             <option value="{{$x->maNganh}}">{{$x->maNganh}} - {{$x->tenNganh}}</option>  
@@ -82,9 +82,9 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="submit" class="btn btn-primary">Save</button>
+                                  <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
 
-                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Cancel') }}</button>
                                 </div>
                               </div>
                             </form>
@@ -95,17 +95,14 @@
                   </div>
                   <!-- /.card-header -->
                   <div class="card-body">
-                    <table
-                      id="example2"
-                      class="table table-bordered table-hover"
-                    >
+                    <table id="example2" class="table table-bordered table-hover">
                       <thead>
                         <tr>
-                          <th>No.</th>
-                          <th>Specialized Name</th>
-                          <th>Major ID</th>
-                          <th>Major</th>
-                          <th>Management Functions</th>
+                          <th>{{ __('No.') }}</th>
+                          <th>{{ __('Specialized Name') }}</th>
+                          <th>{{ __('Major ID') }}</th>
+                          <th>{{ __('Major') }}</th>
+                          <th>{{ __('Option') }}</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -137,7 +134,7 @@
                                           @csrf
                                            <div class="modal-content">
                                               <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Editing Specialized Information</h5>
+                                                <h5 class="modal-title" id="exampleModalLabel">{{ __('Edit') }} {{ __('Specialized') }}</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                   <span aria-hidden="true">&times;</span>
                                                 </button>
@@ -145,11 +142,11 @@
                                               <div class="modal-body">
                                                 <input type="text" name="maCNganh" value="{{$y->maCNganh}}" hidden>
                                                 <div class="form-group">
-                                                  <label for="">Specialized Name</label>
+                                                  <label for="">{{ __('Specialized Name') }}</label>
                                                   <input type="text" name="tenCNganh" class="form-control" value="{{$y->tenCNganh}}" required>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="">Major</label>
+                                                    <label for="">{{ __('Major') }}</label>
                                                     <select name="maNganh" id="" class="form-control">
                                                       @foreach ($nganh as $z)
                                                         @if ($y->nganh->maNganh==$z->maNganh)
@@ -163,8 +160,8 @@
                                                   </div>
                                               </div>
                                               <div class="modal-footer">
-                                                <button type="submit" class="btn btn-primary">Update</button>
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Cancel') }}</button>
                                               </div>
                                             </div>
                                         </form>

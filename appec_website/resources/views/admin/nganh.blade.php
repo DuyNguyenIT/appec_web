@@ -8,15 +8,15 @@
             <div class="row mb-2">
               <div class="col-sm-6">
                 <h1 class="m-0 text-dark">
-                  Majors<noscript></noscript>
+                  {{ __('Majors') }}<noscript></noscript>
                   <nav></nav>
                 </h1>
               </div>
               <!-- /.col -->
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                  <li class="breadcrumb-item"><a href="{{ asset('quan-ly') }}">Home</a></li>
-                  <li class="breadcrumb-item active">Majors</li>
+                  <li class="breadcrumb-item"><a href="{{ asset('quan-ly') }}">{{ __('Home') }}</a></li>
+                  <li class="breadcrumb-item active">{{ __('Majors') }}</li>
                 </ol>
               </div>
               <!-- /.col -->
@@ -27,20 +27,20 @@
         </div>
         <!-- /.content-header -->
         
-    @if(session('success'))
-    <div class="alert alert-success alert-dismissible">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-      <h5><i class="icon fas fa-check"></i> Thông báo!</h5>
-      {{session('success')}}
-    </div>
-  @endif
-  @if(session('warning'))
-    <div class="alert alert-warning alert-dismissible">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-      <h5><i class="icon fas fa-exclamation-triangle"></i> Thông báo!</h5>
-      {{session('warning')}}
-    </div>
-  @endif
+      @if(session('success'))
+      <div class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h5><i class="icon fas fa-check"></i> Thông báo!</h5>
+        {{session('success')}}
+      </div>
+      @endif
+      @if(session('warning'))
+        <div class="alert alert-warning alert-dismissible">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+          <h5><i class="icon fas fa-exclamation-triangle"></i> Thông báo!</h5>
+          {{session('warning')}}
+        </div>
+      @endif
         <!-- Main content -->
 
         <section class="content">
@@ -61,25 +61,25 @@
                               @csrf
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModalLabel">Adding a new majors</h5>
+                                  <h5 class="modal-title" id="exampleModalLabel">{{ __('Adding a new') }} {{ __('Majors') }}</h5>
                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                   </button>
                                 </div>
                                 <div class="modal-body">
                                       <div class="form-group">
-                                        <label for="">Major ID:</label>
+                                        <label for="">{{ __('Major ID') }}:</label>
                                         <input type="text" name="maNganh" class="form-control" required>
                                       </div>
                                       <div class="form-group">
-                                        <label for="">Major name:</label>
+                                        <label for="">{{ __('Major name') }}:</label>
                                         <input type="text" name="tenNganh" class="form-control" required>
                                       </div>
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="submit" class="btn btn-primary">Save</button>
+                                  <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
 
-                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Cancel') }}</button>
                                 </div>
                               </div>
                             </form>
@@ -96,10 +96,10 @@
                     >
                       <thead>
                         <tr>
-                          <th>No.</th>
-                          <th>Major ID</th>
-                          <th>Major name</th>
-                          <th>Option</th>
+                          <th>{{ __('No.') }}</th>
+                          <th>{{ __('Major ID') }}</th>
+                          <th>{{ __('Major name') }}</th>
+                          <th>{{ __('Option') }}</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -138,13 +138,13 @@
                                               <div class="modal-body">
                                                 <input type="text" name="maNganh" value="{{$x->maNganh}}" hidden>
                                                 <div class="form-group">
-                                                  <label for="">Major name:</label>
+                                                  <label for="">{{ __('Major name') }}:</label>
                                                   <input type="text" name="tenNganh" class="form-control" value="{{$x->tenNganh}}" required>
                                                 </div>
                                               </div>
                                               <div class="modal-footer">
-                                                <button type="submit" class="btn btn-primary">Lưu</button>
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                                <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Cancel') }}</button>
                                               </div>
                                             </div>
                                         </form>

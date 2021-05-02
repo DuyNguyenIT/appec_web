@@ -8,6 +8,7 @@ use App\Models\cauHoi;
 use App\Models\chuong;
 use App\Models\kqHTHP;
 use App\Models\hocPhan;
+use App\Models\deThi_cauHoi;
 use Illuminate\Http\Request;
 use App\Models\hocPhan_kqHTHP;
 use App\Models\phuongAnTracNghiem;
@@ -17,6 +18,7 @@ class GVMucController extends Controller
 {
     public function index($maChuong)
     {
+        return $maChuong;
         Session::put('maChuong',$maChuong);
         $chuong=chuong::where('id',$maChuong)->first();
         $muc=muc::where('id_chuong',$maChuong)->with('chuong')->get();
@@ -70,17 +72,25 @@ class GVMucController extends Controller
     }
 
     ///////////////////////////CÂU HỎI TRẮC NGHIỆM///////////////////////////////////////////
-    public function cau_hoi_trac_nghiem(Request $request,$maMuc)
+    public function cau_hoi_trac_nghiem(Request $request,$maMuc)  //show
     {
         $request->session()->put('maMuc', $maMuc);
         $muc=muc::where('id',$maMuc)->first();  
         $chuong=chuong::where('id',$muc->id_chuong)->first();
         Session::put('maChuong',$muc->id_chuong);
-        # code...
+        # hocphan.
         $hocphan=hocPhan::where('maHocPhan',$chuong->maHocPhan)->first();
+        //cau hoi
         $cauHoi=cauHoi::where('id_muc',$maMuc)->where('maLoaiHTDG','T2')->with('phuong_an_trac_nghiem')->get();
+        foreach ($cauHoi as $key => $value) {
+            $temp=kqHTHP::where('maKQHT',$value->maKQHT)->first();
+            if($temp){
+                $value->maKQHTVB=$temp->maKQHTVB;
+                $value->tenKQHT=$temp->tenKQHT;
+            }
+        }
         
-      
+        //combobox cdr
         $cdr3=hocPhan::where('hoc_phan.maHocPhan',$chuong->maHocPhan)
         ->join('hocphan_kqht_hp',function($x){
             $x->on('hocphan_kqht_hp.maHocPhan','=','hoc_phan.maHocPhan')
@@ -93,6 +103,7 @@ class GVMucController extends Controller
         })
         ->get(['hocphan_kqht_hp.maCDR3','cdr_cd3.maCDR3VB','cdr_cd3.tenCDR3']);
         
+        //comboxbox kqht
         $kqht_arr=hocPhan_kqHTHP::where('hocphan_kqht_hp.isDelete',false)
         ->where('hocphan_kqht_hp.maHocPhan',$chuong->maHocPhan)
         ->distinct('hocphan_kqht_hp.maKQHT')
@@ -103,53 +114,159 @@ class GVMucController extends Controller
         ->pluck('hocphan_kqht_hp.maKQHT');
         $kqht=kqHTHP::whereIn('maKQHT',$kqht_arr)->get();
         
-        return view('giangvien.hocphan.chuong.muc.cauhoi.index_tracnghiem',
+        return view('giangvien.quyhoach.cauhoitracnghiem.index',
         compact('chuong','muc','hocphan','cauHoi','cdr3','kqht'));
     }
     
+    public function view_them_trac_nghiem()
+    {
+       
+        $muc=muc::where('id',Session::get('maMuc'))->first();  
+        $chuong=chuong::where('id',$muc->id_chuong)->first();
+
+        //combobox cdr3
+        $cdr3=hocPhan::where('hoc_phan.maHocPhan',$chuong->maHocPhan)
+        ->join('hocphan_kqht_hp',function($x){
+            $x->on('hocphan_kqht_hp.maHocPhan','=','hoc_phan.maHocPhan')
+            ->where('hocphan_kqht_hp.isDelete',false);
+        })
+        ->distinct('hocphan_kqht_hp.maCDR3')
+        ->join('cdr_cd3',function($y){ 
+            $y->on('cdr_cd3.maCDR3','=','hocphan_kqht_hp.maCDR3')
+            ->where('cdr_cd3.isDelete',false);
+        })
+        ->get(['hocphan_kqht_hp.maCDR3','cdr_cd3.maCDR3VB','cdr_cd3.tenCDR3']);
+
+        //combobox abet
+        $abet=hocPhan::where('hoc_phan.maHocPhan',$chuong->maHocPhan)
+        ->join('hocphan_kqht_hp',function($x){
+            $x->on('hocphan_kqht_hp.maHocPhan','=','hoc_phan.maHocPhan')
+            ->where('hocphan_kqht_hp.isDelete',false);
+        })
+        ->distinct('hocphan_kqht_hp.maChuanAbet')
+        ->join('chuan_abet',function($y){ 
+            $y->on('chuan_abet.maChuanAbet','=','hocphan_kqht_hp.maChuanAbet')
+            ->where('chuan_abet.isDelete',false);
+        })
+        ->get(['hocphan_kqht_hp.maChuanAbet','chuan_abet.maChuanAbetVB','chuan_abet.tenChuanAbet']);
+       
+        //combobox kqht
+        $kqht_arr=hocPhan_kqHTHP::where('hocphan_kqht_hp.isDelete',false)
+        ->where('hocphan_kqht_hp.maHocPhan',$chuong->maHocPhan)
+        ->distinct('hocphan_kqht_hp.maKQHT')
+        ->join('kqht_hp',function($x){
+            $x->on('hocphan_kqht_hp.maKQHT','=','kqht_hp.maKQHT')
+            ->where('kqht_hp.isDelete',false);
+        })
+        ->pluck('hocphan_kqht_hp.maKQHT');
+        $kqht=kqHTHP::whereIn('maKQHT',$kqht_arr)->get();
+
+        return view('giangvien.quyhoach.cauhoitracnghiem.them_trac_nghiem',compact('kqht','abet','cdr3'));
+    }
+
     public function them_trac_nghiem(Request $request)
     {
+      
         //thêm câu hỏi mới, điểm câu hỏi thêm mặc định 12
-        cauHoi::create(['noiDungCauHoi'=>$request->noiDungCauHoi,'diemCauHoi'=>12,'maKQHT'=>$request->maKQHT,'maLoaiHTDG'=>'T2','id_loaiCH'=>'1','id_muc'=>Session::get('maMuc')]);
+        cauHoi::create(['noiDungCauHoi'=>$request->noiDungCauHoi,'diemCauHoi'=>12,'maKQHT'=>$request->maKQHT,'maLoaiHTDG'=>'T2','id_muc'=>Session::get('maMuc')]);
         //thêm phương án trắc nghiệm
         $cauhoi=cauHoi::where('isDelete',false)->orderBy('maCauHoi','desc')->first();
-        $diem=0;
         for ($i=0; $i <count($request->phuongAn) ; $i++) { 
-            $diem+=$request->diemPA[$i];
-            if($request->choise==$i){
-                phuongAnTracNghiem::create(['noiDungPA'=>$request->phuongAn[$i],'isCorrect'=>true,'diemPA'=>$request->diemPA[$i],'maCauHoi'=>$cauhoi->maCauHoi,'maCDR3'=>$request->maCDR3]);
+            if($request->choice==$i){
+                phuongAnTracNghiem::create(['noiDungPA'=>$request->phuongAn[$i],'isCorrect'=>true,'diemPA'=>12,
+                'maCauHoi'=>$cauhoi->maCauHoi,'maCDR3'=>$request->maCDR3,'maChuanAbet'=>$request->maChuanAbet]);
             }
             else{
-                phuongAnTracNghiem::create(['noiDungPA'=>$request->phuongAn[$i],'isCorrect'=>false,'diemPA'=>$request->diemPA[$i],'maCauHoi'=>$cauhoi->maCauHoi,'maCDR3'=>$request->maCDR3]);
+                phuongAnTracNghiem::create(['noiDungPA'=>$request->phuongAn[$i],'isCorrect'=>false,'diemPA'=>12,
+                'maCauHoi'=>$cauhoi->maCauHoi,'maCDR3'=>$request->maCDR3,'maChuanAbet'=>$request->maChuanAbet]);
             }
         }
-        cauHoi::updateOrCreate(['maCauHoi'=>$cauhoi->maCauHoi],['diemCauHoi'=>$diem]);
+       
         alert()->success('Added successfully', 'Message');
-        return back();
+        return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/ngan-hang-cau-hoi-trac-nghiem/'.Session::get('maMuc'));
+    }
+
+
+    public function view_sua_trac_nghiem($maCauHoi)
+    {
+        $muc=muc::where('id',Session::get('maMuc'))->first();  
+        $chuong=chuong::where('id',$muc->id_chuong)->first();
+
+        //combobox cdr3
+        $cdr3=hocPhan::where('hoc_phan.maHocPhan',$chuong->maHocPhan)
+        ->join('hocphan_kqht_hp',function($x){
+            $x->on('hocphan_kqht_hp.maHocPhan','=','hoc_phan.maHocPhan')
+            ->where('hocphan_kqht_hp.isDelete',false);
+        })
+        ->distinct('hocphan_kqht_hp.maCDR3')
+        ->join('cdr_cd3',function($y){ 
+            $y->on('cdr_cd3.maCDR3','=','hocphan_kqht_hp.maCDR3')
+            ->where('cdr_cd3.isDelete',false);
+        })
+        ->get(['hocphan_kqht_hp.maCDR3','cdr_cd3.maCDR3VB','cdr_cd3.tenCDR3']);
+
+        //combobox abet
+        $abet=hocPhan::where('hoc_phan.maHocPhan',$chuong->maHocPhan)
+        ->join('hocphan_kqht_hp',function($x){
+            $x->on('hocphan_kqht_hp.maHocPhan','=','hoc_phan.maHocPhan')
+            ->where('hocphan_kqht_hp.isDelete',false);
+        })
+        ->distinct('hocphan_kqht_hp.maChuanAbet')
+        ->join('chuan_abet',function($y){ 
+            $y->on('chuan_abet.maChuanAbet','=','hocphan_kqht_hp.maChuanAbet')
+            ->where('chuan_abet.isDelete',false);
+        })
+        ->get(['hocphan_kqht_hp.maChuanAbet','chuan_abet.maChuanAbetVB','chuan_abet.tenChuanAbet']);
+        
+        $kqht_arr=hocPhan_kqHTHP::where('hocphan_kqht_hp.isDelete',false)
+        ->where('hocphan_kqht_hp.maHocPhan',$chuong->maHocPhan)
+        ->distinct('hocphan_kqht_hp.maKQHT')
+        ->join('kqht_hp',function($x){
+            $x->on('hocphan_kqht_hp.maKQHT','=','kqht_hp.maKQHT')
+            ->where('kqht_hp.isDelete',false);
+        })
+        ->pluck('hocphan_kqht_hp.maKQHT');
+        $kqht=kqHTHP::whereIn('maKQHT',$kqht_arr)->get();
+
+        $cauhoi=cauHoi::where('isDelete',false)->where('maCauHoi',$maCauHoi)->with('phuong_an_trac_nghiem')->first();
+        //return $cauhoi;
+        return view('giangvien.quyhoach.cauhoitracnghiem.sua_trac_nghiem',compact('kqht','abet','cdr3','cauhoi'));
     }
 
     public function sua_trac_nghiem(Request $request)
     {
+        //return $request;
          $cauhoi=cauHoi::where('isDelete',false)->where('maCauHoi',$request->maCauHoi)->first();
-         //thêm câu hỏi mới, điểm câu hỏi thêm mặc định 12
+         //cập nhật câu hỏi
          cauHoi::updateOrCreate(['maCauHoi'=>$cauhoi->maCauHoi],['noiDungCauHoi'=>$request->noiDungCauHoi,'diemCauHoi'=>12,'maKQHT'=>$request->maKQHT,'maLoaiHTDG'=>'T2','id_loaiCH'=>'1','id_muc'=>Session::get('maMuc')]);
-         //thêm phương án trắc nghiệm
-         
-         $diem=0;
+         //cập nhật phương án
          for ($i=0; $i <count($request->phuongAn) ; $i++) { 
-            $diem+=$request->diemPA[$i];
+            $correct=false;
             if($request->choice==$i){
-                phuongAnTracNghiem::updateOrCreate(['id'=>$request->maPhuongAn[$i]],['noiDungPA'=>$request->phuongAn[$i],'isCorrect'=>true,'diemPA'=>$request->diemPA[$i],'maCauHoi'=>$cauhoi->maCauHoi,'maCDR3'=>$request->maCDR3]);
+                $correct=true;
             }
-            else{
-                phuongAnTracNghiem::updateOrCreate(['id'=>$request->maPhuongAn[$i]],['noiDungPA'=>$request->phuongAn[$i],'isCorrect'=>false,'diemPA'=>$request->diemPA[$i],'maCauHoi'=>$cauhoi->maCauHoi,'maCDR3'=>$request->maCDR3]);
-            }
+            phuongAnTracNghiem::updateOrCreate(['id'=>$request->maPhuongAn[$i]],['noiDungPA'=>$request->phuongAn[$i],
+            'isCorrect'=>$correct,'diemPA'=>$request->diemPA[$i],'maCauHoi'=>$cauhoi->maCauHoi,'maCDR3'=>$request->maCDR3,'maChuanAbet'=>$request->maChuanAbet]);
          }
-         cauHoi::updateOrCreate(['maCauHoi'=>$cauhoi->maCauHoi],['diemCauHoi'=>$diem]);
-         alert()->success('Added successfully', 'Message');
-         return back();
+         alert()->success('Edited successfully', 'Message');
+         return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/ngan-hang-cau-hoi-trac-nghiem/'.Session::get('maMuc'));
     }
 
+    public function xoa_trac_nghiem($maCauHoi)
+    {
+       
+        //maCauHoi->cauhoi
+        $cauhoi=cauHoi::where('isDelete',false)->where('maCauHoi',$maCauHoi)->first();
+        //kiem tra cau hoi co duoc su dung trong de thi
+        $count_cauhoi_dethi=deThi_cauHoi::where('isDelete',false)->where('maCauHoi',$maCauHoi)->count();
+        if($count_cauhoi_dethi>0){
+            alert()->warning('This question is used in examination!', 'Message');
+        }
+        //xoa
+        $cauhoi->delete();
+        alert()->success('Deleted', 'Message');
+        return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/ngan-hang-cau-hoi-trac-nghiem/'.Session::get('maMuc'));
+    }
     ///////////////////////////CÂU HỎI THỰC HÀNH///////////////////////////////////////////
     public function cau_hoi_thuc_hanh(Request $request,$maMuc)
     {

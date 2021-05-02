@@ -7,15 +7,15 @@
       <div class="row mb-2">
         <div class="col-sm-6">
           <h1 class="m-0 text-dark">
-            Accounts Management<noscript></noscript>
+            {{ __('Accounts') }}<noscript></noscript>
             <nav></nav>
           </h1>
         </div>
         <!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ asset('quan-ly') }}">Home</a></li>
-            <li class="breadcrumb-item active">Accounts</li>
+            <li class="breadcrumb-item"><a href="{{ asset('quan-ly') }}">{{ __('Home') }}</a></li>
+            <li class="breadcrumb-item active">{{ __('Accounts') }}</li>
           </ol>
         </div>
         <!-- /.col -->
@@ -36,7 +36,7 @@
             <div class="card-header">
               <h3 class="card-title"></h3>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                  <i class="fas fa-plus"></i>Add
+                  <i class="fas fa-plus"></i>
               </button>
 
                 <!-- Modal -->
@@ -46,7 +46,7 @@
                     @csrf
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Adding a new account </h5>
+                        <h5 class="modal-title" id="exampleModalLabel">{{ __('Adding a new') }} {{ __('account') }} </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">×</span>
                         </button>
@@ -58,7 +58,7 @@
                           </div>
                           <div class="form-group">
                             <label for="">Email</label>
-                            <input type="text" class="form-control" name="email" required>
+                            <input type="email" class="form-control" name="email" required>
                           </div>
                           <div class="form-group">
                             <label for="">Password</label>
@@ -67,10 +67,10 @@
                           <div class="form-group">
                             <label for="">Permission</label>
                             <select name="permission" id="" class="form-control" required>
-                              <option value="1" selected>Administration</option>
-                              <option value="2">Lecture</option>
+                              <option value="1" selected>{{ __('Administration') }}</option>
+                              <option value="2">{{ __('Lecture') }}</option>
                               <option value="3">Giáo vụ</option>
-                              <option value="4">Bo mon</option>
+                              <option value="4">Bộ môn</option>
                               <option value="5">Khoa</option>
                             </select>
                           </div>
@@ -84,8 +84,8 @@
                           </div>
                       </div>
                       <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Save</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Cancel') }}</button>
                       </div>
                     </div>
                     </form>
@@ -100,11 +100,11 @@
                 <thead>
                   <tr>
                     <th>No.</th>
-                    <th>User name</th>
-                    <th>Email</th>
-                    <th>Permission</th>
-                    <th>is Block</th>
-                    <th>Option</th>
+                    <th>{{ __('Username') }}</th>
+                    <th>{{ __('Email') }}</th>
+                    <th>{{ __('Permission') }}</th>
+                    <th>{{ __('Block') }}</th>
+                    <th>{{ __('Option') }}</th>
                   </tr>
                 </thead>
                 <tbody>

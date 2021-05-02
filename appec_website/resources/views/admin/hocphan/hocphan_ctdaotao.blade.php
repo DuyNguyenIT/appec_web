@@ -27,9 +27,14 @@
               <div class="col-12">
                 <div class="card">
                   <div class="card-header">
-                        <h3>{{ __('Course name') }}: {{ $hp->tenHocPhan }}</h3>
-                        <h3>{{ __('Course ID') }}: {{ $hp->maHocPhan }}</h3>
+                    <div class="card-title">
+                      {{ __('Course name') }}: {{ $hp->tenHocPhan }}--{{ __('Course ID') }}: {{ $hp->maHocPhan }}
+                    </div>
+                    <div class="card-tools">
+                      <a href="{{ asset('/quan-ly/hoc-phan') }}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
+                    </div>
                   </div>
+                 
                   <div class="card-body">
                       <table id="example2" class="table table-bordered table-hover">
                         <thead>

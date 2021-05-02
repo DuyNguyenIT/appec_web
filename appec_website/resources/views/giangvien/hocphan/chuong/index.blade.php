@@ -37,7 +37,10 @@
           <div class="card">
             <div class="card-header">
               <h3 class="card-title">
-                  
+                <h3 class="d-flex justify-content-between">
+                  {{ $hocPhan->tenHocPhan }}
+                  <a href="{{ asset('/giang-vien/hoc-phan') }}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
+                </h3>
               </h3>
             </div>
             <!-- /.card-header -->

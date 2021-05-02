@@ -1,6 +1,5 @@
 @extends('admin.no_menu_master')
 @section('content')
-<link rel="stylesheet" href="{{ asset('dist/css/themdecuong.css') }}">
 
 <div class="content-wrapper" style="min-height: 22px;">
     <!-- Content Header (Page header) -->
@@ -47,72 +46,108 @@
     <!-- Main content -->
 
     <section class="content">
+    
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
+            
+
             <div class="card">
               <div class="card-header">
+                <div class="card-tools">
+                  <a class="btn btn-primary" href="{{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/in-de-cuong-mon-hoc/'.$hocPhan->maHocPhan) }}"><i class="fas fa-print"></i></a>
+                  <a href="{{ asset('/quan-ly/hoc-phan') }}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
+                </div>
                 <h3  style="text-align: center">
                   {{ __('COURSE SYLLABUS') }} <br>
                 {{ __('Course') }} : {{ $hocPhan->tenHocPhan }} <br>
                 {{ __('Course code') }}: {{ $hocPhan->maHocPhan }}
                 </h3>
+               
               </div>
-              <a class="btn btn-primary" href="{{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/in-de-cuong-mon-hoc/'.$hocPhan->maHocPhan) }}">{{ __('Printing') }}</a>
+              
+                <div class="card-header p-0 pt-1">
+                  <ul class="nav nav-tabs"  role="tablist" >
+                    <li class="nav-item">
+                      <a class="nav-link active" id="tab_P1" data-toggle="tab" href="#P1" role="tab" aria-controls="P1" aria-selected="true">
+                        1. {{ __('General information') }}
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="tab_P2" data-toggle="tab" href="#P2" role="tab" aria-controls="P2" aria-selected="false">
+                        2. {{ __('Learning resources') }}
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="custom-tabs-one-messages-tab" data-toggle="tab" href="#P3" role="tab" aria-controls="P3" aria-selected="false">
+                        3. {{ __('Course description') }}
+                      
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="custom-tabs-one-settings-tab" data-toggle="tab" href="#P4" role="tab" aria-controls="P4" aria-selected="false">
+                        4. {{ __('Course learning outcomes') }} (CLOs)
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="custom-tabs-one-settings-tab" data-toggle="tab" href="#P5" role="tab" aria-controls="P5" aria-selected="false">
+                        5. {{ __('Course contents') }}
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="custom-tabs-one-settings-tab" data-toggle="tab" href="#P6" role="tab" aria-controls="P6" aria-selected="false">
+                        6. {{ __('Teaching and learning methods') }}
+                      </a>
+          
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="custom-tabs-one-settings-tab" data-toggle="tab" href="#P7" role="tab" aria-controls="P7" aria-selected="false">
+                        7. {{ __('Course assessment') }}
+                      </a>
+          
+                    </li>
+                    <li class="nav-item" >
+                      <a class="nav-link" id="custom-tabs-one-settings-tab" data-toggle="tab" href="#P8" role="tab" aria-controls="P8" aria-selected="false">
+                        8. {{ __('Course requirements and expectations') }}
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <!-- /.card -->
+              
+         
+
+ 
               <!-- /.card-header -->
               <div class="card-body">
-              <button class="tablink" onclick="openPage('P1', this, 'blue')" id="defaultOpen">1. {{ __('General information') }}</button>
-              <button class="tablink" onclick="openPage('P2', this, 'blue')" >2. {{ __('Learning resources') }}</button>
-              <button class="tablink" onclick="openPage('P3', this, 'blue')">3. {{ __('Course description') }}</button>
-              <button class="tablink" onclick="openPage('P4', this, 'blue')">4. {{ __('Course learning outcomes') }} (CLOs)</button>
-              <button class="tablink" onclick="openPage('P5', this, 'blue')">5. {{ __('Course contents') }}</button>
-              <button class="tablink" onclick="openPage('P6', this, 'blue')">6. {{ __('Teaching and learning methods') }}</button>
-              <button class="tablink" onclick="openPage('P7', this, 'blue')">7. {{ __('Course assessment') }}</button>
-              <button class="tablink" onclick="openPage('P8', this, 'blue')">8. {{ __('Course requirements and expectations') }}</button>
-              
-              <div id="P1" class="tabcontent">
-                 {{-- 1.Thong tin chung --}}
-              @include('admin.hocphan.noidungdecuong.1_thongtinchung')
-              </div>
-              
-              <div id="P2" class="tabcontent">
-                   {{-- 2--tai lieu tham khao --}}
-              @include('admin.hocphan.noidungdecuong.2_tailieuthamkhao')
-              </div>
-              
-              <div id="P3" class="tabcontent">
-                  {{-- 3--Mo ta hoc phan --}}
-              @include('admin.hocphan.noidungdecuong.3_motahocphan')
-              </div>
-              
-              <div id="P4" class="tabcontent">
-                 {{-- 4 chuan dau ra mon hoc --}}
-              @include('admin.hocphan.noidungdecuong.4_chuandaura')
-              </div>
-              <div id="P5" class="tabcontent">
-                     
-                {{-- 5--Noi dung mon hoc --}}
-              @include('admin.hocphan.noidungdecuong.5_noidungmonhoc')
-              </div>
-              <div id="P6" class="tabcontent">
-              {{-- 6---Phương pháp giảng dạy --}}
-              @include('admin.hocphan.noidungdecuong.6_phuongphapgiangday')
-              </div>
-              <div id="P7" class="tabcontent">
-              {{-- 7 phuong thuc danh gia --}}
-              @include('admin.hocphan.noidungdecuong.7_phuongthucdanhgia')
-              </div>
-              <div id="P8" class="tabcontent">
-              {{-- 8 cac quy dinh chung --}}
-              @include('admin.hocphan.noidungdecuong.8_cacquydinhchung')
-              </div>
-               
-              
-           
-           
-         
-              
-           
+                <div class="tab-content" id="custom-tabs-one-tabContent">
+                  <div  class="tab-pane fade active show" id="P1" role="tabpanel" aria-labelledby="P1">
+                    @include('admin.hocphan.noidungdecuong.1_thongtinchung')
+                  </div>
+                  <div class="tab-pane fade show" id="P2" role="tabpanel" aria-labelledby="P2">
+                    @include('admin.hocphan.noidungdecuong.2_tailieuthamkhao')
+
+                  </div>
+                  <div class="tab-pane fade " id="P3" role="tabpanel" aria-labelledby="P3">
+                    @include('admin.hocphan.noidungdecuong.3_motahocphan')
+
+                  </div>
+                  <div class="tab-pane fade " id="P4" role="tabpanel" aria-labelledby="P4">
+                    @include('admin.hocphan.noidungdecuong.4_chuandaura')
+                  </div>
+                  <div class="tab-pane fade " id="P5" role="tabpanel" aria-labelledby="P5">
+                    @include('admin.hocphan.noidungdecuong.5_noidungmonhoc')
+                  </div>
+                  <div class="tab-pane fade " id="P6" role="tabpanel" aria-labelledby="P6">
+                    @include('admin.hocphan.noidungdecuong.6_phuongphapgiangday')
+                  </div>
+                  <div class="tab-pane fade " id="P7" role="tabpanel" aria-labelledby="P7">
+                    @include('admin.hocphan.noidungdecuong.7_phuongthucdanhgia')
+                  </div>
+                  <div class="tab-pane fade " id="P8" role="tabpanel" aria-labelledby="P8">
+                    @include('admin.hocphan.noidungdecuong.8_cacquydinhchung')
+                  </div>
+                </div>
               </div>
               <!-- /.card-body -->
             </div>
@@ -126,22 +161,9 @@
     </section>
     <!-- /.content -->
   </div>
-  <script>
-    function openPage(pageName,elmnt,color) {
-      var i, tabcontent, tablinks;
-      tabcontent = document.getElementsByClassName("tabcontent");
-      for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-      }
-      tablinks = document.getElementsByClassName("tablink");
-      for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].style.backgroundColor = "";
-      }
-      document.getElementById(pageName).style.display = "block";
-      elmnt.style.backgroundColor = color;
-    }
-    
-    // Get the element with id="defaultOpen" and click on it
-    document.getElementById("defaultOpen").click();
-    </script>
+
+        
+  <script src="{{ asset('/plugins/jquery/jquery.min.js') }}"></script>
+      
+  <script src="{{ asset('/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
 @endsection

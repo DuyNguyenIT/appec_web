@@ -54,7 +54,7 @@ class WordController extends Controller
         $table->addRow();
         $cell = $table->addCell(4500);
         $textrun = $cell->addTextRun();
-        $textrun->addText('Tr&#432;&#7901;ng &#272;&#7841;i h&#7885;c Tr� Vinh',array('bold' => true,'italic'=>true, 'size' => 10,'name'=>'Times New Roman'),array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::LEFT, 'spaceAfter' => 100));
+        $textrun->addText('Trường Đại học Trà Vinh',array('bold' => true,'italic'=>true, 'size' => 10,'name'=>'Times New Roman'),array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::LEFT, 'spaceAfter' => 100));
 
         // Add header for all other pages
         $subsequent = $section->addHeader();
@@ -63,7 +63,7 @@ class WordController extends Controller
         // 1/ Thong tin chung
         $section->addText('Đề cương học phần',$headerForntStyle,$headerparagraphStyle);
         
-        $hocPhan=hocPhan::where('maHocPhan',$maHocPhan)->first();  //truy v&#7845;n th�ng tin h&#7885;c ph&#7847;n
+        $hocPhan=hocPhan::where('maHocPhan',$maHocPhan)->first();  //thong tin hoc phan
        
         $hoc_phan = $section->addTextRun($headerparagraphStyle);
         $hoc_phan->addText('Học phần: ',$boldNormalText);
@@ -72,14 +72,14 @@ class WordController extends Controller
         $ma_hoc_phan = $section->addTextRun($headerparagraphStyle);
         $ma_hoc_phan->addText('Mã học phần: ',$boldNormalText);
         $ma_hoc_phan->addText($hocPhan->maHocPhan,$headerForntStyle,$headerparagraphStyle);
-        ////------------------------------------------1/ th�ng tin chung---------------------------------------------
+        ////------------------------------------------1/ thong tin chung---------------------------------------------
         $section->addText('1. Thông tin chung',$headding1,array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::LEFT));
 
         
 
         $table = $section->addTable($spanTableStyleName);
 
-        $table->addRow(); //ti�u &#273;&#7873; b&#7843;ng th�ng tin chung
+        $table->addRow(); //tieu de
 
         $cell1 = $table->addCell(4000, $cellRowSpan); 
         $textrun1 = $cell1->addTextRun($cellHCentered);
@@ -143,7 +143,7 @@ class WordController extends Controller
         $html = $hocPhan->yeuCau;
         \PhpOffice\PhpWord\Shared\Html::addHtml($cell1, $html, false, false);
 
-        // //--------------------------------------2. T�i li&#7879;u tham kh&#7843;o------------------------------------------------------------
+        // //--------------------------------------2. Taii lieu tham khao------------------------------------------------------------
       
         $section->addText('2. Tài liệu tham khảo',$headding1,array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::LEFT));
 
@@ -171,15 +171,15 @@ class WordController extends Controller
         $html = $tailieuthamkhao->taiLieuKhac;
         \PhpOffice\PhpWord\Shared\Html::addHtml($cell3, $html, false, false);
 
-        //--------------------------------------3. M� t&#7843; h&#7885;c ph&#7847;n------------------------------------------------------------
+        //--------------------------------------3. Mo ta hoc phan------------------------------------------------------------
         
         $section->addText('3. Mô tả học phần',$headding1,array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::LEFT));
 
         $html = $hocPhan->moTaHocPhan;
         \PhpOffice\PhpWord\Shared\Html::addHtml($section, $html, false, false);
-        //--------------------------------------4. Chu&#7849;n &#273;&#7847;u ra h&#7885;c ph&#7847;n------------------------------------------------------------
-        $CDR1=CDR1::all();//bi&#7871;n n�y &#273;&#7875; in ch&#7911; &#273;&#7873;
-        $kqht=hocPhan_kqHTHP::where('hocphan_kqht_hp.isDelete',false) //bi&#7871;n n�y ch&#7841;y n&#7897;i dung trong b&#7843;ng chu&#7849;n &#273;&#7847;u ra m�n h&#7885;c
+        //--------------------------------------4. Chuan dau ra hoc phan------------------------------------------------------------
+        $CDR1=CDR1::all();//danh sach chu de
+        $kqht=hocPhan_kqHTHP::where('hocphan_kqht_hp.isDelete',false) //ke qua hoc tap
         ->where('hocphan_kqht_hp.maHocPhan',$maHocPhan)
         ->join('kqht_hp',function($y){
             $y->on('kqht_hp.maKQHT','=','hocphan_kqht_hp.maKQHT')
@@ -215,7 +215,7 @@ class WordController extends Controller
             $table_chuandaura->addRow();
             $table_chuandaura->addCell(1000);
             $cell=$table_chuandaura->addCell(7000);
-            $cell->addText('Ch&#7911; &#273;&#7873;:'.$cdr->tenCDR1, $boldNormalText);
+            $cell->addText('Chương:'.$cdr->tenCDR1, $boldNormalText);
             $table_chuandaura->addCell(4000);
             foreach ($kqht as $x){
                 if($x->maCDR1==$cdr->maCDR1){
@@ -252,18 +252,15 @@ class WordController extends Controller
         $table_noidunghp->addRow();
         $table_noidunghp->addCell(null, $cellRowContinue);
         $table_noidunghp->addCell(null, $cellRowContinue);
-        $table_noidunghp->addCell(1000, $cellVCentered)->addText('L� thuy&#7871;t', null, $cellHCentered);
-        $table_noidunghp->addCell(1000, $cellVCentered)->addText('Th&#7921;c h�nh', null, $cellHCentered);
-        $table_noidunghp->addCell(1000, $cellVCentered)->addText('Kh�c', null, $cellHCentered);
+        $table_noidunghp->addCell(1000, $cellVCentered)->addText('Lý thuyết', null, $cellHCentered);
+        $table_noidunghp->addCell(1000, $cellVCentered)->addText('Thực hành', null, $cellHCentered);
+        $table_noidunghp->addCell(1000, $cellVCentered)->addText('Khác', null, $cellHCentered);
         #dong noi dung
-        $noidung=chuong::where('chuong.isdelete',false)->where('chuong.maHocPhan',$maHocPhan)
-        ->orderBy('chuong.id','asc')
-        ->with('muc')
-        ->with('chuong_kqht')
-        ->get();
+        $noidung=chuong::where('chuong.isdelete',false)->where('chuong.maHocPhan',$maHocPhan)->orderBy('chuong.id','asc')
+        ->with('muc')->with('chuong_kqht')->get();
+
         $chuong_array=chuong::where('chuong.isdelete',false)->where('chuong.maHocPhan',$maHocPhan)
-        ->orderBy('chuong.id','asc')
-        ->pluck('id');
+        ->orderBy('chuong.id','asc')->pluck('id');
         
         $mudokynangUIT=mucDoKyNangUIT::whereIn('muc_do_ky_nang_itu.id_chuong',$chuong_array)
         ->orderBy('muc_do_ky_nang_itu.maCDR1')
@@ -316,7 +313,7 @@ class WordController extends Controller
             }
         }
 
-        //--------------------------------------6. Ph&#432;&#417;ng ph�p gi&#7843;ng d&#7841;y:-----------------------------------------------------------
+        //--------------------------------------6. Phuong phap giang day:-----------------------------------------------------------
         $section->addText('6. Phương pháp giảng dạy:',$headding1);
         $hp_ppgd=hocPhan_ppGiangDay::where('isDelete',false)->where('maHocPhan',$maHocPhan)->with('ppGiangDay')->get(); //bi&#7875;n hi&#7875;n th&#7883; ph&#432;&#417;ng ph�p gi&#7843;ng d&#7841;y 
 
@@ -354,7 +351,7 @@ class WordController extends Controller
             $i++;
         }
 
-        //--------------------------------------7. Ph&#432;&#417;ng th&#7913;c &#273;�nh gi�:-----------------------------------------------------------
+        //--------------------------------------7. Phương thức đánh giá:-----------------------------------------------------------
         $section->addText('7. Phương thức đánh giá:',$headding1);
 
         $table_phuongthucdanhgia= $section->addTable($spanTableStyleName);
