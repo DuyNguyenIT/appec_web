@@ -26,23 +26,37 @@ class GVMucController extends Controller
         return view('giangvien.hocphan.chuong.muc.index',compact('muc','chuong','hocphan'));
     }
 
+    //-------------ajax function
+    public function get_muc_by_ma_chuong($maChuong)
+    {
+        if($maChuong!=-1){
+            return muc::get_by_machuong($maChuong);
+        }else{
+            return muc::get_all();
+        }
+        
+    }
+
+    public function get_cau_hoi_trac_nghiem_by_mamuc($maMuc)
+    {
+        if($maMuc!=-1){
+             return cauHoi::get_cau_hoi_trac_nghiem_by_mamuc_distinct(Session::get('maDe'),$maMuc);
+        }
+        else{
+            return cauHoi::get_cau_hoi_trac_nghiem();
+        }
+       
+    }
     ///////////////////////////CÂU HỎI TỰ LUẬN///////////////////////////////////////////
     public function cau_hoi_tu_luan($maMuc)
     {
         Session::put('maMuc',$maMuc);
-        $muc=muc::where('id',$maMuc)->first();  
-        $chuong=chuong::where('id',$muc->id_chuong)->first();
+        $muc=muc::get_by_id($maMuc);  
+        $chuong=chuong::get_one_chuong_by_id($muc->id_chuong);
         Session::put('maChuong',$muc->id_chuong);
         $hocphan=hocPhan::where('maHocPhan',$chuong->maHocPhan)->first();
-        $kqht_arr=hocPhan_kqHTHP::where('hocphan_kqht_hp.isDelete',false)
-        ->where('hocphan_kqht_hp.maHocPhan',$chuong->maHocPhan)
-        ->distinct('hocphan_kqht_hp.maKQHT')
-        ->join('kqht_hp',function($x){
-            $x->on('hocphan_kqht_hp.maKQHT','=','kqht_hp.maKQHT')
-            ->where('kqht_hp.isDelete',false);
-        })
-        ->pluck('hocphan_kqht_hp.maKQHT');
-        $kqht=kqHTHP::whereIn('maKQHT',$kqht_arr)->get();
+
+        $kqht=kqHTHP::get_kqht_by_mahocphan($chuong->maHocPhan);
         $cauhoi =cauHoi::where('id_muc',$maMuc)->where('maLoaiHTDG','T1')->get();
       
         return view('giangvien.hocphan.chuong.muc.cauhoi.index_tuluan',
@@ -71,6 +85,10 @@ class GVMucController extends Controller
         return back();
     }
 
+    public function xoa_tu_luan($maCauHoi)
+    {
+        # code...
+    }
     ///////////////////////////CÂU HỎI TRẮC NGHIỆM///////////////////////////////////////////
     public function cau_hoi_trac_nghiem(Request $request,$maMuc)  //show
     {
@@ -277,17 +295,7 @@ class GVMucController extends Controller
         # code...
         $hocphan=hocPhan::where('maHocPhan',$chuong->maHocPhan)->first();
         $cauhoi=cauHoi::where('id_muc',$maMuc)->where('maLoaiHTDG','T3')->with('kqht')->get();
-        $kqht_arr=hocPhan_kqHTHP::where('hocphan_kqht_hp.isDelete',false)
-        ->where('hocphan_kqht_hp.maHocPhan',$chuong->maHocPhan)
-        ->distinct('hocphan_kqht_hp.maKQHT')
-        ->join('kqht_hp',function($x){
-            $x->on('hocphan_kqht_hp.maKQHT','=','kqht_hp.maKQHT')
-            ->where('kqht_hp.isDelete',false);
-        })
-        ->pluck('hocphan_kqht_hp.maKQHT');
-        $kqht=kqHTHP::whereIn('maKQHT',$kqht_arr)->get();
-      
-        
+        $kqht=kqHTHP::get_kqht_by_mahocphan($chuong->maHocPhan);
         return view('giangvien.hocphan.chuong.muc.cauhoi.index_thuchanh',
         compact('hocphan','cauhoi','kqht','chuong','muc'));
     }

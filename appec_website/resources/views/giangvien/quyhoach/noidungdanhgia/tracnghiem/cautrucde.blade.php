@@ -1,10 +1,15 @@
 @extends('giangvien.no_menu_master')
 @section('content')
-<!-- jQuery -->
-<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+
 <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+<link rel="stylesheet" type="text/css" href="{{ asset('/dist/css/jquery-multi-selection.css') }}" />
+<link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+<script src="{{ asset('/dist/js/jquery.multi-selection.v1.js') }}"></script>
+<style>
+  .jp-multiselect select {max-height: 130px;}
+</style>
+<meta name="csrf-token" content="{{ csrf_token() }}">
+{{-- ------------------------------------------------------------------------ --}}
 <div class="content-wrapper" style="min-height: 96px;">
     <div class="content-header">
         <div class="container-fluid">
@@ -36,13 +41,21 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-12">
-
               <div class="card">
-            <a class="btn btn-primary" href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/in-de-trac-nghiem/'.$dethi->maDe.'/'.$hocphan->maHocPhan) }}">Print</a>
-
                 <div class="card-header">
+                  <h3 class="card-title">
+                    
+                  </h3>
+
+                  <div class="card-tools">
+                    <a class="btn btn-primary" href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/in-de-trac-nghiem/'.$dethi->maDe.'/'.$hocphan->maHocPhan) }}">
+                      <i class="fas fa-print"></i>
+                    </a>
+                    <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/'.Session::get('maCTBaiQH')) }}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
+                  </div>
                   <div class="row">
                     <div class="col-md-5">
+                        <input type="text" name="maDe" value="{{ $dethi->maDe }}" hidden>
                         <b>Trường: </b>Đại học Trà Vinh <br>
                         <b>Lớp:</b>......................... <br>
                         <b>Họ và tên:</b>................... 
@@ -56,79 +69,109 @@
                         <b>Mã đề:</b> {{ $dethi->maDeVB }}
                     </div>
                   </div>
-                  <h3 class="card-title"></h3>
                 <i>  {{ $dethi->ghiChu }}</i>
                 </div>
                 <div class="card-body">
                   @php
                       $index=1;
+                      $letter=['A','B','C','D'];
                   @endphp
                   @foreach ($noidung as $data) 
-                      <b>Câu </b> {{ $index++ }} <b>({{ $data->diem }} điểm)</b>
-                      {!! $data->noiDungCauHoi !!}
+                      <b>Câu </b> {{ $index++ }} <b>({{ $data->diem }} điểm)</b> <br>
+                      {!! $data->noiDungCauHoi !!}  <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/xoa-cau-hoi-trac-nghiem/'.$data->maCauHoi) }}">
+                        <i class="fas fa-trash"></i>
+                      </a><br>
                       @for ($i = 0; $i < count($data->phuong_an); $i++)
                           @if ($data->phuong_an[$i]->isCorrect==true)
-                              <b>{!! $data->phuong_an[$i]->noiDungPA !!}</b>
+                              <b> {{ $letter[$i] }}.{!! $data->phuong_an[$i]->noiDungPA !!}</b> <br>
                           @else
-                          {!! $data->phuong_an[$i]->noiDungPA !!}
+                          {{ $letter[$i] }}.{!! $data->phuong_an[$i]->noiDungPA !!} <br>
                           @endif
-                          
                       @endfor
                   @endforeach
                 </div>
-                 
-                <!-- /.card-header -->
-                <div class="card-body" style="background-color: whitesmoke">
-                  <h3>Adding new content form</h3>
-                  <form action="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/them-cau-hoi-trac-nghiem') }}" method="post">
-                  @csrf
-                    <input type="text" name="maDe" value="{{ $dethi->maDe }}" hidden>
-
-                    <div class="form-group">
-                      <table id="example2" class="table table-bordered table-hover">
-                      <thead>
-                        <tr>
-                          <th>Order</th>
-                          <th>Question</th>
-                          <th>Choise</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        @php
-                            $i=1;
-                            $letter=['A','B','C','D'];
-                        @endphp
-                      @foreach ($cauhoi as $item)
-                        <tr>
-                          <td>{{ $i++ }}</td>
-                          <td>{!! $item->noiDungCauHoi !!}
-                            @for ($i = 0; $i < count($item->phuong_an_trac_nghiem); $i++)
-                               @if ($item->phuong_an_trac_nghiem[$i]->isCorrect==true)
-                                    <b>{!! $item->phuong_an_trac_nghiem[$i]->noiDungPA !!}</b>
-                                @else
-                                    {!! $item->phuong_an_trac_nghiem[$i]->noiDungPA !!}
-                                @endif
-                            @endfor
-                          </td>
-                          <td>
-                            <input type="radio" id="ch_{{$item->maCauHoi }}" name="maCauHoi" value="{{$item->maCauHoi }}">
-                          </td>
-                        </tr> 
-                      @endforeach
-                      </tbody>
-                      <tfoot></tfoot>
-                    </table>
-                    </div>
-                  
-                    <div class="form-group">
-                      <button class="btn btn-primary" type="submit">Save</button>
-                      <button class="btn btn-info" type="reset">Cancel</button>
-                    </div>
-                  </form>
+                <div class="card-footer">
+                  @if ($dem_cau_hoi<$dethi->soCauHoi)
+                    <span style="color: red">*Hiện có: {{ $dem_cau_hoi }}/{{ $dethi->soCauHoi }} Câu hỏi</span>
+                  @else
+                    <span style="color: green">Đã đủ: {{ $dem_cau_hoi }}/{{ $dethi->soCauHoi }} Câu hỏi</span>
+                      
+                  @endif
+                    
                 </div>
-                <!-- /.card-body -->
+
               </div>
               <!-- /.card -->
+
+              <div class="card">
+                <div class="card-header">
+                  <div class="form-group">
+                    <label for="">{{ __('Chapter') }}</label>
+                    <select name="maChuong" id="chuong" class="form-control">
+                          <option value="-1">{{ __('All') }}</option>
+                      @foreach ($chuong as $chg)
+                          <option value="{{ $chg->id }}">{{ $chg->tenchuong }}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="">{{ __('Items') }}</label>
+                    <select name="maMuc" id="muc" class="form-control">
+                      <option value="-1">All</option>
+                      @foreach ($muc as $m)
+                          <option value="{{ $m->id }}">{{ $m->maMucVB }}: {{ $m->tenMuc }}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="jp-multiselect">
+                    <div class="from-panel">
+                        <select name="from[]" id="from_box" class="form-control" size="8" multiple="multiple">
+                        </select>
+                    </div>
+                    <div class="move-panel">
+                        <button type="button" class="btn-move-all-right"></button>
+                        <button type="button" class="btn-move-selected-right "></button>
+                        <button type="button" class="btn-move-all-left"></button>
+                        <button type="button" class="btn-move-selected-left"></button>
+                    </div>
+                   
+
+                   
+                    <div class="to-panel">
+                        <select name="to[]" id="to_box" class="form-control" size="8" multiple="multiple">
+                        </select>
+                    </div>
+                    <div class="control-panel">
+                        <button type="button" class="btn-delete"></button>
+                        <button type="button" class="btn-up"></button>
+                        <button type="button" class="btn-down"></button>
+                        <button type="button" id="get">get</button>
+                    </div>
+                  <span id="ch">text</span>
+                    
+                </div>
+                <script>
+                    $(".jp-multiselect").jQueryMultiSelection();
+                </script>
+                </div>
+                {{-- /card --}}
+              </div>
+              <!-- Modal -->
+              <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="myModalLabel">Modal header</h3>
+                </div>
+                <div class="modal-body">
+                    <p>One fine body…</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                    <button class="btn btn-primary">Save changes</button>
+                </div>
+              </div>
             </div>
             <!-- /.col -->
           </div>
@@ -137,7 +180,84 @@
         <!-- /.container-fluid -->
       </section>
       <!-- /.content -->
-
 </div>
+{{-- ---------------------------------------------------------------------------------- --}}
+<script>
+  //function chuong
+  $('#chuong').change(function(){
+    $('select[id="from_box"]').empty();
+    var ajaxurl ='/giang-vien/hoc-phan/chuong/muc/get-muc-by-machuong/'+$(this).val();
+    $.ajax({
+      type:'get',
+      url:ajaxurl,
+      success:function(rsp){
+          var option="<option value='-1'>All</option>";
+          rsp.forEach(element => {
+              option+="<option value='"+element['id']+"'>"+element['maMucVB']+"--"+element['tenMuc']+"</option>";
+          });
+          $('#muc').empty();
+          $('#muc').append(option);
+      },
+      error:function(rsp){
+        console.log(rsp);
+      }
+    });
+  })
+  //function muc
+  $('#muc').change(function(){
+    var muc_url='/giang-vien/hoc-phan/chuong/muc/get-cau-hoi-trac-nghiem-by-mamuc/'+$(this).val();
+    $.ajax({
+      type:'get',
+      url:muc_url,
+      success:function(rsp){
+        var option="";
+        rsp.forEach(element => {
+              option+="<option value='"+element['maCauHoi']+"'>"+element['noiDungCauHoi']+"</option>";
+        });
+        $('select[id="from_box"]').empty();
+        $('select[id="from_box"]').append(option);
+
+      },
+      error:function(rsp){
+        console.log(rsp);
+      }
+    });
+  })
+  //function get
+  $('#get').click(function(){
+    var to_box=[];  
+    $("select#to_box").map(function() {return $(this).val();}).get();
+    // First, get the elements into a list
+    var options = $('#to_box option'),
+    data = [],$i=0;
+
+    var values = $.map(options ,function(option) {
+        to_box.push(option.value);
+        data.push({'id':option.value,'noidung':option.value});
+        $i++;
+    });
+
+    console.log(data);
+      var url_cau_hoi='/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/them-cau-hoi-trac-nghiem';
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+      $.ajax({
+        type:'post',
+        url: url_cau_hoi,
+        data: { array:data, _token: '{{csrf_token()}}' },
+        success:function(rsp){
+          //console.log(rsp);
+          window.location.href = rsp;
+       }
+      })
+  })
+  $('#from_box option').dblclick(function(){
+    alert('Double click');
+  })
+
+</script>
 
 @endsection

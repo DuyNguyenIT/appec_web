@@ -32,7 +32,7 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="">
+                  <h3 class="card-title">
                     <a href="{{ asset('giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/them-tieu-chi-danh-gia/'.Session::get('maCTBaiQH')) }}" class="btn btn-primary">
                        <i class="fas fa-plus"></i> Thêm
                     </a>
@@ -42,6 +42,9 @@
                     </button>
 
                   </h3>
+                  <div class="card-tools">
+                    <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/'.Session::get('maHocPhan').'/'.Session::get('maBaiQH').'/'.Session::get('maHK').'/'.Session::get('namHoc').'/'.Session::get('maLop')) }}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
+                  </div>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">

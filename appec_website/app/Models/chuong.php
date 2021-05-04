@@ -26,4 +26,18 @@ class chuong extends Model
         return $this->hasMany('App\Models\chuong_kqht', 'machuong', 'id');
     }
 
+
+    #----------------function---------------
+    public static function get_one_chuong_by_id($id)
+    {
+        return self::where('id',$id)->first();
+    }
+
+    public static function get_chuong_by_maHocPhan($maHocPhan)
+    {
+        return self::where('maHocPhan',$maHocPhan)->get();
+    }
+
+    
+
 }

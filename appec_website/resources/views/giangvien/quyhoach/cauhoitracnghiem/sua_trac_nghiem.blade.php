@@ -1,5 +1,6 @@
 @extends('giangvien.master')
 @section('content')
+<script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 <div class="content-wrapper" style="min-height: 96px;">
         <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -41,32 +42,44 @@
                       </h3>
                     </div>
                     <div class="card-body">
+                      <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                        <label class="custom-control-label" for="customSwitch1">CKeditor</label>
+                      </div>
                       <form action="{{ asset('giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/ngan-hang-cau-hoi-trac-nghiem/sua-cau-hoi-submit') }}" method="post">
                       @csrf
                         <div class="form-group">
                           <label for="">{{ __('Question content') }}:</label>
                           <input type="text" name="maCauHoi" value="{{ $cauhoi->maCauHoi }}" hidden>
-                          <textarea type="text" name="noiDungCauHoi" class="form-control">{{ $cauhoi->noiDungCauHoi }}</textarea>
+                          <textarea type="text" name="noiDungCauHoi" id="noiDungCauHoi" class="form-control">{{ $cauhoi->noiDungCauHoi }}</textarea>
                         </div>
                         <div class="form-group">
                           <label for="">Lựa chọn A</label>
                           <input type="text" name="maPhuongAn[]" value="{{ $cauhoi->phuong_an_trac_nghiem[0]->id }}" hidden>
-                          <input type="text" name="phuongAn[]" class="form-control" value="{{ $cauhoi->phuong_an_trac_nghiem[0]->noiDungPA }}">
+                          <textarea type="text" name="phuongAn[]" id="phuongAn1" class="form-control">
+                            {{ $cauhoi->phuong_an_trac_nghiem[0]->noiDungPA }}
+                          </textarea>
                         </div>
                         <div class="form-group">
                           <label for="">Lựa chọn B</label>
                           <input type="text" name="maPhuongAn[]" value="{{ $cauhoi->phuong_an_trac_nghiem[1]->id }}" hidden>
-                          <input type="text" name="phuongAn[]" class="form-control" value="{{ $cauhoi->phuong_an_trac_nghiem[1]->noiDungPA }}">
+                          <textarea type="text" name="phuongAn[]" id="phuongAn2" class="form-control">
+                            {{ $cauhoi->phuong_an_trac_nghiem[1]->noiDungPA }}
+                          </textarea>
                         </div>
                         <div class="form-group">
                           <label for="">Lựa chọn C</label>
                           <input type="text" name="maPhuongAn[]" value="{{ $cauhoi->phuong_an_trac_nghiem[2]->id }}" hidden>
-                          <input type="text" name="phuongAn[]" class="form-control" value="{{ $cauhoi->phuong_an_trac_nghiem[2]->noiDungPA }}">
+                          <textarea type="text" name="phuongAn[]" id="phuongAn3" class="form-control">
+                            {{ $cauhoi->phuong_an_trac_nghiem[2]->noiDungPA }}
+                          </textarea>
                         </div>
                         <div class="form-group">
                           <label for="">Lựa chọn D</label>
                           <input type="text" name="maPhuongAn[]" value="{{ $cauhoi->phuong_an_trac_nghiem[3]->id }}" hidden>
-                          <input type="text" name="phuongAn[]" class="form-control" value="{{ $cauhoi->phuong_an_trac_nghiem[3]->noiDungPA }}">
+                          <textarea type="text" name="phuongAn[]" id="phuongAn4" class="form-control">
+                            {{ $cauhoi->phuong_an_trac_nghiem[3]->noiDungPA }}
+                          </textarea>
                         </div>
                         <div class="form-group">
                             <label for="">{{ __('Answer') }}</label><br>
@@ -133,4 +146,33 @@
 
     </div>
 </div>
+<script>
+  $("#customSwitch1").change(function() {
+    if(this.checked) {
+      CKEDITOR.replace( 'noiDungCauHoi', {
+        filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
+        filebrowserUploadMethod: 'form'
+      } );
+      for (let index = 1; index <= 4; index++) {
+        var name="phuongAn"+index;
+        CKEDITOR.replace( name, {
+          filebrowserUploadUrl: "{{route('upload', ['_token' => csrf_token() ])}}",
+          filebrowserUploadMethod: 'form'
+        } );
+      }
+    }
+    else{
+      if(CKEDITOR.instances["noiDungCauHoi"]){
+         CKEDITOR.instances["noiDungCauHoi"].destroy();
+      }
+      for (let index = 1; index <= 4; index++) {
+        var name="phuongAn"+index;
+        console.log(name);
+        if(CKEDITOR.instances[name]){
+          CKEDITOR.instances[name].destroy();
+        }
+      }
+    }
+});
+</script>
 @endsection

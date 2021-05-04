@@ -40,17 +40,18 @@
                 <div class="col-12">
                   <div class="card">
                     <div class="card-header">
-                      <h3 class="">
-                           <!-- Button trigger modal -->
-                           <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">
-                            <i class="fas fa-plus"></i>{{ __('Adding a new Exam') }}
-                          </button>
-                        <a class="btn btn-outline-primary" href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/ngan-hang-cau-hoi') }}">{{ __('Questions store') }}</a>
+                      <h3 class="card-title">
+                       
+                      <!-- Button trigger modal -->
+                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                        <i class="fas fa-plus"></i>
+                      </button>
 
                       </h3>
-                         {{-- <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/them-de-thi-tu-luan') }}" class="btn btn-primary">
-                           <i class="fas fa-plus"></i>Thêm đề thi
-                         </a> --}}
+                      <div class="card-tools">
+                        <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/'.Session::get('maHocPhan').'/'.Session::get('maBaiQH').'/'.Session::get('maHK').'/'.Session::get('namHoc').'/'.Session::get('maLop')) }}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
+                      </div>
+                        
                          <!-- Button trigger modal -->
 
                        
@@ -80,17 +81,17 @@
                                     <input type="number" class="form-control"  name="thoiGian" min="30" max="180">
                                   </div>
                                   <div class="form-group">
-                                    <label for="">The number of question</label>
+                                    <label for="">{{ __('The number of question') }}</label>
                                     <input type="number" class="form-control" name="soCauHoi" min="1" required>
                                   </div>
                                   <div class="form-group">
-                                    <label for="">Note</label>
+                                    <label for="">{{ __('Note') }}</label>
                                     <input type="text" class="form-control" name="ghiChu">
                                   </div>
                                 </div>
                                 <div class="modal-footer">
-                                  <button type="submit" class="btn btn-primary">Save</button>
-                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                  <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Cancel') }}</button>
                                 </div>
                               </div>
                               </form>
@@ -108,13 +109,13 @@
                       <table id="example2" class="table table-bordered table-hover">
                         <thead>
                           <tr>
-                            <th>Order</th>
-                            <th>Exame ID</th>
-                            <th>Title</th>
-                            <th>Duration</th>
-                            <th>The number of question</th>
-                            <th>Note</th>
-                            <th>Option</th>
+                            <th>{{ __('No.') }}</th>
+                            <th>{{ __('Exame ID') }}</th>
+                            <th>{{ __('Title') }}</th>
+                            <th>{{ __('Duration') }}</th>
+                            <th>{{ __('The number of question') }}</th>
+                            <th>{{ __('Note') }}</th>
+                            <th>{{ __('Option') }}</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -134,8 +135,16 @@
                                 <td>{{ $data->soCauHoi }}</td>
                                 <td>{{ $data->ghiChu }}</td>
                                 <td>
-                                  <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/cau-truc-de-trac-nghiem/'.$data->maDe) }}" class="btn btn-primary">Cấu trúc nội dung</a>
-                                  <button class="btn btn-danger">Xóa</button>
+                                  <div class="btn-group">
+                                    <a class="btn btn-primary" title="{{ __('Structure content') }}"
+                                    href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/cau-truc-de-trac-nghiem/'.$data->maDe) }}">
+                                      <i class="fas fa-cogs"></i>
+                                    </a>
+                                    <button class="btn btn-danger" title="{{ __('Delete') }}">
+                                      <i class="fas fa-trash"></i>
+                                    </button>
+                                  </div>
+                                  
                                 </td>
                               </tr>
                           @endforeach

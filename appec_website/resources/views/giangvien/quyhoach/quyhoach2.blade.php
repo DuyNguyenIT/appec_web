@@ -98,7 +98,10 @@
                                   </button>
                             @endif
                           </form>
-                            </h3>
+                        </h3>
+                        <div class="card-tools">
+                            <a href="{{ asset('/giang-vien/quy-hoach-danh-gia') }}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
+                          </div>
                     </div>
                     <div class="card-body">
                     

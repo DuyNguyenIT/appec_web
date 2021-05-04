@@ -87,14 +87,14 @@
                         {{ $data->maKQHTVB }}-- {{ $data->tenKQHT }}
                       </td>
                       <td>
-                        <h3 class="card-title">
+                        <div class="btn-group">
                           <a href="{{ asset('giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/ngan-hang-cau-hoi-trac-nghiem/sua-cau-hoi/'.$data->maCauHoi) }}" class="btn btn-primary">
                             <i class="fas fa-edit"></i>
                           </a>
                           <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/ngan-hang-cau-hoi-trac-nghiem/xoa-cau-hoi/'.$data->maCauHoi) }}" class="btn btn-danger" onclick="return confirm('Are you sure?')">
                             <i class="fas fa-trash"></i>
                           </a>
-                        </h3>
+                        </div>
                       </td>
                     </tr>
                 @endforeach

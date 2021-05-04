@@ -40,10 +40,13 @@
                   <div class="col-12">
                     <div class="card">
                       <div class="card-header">
-                        <h4 class="">
+                        <h4 class="card-title">
                           <b>Cán bộ chấm 1:</b> {{$gv->hoGV}} {{$gv->tenGV}}<br />
                           <b>Cán bộ chấm 2:</b> {{$gv2->hoGV}} {{$gv2->tenGV}}<br />
                         </h4>
+                        <div class="card-tools">
+                          <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/'.Session::get('maHocPhan').'/'.Session::get('maBaiQH').'/'.Session::get('maHK').'/'.Session::get('namHoc').'/'.Session::get('maLop')) }}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
+                        </div>
                       </div>
                       <!-- /.card-header -->
                       <div class="card-body">

@@ -14,7 +14,7 @@
             <div class="row mb-2">
               <div class="col-sm-6">
                 <h1 class="m-0 text-dark">
-                  Đồ án<noscript></noscript>
+                  {{ __('Project') }}<noscript></noscript>
                   <nav></nav>
                 </h1>
               </div>
@@ -22,10 +22,10 @@
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                   <li class="breadcrumb-item">
-                    <a href="{{ asset('/giang-vien') }}">Trang chủ</a>
+                    <a href="{{ asset('/giang-vien') }}">{{ __('Home') }}</a>
                   </li>
                   <li class="breadcrumb-item">
-                    <a href="quyhoachKQHT.html">Đồ án</a>
+                    <a href="#">Đồ án</a>
                   </li>
                   <li class="breadcrumb-item active">Nội dung đánh giá</li>
                 </ol>
@@ -60,7 +60,7 @@
               <div class="col-12">
                 <div class="card">
                   <div class="card-header">
-                    <h3 class="">
+                    <h3 class="card-title">
                       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" >
                         <i class="far fa-address-card"></i> Thêm phiếu chấm
                       </button>
@@ -173,6 +173,9 @@
                       <hr>
                       Cán bộ chấm 2: {{$canbo2->hoGV}} {{$canbo2->tenGV}}
                      </h3>
+                     <div class="card-tools">
+                      <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/'.Session::get('maHocPhan').'/'.Session::get('maBaiQH').'/'.Session::get('maHK').'/'.Session::get('namHoc').'/'.Session::get('maLop')) }}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
+                    </div>
                   </div>
                   {{-- <div class="card-header">Giảng viên cộng tác: <b>Võ Thành C</b></div> --}}
                   <!-- /.card-header -->
@@ -278,7 +281,7 @@
         <div class="modal-body">
           <input type="text" name="maDe" id="" hidden value="{{ $dt->maDe }}">
           <div class="form-group">
-            <label for="">T�n &#273;&#7873; t�i:</label>
+            <label for="">T�n &#273;&#7873; t�i:</label>
           <input type="text" class="form-control" name="tenDe" id="" value="{{ $dt->tenDe }}">
           </div>
         </div>
@@ -300,7 +303,7 @@
                               <button class="btn btn-primary">
                                 <i class="fas fa-edit"></i> Chỉnh sửa
                               </button>
-                              <a class="btn btn-danger" href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xoa-phieu-cham-do-an/'.$dt->maDe.'/'.$dt->maSSV) }}" onclick="confirm('x�c nh&#7853;n x�a?')"><i class="fas fa-trash"></i></a>
+                              <a class="btn btn-danger" href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xoa-phieu-cham-do-an/'.$dt->maDe.'/'.$dt->maSSV) }}" onclick="confirm('x�c nh&#7853;n x�a?')"><i class="fas fa-trash"></i></a>
 
                             </td>
                         </tr>
@@ -313,7 +316,7 @@
                             <button class="btn btn-primary">
                               <i class="fas fa-edit"></i> Chỉnh sửa
                             </button>
-                              <a class="btn btn-danger" href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xoa-phieu-cham-do-an/'.$dt->maDe.'/'.$dt->maSSV) }}" onclick="confirm('x�c nh&#7853;n x�a?')"><i class="fas fa-trash"></i></a>
+                              <a class="btn btn-danger" href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xoa-phieu-cham-do-an/'.$dt->maDe.'/'.$dt->maSSV) }}" onclick="confirm('x�c nh&#7853;n x�a?')"><i class="fas fa-trash"></i></a>
 
                           </td>
                         @endif

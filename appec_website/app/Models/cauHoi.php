@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\kqHTHP;
+use App\Models\deThi_cauHoi;
 use App\Models\phuongAnTracNghiem;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,5 +23,22 @@ class cauHoi extends Model
     public function kqht()
     {
         return $this->belongsTo(kqHTHP::class, 'maKQHT', 'maKQHT');
+    }
+
+    ##----------------function---------------------------
+    public static function get_cau_hoi_trac_nghiem(Type $var = null)
+    {
+        return self::where('isDelete',false)->where('maLoaiHTDG','T2')->get();
+    }
+
+    public static function get_cau_hoi_trac_nghiem_by_mamuc($maMuc)
+    {
+        return self::where('isDelete',false)->where('id_muc',$maMuc)->where('maLoaiHTDG','T2')->get();
+    }
+
+    public static function get_cau_hoi_trac_nghiem_by_mamuc_distinct($maDe,$maMuc)
+    {
+        $dt_arr=deThi_cauHoi::where('maDe',$maDe)->pluck('maCauHoi');
+        return self::where('isDelete',false)->where('id_muc',$maMuc)->whereNotIn('maCauHoi',$dt_arr)->where('maLoaiHTDG','T2')->get();
     }
 }

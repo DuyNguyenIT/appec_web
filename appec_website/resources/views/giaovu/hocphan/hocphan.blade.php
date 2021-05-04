@@ -6,12 +6,12 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0 text-dark">Học phần<noscript></noscript><nav></nav></h1>
+          <h1 class="m-0 text-dark">{{ __('Course') }}<noscript></noscript><nav></nav></h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-            <li class="breadcrumb-item active">Học phần</li>
+            <li class="breadcrumb-item"><a href="#">{{ __('Home') }}</a></li>
+            <li class="breadcrumb-item active">{{ __('Course') }}</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -91,7 +91,7 @@
 
                             <div class="form-group">
                               <label for="">Chọn học phần:</label>
-                              <select name="maHocPhan" id="" class="form-control">
+                              <select name="maHocPhan" id="" class="form-control mdb-select" searchable="Find...">
                                 @foreach ($hocphan as $hp)
                                   <option value="{{$hp->maHocPhan}}">{{$hp->maHocPhan}}: {{$hp->tenHocPhan}}</option>
                                 @endforeach

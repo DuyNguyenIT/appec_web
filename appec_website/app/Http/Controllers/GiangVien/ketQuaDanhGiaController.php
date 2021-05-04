@@ -125,6 +125,7 @@ class ketQuaDanhGiaController extends Controller
  
              //phiếu chấm
              $phieucham=deThi::getPhieuChamByCTBQH($maCTBaiQH,Session::get('maGV'));
+             
             return view('giangvien.ketqua.tracnghiem.ketquatracnghiem',compact('hp','dssv','deThi','phieucham'));
         }
         

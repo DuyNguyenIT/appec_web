@@ -39,7 +39,8 @@
                 <div class="col-12">
                   <div class="card">
                     <div class="card-header">
-                      <h4 class="">
+
+                      <h4 class="card-title">
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addOne">
                               Chọn đề cho từng sinh viên
@@ -123,7 +124,11 @@
                             </div>
 
                       </h4>
+                      <div class="card-tools">
+                        <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/'.Session::get('maHocPhan').'/'.Session::get('maBaiQH').'/'.Session::get('maHK').'/'.Session::get('namHoc').'/'.Session::get('maLop')) }}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
+                      </div>
                     </div>
+                    
                     <!-- /.card-header -->
                     <div class="card-body">
                       <table  id="example2" class="table table-bordered table-hover">
@@ -142,8 +147,34 @@
                           @php
                               $i=1;
                           @endphp
-                       
+                          @foreach ($phieucham as $pc)
+                              <tr>
+                                <td>{{ $i++ }}</td>
+                                <td>{{ $pc->maSSV }}</td>
+                                <td>{{ $pc->HoSV }} {{ $pc->TenSV }}</td>
+                                <td>{{ $pc->maDeVB }}</td>
+                                <td>
+                                  @if ($pc->diemSo!=0)
+                                      {{ $pc->diemSo }}
+                                  @endif
+                                </td>
+                                <td>
+                                  @if ($pc->trangThai==true)
+                                  <span class="badge bg-success">Đã chấm</span>
+                                  @else
+                                  <span class="badge bg-warning">Chờ chấm</span>
+                                  @endif
+                                </td>
+                                <td>
+                                  @if ($pc->trangThai==true)
+                                  <a href="{{ asset('/giang-vien/ket-qua-danh-gia/trac-nghiem/xem-ket-qua-danh-gia-trac-nghiem/'.$pc->maDe.'/'.$pc->maSSV) }}" class="btn btn-primary">Xem KQ</a>
+                                  @else
+                                  <a href="{{ asset('/giang-vien/ket-qua-danh-gia/trac-nghiem/nhap-diem-trac-nghiem/'.$pc->maDe.'/'.$pc->maSSV) }}" class="btn btn-primary">Chấm</a>
+                                  @endif
+                                </td>
+                              </tr>
                           @endforeach
+                          
                             
                         </tbody>
                         <tfoot></tfoot>

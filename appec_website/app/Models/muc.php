@@ -16,4 +16,23 @@ class muc extends Model
     {
         return $this->belongsTo(chuong::class, 'id_chuong', 'id');
     }
+
+    ##-----------function-----------
+    public static function get_all()
+    {
+        return self::all();
+    }
+
+    public static function get_by_id($id)
+    {
+        return self::find($id);
+    }
+
+    public static function get_by_machuong($maChuong)
+    {
+        return self::where('id_chuong',$maChuong)->get();
+    }
+
+    
+
 }
