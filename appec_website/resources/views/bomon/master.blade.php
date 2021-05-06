@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Lecture</title>
+    <title>{{ __('Department') }}</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link
@@ -59,29 +59,12 @@
             ></a>
           </li>
           <li class="nav-item d-none d-sm-inline-block">
-            <a href="giang_vien.html" class="nav-link">Home</a>
+            <a href="{{ asset('/bo-mon') }}" class="nav-link">{{ __('Home') }}</a>
           </li>
-          <li class="nav-item d-none d-sm-inline-block">
-            <a href="#" class="nav-link">Contact</a>
-          </li>
+         
         </ul>
 
-        <!-- SEARCH FORM -->
-        <form class="form-inline ml-3">
-          <div class="input-group input-group-sm">
-            <input
-              class="form-control form-control-navbar"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <div class="input-group-append">
-              <button class="btn btn-navbar" type="submit">
-                <i class="fas fa-search"></i>
-              </button>
-            </div>
-          </div>
-        </form>
+      
 
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
@@ -93,7 +76,7 @@
               href="{{ asset('/dang-xuat') }}"
               role="button"
             >
-              <i class="fas fa-sign-out-alt"></i> Login
+              <i class="fas fa-sign-out-alt"></i> {{ __('Login') }}
             </a>
           </li>
         </ul>
@@ -110,7 +93,7 @@
             class="brand-image img-circle elevation-3"
             style="opacity: 0.8"
           />
-          <span class="brand-text font-weight-light">Lecture</span>
+          <span class="brand-text font-weight-light">{{ __('Department') }}</span>
         </a>
 
         <!-- Sidebar -->
@@ -171,37 +154,6 @@
                 </a>
               </li>
 
-              <li class="nav-item">
-                <a
-                  href="{{ asset('/giang-vien/quy-hoach-danh-gia') }}"
-                  class="nav-link"
-                >
-                  <i class="nav-icon fas fa-gavel"></i>
-
-                  <p>Assessment Planing</p>
-                </a>
-              </li>
-
-              {{-- <li class="nav-item">
-                <a href="{{ asset('/giang-vien/de-danh-gia') }}" class="nav-link">
-                  <i class="nav-icon fas fa-store-alt"></i>
-                  <p>Đề đánh giá</p>
-                </a>
-              </li> --}}
-              
-              <li class="nav-item">
-                <a href="{{ asset('/giang-vien/ket-qua-danh-gia') }}" class="nav-link">
-                  <i class="nav-icon fas fa-user-friends"></i>
-                  <p>Assessment Result</p>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="{{ asset('/giang-vien/cham-diem-bao-cao') }}" class="nav-link">
-                  <i class="fas fa-balance-scale-left"></i>
-                  <p>Instructor</p>
-                </a>
-              </li>
             </ul>
           </nav>
           <!-- /.sidebar-menu -->
@@ -214,8 +166,8 @@
 
       <footer class="main-footer">
         <strong
-          >Copyright &copy; 2020
-          <a href=""> Hệ thống đánh giá học sinh CAP</a
+          >Copyright &copy; 2020-2021
+          <a href=""> {{ __('C.A.P system') }}</a
           >.</strong
         >
         <div class="float-right d-none d-sm-inline-block">

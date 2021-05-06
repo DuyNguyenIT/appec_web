@@ -22,7 +22,7 @@ use App\Http\Controllers\Controller;
 
 class thongKeController extends Controller
 {
-    public function index(Type $var = null)
+    public function index()
     {
         $gd=giangDay::where('giangday.isDelete',false)
         ->join('hoc_phan',function($q){
@@ -233,7 +233,7 @@ class thongKeController extends Controller
         'hp'=>$hp,'chu'=>$letter,'ct_baiQH'=>$ct_baiQH]);
     }
 
-    public function get_diem_chu_thuc_hanh(Type $var = null)
+    public function get_diem_chu_thuc_hanh()
     {
         $diemChu=[];
         $dethi=deThi::where('de_thi.isDelete',false)
@@ -608,7 +608,7 @@ class thongKeController extends Controller
         'hp'=>$hp,'chu'=>$letter,'ct_baiQH'=>$ct_baiQH]);
     }
 
-    public function get_diem_chu_tu_luan(Type $var = null)
+    public function get_diem_chu_tu_luan()
     {
         $diemChu=[];
         $dethi=deThi::where('de_thi.isDelete',false)
@@ -1178,7 +1178,7 @@ class thongKeController extends Controller
         return view('giaovu.thongke.thongketheoxephang',['xepHang'=>$xepHang,'tiLe'=>$tiLe]);
     }
 
-    public function get_xep_hang(Type $var = null)
+    public function get_xep_hang()
     {
         if(Session::get('maCanBo')==1){
             $dethi=deThi::where('de_thi.isDelete',false)
@@ -1267,7 +1267,7 @@ class thongKeController extends Controller
         'hp'=>$hp,'chu'=>$letter,'ct_baiQH'=>$ct_baiQH]);
     }
 
-    public function get_diem_chu(Type $var = null)
+    public function get_diem_chu()
     {
         $diemChu=[];
         if (Session::get('maCanBo')==1) {
@@ -2231,7 +2231,7 @@ class thongKeController extends Controller
         return view('giaovu.thongke.thongketheotieuchikl',['bieuDo'=>$bieuDo]);
     }
 
-    public function get_tieu_chi_kl(Type $var = null)
+    public function get_tieu_chi_kl()
     {
         //baiQH
         $baiQH=giangDay::where('isDelete',false)

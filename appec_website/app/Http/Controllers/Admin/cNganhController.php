@@ -9,7 +9,7 @@ use App\Models\nganh;
 
 class cNganhController extends Controller
 {
-    public function index(Type $var = null)
+    public function index()
     {
         $cnganh=cNganh::where('isDelete',false)->orderBy('maNganh','desc')->with('nganh')->get();
          $nganh=nganh::where('isDelete',false)->orderBy('maNganh','desc')->get();

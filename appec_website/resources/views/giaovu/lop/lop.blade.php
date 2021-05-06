@@ -31,7 +31,7 @@
                 <h3 class="card-title">
                      <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addClass">
-                  Adding class
+                  <i class="fas fa-plus"></i>
                 </button>
 
                 <!-- Modal adding class-->
@@ -69,38 +69,7 @@
                   
                 </div>
               </div>
-                  <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#importExcel">
-                  Import excel
-                </button>
-                <a href="{{ asset('/giao-vu/quan-ly-lop/tai-file-mau') }}">Template file excel</a>
-
-                <!-- Modal -->
-                <div class="modal fade" id="importExcel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-                    <form action="{{ asset('/giao-vu/quan-ly-lop/cap-nhat-ds-sinh-vien-bang-excel') }}" enctype="multipart/form-data" method="post">
-                    @csrf
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Import excel</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div class="modal-body">
-                        <div class="form-group">
-                          <input type="file" name="file" id="" class="form-control">
-                        </div>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Save</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      </div>
-                    </div>
-                    </form>
-                    
-                  </div>
-                </div>
+                  
                
                 </h3>
               </div>
@@ -118,21 +87,61 @@
                       <tr role="row" class="odd">
                           <td class="sorting_1 dtr-control">{{$i++}}</td>
                           <td>
-                            <a href="{{ asset('giao-vu/quan-ly-lop/xem-danh-sach-sinh-vien/'.$lp->maLop) }}">
                               {{$lp->maLop}}
-                            </a>
                           </td>
                           <td>{{$lp->tenLop}}</td>
                           <td>{{$lp->namTS}}</td>
                           
                           <td>
-                              <a href="{{ asset('giao-vu/quan-ly-lop/xem-danh-sach-sinh-vien/'.$lp->maLop) }}">
-                                  <button class="btn btn-success">
-                                    Danh sách sinh viên
-                                    </button>
+                              
+                              <a class="btn bg-success" href="{{ asset('giao-vu/quan-ly-lop/xem-danh-sach-sinh-vien/'.$lp->maLop) }}">
+                                <span class="badge bg-purple">{{ $lp->countsv }}</span>
+                                <i class="fas fa-align-justify"></i> {{ __('Students list') }}
                               </a>
-                            
-                            
+                              
+
+                              <!-- Modal edit-->
+                              <div class="modal fade" id="edit_{{ $lp->maLop }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                  <form action="{{ asset('/giao-vu/quan-ly-lop/sua-lop') }}" method="post">
+                                  @csrf
+                                  <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">{{ __('Edit') }} {{ $lp->maLop }}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <input type="text" name="maLop" value="{{ $lp->maLop }}" hidden>
+                                        <div class="form-group">
+                                          <label for="">{{ __('Class name') }}</label>
+                                          <input type="text" name="tenLop" class="form-control" value="{{ $lp->tenLop }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="">{{ __('Year') }}</label>
+                                          <input type="text" name="namTS" class="form-control" value="{{ $lp->namTS }}" required>
+                                        </div>
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Cancel') }}</button>
+                                      </div>
+                                    </div>
+                                  </form>
+                                  
+                                </div>
+                              </div>
+                              <div class="btn-group">
+                                 <!-- Button edit modal -->
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit_{{ $lp->maLop }}">
+                                  <i class="fas fa-edit"></i>
+                                </button>
+                                <a class="btn btn-danger" href="{{ asset('/giao-vu/quan-ly-lop/xoa-lop/'.$lp->maLop) }}" onclick="return confirm('Are you sure?')">
+                                  <i class="fas fa-trash"></i>
+                                </a>
+                              </div>
+                             
                           </td>
                       </tr>
                     @endforeach

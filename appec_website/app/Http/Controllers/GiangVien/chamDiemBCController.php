@@ -20,7 +20,7 @@ use App\Http\Controllers\Controller;
 
 class chamDiemBCController extends Controller
 {
-    public function index(Type $var = null)
+    public function index()
     {
         //maGV->ct_bai_quy_hoach[]
         $ct_bai_quy_hoach=ct_bai_quy_hoach::where('isDelete',false)

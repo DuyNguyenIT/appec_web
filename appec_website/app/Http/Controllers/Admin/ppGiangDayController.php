@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 
 class ppGiangDayController extends Controller
 {
-    public function index(Type $var = null) //hàm xóa
+    public function index() //hàm xóa
     {
         $pp=ppGiangDay::orderBy('maPP','asc')->get();
         return view('admin.ppGiangDay',['ppGiangDay'=>$pp]);
@@ -28,7 +28,7 @@ class ppGiangDayController extends Controller
         return back();
     }
 
-    public function xoa(Type $var = null)
+    public function xoa()
     {
         # code...
     }

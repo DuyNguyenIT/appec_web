@@ -1,10 +1,5 @@
 @extends('giangvien.master')
 @section('content')
-   <!-- jQuery -->
-   <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
-   <!-- jQuery UI 1.11.4 -->
-   <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
-   <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
    
      <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -13,7 +8,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Phiếu đánh giá thực hành<noscript></noscript><nav></nav></h1>
+            <h1 class="m-0 text-dark">Phiếu đánh giá tự luận<noscript></noscript><nav></nav></h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -41,13 +36,16 @@
                 <input type="text" name="maPhieuCham" hidden value={{$gv->maPhieuCham}}>
                 <div class="card">
                   <div class="card-header">
-                    <h5 class="">
+                    <h5 class="card-title">
                         1. Giảng viên chấm: {{$gv->hoGV}} {{$gv->tenGV}} <br>
                         2. Chức danh: <br>
                         3. Đơn vị công tác: <br>
                         4. Đề thi: {{$dethi->tenDe}} <br>
                         5. Học và tên sinh viên: {{$sv->HoSV}} {{$sv->TenSV}} <br>
                     </h5>
+                    <div class="card-tools">
+                      <a href="{{ asset('/giang-vien/ket-qua-danh-gia/nhap-ket-qua-danh-gia/'.Session::get('maCTBaiQH')) }}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
+                    </div>
                   </div>
                   <!-- /.card-header -->
                   <div class="card-body">

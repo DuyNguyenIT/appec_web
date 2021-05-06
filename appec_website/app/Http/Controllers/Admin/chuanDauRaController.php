@@ -11,13 +11,13 @@ use Session;
 
 class chuanDauRaController extends Controller
 {
-    public function index(Type $var = null)
+    public function index()
     {
         $cdr1=CDR1::where('isDelete',false)
         ->get();
         return view('admin.chuandaura.chuanDR1',['chuandaura'=>$cdr1]);
     }
- ////-----------------chu&#7849;n &#273;&#7847;u ra 1 PTTMai có s&#7917;a
+ ////-----------------chu&#7849;n &#273;&#7847;u ra 1 PTTMai cï¿½ s&#7917;a
  public function them_cdr_submit(Request $request)
  {
      try {
@@ -38,7 +38,7 @@ class chuanDauRaController extends Controller
          $cdr->tenCDR1=$request->tenCDR1;
          $cdr->tenCDR1EN=$request->tenCDR1EN;
          $cdr->update();
-         //return redirect('/quan-ly/chuan-dau-ra')->with('success','Thêm thành công!');
+         //return redirect('/quan-ly/chuan-dau-ra')->with('success','Thï¿½m thï¿½nh cï¿½ng!');
          alert()->success('Updated successfully', 'Message')->persistent('Close');;
          return redirect('/quan-ly/chuan-dau-ra');
      } catch (\Throwable $th) {

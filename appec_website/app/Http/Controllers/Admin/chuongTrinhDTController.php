@@ -13,7 +13,7 @@ use Maatwebsite\Excel\Excel;
 
 class chuongTrinhDTController extends Controller
 {
-    public function index(Type $var = null)
+    public function index()
     {
         $ctdt=ctDaoTao::where('isDelete',false)->orderBy('maCT','desc')->with('bac')->with('cnganh')->with('he')->get();
          $bac=bacDaoTao::where('isDelete',false)->orderBy('maBac','desc')->get();

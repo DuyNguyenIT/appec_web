@@ -9,7 +9,7 @@ use SweetAlert;
 
 class heController extends Controller
 {
-    public function index(Type $var = null)
+    public function index()
     {
         $he=he::where('isDelete',false)->orderBy('maHe','desc')->get();
         return view('admin.he',['he'=>$he]);

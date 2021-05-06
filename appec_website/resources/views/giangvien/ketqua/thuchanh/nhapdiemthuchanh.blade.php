@@ -41,13 +41,16 @@
                 <input type="text" name="maPhieuCham" hidden value={{$gv->maPhieuCham}}>
                 <div class="card">
                   <div class="card-header">
-                    <h5 class="">
+                    <h5 class="card-title">
                         1. Giảng viên chấm: {{$gv->hoGV}} {{$gv->tenGV}} <br>
                         2. Chức danh: <br>
                         3. Đơn vị công tác: <br>
                         4. Đề thi: {{$dethi->tenDe}} <br>
                         5. Học và tên sinh viên: {{$sv->HoSV}} {{$sv->TenSV}} <br>
                     </h5>
+                    <div class="card-tools">
+                      <a href="{{ asset('/giang-vien/ket-qua-danh-gia/nhap-ket-qua-danh-gia/'.Session::get('maCTBaiQH')) }}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
+                    </div>
                   </div>
                   <!-- /.card-header -->
                   <div class="card-body">

@@ -26,4 +26,72 @@ class CommonController extends Controller
         return $str;
     }
 
+    public static function tinh_diem_chu($diem)
+    {
+        $diemChu="";
+        if($diem>=0 && $diem<4){
+            $diemChu="F";
+        }
+        
+        if($diem>=4 && $diem<=4.9){
+             $diemChu="D";
+        }
+        if($diem>=5 && $diem<=5.4){
+            $diemChu="D+";
+        }
+
+        if($diem>=5.5 && $diem<=6.4){
+            $diemChu="C";
+        }
+        if($diem>=6.5 && $diem<=6.9){
+            $diemChu="C+";
+        }
+
+        if($diem>=7 && $diem<=7.9){
+            $diemChu="B";
+        }
+        if($diem>=8.0 && $diem<=8.9){
+            $diemChu="B+";
+        }
+        
+        if($diem>=9.0 && $diem<=10){
+            $diemChu="A";
+        }
+        return $diemChu;
+    }
+
+    public static function tinh_xep_hang($diem)
+    {
+        $xepHang="";
+        if($diem>=0 && $diem<4){
+            $xepHang=5;
+        }
+        
+        if($diem>=4 && $diem<=4.9){
+             $xepHang=4;
+        }
+        if($diem>=5 && $diem<=5.4){
+            $xepHang=4;
+        }
+
+        if($diem>=5.5 && $diem<=6.4){
+            $xepHang=3;
+        }
+        if($diem>=6.5 && $diem<=6.9){
+            $xepHang=3;
+        }
+
+        if($diem>=7 && $diem<=7.9){
+            $xepHang=2;
+        }
+        if($diem>=8.0 && $diem<=8.9){
+            $xepHang=2;
+        }
+        
+        if($diem>=9.0 && $diem<=10){
+            $xepHang=1;
+        }
+
+        return $xepHang;
+    }
 }

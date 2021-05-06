@@ -14,18 +14,22 @@ use App\Models\giangVien;
 use App\Models\noiDungQH;
 use App\Models\phieu_cham;
 use App\Models\loaiDanhGia;
+use App\Models\deThi_cauHoi;
 use Illuminate\Http\Request;
 use App\Models\loaiHTDanhGia;
 use App\Models\danhgia_tuluan;
 use App\Models\phuongAnTuLuan;
 use App\Models\tieuChiChamDiem;
 use App\Models\ct_bai_quy_hoach;
+use App\Models\danhgia_tracnghiem;
 use App\Models\dethi_cauhoituluan;
+use App\Models\phuongAnTracNghiem;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\CommonController;
 
 class ketQuaDanhGiaController extends Controller
 {
-    public function index(Type $var = null)
+    public function index()
     {
         $gd=giangDay::where('giangday.isDelete',false)->where('maGV',Session::get('maGV'))
         ->join('hoc_phan',function($q){
@@ -461,8 +465,6 @@ class ketQuaDanhGiaController extends Controller
   
 
     ####-----------------------------THỰC HÀNH---------------
-    
-    
     public function them_mot_phieu_cham_thuc_hanh(Request $request)
     {
         foreach ($request->dssv as $sv) {
@@ -554,44 +556,10 @@ class ketQuaDanhGiaController extends Controller
 
         $dg=danhgia_tuluan::where('maPhieuCham',$request->maPhieuCham)->sum('diemDG');
         
-        $pc=phieu_cham::where('maPhieuCham',$request->maPhieuCham)
-        ->first();
-        if($diem>=0 && $diem<4){
-            $pc->diemChu="F";
-            $pc->xepHang=5;
-        }
-        
-        if($diem>=4 && $diem<=4.9){
-             $pc->diemChu="D";
-             $pc->xepHang=4;
-        }
-        if($diem>=5 && $diem<=5.4){
-            $pc->diemChu="D+";
-            $pc->xepHang=4;
-        }
+        $pc=phieu_cham::where('maPhieuCham',$request->maPhieuCham)->first();
 
-        if($diem>=5.5 && $diem<=6.4){
-            $pc->diemChu="C";
-            $pc->xepHang=3;
-        }
-        if($diem>=6.5 && $diem<=6.9){
-            $pc->diemChu="C+";
-            $pc->xepHang=3;
-        }
-
-        if($diem>=7 && $diem<=7.9){
-            $pc->diemChu="B";
-            $pc->xepHang=2;
-        }
-        if($diem>=8.0 && $diem<=8.9){
-            $pc->diemChu="B+";
-            $pc->xepHang=2;
-        }
-        
-        if($diem>=9.0 && $diem<=10){
-            $pc->diemChu="A";
-            $pc->xepHang=1;
-        }
+        $pc->diemChu=CommonController::tinh_diem_chu($diem);
+        $pc->xepHang=CommonController::tinh_xep_hang($diem);
 
         $pc->trangThai=true;
         $pc->diemSo=$diem;
@@ -703,8 +671,7 @@ class ketQuaDanhGiaController extends Controller
     public function nhap_diem_tu_luan($maDe,$maSSV)
     {
          //đề thi
-         $dethi=deThi::where('isDelete',false)->where('maDe',$maDe)
-         ->first();
+         $dethi=deThi::where('isDelete',false)->where('maDe',$maDe)->first();
          //giảng viên
          $gv=phieu_cham::where('phieu_cham.isDelete',false)
          ->where('maDe',$maDe)
@@ -762,42 +729,9 @@ class ketQuaDanhGiaController extends Controller
         
         $pc=phieu_cham::where('maPhieuCham',$request->maPhieuCham)
         ->first();
-        if($diem>=0 && $diem<4){
-            $pc->diemChu="F";
-            $pc->xepHang=5;
-        }
-        
-        if($diem>=4 && $diem<=4.9){
-             $pc->diemChu="D";
-             $pc->xepHang=4;
-        }
-        if($diem>=5 && $diem<=5.4){
-            $pc->diemChu="D+";
-            $pc->xepHang=4;
-        }
 
-        if($diem>=5.5 && $diem<=6.4){
-            $pc->diemChu="C";
-            $pc->xepHang=3;
-        }
-        if($diem>=6.5 && $diem<=6.9){
-            $pc->diemChu="C+";
-            $pc->xepHang=3;
-        }
-
-        if($diem>=7 && $diem<=7.9){
-            $pc->diemChu="B";
-            $pc->xepHang=2;
-        }
-        if($diem>=8.0 && $diem<=8.9){
-            $pc->diemChu="B+";
-            $pc->xepHang=2;
-        }
-        
-        if($diem>=9.0 && $diem<=10){
-            $pc->diemChu="A";
-            $pc->xepHang=1;
-        }
+        $pc->diemChu=CommonController::tinh_diem_chu($diem);
+        $pc->xepHang=CommonController::tinh_xep_hang($diem);
 
         $pc->trangThai=true;
         $pc->diemSo=$diem;
@@ -908,5 +842,97 @@ class ketQuaDanhGiaController extends Controller
         return back();
     }
 
-    
+    public function nhap_diem_trac_nghiem($maDe,$maSSV)
+    {
+        Session::put('maDe',$maDe);
+        Session::put('maSSV',$maSSV);
+        //đề thi
+        $dethi=deThi::where('isDelete',false)->where('maDe',$maDe)->first();
+        
+        //giảng viên
+        $gv=phieu_cham::where('phieu_cham.isDelete',false)
+        ->where('maDe',$maDe)
+        ->where('phieu_cham.maGV',Session::get('maGV'))
+        ->where('maSSV',$maSSV)
+        ->join('giang_vien',function($x){
+            $x->on('giang_vien.maGV','=','phieu_cham.maGV')
+            ->where('giang_vien.isDelete',false);
+        })
+        ->first(['giang_vien.maGV','hoGV','tenGV','phieu_cham.maPhieuCham']);
+        
+        //sinh viên
+       $sv=sinhVien::where('isDelete',false)->where('maSSV',$maSSV)->first();
+      
+        //noi dung de thi thuc  hanh
+        if($dethi){
+            $noidung=deThi_cauHoi::where('de_thi_cau_hoi.maDe',$dethi->maDe)
+            ->join('cau_hoi','cau_hoi.maCauHoi','=','de_thi_cau_hoi.maCauHoi')
+            ->join('phuong_an_trac_nghiem','phuong_an_trac_nghiem.maCauHoi','=','de_thi_cau_hoi.maCauHoi')
+            ->get();
+            foreach ($noidung as $tc) {
+                $cdr3=CDR3::where('isDelete',false)
+                    ->where('maCDR3', $tc->maCDR3)
+                    ->get(['maCDR3VB', 'tenCDR3']);
+                $tc->tenCDR3=$cdr3[0]["tenCDR3"];
+                $tc->maCDR3VB=$cdr3[0]["maCDR3VB"];
+            }
+        }else{
+            alert()->warning("Can't found examination",'Warning');
+            return back();
+        }
+       return view('giangvien.ketqua.tracnghiem.nhapdiemtracnghiem',compact('dethi','gv','sv','noidung'));
+    }
+
+    public function cham_diem_trac_nghiem_submit(Request $request)
+    {
+       
+        //Session maDe--> dethi--> noidung
+        //đề thi
+        $dethi=deThi::where('isDelete',false)->where('maDe',Session::get('maDe'))->first();
+        if($dethi){
+            $noidung=deThi_cauHoi::where('de_thi_cau_hoi.maDe',$dethi->maDe)->get();
+            $diemTong=0;
+            //foreach noidung->them vao danh_gia_trac_nghiem
+            foreach ($noidung as $nd) {
+                //(maCauHoi+diem)-->(maPA+isCorrect)+tinh diemTong
+                $index='chon_'.$nd->maCauHoi;
+                $pa=phuongAnTracNghiem::find($request[$index]);
+                $diemPA=($pa->isCorrect==true)?$nd->diem:0;
+                danhgia_tracnghiem::create(['maPhieuCham'=>$request->maPhieuCham,
+                "maPA"=>$request[$index],"diem"=>$diemPA]);
+                $diemTong+=$diemPA;
+            }
+            
+            //phieuCham:
+            $pc=phieu_cham::where('maPhieuCham',$request->maPhieuCham)->first();
+            //---tinh diemSo
+            $pc->diemChu=CommonController::tinh_diem_chu($diemTong);
+            //---tinh diemChu
+            $pc->xepHang=CommonController::tinh_xep_hang($diemTong);
+            $pc->trangThai=true;
+            $pc->diemSo=$diemTong;
+            $pc->loaiCB=1;
+            $pc->yKienDongGop=$request->yKienDongGop;
+            $pc->update();
+            if (Session::has('language') && Session::get('language')=='vi') {
+                alert()->warning("Chấm điểm thành công",'Warning');
+            }else{
+                alert()->warning("Successfully",'Message');
+            }
+            return redirect('/giang-vien/ket-qua-danh-gia/nhap-ket-qua-danh-gia/'.Session::get('maCTBaiQH'));
+
+        }else{
+            if (Session::has('language') && Session::get('language')=='vi') {
+                alert()->warning("Không tìm thấy đề thi",'Warning');
+            }else{
+                alert()->warning("Can't found examination",'Warning');
+            }
+            return redirect('/giang-vien/ket-qua-danh-gia/trac-nghiem/nhap-diem-trac-nghiem/'.Session::get('maDe').'/'.Session::get('maSSV'));
+        }
+    }
+
+    public function xem_ket_qua_trac_nghiem($maDe,$maSSV)
+    {
+        return $maDe;
+    }
 }

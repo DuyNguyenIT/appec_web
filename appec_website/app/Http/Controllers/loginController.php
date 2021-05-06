@@ -9,7 +9,7 @@ use Session;
 
 class loginController extends Controller
 {
-    public function index(Type $var = null)
+    public function index()
     {
         if(Session::get('user_permission') == 1)	
             return redirect('/quan-ly');
@@ -17,6 +17,9 @@ class loginController extends Controller
             return redirect('/giang-vien');
         if(Session::get('user_permission') == 3){
             return redirect('/giao-vu');
+        }
+        if(Session::get('user_permission') == 4){
+            return redirect('/bo-mon');
         }
         return view('login');
     }
@@ -46,14 +49,14 @@ class loginController extends Controller
                 return redirect('/giao-vu');
             }
             if($Users->permission==4){//bộ môn
-                
+                return redirect('/bo-mon');
             }
        }
        return back()->with('warning','Đăng nhập không thành công!!!');
 
     }
 
-    public function logout(Type $var = null)
+    public function logout()
     {
         $lang=Session::get('language');
         Session::flush();

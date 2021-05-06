@@ -59,8 +59,8 @@
 
                     <td style='white-space: nowrap'>
                         <a class="btn btn-primary" href="{{ asset('/giang-vien/hoc-phan/in-de-cuong-mon-hoc/'.$item->maHocPhan) }}">
-                          <i class="far fa-file-word"></i>
-                              {{ __('Printing') }} {{ __('Course Syllabus') }}
+                          <i class="fas fa-download"></i>
+                           {{ __('Course Syllabus') }}
                         </a>
                          
                         <a href="{{ asset('/giang-vien/hoc-phan/chuong/'.$item->maHocPhan) }}" class="btn btn-success">

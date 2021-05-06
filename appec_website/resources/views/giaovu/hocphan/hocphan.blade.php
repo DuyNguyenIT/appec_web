@@ -32,7 +32,7 @@
                    
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                          Thêm học phần giảng dạy
+                      <i class="fas fa-plus"></i>
                     </button>
 
                     <!-- Modal -->
@@ -42,7 +42,7 @@
                           @csrf
                           <div class="modal-content">
                           <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Thêm học phần</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">{{ __('Add') }}</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>
@@ -90,7 +90,7 @@
 
 
                             <div class="form-group">
-                              <label for="">Chọn học phần:</label>
+                              <label for="">{{ __('Courses') }}:</label>
                               <select name="maHocPhan" id="" class="form-control mdb-select" searchable="Find...">
                                 @foreach ($hocphan as $hp)
                                   <option value="{{$hp->maHocPhan}}">{{$hp->maHocPhan}}: {{$hp->tenHocPhan}}</option>
@@ -98,7 +98,7 @@
                               </select>
                             </div>
                             <div class="form-group">
-                              <label for="">Chọn giảng viên</label>
+                              <label for="">{{ __('Lecture') }}:</label>
                               <select name="maGV" id="" class="form-control">
                                 @foreach ($giangvien as $gv)
                                   <option value="{{$gv->maGV}}">{{$gv->hoGV}} {{$gv->tenGV}}</option>
@@ -106,7 +106,7 @@
                               </select>
                             </div>
                             <div class="form-group">
-                              <label for="">Chọn lớp</label>
+                              <label for="">{{ __('Class') }}</label>
                               <select name="maLop" id="" class="form-control">
                                 @foreach ($lop as $lp)
                                   <option value="{{$lp->maLop}}">{{$lp->tenLop}}</option>
@@ -114,14 +114,14 @@
                               </select>
                             </div>
                             <div class="form-group">
-                              <label for="">Chọn học kì:</label>
+                              <label for="">{{ __('Semester') }}</label>
                               <select name="maHK" id="" class="form-control">
                                 <option value="HK1">Hk1</option>
                                 <option value="HK2">Hk2</option>
                               </select>
                             </div>
                             <div class="form-group">
-                              <label for="">Nhập năm học:</label>
+                              <label for="">{{ __('Academic year') }}:</label>
                               <select name="namHoc" id="" class="form-control">
                                 @foreach ($years_array as $data)
                                     <option value="{{ $data }}">{{ $data }}</option>
@@ -130,17 +130,17 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                          <button type="sumit" class="btn btn-primary">Lưu</button>
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                          <button type="sumit" class="btn btn-primary">{{ __('Save') }}</button>
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Cancel') }}</button>
                         </div>
                       </div>
                       </form>
                       
                     </div>
                   </div>
-                  <button class="btn btn-success">
-                    <i class="fas fa-file-excel"></i> Cập nhật lịch phân công giảng dạy bằng file excel
-                  </button>
+                  {{-- <button class="btn btn-success">
+                    <i class="fas fa-upload"></i>  <i class="fas fa-file-excel"></i> 
+                  </button> --}}
                
                 </h3>
               </div>
@@ -149,16 +149,16 @@
                 <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer"><div class="row"><div class="col-sm-12 col-md-6"></div><div class="col-sm-12 col-md-6"></div></div><div class="row"><div class="col-sm-12"><table id="example2" class="table table-bordered table-hover dataTable no-footer dtr-inline" role="grid" aria-describedby="example2_info">
                   <thead>
                   <tr role="row">
-                    <th>STT</th>
-                    <th>Năm học</th>
-                    <th>Học kì</th>
-                    <th>Tên học phần</th>
-                    <th>Lớp</th>
-                    <th>Tên giảng viên</th>
+                    <th>{{ __('No.') }}</th>
+                    <th>{{ __('Academic year') }}</th>
+                    <th>{{ __('Semester') }}</th>
+                    <th>{{ __('Courses') }}</th>
+                    <th>{{ __('Class') }}</th>
+                    <th>{{ __('Lecture') }}</th>
                    
                    
                    
-                    <th>Tùy chọn</th>
+                    <th>{{ __('Option') }}</th>
                   </tr>
                 </thead>
                  <tbody>
@@ -177,17 +177,11 @@
                               <li>{{$gv->hoGV}} {{$gv->tenGV}}</li>
                               @endforeach
                           </td>
-                        
-                         
-                         
                           <td>
-                            <button class="btn btn-success">
-                                CDR3
-                            </button>
-                            <a href="danhsachsv_1.html">
-                              <button class="btn btn-primary"> 
-                                  <i class="fas fa-align-justify"></i> DSSV
-                              </button>
+                            
+                            <a class="btn bg-success" href="{{ asset('/giao-vu/hoc-phan-giang-day/xem-danh-sach-sinh-vien/'.$gd->maHocPhan.'/'.$gd->maLop.'/'.$gd->maHK.'/'.$gd->namHoc) }}">
+                              <span class="badge bg-purple">{{ $gd->countsv }}</span>
+                              <i class="fas fa-align-justify"></i> {{ __('Students list') }}
                             </a>
                           </td>
                         </tr>

@@ -9,5 +9,8 @@ class lop extends Model
 {
     use HasFactory;
     protected $table='lop';
+    
+    protected $primaryKey = 'maLop';
     protected $fillable = ['maLop','tenLop','namTS'];
+    public $incrementing = false;
 }

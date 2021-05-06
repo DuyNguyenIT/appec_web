@@ -19,13 +19,13 @@ use App\Models\kqHTHP;
 class thongKeController extends Controller
 {
     //
-    public function index(Type $var = null)
+    public function index()
     {
         $ctdt=ctDaoTao::where('isDelete',false)->orderBy('maCT','desc')->get();
         
         return view('admin.thongke.thongke',['ctdaotao'=>$ctdt]);
     }
-    //th&#7889;ng kê CDR c&#7845;p &#273;&#7897; 3 theo t&#7915;ng ch&#432;&#417;ng trình
+    //th&#7889;ng kï¿½ CDR c&#7845;p &#273;&#7897; 3 theo t&#7915;ng ch&#432;&#417;ng trï¿½nh
     public function thong_ke_CT_theo_CDR3($maCT)
     {
       
@@ -67,7 +67,7 @@ class thongKeController extends Controller
         return view('admin.thongke.thongkechuongtrinhCDR3',['ctdt_cdr'=>$ctdt_cdr,'ctdt'=>$ctdt,'hp_ctdt'=>$hp_ctdt,'hp_cdr3'=>$hp_cdr3]);
     }
 
-   //v&#7869; bi&#7875;u &#273;&#7891; cdr3 c&#7845;p ch&#432;&#417;ng trình
+   //v&#7869; bi&#7875;u &#273;&#7891; cdr3 c&#7845;p ch&#432;&#417;ng trï¿½nh
     // public function get_CDR3_chuong_trinh()
     // {
     //     $ctdt=ctDaoTao::where('isDelete',false)->where('maCT',$maCT)->first();
@@ -174,7 +174,7 @@ class thongKeController extends Controller
     //     return response()->json($bieuDo);
     // } 
 
-    //th&#7889;ng kê c&#7845;p ch&#432;&#417;ng trình t&#432;&#417;ng quan abet và cdio
+    //th&#7889;ng kï¿½ c&#7845;p ch&#432;&#417;ng trï¿½nh t&#432;&#417;ng quan abet vï¿½ cdio
      public function thong_ke_CT_theo_CDR3_Abet($maCT)
      {
        
@@ -204,7 +204,7 @@ class thongKeController extends Controller
          return view('admin.thongke.thongkechuongtrinhCDR3Abet',['ctdt'=>$ctdt,'hp_ctdt'=>$hp_ctdt,'hp_kqhthp'=>$hp_kqhthp,'chuan_abet'=>$chuan_abet]);
      }
 
-     //v&#7869; bi&#7875;u &#273;&#7891; abet c&#7845;p ch&#432;&#417;ng trình
+     //v&#7869; bi&#7875;u &#273;&#7891; abet c&#7845;p ch&#432;&#417;ng trï¿½nh
     public function get_Abet_chuong_trinh()
     {
        
@@ -219,10 +219,10 @@ class thongKeController extends Controller
         $chuan_abet=chuan_abet::where('isDelete',false)->get();
         $temp=[];
         foreach($chuan_abet as $chuan){
-            array_push($temp,$chuan->maChuanAbetVB);//này &#273;&#7875; làm tr&#7909;c x
+            array_push($temp,$chuan->maChuanAbetVB);//nï¿½y &#273;&#7875; lï¿½m tr&#7909;c x
         }
         $bieuDo=[];
-        $dem=[0,0,0,0,0,0];//kh&#7903;i t&#7841;o cho bi&#7871;n &#273;&#7871;m s&#7889; l&#432;&#7907;ng môn &#273;&#7841;t c&#7911;a 6 chu&#7849;n abet
+        $dem=[0,0,0,0,0,0];//kh&#7903;i t&#7841;o cho bi&#7871;n &#273;&#7871;m s&#7889; l&#432;&#7907;ng mï¿½n &#273;&#7841;t c&#7911;a 6 chu&#7849;n abet
 
        
         foreach ($hp_ctdt as $hp) {
@@ -240,7 +240,7 @@ class thongKeController extends Controller
             
         }
         
-        array_push($bieuDo,$temp); //bi&#7875;u &#273;&#7891; s&#7869; là m&#7897;t m&#7843;ng 2 chi&#7873;u, ki&#7875;u a[[0],[1]] khi tri&#7875;n khai s&#7869; thành A[[i0,i1,i2,...,i5],[j0,j1,j2,...,j5]] 
+        array_push($bieuDo,$temp); //bi&#7875;u &#273;&#7891; s&#7869; lï¿½ m&#7897;t m&#7843;ng 2 chi&#7873;u, ki&#7875;u a[[0],[1]] khi tri&#7875;n khai s&#7869; thï¿½nh A[[i0,i1,i2,...,i5],[j0,j1,j2,...,j5]] 
         array_push($bieuDo,$dem); 
        // return $bieuDo;
         return response()->json($bieuDo);

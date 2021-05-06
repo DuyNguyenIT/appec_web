@@ -254,7 +254,7 @@ class quyhoachController extends Controller
         return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/noi-dung-quy-hoach/chuong/'.Session::get('maNoiDungQH'))->with('success','Thêm thành công');
     }
 
-    public function xem_cau_hoi_trong_chuong(Type $var = null)
+    public function xem_cau_hoi_trong_chuong()
     {
         #code...
     }
@@ -700,9 +700,14 @@ class quyhoachController extends Controller
               $diem=deThi_cauHoi::where('maCauHoi',$noidung[$i]->maCauHoi)->sum('diem');
               $noidung[$i]->diem=$diem;
               $noidung[$i]->phuong_an=phuongAnTracNghiem::where('maCauHoi',$noidung[$i]->maCauHoi)->get();
-            //   for ($j=0; $j <count($noidung[$i]->phuong_an) ; $j++) { 
-            //     $noidung[$i]->phuong_an[$j]->noiDungPA=substr_replace($noidung[$i]->phuong_an[$j]->noiDungPA, $letter[$j].'. ', 3, 0);
-            //   }
+              for ($j=0; $j <count($noidung[$i]->phuong_an) ; $j++) { 
+                if(substr($noidung[$i]->phuong_an[$j]->noiDungPA, 0, 3) === '<p>'){
+                    $noidung[$i]->phuong_an[$j]->noiDungPA=substr_replace($noidung[$i]->phuong_an[$j]->noiDungPA, $letter[$j].'. ', 3, 0);
+                }else{
+                    $noidung[$i]->phuong_an[$j]->noiDungPA = $letter[$j].'. '.$noidung[$i]->phuong_an[$j]->noiDungPA;
+                }            
+                
+              }
           }
           #dem so cau hoi hien co
           $dem_cau_hoi=deThi_cauHoi::where('maDe',$maDe)->count('maCauHoi');

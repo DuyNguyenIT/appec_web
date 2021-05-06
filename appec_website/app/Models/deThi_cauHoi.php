@@ -9,6 +9,5 @@ class deThi_cauHoi extends Model
 {
     use HasFactory;
     protected $table='de_thi_cau_hoi';
-
     protected $fillable = ['maCauHoi','maDe','diem'];
 }

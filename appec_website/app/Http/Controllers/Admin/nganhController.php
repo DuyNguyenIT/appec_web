@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class nganhController extends Controller
 {
-    public function index(Type $var = null)
+    public function index()
     {
         $nganh=nganh::where('isDelete',false)->get();
         return view('admin.nganh',['nganh'=>$nganh]);

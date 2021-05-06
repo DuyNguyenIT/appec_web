@@ -49,7 +49,7 @@
 
                   <div class="card-tools">
                     <a class="btn btn-primary" href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/in-de-trac-nghiem/'.$dethi->maDe.'/'.$hocphan->maHocPhan) }}">
-                      <i class="fas fa-print"></i>
+                      <i class="fas fa-download"></i>
                     </a>
                     <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/'.Session::get('maCTBaiQH')) }}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
                   </div>
@@ -74,7 +74,7 @@
                 <div class="card-body">
                   @php
                       $index=1;
-                      $letter=['A','B','C','D'];
+                      
                   @endphp
                   @foreach ($noidung as $data) 
                       <b>Câu </b> {{ $index++ }} <b>({{ $data->diem }} điểm)</b> <br>
@@ -83,9 +83,9 @@
                       </a><br>
                       @for ($i = 0; $i < count($data->phuong_an); $i++)
                           @if ($data->phuong_an[$i]->isCorrect==true)
-                              <b> {{ $letter[$i] }}.{!! $data->phuong_an[$i]->noiDungPA !!}</b> <br>
+                              <b> {!! $data->phuong_an[$i]->noiDungPA !!}</b> <br>
                           @else
-                          {{ $letter[$i] }}.{!! $data->phuong_an[$i]->noiDungPA !!} <br>
+                          {!! $data->phuong_an[$i]->noiDungPA !!} <br>
                           @endif
                       @endfor
                   @endforeach

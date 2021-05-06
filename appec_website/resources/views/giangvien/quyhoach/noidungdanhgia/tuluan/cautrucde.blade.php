@@ -39,7 +39,7 @@
             
             <div class="col-12">
               <div class="card">
-                <a class="btn btn-primary" href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/in-de-thuc-hanh/'.$dethi->maDe.'/'.$hocphan->maHocPhan) }}">Print</a>
+                <a class="btn btn-primary" href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/in-de-thuc-hanh/'.$dethi->maDe.'/'.$hocphan->maHocPhan) }}"><i class="fas fa-download"></i></a>
 
                 <div class="card-header">
                   <div class="row">

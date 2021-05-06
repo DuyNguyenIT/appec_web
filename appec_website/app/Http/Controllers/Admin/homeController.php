@@ -17,7 +17,7 @@ use App\Http\Controllers\Controller;
 
 class homeController extends Controller
 {
-    public function index(Type $var = null)
+    public function index()
     {
         $education_level=bacDaoTao::where('isDelete',false)->count();
         $majors=nganh::where('isDelete',false)->count();

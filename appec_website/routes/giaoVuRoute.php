@@ -13,12 +13,18 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiaoVu'], function (){
                      Route::post('cap-nhat-ds-sinh-vien-bang-excel', 'dsSinhVienImportController@import');
                      Route::get('tai-file-mau', 'dsSinhVienImportController@download_template');
                      Route::post('them-lop', 'lopController@addClass');
+                     Route::post('sua-lop', 'lopController@editClass');
+                     Route::get('xoa-lop/{maLop}', 'lopController@delClass');
+
+
               });
               //học phần
               Route::group(['prefix' => 'hoc-phan-giang-day'], function () {
                      Route::get('/', 'hocPhanController@index');
+                     Route::post('cap-nhat-ds-sinh-vien-bang-excel', 'dsSinhVienHocPhanImport@import');
+                     Route::get('tai-file-mau', 'dsSinhVienHocPhanImport@download_template');
                      Route::post('them-hoc-phan-giang-day-submit', 'hocPhanController@them_hoc_phan_giang_day');
-                    
+                     Route::get('/xem-danh-sach-sinh-vien/{maHocPhan}/{maLop}/{maHK}/{namHoc}','hocPhanController@xem_danh_sach_sinh_vien');
               //     Route::post('xoa/{id}', '');
               });
           

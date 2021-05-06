@@ -13,6 +13,8 @@
     />
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}" />
+     <!-- flag-icon-css -->
+     <link rel="stylesheet" href="{{ asset('/plugins/flag-icon-css/css/flag-icon.min.css') }}">
     <!-- Ionicons -->
     <link
       rel="stylesheet"
@@ -58,37 +60,46 @@
             ></a>
           </li>
           <li class="nav-item d-none d-sm-inline-block">
-            <a href="giaovu.html" class="nav-link">Trang chủ</a>
-          </li>
-          <li class="nav-item d-none d-sm-inline-block">
-            <a href="#" class="nav-link">Liên hệ</a>
+            <a href="{{ asset('/giao-vu') }}" class="nav-link">{{ __('Home') }}</a>
           </li>
         </ul>
 
-        <!-- SEARCH FORM -->
-        <form class="form-inline ml-3">
-          <div class="input-group input-group-sm">
-            <input
-              class="form-control form-control-navbar"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <div class="input-group-append">
-              <button class="btn btn-navbar" type="submit">
-                <i class="fas fa-search"></i>
-              </button>
-            </div>
-          </div>
-        </form>
+        
 
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
+            <!-- Language Dropdown Menu -->
+            <li class="nav-item dropdown">
+              <a class="nav-link" data-toggle="dropdown" href="#">
+                @if (Session::has('language') && Session::get('language')=='vi')
+                  <i class="flag-icon flag-icon-vn"></i>
+                @else
+                <i class="flag-icon flag-icon-us"></i>
+                @endif
+              </a>
+              <div class="dropdown-menu dropdown-menu-right p-0">
+                @if (Session::has('language') && Session::get('language')=='vi')
+                  <a href="{{ asset('/language/en') }}" class="dropdown-item ">
+                    <i class="flag-icon flag-icon-us mr-2"></i> {{ __('English') }}
+                  </a>
+                  <a href="{{ asset('/language/vi') }}" class="dropdown-item active">
+                    <i class="flag-icon flag-icon-vn mr-2"></i> {{ __('Vietnamese') }}
+                  </a>  
+                @else
+                  <a href="{{ asset('/language/en') }}" class="dropdown-item active">
+                    <i class="flag-icon flag-icon-us mr-2"></i> {{ __('English') }}
+                  </a>
+                  <a href="{{ asset('/language/vi') }}" class="dropdown-item">
+                    <i class="flag-icon flag-icon-vn mr-2"></i> {{ __('Vietnamese') }}
+                  </a>
+                @endif
+              </div>
+            </li>
           <!-- Messages Dropdown Menu -->
           <li class="nav-item">
             <a class="nav-link" data-widget="fullscreen" href="{{ asset('/dang-xuat') }}"
               role="button">
-            Đăng xuất
+              {{ __('Logout') }}
               <i class="fas fa-sign-out-alt"></i>
             </a>
           </li>
@@ -156,32 +167,32 @@
               <li class="nav-item">
                 <a href="{{ asset('/giao-vu') }}" class="nav-link">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
-                  <p>Bảng điều khiển</p>
+                  <p>{{ __('Dashboard') }}</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ asset('/giao-vu/quan-ly-lop') }}" class="nav-link">
                   <i class="fas fa-users"></i>
-                  <p>Quản lý lớp</p>
+                  <p>{{ __('Class') }}</p>
                 </a>
               </li>
 
               <li class="nav-item">
                 <a href="{{ asset('/giao-vu/hoc-phan-giang-day') }}" class="nav-link">
                   <i class="nav-icon fas fa-book-reader"></i>
-                  <p>Phân công dạy học</p>
+                  <p>{{ __('Assignment of teaching') }}</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ asset('/giao-vu/cap-nhat-diem-ket-thuc') }}" class="nav-link">
                   <i class="fas fa-gavel"></i>
-                  <p>Cập nhật điểm kết thúc môn</p>
+                  <p>{{ __('Updating final result') }}</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ asset('/giao-vu/thong-ke') }}" class="nav-link">
                   <i class="fas fa-chart-bar"></i>
-                  <p>Thống kê</p>
+                  <p>{{ __('Statistics') }}</p>
                 </a>
               </li>
             </ul>
@@ -198,7 +209,7 @@
       <footer class="main-footer">
         <strong
           >Copyright &copy; 2020
-          <a href="https://adminlte.io"> Hệ thống đánh giá học sinh CAP</a
+          <a href="https://adminlte.io"> {{ __('C.A.P System') }}</a
           >.</strong
         >
         <div class="float-right d-none d-sm-inline-block">

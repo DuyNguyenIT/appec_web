@@ -14,7 +14,7 @@ use App\Http\Controllers\Controller;
 
 class GVHocPhanController extends Controller
 {
-    public function index(Type $var = null)
+    public function index()
     {
         $mhp_arr=giangDay::where('giangday.isDelete',false)->where('maGV',Session::get('maGV'))
         ->join('hoc_phan',function($q){
@@ -65,6 +65,8 @@ class GVHocPhanController extends Controller
     ////////////////---------------Xem danh sách sinh viên giảng dạy
     public function xem_ds_sv_giang_day($maLop)
     {
+        // sinhvien_hocphan::where('maHocPhan',$maHocPhan)->where('maLop',$maLop)
+        // ->where('maHK',$maHK)->where('namHoc',$namHoc)->with('sinhvien')->get();
         $dssv=sinhVien::where('isDelete',false)->where('maLop',$maLop)->get();
         return view('giangvien.hocphan.xemdssinhvien',['dssv'=>$dssv]);
     }
@@ -87,7 +89,7 @@ class GVHocPhanController extends Controller
     }
 
     ////////////////---------------Giảng viên dạy học phần
-    public function giang_vien_day_hoc_phan(Type $var = null)
+    public function giang_vien_day_hoc_phan()
     {
         # code...
     }

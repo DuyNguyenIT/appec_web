@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class loaiHocPhanController extends Controller
 {
-    public function index(Type $var = null)
+    public function index()
     {
         $lhp=loaiHocPhan::where('isDelete',false)->orderBy('maLoaiHocPhan','desc')->get();
         return view('admin.loaihocphan',['loaihocphan'=>$lhp]);

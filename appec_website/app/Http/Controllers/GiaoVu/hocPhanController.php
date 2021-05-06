@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers\GiaoVu;
 
-use App\Http\Controllers\Controller;
 use Carbon\Carbon;
-use App\Models\baiQuyHoach;
+use App\Models\lop;
+use App\Models\hocPhan;
 use App\Models\giangDay;
 use App\Models\giangVien;
-use App\Models\hocPhan;
-use App\Models\lop;
+use App\Models\baiQuyHoach;
 use Illuminate\Http\Request;
+use App\Models\sinhvien_hocphan;
+use App\Http\Controllers\Controller;
+use Session;
 
 class hocPhanController extends Controller
 {
-    public function index(Type $var = null)
+    public function index()
     {
         //học phần
         $hp=hocPhan::where('isDelete',false)
@@ -35,7 +37,15 @@ class hocPhanController extends Controller
         })
         ->distinct()
         ->get(['hoc_phan.maHocPhan','maHK','namHoc','hoc_phan.tenHocPhan','giangday.maLop']);
+        //count student
+        foreach ($gd_rs as $x) {
+            $count=sinhvien_hocphan::where('maHocPhan',$x->maHocPhan)
+            ->where('maLop',$x->maLop)->where('maHK',$x->maHK)
+            ->where('namHoc',$x->namHoc)->count('maSSV');
+            $x->countsv=$count;
+        }
         
+
         //------t&#7841;o combobox n&#259;m h&#7885;c
         $date = new Carbon();   
         $current_year=$date->year;
@@ -63,6 +73,7 @@ class hocPhanController extends Controller
                 $x->GV=$temp;
             }
         }
+
        
         return view('giaovu.hocphan.hocphan',['giangday'=>$gd_rs,'hocphan'=>$hp,
         'giangvien'=>$giangvien,'lop'=>$lop,'years_array'=>$years_array]);
@@ -70,23 +81,32 @@ class hocPhanController extends Controller
 
     public function them_hoc_phan_giang_day(Request  $request)
     {
+
         //tạo bài quy hoạch mới
         $bqh=new baiQuyHoach();
         $bqh->save();
         $bqh=baiQuyHoach::where('isDelete',false)->orderBy('maBaiQH','desc')->first();
 
+        $request->maCDR3=1;
         //tạo giảng dạy
-        $gd=new giangDay();
-        $gd->maHocPhan=$request->maHocPhan;
-        $gd->maLop=$request->maLop;
-        $gd->maGV=$request->maGV;
-        $gd->maHK=$request->maHK;
-        $gd->namHoc=$request->namHoc;
-        $gd->maBaiQH=$bqh->maBaiQH;
-        $gd->maCDR3=1;
-        
-        $gd->save();
+        $gd=giangDay::create($request->all());
+
 
         return redirect('/giao-vu/hoc-phan-giang-day')->with('success','Thêm thành công!!!');
+    }
+
+    public function xem_danh_sach_sinh_vien($maHocPhan,$maLop,$maHK,$namHoc)
+    {
+        Session::put('maHocPhan',$maHocPhan);
+        Session::put('maLop',$maLop);
+        Session::put('maHK',$maHK);
+        Session::put('namHoc',$namHoc);
+
+
+        $hocphan=hocPhan::where('maHocPhan',$maHocPhan)->first();
+        $dssv=sinhvien_hocphan::where('maHocPhan',$maHocPhan)->where('maLop',$maLop)
+        ->where('maHK',$maHK)->where('namHoc',$namHoc)->with('sinhvien')->get();
+       
+        return view('giaovu.hocphan.danhsachSV',compact('dssv','hocphan','maLop','maHK','namHoc'));
     }
 }

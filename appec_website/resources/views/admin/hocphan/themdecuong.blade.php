@@ -55,7 +55,7 @@
             <div class="card">
               <div class="card-header">
                 <div class="card-tools">
-                  <a class="btn btn-primary" href="{{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/in-de-cuong-mon-hoc/'.$hocPhan->maHocPhan) }}"><i class="fas fa-print"></i></a>
+                  <a class="btn btn-primary" href="{{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/in-de-cuong-mon-hoc/'.$hocPhan->maHocPhan) }}"><i class="fas fa-download"></i></a>
                   <a href="{{ asset('/quan-ly/hoc-phan') }}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
                 </div>
                 <h3  style="text-align: center">

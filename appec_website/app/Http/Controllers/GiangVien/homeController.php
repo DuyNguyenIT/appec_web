@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Session;
 
 class homeController extends Controller
 {
-    public function index(Type $var = null)
+    public function index()
     {
         
         return view('giangvien.home');

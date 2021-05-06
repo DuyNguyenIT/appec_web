@@ -14,17 +14,14 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}" />
      <!-- flag-icon-css -->
-  <link rel="stylesheet" href="{{ asset('/plugins/flag-icon-css/css/flag-icon.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/plugins/flag-icon-css/css/flag-icon.min.css') }}">
     <!-- Ionicons -->
     <link
       rel="stylesheet"
       href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
     />
     <!-- Tempusdominus Bootstrap 4 -->
-    <link
-      rel="stylesheet"
-      href="{{ asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}"
-    />
+    <link rel="stylesheet" href="{{ asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}"/>
     <!-- iCheck -->
     <link
       rel="stylesheet"
@@ -48,12 +45,12 @@
    <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-   
     <!-- jQuery -->
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <!-- jQuery UI 1.11.4 -->
     <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+
   </head>
   <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
@@ -71,20 +68,7 @@
           </li>
         </ul>
 
-        <!-- SEARCH FORM -->
-        {{-- <form class="form-inline ml-3">
-          <div class="input-group input-group-sm">
-            <input
-              class="form-control form-control-navbar" type="search"
-              placeholder="Search" aria-label="Search"
-            />
-            <div class="input-group-append">
-              <button class="btn btn-navbar" type="submit">
-                <i class="fas fa-search"></i>
-              </button>
-            </div>
-          </div>
-        </form> --}}
+
 
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
@@ -226,13 +210,13 @@
 
       <footer class="main-footer">
         <strong
-          >Copyright &copy; 2020
-          <a href=""> Hệ thống đánh giá học sinh CAP</a
-          >.</strong
-        >
-        <div class="float-right d-none d-sm-inline-block">
-          <b>Version</b> 1.0
-        </div>
+        >Copyright &copy; 2020-2021
+        <a href=""> {{ __('C.A.P system') }}</a
+        >.</strong
+      >
+      <div class="float-right d-none d-sm-inline-block">
+        <b>Version</b> 1.0
+      </div>
       </footer>
 
       <!-- Control Sidebar -->
@@ -284,7 +268,6 @@
         "responsive": true,
         "autoWidth": false,
       });
-      
     });
     </script>
   </body>

@@ -35,7 +35,7 @@ use App\Http\Controllers\CommonController;
 
 class hocPhanController extends Controller
 {
-    public function index(Type $var = null)
+    public function index()
     {
         $hocphan=hocPhan::where('isDelete',false)->orderBy('maHocPhan','desc')->with('hocphan_ctdt')->with('ctkhoi')->get();
         $ctkhoi=ctKhoiKT::where('isDelete',false)->orderBy('maCTKhoiKT','asc')->get();

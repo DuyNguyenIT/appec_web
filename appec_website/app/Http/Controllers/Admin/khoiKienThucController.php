@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class khoiKienThucController extends Controller
 {
-    public function index(Type $var = null)
+    public function index()
     {
         $kkt=khoiKienThuc::where('isDelete',false)->orderBy('maKhoiKT','desc')->get();
         return view('admin.khoikienthuc',['khoikienthuc'=>$kkt]);
