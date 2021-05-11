@@ -7,15 +7,15 @@
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <h1 class="m-0 text-dark">
-                            {{ __('Forms of training') }} <noscript></noscript>
-                            <nav></nav>
+                            {{ __('Level-2 Student Outcomes') }} <-> Abet <noscript></noscript>
+                                <nav></nav>
                         </h1>
                     </div>
                     <!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ asset('quan-ly') }}">{{ __('Home') }}</a></li>
-                            <li class="breadcrumb-item active">{{ __('Form of training') }}</li>
+                            <li class="breadcrumb-item active">{{ __('Level-2 Student Outcomes') }} <-> Abet </li>
                         </ol>
                     </div>
                     <!-- /.col -->
@@ -25,7 +25,6 @@
             <!-- /.container-fluid -->
         </div>
         <!-- /.content-header -->
-
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
@@ -42,12 +41,13 @@
                                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
-                                        <form action="{{ asset('quan-ly/he/them') }}" method="post">
+                                        <form action="{{ asset('quan-ly/chuan-dau-ra2-abet/them') }}" method="post">
                                             @csrf
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="exampleModalLabel">
-                                                        {{ __('Adding a new') }} {{ __('Form of training') }} </h5>
+                                                        {{ __('Adding a new') }} {{ __('Level-2 Student Outcomes') }}
+                                                        {{ __('Abet') }} </h5>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                         <span aria-hidden="true">×</span>
@@ -55,11 +55,11 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="form-group">
-                                                        <label for="">{{ __('Form of training ID') }}</label>
+                                                        <label for="">{{ __('Level-2 Student Outcomes') }}</label>
                                                         <input type="text" name="maHe" class="form-control">
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="">{{ __('Form of training Name') }}</label>
+                                                        <label for="">{{ __('Abet') }}</label>
                                                         <input type="text" class="form-control" name="tenHe">
                                                     </div>
                                                 </div>
@@ -79,8 +79,8 @@
                                         <thead>
                                             <tr>
                                                 <th>{{ __('No.') }}</th>
-                                                <th>{{ __('Form of training ID') }}</th>
-                                                <th>{{ __('Form of training Name') }}</th>
+                                                <th>{{ __('Level-2 Student Outcomes') }}</th>
+                                                <th>{{ __('Abet') }}</th>
                                                 <th>{{ __('Option') }}</th>
                                             </tr>
                                         </thead>
@@ -100,21 +100,23 @@
                                                         </button>
                                                         <a title="Delete" class="btn btn-danger"
                                                             onclick="return confirm('Do you want to delete {{ $h->tenHe }}?')"
-                                                            href="{{ asset('quan-ly/he/xoa/' . $h->maHe) }}"><i
-                                                                class="fa fa-trash"></i></a>
-
+                                                            href="{{ asset('quan-ly/chuan-dau-ra2-abet/xoa/' . $h->id) }}">
+                                                            <i class="fa fa-trash"></i>
+                                                        </a>
                                                         <div class="modal fade" id="edit_{{ $h->maHe }}" tabindex="-1"
                                                             role="dialog" aria-labelledby="exampleModalLabel"
                                                             aria-hidden="true">
                                                             <div class="modal-dialog" role="document">
-                                                                <form action="{{ asset('quan-ly/he/sua') }}"
+                                                                <form
+                                                                    action="{{ asset('quan-ly/chuan-dau-ra2-abet/sua') }}"
                                                                     method="post">
                                                                     @csrf
                                                                     <div class="modal-content">
                                                                         <div class="modal-header">
                                                                             <h5 class="modal-title" id="exampleModalLabel">
                                                                                 {{ __('Editing') }}
-                                                                                {{ __('Form of training') }}
+                                                                                {{ __('Level-2 Student Outcomes') }}
+                                                                                {{ __('Abets') }}
                                                                             </h5>
                                                                             <button type="button" class="close"
                                                                                 data-dismiss="modal" aria-label="Close">
@@ -122,11 +124,11 @@
                                                                             </button>
                                                                         </div>
                                                                         <div class="modal-body">
-                                                                            <input type="text" name="maHe"
-                                                                                value="{{ $h->maHe }}" hidden>
+                                                                            <input type="text" name="id"
+                                                                                value="{{ $h->id }}" hidden>
                                                                             <div class="form-group">
                                                                                 <label
-                                                                                    for="">{{ __('Form of training Name') }}</label>
+                                                                                    for="">{{ __('Level-2 Student Outcomes') }}</label>
                                                                                 <input type="text" name="tenHe"
                                                                                     class="form-control"
                                                                                     value="{{ $h->tenHe }}"

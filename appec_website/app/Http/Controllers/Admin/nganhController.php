@@ -6,58 +6,53 @@ use App\Http\Controllers\Controller;
 use App\Models\cNganh;
 use App\Models\nganh;
 use Illuminate\Http\Request;
+use Session;
 
 class nganhController extends Controller
 {
     public function index()
     {
-        $nganh=nganh::where('isDelete',false)->get();
+        //$nganh=nganh::where('isDelete',false)->get();
+        $nganh=nganh::all();
         return view('admin.nganh',['nganh'=>$nganh]);
     }
 
     public function them(Request $request)
     {
-        try {
-            $nganh=new nganh();
-            $nganh->maNganh=$request->maNganh;
-            $nganh->tenNganh=$request->tenNganh;
-            $nganh->save();
+        $nganh=new nganh();
+        $nganh->maNganh=$request->maNganh;
+        $nganh->tenNganh=$request->tenNganh;
+        $nganh->save();
+        if (Session::has('language') && Session::get('language')=='vi') {
+            alert()->success('Thêm thành công', 'Thông báo')->persistent('Close');
+        } else {
             alert()->success('Added successfully', 'Message')->persistent('Close');
-            return redirect('/quan-ly/nganh-hoc');
-    
-        } catch (\Throwable $th) {
-            alert()->error('Error:'.$th, 'Can not add this entry');
-            return redirect('/quan-ly/nganh-hoc');
         }
+        return redirect('/quan-ly/nganh-hoc');
     }
 
     public function sua(Request $request)
     {
-        try {
-            $nganh=nganh::where('maNganh',$request->maNganh)->first();
-            $nganh->maNganh=$request->maNganh;
-            $nganh->tenNganh=$request->tenNganh;
-            $nganh->update();
-            alert()->success('Updated successfully', 'Message');
-            return redirect('/quan-ly/nganh-hoc');
-        } catch (\Throwable $th) {
-            alert()->error('Error:'.$th, 'Update failed');
-            return redirect('/quan-ly/nganh-hoc');
+        $nganh=nganh::where('maNganh',$request->maNganh)->first();
+        $nganh->maNganh=$request->maNganh;
+        $nganh->tenNganh=$request->tenNganh;
+        $nganh->update();
+        if (Session::has('language') && Session::get('language')=='vi') {
+            alert()->success('Sửa thành công!!','Thông báo');
+        } else {
+            alert()->success('Edited successfully!!','Message');
         }
+        return redirect('/quan-ly/nganh-hoc');
     }
 
     public function xoa($maNganh)
     {
-        try {
-            $nganh=nganh::where('maNganh',$maNganh)->first();
-            $nganh->isDelete=true;
-            $nganh->update();
+        $nganh=nganh::find($maNganh)->delete();
+        if (Session::has('language') && Session::get('language')=='vi') {
+            alert()->success('Xóa thành công!!','Thông báo');
+        } else {
             alert()->success('Deleted successful', 'Message');
-            return redirect('/quan-ly/nganh-hoc');
-        } catch (\Throwable $th) {
-            alert()->error('Error:'.$th, 'Delete failed');
-            return redirect('/quan-ly/nganh-hoc');
         }
-        
+        return redirect('/quan-ly/nganh-hoc');     
     }
 }

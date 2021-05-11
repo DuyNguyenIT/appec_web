@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
-
 use App\Models\he;
 use App\Models\muc;
 use App\Models\CDR1;
@@ -32,7 +30,6 @@ use App\Http\Controllers\Controller;
 use App\Models\hocPhan_loaiHTDanhGia;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\CommonController;
-
 class hocPhanController extends Controller
 {
     public function index()
@@ -41,7 +38,6 @@ class hocPhanController extends Controller
         $ctkhoi=ctKhoiKT::where('isDelete',false)->orderBy('maCTKhoiKT','asc')->get();
         $ctdt=ctDaoTao::all();
         $loaihp=loaiHocPhan::all();
-
         foreach ($hocphan as $hp) {
             foreach ($hp->hocphan_ctdt as $hp_ctdt) {
                 $ct=ctDaoTao::where('maCT',$hp_ctdt->maCT)->first();
@@ -52,11 +48,8 @@ class hocPhanController extends Controller
         // return $hocphan[0];
         return view('admin.hocphan.hocphan',compact('hocphan','ctkhoi','ctdt','loaihp'));
     }
-
-
     public function them_hoc_phan_ctdt(Request $request)
     {
-
         $ct= hocPhan_ctDaoTao::where('maHocPhan',$request->maHocPhan)->where('maCT',$request->maCT)->first();
         if($ct){
             alert()->warning('Chương trình đã được chọn','Thông báo');
@@ -66,10 +59,8 @@ class hocPhanController extends Controller
         alert()->success('Thêm thành công','Thông báo');
         return redirect('quan-ly/hoc-phan');
     }
-
     public function them(Request $request) //thêm học phần mới
     {
-
         //tính tổng số tín chỉ
         $request->tongSoTinChi=$request->tinChiLyThuyet+$request->tinChiThucHanh;
         //tạo học phần
@@ -80,7 +71,6 @@ class hocPhanController extends Controller
         alert()->success('Thêm thành công','Thông báo');
         return redirect('quan-ly/hoc-phan');
     }
-
      //Sửa học phần
      public function sua(Request $request)
      {
@@ -124,7 +114,6 @@ class hocPhanController extends Controller
         ->with('ctDaoTao')
         ->with('loaiHocPhan')
         ->get();
-
         ///---------tao combobox edit
         $ctdt=ctDaoTao::where('isDelete',false)->get();
         $loaihp=loaiHocPhan::where('isDelete',false)->get();
@@ -170,7 +159,6 @@ class hocPhanController extends Controller
         //3 mô tả
         //4 Chuẩn đầu ra môn học
         $cdr1=CDR1::all();//biến này để in chủ đề
-
         $cdr=CDR1::join('cdr_cd2',function($x){ //biến này để chạy combobox cho modal thêm chuẩn đầu ra môn học
             $x->on('cdr_cd1.maCDR1','=','cdr_cd2.maCDR1')
             ->where('cdr_cd2.isDelete',false);
@@ -180,7 +168,6 @@ class hocPhanController extends Controller
             ->where('cdr_cd3.isDelete',false);
         })
         ->get();
-
         $kqht=hocPhan_kqHTHP::where('hocphan_kqht_hp.isDelete',false) //biến này chạy nội dung trong bảng chuẩn đầu ra môn học
         ->where('hocphan_kqht_hp.maHocPhan',$maHocPhan)
         ->join('chuan_abet',function($y){
@@ -204,15 +191,11 @@ class hocPhanController extends Controller
             ->where('cdr_cd1.isDelete',false);
         })
         ->get();
-
-
         $chuan_abet=chuan_abet::all();//combobox chuẩn abet
-
         //5 nội dung môn học
         $kqht_hp=hocPhan_kqHTHP::where('hocphan_kqht_hp.isDelete',false) 
         ->where('hocphan_kqht_hp.maHocPhan',$maHocPhan)
         ->get('maKQHT');
-
         $getKQHT=kqHTHP::whereIn('maKQHT',$kqht_hp)->get(); //biến hiện combobox kqht thêm chương (vì select distinct không chạy nên dùng wherein)
         
         $mucDoDG=mucDoDanhGia::where('isDelete',false)->get();  //hiện combobox mức độ đánh giá trong chương
@@ -232,7 +215,6 @@ class hocPhanController extends Controller
         ->join('cdr_cd1','cdr_cd1.maCDR1','=','muc_do_ky_nang_itu.maCDR1')
         ->join('kqht_hp','kqht_hp.maKQHT','=','muc_do_ky_nang_itu.maKQHT')
         ->get();
-
         foreach ($noidung as $nd) {
             foreach ($nd->chuong_kqht as $x) {
                 $temp=kqHTHP::where('maKQHT',$x->maKQHT)->first();
@@ -251,7 +233,6 @@ class hocPhanController extends Controller
         ->with('loai_danh_gia')
         ->with('loaiHTDanhGia')
         ->get(); //biến này in bảng phương thức đánh giá
-
         //phản hồi
         return view('admin.hocphan.themdecuong',['hocPhan'=>$hocPhan,'monHoc'=>$mon,'hocphan_ctdaotao'=>$hocphan_ctdaotao,
         'monTQ'=>$monTQ,'tailieu'=>$tailieu,
@@ -260,7 +241,6 @@ class hocPhanController extends Controller
         'ppGiangDay'=>$ppgd,'hocPhan_ppGiangDay'=>$hp_ppgd,
         'noidung'=>$noidung,'loaiDG'=>$loaiDG, 'mucDoDG'=>$mucDoDG,
         'loaiHTDG'=>$loaiHTDG,'hocPhan_loaiHTDG'=>$hocPhan_loaiHTDG]);
-
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////CÁC HÀM XỬ LÝ CHO THÊM ĐỀ CƯƠNG/////////////////
@@ -329,12 +309,10 @@ class hocPhanController extends Controller
         foreach ($arrray_maCDR3 as $maCDR3) {
             hocPhan_kqHTHP::create(['maHocPhan'=>$request->maHocPhan,'maKQHT'=>$kqht->maKQHT,'maCDR3'=>$maCDR3,'maChuanAbet'=>$request->maChuanAbet]);
         }
-
         //phản hồi
         alert()->success('Thêm chuẩn đầu ra thành công!!','Thông báo');
         return back();
     }
-
     public function sua_chuan_dau_ra_mon_hoc(Request $request)
     {
         # 1. Sửa KQht
@@ -346,7 +324,6 @@ class hocPhanController extends Controller
         //alert()->success('Thêm chuẩn đầu ra thành công!!','Thông báo');
         return back();
     }
-
     public function them_noi_dung_mon_hoc(Request $request)  //thêm nội dung môn học (chương)
     {
         //1.thêm chương mới
@@ -365,7 +342,6 @@ class hocPhanController extends Controller
         alert()->success('Thêm nội dung thành công!!','Thông báo');
         return back();
     }
-
     public function them_muc_do_ky_nang_uti(Request $request)
     {
         # code...
@@ -405,7 +381,6 @@ class hocPhanController extends Controller
             alert()->warning('Tỉ lệ công thức 2 đã đạt 100%, không thể thêm phương thức đánh giá!!','Cảnh báo');
             return back();
         }
-
         
         hocPhan_loaiHTDanhGia::create(['maHocPhan'=>$request->maHocPhan,'maLoaiDG'=>$request->maLoaiDG,'maLoaiHTDG'=>$request->maLoaiHTDG,'trongSo'=>$request->trongSo,'groupCT'=>$request->groupCT]);
         //phản hồi

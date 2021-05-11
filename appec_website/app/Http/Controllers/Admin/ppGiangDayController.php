@@ -17,19 +17,30 @@ class ppGiangDayController extends Controller
     public function them(Request $request) //hàm thêm
     {
         ppGiangDay::create($request->all());
-        alert()->success('Thêm thành công!!','Thông báo');
-        return back();
+        if (Session::has('language') && Session::get('language')=='vi') {
+            alert()->success('Thêm thành công!!','Thông báo');
+        } else {
+            alert()->success('Added successfully!!','Message');
+        }
+        return redirect('/quan-ly/phuong-phap-giang-day');
+
     }
 
     public function sua(Request $request) //hàm sửa
     {
-        ppGiangDay::updateOrCreate(['maPP'=>$request->maPP],['tenPP'=>$request->tenPP]);
-        alert()->success('Sửa thành công!!','Thông báo');
-        return back();
+        ppGiangDay::updateOrCreate(['maPP'=>$request->maPP],['tenPP'=>$request->tenPP,'tenPP_EN'=>$request->tenPP_EN]);
+        if (Session::has('language') && Session::get('language')=='vi') {
+            alert()->success('Sửa thành công!!','Thông báo');
+        } else {
+            alert()->success('Edited successfully!!','Message');
+        }
+        return redirect('/quan-ly/phuong-phap-giang-day');
+
     }
 
-    public function xoa()
+    public function xoa($maPP)
     {
-        # code...
+        ppGiangDay::find('$maPP')->delete();
+        return redirect('/quan-ly/phuong-phap-giang-day');
     }
 }

@@ -57,6 +57,10 @@
                           <label for="">{{ __('Teaching methods name') }}</label>
                           <input type="text" name="tenPP" class="form-control" required>
                         </div>
+                        <div class="form-group">
+                          <label for="">{{ __('Teaching methods name') }} EN</label>
+                          <input type="text" name="tenPP_EN" class="form-control" required>
+                        </div>
                     </div>
                     <div class="modal-footer">
                       <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
@@ -85,7 +89,13 @@
                     @foreach ($ppGiangDay as $data)
                     <tr>
                       <td>{{ $i++ }}</td>
-                      <td>{{ $data->tenPP}}</td>
+                      <td>
+                        @if (Session::has('language') && Session::get('language')=='vi')
+                            {{ $data->tenPP }}
+                        @else
+                            {{ $data->tenPP_EN }}
+                        @endif
+                      </td>
                       <td>
                        <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editPP_{{ $data->maPP }}">
@@ -109,6 +119,10 @@
                                       <label for="">{{ __('Teaching methods name') }}</label>
                                       <input type="text" name="tenPP" value="{{ $data->tenPP }}" class="form-control" required>
                                     </div>
+                                    <div class="form-group">
+                                      <label for="">{{ __('Teaching methods name') }} EN</label>
+                                      <input type="text" name="tenPP_EN" value="{{ $data->tenPP_ENs }}" class="form-control" required>
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                   <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
@@ -122,7 +136,6 @@
                       </td>
                     </tr>
                     @endforeach
-                 
                   </tbody>
                   <tfoot></tfoot>
                 </table>

@@ -1,11 +1,8 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
-
 use App\Http\Controllers\Controller;
 use App\Models\khoiKienThuc;
 use Illuminate\Http\Request;
-
 class khoiKienThucController extends Controller
 {
     public function index()
@@ -13,7 +10,6 @@ class khoiKienThucController extends Controller
         $kkt=khoiKienThuc::where('isDelete',false)->orderBy('maKhoiKT','desc')->get();
         return view('admin.khoikienthuc',['khoikienthuc'=>$kkt]);
     }
-
     public function them(Request $request)
     {
         try {
@@ -28,7 +24,6 @@ class khoiKienThucController extends Controller
             return redirect('/quan-ly/khoi-kien-thuc');
         }
     }
-
     public function sua(Request $request)
     {
         try {
@@ -42,7 +37,6 @@ class khoiKienThucController extends Controller
             return redirect('/quan-ly/khoi-kien-thuc');
         }
     }
-
     public function xoa($maKhoiKT)
     {
         try {
