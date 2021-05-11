@@ -31,6 +31,7 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiangVien'], function (){
                         Route::get('/cau-hoi-tu-luan/{maMuc}','GVMucController@cau_hoi_tu_luan');
                         Route::post('/cau-hoi-tu-luan/them','GVMucController@them_tu_luan');
                         Route::post('/cau-hoi-tu-luan/sua','GVMucController@sua_tu_luan');
+                        Route::get('/cau-hoi-tu-luan/xoa/{maCauHoi}','GVMucController@xoa_tu_luan');
                         //thêm sửa câu hỏi trắc nghiệm
                         Route::get('/get-cau-hoi-trac-nghiem-by-mamuc/{maMuc}','GVMucController@get_cau_hoi_trac_nghiem_by_mamuc');
                         Route::get('/cau-hoi-trac-nghiem/{maMuc}','GVMucController@cau_hoi_trac_nghiem');
@@ -42,6 +43,7 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiangVien'], function (){
                         Route::get('/cau-hoi-thuc-hanh/{maMuc}','GVMucController@cau_hoi_thuc_hanh');
                         Route::post('/cau-hoi-thuc-hanh/them','GVMucController@them_thuc_hanh');
                         Route::post('/cau-hoi-thuc-hanh/sua','GVMucController@sua_thuc_hanh');
+                        Route::get('/cau-hoi-thuc-hanh/xoa/{maCauHoi}','GVMucController@xoa_thuc_hanh');
                         //xem - muc 
                         Route::get('/{maChuong}','GVMucController@index');
                         Route::get('/get-muc-by-machuong/{maChuong}','GVMucController@get_muc_by_ma_chuong');
@@ -56,16 +58,21 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiangVien'], function (){
 
           //quy hoạch đánh giá
           Route::group(['prefix' => 'quy-hoach-danh-gia'], function () {
+               
+
                Route::get('/', 'quyhoachController@index');
                Route::post('/loc','quyhoachController@filter');
                Route::get('/quy-hoach-ket-qua/{maHocPhan}/{maBaiQH}/{maHK}/{namHoc}/{maLop}', 'quyhoachController@quy_hoach_ket_qua_hoc_tap');
                Route::post('/them-quy-hoach', 'quyhoachController@them_quy_hoach');
                Route::post('/chon-nhom-cong-thuc','quyhoachController@chon_nhom_cong_thuc');
                
+
                //nội dung quy hoạch
                Route::group(['prefix' => 'noi-dung-quy-hoach'], function () {
                     Route::get('/{maCTBaiQH}','quyhoachController@noi_dung_quy_hoach');
-                    Route::post('/them-noi-dung-quy-hoach-submit','quyhoachController@them_noi_dung_quy_hoach_submit');
+                    Route::post('/them-noi-dung-quy-hoach-submit','quyhoachController@them_noi_dung_quy_hoach');
+                    Route::post('/sua-noi-dung-quy-hoach-submit','quyhoachController@sua_noi_dung_quy_hoach');
+                    Route::get('/xoa-noi-dung-quy-hoach/{maNoiDungQH}','quyhoachController@sua_noi_dung_quy_hoach_submit');
                     Route::get('/chuong/{maNoiDungQH}','quyhoachController@chuong_noidungqh');
                     Route::post('/chuong/them-chuong-noi-dung-quy-hoach', 'quyhoachController@them_chuong_ndqh');
                     Route::get('them-cau-hoi-tu-luan', 'quyhoachController@them_cau_hoi_tu_luan');
@@ -138,15 +145,17 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiangVien'], function (){
 
                }); 
 
-               
            });
-          //đề đánh giá
+         
+           //đề đánh giá
           Route::group(['prefix' => 'de-danh-gia'], function () {
                Route::get('/', 'deDanhGiaController@index');
            });
       
-          //chấm điểm báo cáo
-          Route::group(['prefix' => 'cham-diem-bao-cao'], function () {
+          
+           //chấm điểm báo cáo
+          
+           Route::group(['prefix' => 'cham-diem-bao-cao'], function () {
                Route::get('/', 'chamDiemBCController@index');
                Route::get('/noi-dung-danh-gia/{maBaiQH}/{maHocPhan}','chamDiemBCController@noi_dung_danh_gia');
                Route::get('/nhap-ket-qua-danh-gia/{maCTBaiQH}', 'chamDiemBCController@nhap_ket_qua_danh_gia');
@@ -154,6 +163,7 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiangVien'], function (){
                Route::post('/cham-diem-submit', 'chamDiemBCController@cham_diem_submit');
                Route::get('/xem-ket-qua-danh-gia/{maPhieuCham}','chamDiemBCController@xem_ket_qua_danh_gia');
           });
+
           //kết quả đánh giá
           Route::group(['prefix' => 'ket-qua-danh-gia'], function () {
                Route::get('/', 'ketQuaDanhGiaController@index');
@@ -184,6 +194,7 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiangVien'], function (){
                     Route::post('/them-nhieu-phieu-cham', 'ketQuaDanhGiaController@them_nhieu_phieu_cham_trac_nghiem');
                     Route::get('/nhap-diem-trac-nghiem/{maDe}/{maSSV}', 'ketQuaDanhGiaController@nhap_diem_trac_nghiem');
                     Route::post('/cham-diem-submit', 'ketQuaDanhGiaController@cham_diem_trac_nghiem_submit');
+                    Route::get('/xem-ket-qua-danh-gia-trac-nghiem/{maDe}/{maSSV}','ketQuaDanhGiaController@xem_ket_qua_trac_nghiem');
                });
           });
      });

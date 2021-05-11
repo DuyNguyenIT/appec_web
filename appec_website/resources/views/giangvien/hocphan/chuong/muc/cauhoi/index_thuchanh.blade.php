@@ -64,10 +64,13 @@
           <div class="card">
             <div class="card-header">
               <h3 class="card-title"></h3>
+              <h3 class="d-flex justify-content-between">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                   <i class="fas fa-plus"></i>
-                  
               </button>
+                <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/220060/32/HK1/2017-2018/DA16TT') }}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
+              </h3>
+               
 
                 <!-- Modal -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -99,6 +102,14 @@
                             <select name="maKQHT" id="" class="form-control" required>
                               @foreach ($kqht as $x)
                               <option value="{{$x->maKQHT}}">{{$x->maKQHTVB}}-{{$x->tenKQHT}}</option>
+                              @endforeach
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <label for=""> Nội dung qh:</label>
+                            <select name="maNoiDungQH" id="" class="form-control" required>
+                              @foreach ($ndqh as $nd)
+                              <option value="{{$nd->maNoiDungQH}}">{{$nd->tenNoiDungQH}}</option>
                               @endforeach
                             </select>
                           </div>
@@ -136,11 +147,15 @@
                        <td>{!! html_entity_decode($x->noiDungCauHoi)!!}</td>
                        <td>{{ $x->kqht->maKQHTVB }}</td>
                        <td>
-                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit_{{$x->maCauHoi}}">
-                          <li class="fas fa-edit"></li>
-                        </button>
-
+                         <div class="btn-group">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit_{{$x->maCauHoi}}">
+                              <li class="fas fa-edit"></li>
+                            </button>
+                            <a class="btn btn-danger" onclick="return confirm('Confirm?')" href="{{ asset('/giang-vien/hoc-phan/chuong/muc/cau-hoi-thuc-hanh/xoa/'.$x->maCauHoi) }}">
+                              <i class="fas fa-trash"></i>
+                            </a>
+                         </div>
                         <!-- Modal -->
                         <div class="modal fade" id="edit_{{$x->maCauHoi}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                           <div class="modal-dialog modal-lg" role="document">

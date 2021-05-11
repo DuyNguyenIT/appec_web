@@ -99,6 +99,14 @@
                             @endforeach
                           </select>
                         </div>
+                        <div class="form-group">
+                          <label for=""> Nội dung qh:</label>
+                          <select name="maNoiDungQH" id="" class="form-control" required>
+                            @foreach ($ndqh as $nd)
+                            <option value="{{$nd->maNoiDungQH}}">{{$nd->tenNoiDungQH}}</option>
+                            @endforeach
+                          </select>
+                        </div>
 
                         <div class="form-group">
                           <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>

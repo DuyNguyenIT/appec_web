@@ -2,13 +2,14 @@
 
 namespace App\Imports;
 
+use Session;
+use App\Models\sinhVien;
 use App\Models\sinhvien_hocphan;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use Session;
 
 class dsSV_HPImport implements ToModel,WithHeadingRow
 {
@@ -36,11 +37,9 @@ class dsSV_HPImport implements ToModel,WithHeadingRow
                     'isDelete'=>false
                 ]);
             }
+            
         }else{
             return null;
         }
-
-        
-        
     }
 }

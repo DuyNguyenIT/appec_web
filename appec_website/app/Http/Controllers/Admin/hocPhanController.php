@@ -316,6 +316,7 @@ class hocPhanController extends Controller
         alert()->success('Thêm mô tả thành công!!','Thông báo');
         return back();
     }
+    
     public function them_chuan_dau_ra_mon_hoc(Request $request) //thêm chuẩn đầu ra môn học
     {
         //1.thêm kết quả học tập

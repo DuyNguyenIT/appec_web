@@ -181,43 +181,55 @@ class quyhoachController extends Controller
     ///giang-vien/quy-hoach-danh-gia/noi-dung-quy-hoach/1
     public function noi_dung_quy_hoach($maCTBaiQH)
     {
+        Session::put('maCTBaiQH',$maCTBaiQH);
         $ct_bqh=ct_bai_quy_hoach::where('isdelete',false)->where('maCtBaiQH',$maCTBaiQH)->first();
         
         if(!$ct_bqh){
             return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/noi-dung-quy-hoach/'.$maCTBaiQH)->with('warning','Không thể tìm thất chi tiết bài quy hoạch');
         }
         $ndqh=noiDungQH::where('isDelete',false)->where('maCTBaiQH',$maCTBaiQH)->get();
+        
         //kết quả học tập
         $kqht=hocPhan_kqHTHP::where('hocphan_kqht_hp.isDelete',false) //biến này chạy nội dung trong bảng chuẩn đầu ra môn học
         ->where('hocphan_kqht_hp.maHocPhan',Session::get('maHocPhan'))
         ->join('kqht_hp',function($y){
             $y->on('kqht_hp.maKQHT','=','hocphan_kqht_hp.maKQHT')
             ->where('kqht_hp.isDelete',false);
-        })
-        ->get();
+        })->get();
         
         //mức độ đánh giá
         $mdg=mucDoDanhGia::where('isDelete',false)->get();
 
-        //còn lại là đồ án
+        
         return view('giangvien.quyhoach.noidungquyhoach',['noiDungQH'=>$ndqh,'maCTBaiQH'=>$maCTBaiQH,'ketQuaHT'=>$kqht,
         'mucDoDG'=>$mdg]);
     }
 
     
-    //-----------------thêm nội dung quy hoạch
     ///giang-vien/quy-hoach-danh-gia/noi-dung-quy-hoach/them_noi_dung_quy_hoach_submit
-
-    public function them_noi_dung_quy_hoach_submit(Request $request)
+    public function them_noi_dung_quy_hoach(Request $request)
     {
-        noiDungQH::create(['maCTBaiQH'=>$request->maCTBaiQH,'tenNoiDungQH'=>$request->tenNoiDungQH,'maKQHT'=>$request->maKQHT,'maMucDoDG'=>$request->maMucDoDG]);
-        alert()->success('Thêm thành công!', 'Thông báo');
-        return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-quy-hoach/'.$request->maCTBaiQH);
+        noiDungQH::create($request->all());
+        if(Session::has('language') && Session::get('language')=='vi'){
+            alert()->success('Thêm thành công!', 'Thông báo');
+        }else{
+            alert()->success('Added successfully!', 'Message');
+        }
+        return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-quy-hoach/'.session::get('maCTBaiQH'));
     }
 
-    public function them_cau_hoi_tu_luan()
+    public function sua_noi_dung_quy_hoach(Request $request)
     {
-        return view('giangvien.quyhoach.noidungdanhgia.tuluan.themcauhoituluan');
+       
+        //noiDungQH::updateOrCreate(['maNoiDungQH'=>$request->maNoiDungQH],[$request->all()]);
+
+        noiDungQH::updateOrCreate(['maNoiDungQH'=>$request->maNoiDungQH],['tenNoiDungQH'=> $request->tenNoiDungQH]);
+        if(Session::has('language') && Session::get('language')=='vi'){
+            alert()->success('Sửa thành công!', 'Thông báo');
+        }else{
+            alert()->success('Edited successfully!', 'Message');
+        }
+        return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-quy-hoach/'.session::get('maCTBaiQH'));
     }
   
     ///////---------------------quy hoạch chương----------------
@@ -254,10 +266,7 @@ class quyhoachController extends Controller
         return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/noi-dung-quy-hoach/chuong/'.Session::get('maNoiDungQH'))->with('success','Thêm thành công');
     }
 
-    public function xem_cau_hoi_trong_chuong()
-    {
-        #code...
-    }
+
 
     ///---------------thêm quy hoạch
     public function them_quy_hoach(Request $request)
@@ -922,7 +931,14 @@ class quyhoachController extends Controller
        
         //noiDung BaiqH
         $ndqh=noiDungQH::where('isDelete',false)->where('maCTBaiQH',$maCTBaiQH)->get();
-
+        if(count($ndqh)==0){
+            if(Session::has('language') && Session::get('language')=='vi'){
+                alert()->warning('Cần thêm nội dung quy hoạch!','Thông báo');
+            }else{
+                alert()->warning('You must insert planning content first!','Message');
+            }
+            return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-tieu-chi-danh-gia/'.$maCTBaiQH);
+        }
         $tc=tieuChuanDanhGia::where('isDelete',false)->where('maNoiDungQH',$ndqh[0]->maNoiDungQH)->get();
        
         return view('giangvien.quyhoach.themtieuchi',['cdr3'=>$cdr3,'kqht'=>$kqht,'loai_htdg'=>$loai_htdg,'tieuchuan'=>$tc,
