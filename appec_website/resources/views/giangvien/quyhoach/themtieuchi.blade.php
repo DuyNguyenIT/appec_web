@@ -45,12 +45,16 @@
                             <div class="card">
                                 <div class="card-header">
                                     <h3 class="card-title"></h3>
+                                    <div class="card-tools">
+                                        <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-tieu-chi-danh-gia/'.session::get('maCTBaiQH')) }}"
+                                            class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
+                                    </div>
                                     <input type="text" name="maCTBaiQH" value="{{ $maCTBaiQH }}" hidden>
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="">Chọn chuẩn đầu ra:</label>
+                                        <label for="">{{ __('Student Outcomes') }}:</label>
                                         <select name="maCDR3" id="" class="form-control">
                                             @foreach ($cdr3 as $x)
                                                 <option value="{{ $x->maCDR3 }}">{{ $x->maCDR3VB }}:
@@ -61,7 +65,7 @@
                                     </div>
                                     <hr>
                                     <div class="fomr-group">
-                                        <label for="">Chọn kết quả học tập</label>
+                                        <label for="">{{ __('Studying results') }}</label>
                                         <select name="maKQHT" id="" class="form-control">
                                             @foreach ($kqht as $y)
                                                 <option value="{{ $y->maKQHT }}">
@@ -69,21 +73,10 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="">Chọn loại hình thức đánh giá:</label>
-                                        <select name="maLoaiHTDG" id="" class="form-control">
-                                            @foreach ($loai_htdg as $x)
-                                                <option value="{{ $x->maLoaiHTDG }}">{{ $x->tenLoaiHTDG }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="">Nhập nội dung yêu cầu đánh giá:</label>
-                                        <input type="text" name="noiDungCauHoi" class="form-control">
-                                    </div>
+                                   
                                     <hr>
                                     <div class="form-group">
-                                        <label for="">Chọn nội dung quy hoạch:</label>
+                                        <label for="">{{ __('Planning Content') }}:</label>
                                         <select name="maNoiDungQH" id="maNoiDungQH" class="form-control">
                                             @foreach ($ndqh as $z)
                                                 <option value="{{ $z->maNoiDungQH }}">{{ $z->tenNoiDungQH }}</option>
@@ -92,20 +85,20 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="">Chọn tiêu chuẩn:</label>
+                                        <label for="">{{ __('Standard') }}:</label>
                                         <div class="row">
                                             <div class="col-md-9">
                                                 <select name="maTCDG" id="tenTCDG" class="form-control">
                                                     @foreach ($tieuchuan as $tc)
                                                         <option value="{{ $tc->maTCDG }}">{{ $tc->tenTCDG }} -
-                                                            {{ $tc->diem }} điểm</option>
+                                                            {{ $tc->diem }} {{ __('mark') }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-md-3">
                                                 <button type="button" href="" class="btn btn-primary" data-toggle="modal"
                                                     data-target="#themTieuChuan">
-                                                    Thêm tiêu chuẩn
+                                                    {{ __('Add') }} {{ __('Standard') }}
                                                 </button>
                                             </div>
                                         </div>
@@ -147,7 +140,7 @@
                                         </table>
                                     </div>
                                     <div class="form-group">
-                                        <button class="btn btn-primary" type="submit"> Lưu</button>
+                                        <button class="btn btn-primary" type="submit"> {{ __('Save') }}</button>
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
@@ -163,7 +156,7 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Thêm tiêu chuẩn</h5>
+                                            <h5 class="modal-title" id="exampleModalLabel">{{ __('Add') }}</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -176,7 +169,7 @@
                                                 <input type="text" class="form-control" name="tenTCDG">
                                             </div>
                                             <div class="form-group">
-                                                <label for="">Nhập điểm tiêu chuẩn:</label>
+                                                <label for="">{{ __('mark') }}:</label>
                                                 <input type="text" class="form-control" name="diemTCDG">
                                             </div>
                                         </div>
@@ -190,6 +183,7 @@
                             </div>
                         </form>
                         <!-- /.card -->
+
                     </div>
                     <!-- /.col -->
                 </div>

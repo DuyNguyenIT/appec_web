@@ -209,8 +209,8 @@
                                                                                                                         {{ $m->maMucVB }}
                                                                                                                         {{ $m->tenMuc }}</a></span>
                                                                                                             </li>
-                                                                                                        @endfor
-                                                                                                        each
+                                                                                                        @endforeach
+                                                                                                    </div>
                                                                                                 </ul>
                                                                                             </li>
                                                                                         @endforeach
@@ -261,8 +261,8 @@
                                                                                                                             {{ $m->maMucVB }}
                                                                                                                             {{ $m->tenMuc }}</a></span>
                                                                                                                 </li>
-                                                                                                            @endfor
-                                                                                                            each
+                                                                                                            @endforeach
+                                                                                                        </div>
                                                                                                     </ul>
                                                                                                 </li>
                                                                                             @endforeach
@@ -313,12 +313,10 @@
                                                                                                                                 {{ $m->maMucVB }}
                                                                                                                                 {{ $m->tenMuc }}</a></span>
                                                                                                                     </li>
-                                                                                                                @endfor
-                                                                                                                each
+                                                                                                                @endforeach
                                                                                                         </ul>
                                                                                                     </li>
-                                                                                                @endfor
-                                                                                                each
+                                                                                                @endforeach
                                                                                         </ul>
                                                                                     </li>
                                                                                 @endif

@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\he;
 use App\Models\muc;
 use App\Models\CDR1;
+use App\Models\CDR3;
 use App\Models\nganh;
 use App\Models\chuong;
 use App\Models\cNganh;
@@ -11,6 +12,7 @@ use App\Models\hocPhan;
 use App\Models\ctDaoTao;
 use App\Models\ctKhoiKT;
 use App\Models\bacDaoTao;
+use App\Models\cdr2_abet;
 use App\Models\chuan_abet;
 use App\Models\ppGiangDay;
 use App\Models\chuong_kqht;
@@ -30,6 +32,7 @@ use App\Http\Controllers\Controller;
 use App\Models\hocPhan_loaiHTDanhGia;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\CommonController;
+
 class hocPhanController extends Controller
 {
     public function index()
@@ -137,7 +140,10 @@ class hocPhanController extends Controller
     ////////////////////////////////////////HIỂN THỊ ĐỀ CƯƠNG MÔN HỌC//////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////
     public function de_cuong_mon_hoc(Request $request,$maHocPhan)
-    {//hàm hiển thị đề cương chi tiết
+    {   
+        //luu phien lam viec
+        Session::put('maHocPhan',$maHocPhan);
+        //hàm hiển thị đề cương chi tiết
         //1/ Thông tin chung
         $hocPhan=hocPhan::where('maHocPhan',$maHocPhan)->where('isDelete',false)->first();
         $loaiMonHoc=loaiHocPhan::all();
@@ -168,29 +174,9 @@ class hocPhanController extends Controller
             ->where('cdr_cd3.isDelete',false);
         })
         ->get();
-        $kqht=hocPhan_kqHTHP::where('hocphan_kqht_hp.isDelete',false) //biến này chạy nội dung trong bảng chuẩn đầu ra môn học
-        ->where('hocphan_kqht_hp.maHocPhan',$maHocPhan)
-        ->join('chuan_abet',function($y){
-            $y->on('chuan_abet.maChuanAbet','=','hocphan_kqht_hp.maChuanAbet')
-            ->where('chuan_abet.isDelete',false);
-        })
-        ->join('kqht_hp',function($y){
-            $y->on('kqht_hp.maKQHT','=','hocphan_kqht_hp.maKQHT')
-            ->where('kqht_hp.isDelete',false);
-        })
-        ->join('cdr_cd3',function($t){
-            $t->on('cdr_cd3.maCDR3','=','hocphan_kqht_hp.maCDR3')
-            ->where('cdr_cd3.isDelete',false);
-        })
-        ->join('cdr_cd2',function($t){
-            $t->on('cdr_cd2.maCDR2','=','cdr_cd3.maCDR2')
-            ->where('cdr_cd2.isDelete',false);
-        })
-        ->join('cdr_cd1',function($t){
-            $t->on('cdr_cd1.maCDR1','=','cdr_cd2.maCDR1')
-            ->where('cdr_cd1.isDelete',false);
-        })
-        ->get();
+        //bien nay chay noi dung trong bang chuan đau ra mon hoc
+        $kqht=hocPhan_kqHTHP::get_kqht_cdr3_abet($maHocPhan);
+
         $chuan_abet=chuan_abet::all();//combobox chuẩn abet
         //5 nội dung môn học
         $kqht_hp=hocPhan_kqHTHP::where('hocphan_kqht_hp.isDelete',false) 
@@ -245,38 +231,59 @@ class hocPhanController extends Controller
     /////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////CÁC HÀM XỬ LÝ CHO THÊM ĐỀ CƯƠNG/////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////    
-    public function them_mon_tien_quyet(Request $request)//thêm môn tiên quyết
+    //MON TIEN QUYET
+    public function them_mon_tien_quyet(Request $request)
     {
         monTienQuyet::create(['maHocPhan'=>$request->maHocPhan,'maMonTienQuyet'=>$request->maMonTienQuyet]);
         //phản hồi
-        alert()->success('Cập nhật môn tiên quyết thành công!!','Thông báo');
-        return back();
+        if (Session::has('language') && Session::get('language')=='vi') {
+            alert()->success('Added successfully!!','Message');
+        }else{
+            alert()->success('Thêm thành công!!','Thông báo');
+        }
+        return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
     }
-    public function them_giao_trinh(Request $request)//thêm giáo trình
+    //GIAO TRINH
+    public function them_giao_trinh(Request $request)
     {
         //sửa tài liệu tham khảo
         tai_lieu_tham_khao::updateOrCreate(['maHocPhan'=>$request->maHocPhan],['giaoTrinh'=>$request->giaoTrinh]);
         //phản hồi
-        alert()->success('Cập nhật thành công!!','Thông báo');
-        return back();
+        if (Session::has('language') && Session::get('language')=='vi') {
+            alert()->success('Added successfully!!','Message');
+        }else{
+            alert()->success('Thêm thành công!!','Thông báo');
+        }
+        return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
     }
-    public function them_tai_lieu_tham_khao_them(Request $request)//thêm tài liệu tham khảo
+    // TAI LIEU THAM KHAO
+    public function them_tai_lieu_tham_khao_them(Request $request)
     {
         //sửa tài liệu tham khảo
         tai_lieu_tham_khao::updateOrCreate(['maHocPhan'=>$request->maHocPhan],['thamKhaoThem'=>$request->thamKhaoThem]);
         //phản hồi
-        alert()->success('Cập nhật thành công!!','Thông báo');
-        return back();
+        if (Session::has('language') && Session::get('language')=='vi') {
+            alert()->success('Added successfully!!','Message');
+        }else{
+            alert()->success('Thêm thành công!!','Thông báo');
+        }
+        return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
     }
-    public function them_tai_lieu_khac(Request $request)//thêm tài liệu khác
+    //TAI LIEU KHAC
+    public function them_tai_lieu_khac(Request $request)
     {
         //sửa tài liệu tham khảo
         tai_lieu_tham_khao::updateOrCreate(['maHocPhan'=>$request->maHocPhan],['taiLieuKhac'=>$request->taiLieuKhac]);
         //phản hồi
-        alert()->success('Cập nhật thành công!!','Thông báo');
-        return back();
+        if (Session::has('language') && Session::get('language')=='vi') {
+            alert()->success('Added successfully!!','Message');
+        }else{
+            alert()->success('Thêm thành công!!','Thông báo');
+        }
+        return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
     }
-    public function them_yeu_cau_hoc_phan(Request $request)  //thêm yêu cầu học phần
+    //YEU CAU HOC PHAN
+    public function them_yeu_cau_hoc_phan(Request $request)  
     {
         //sửa học phần
         //hocPhan::updateOrCreate(['maHocPhan'=>$request->maHocPhan],['yeuCau'=>$request->yeuCau]);
@@ -284,34 +291,61 @@ class hocPhanController extends Controller
         $hp->yeuCau=$request->yeuCau;
         $hp->save();
         //phản hồi
-        alert()->success('Thêm yêu cầu thành công!!','Thông báo');
-        return back();
+        if (Session::has('language') && Session::get('language')=='vi') {
+            alert()->success('Added successfully!!','Message');
+        }else{
+            alert()->success('Thêm thành công!!','Thông báo');
+        }
+        return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
     }
-    public function them_mo_ta_hoc_phan(Request $request) //thêm mô tả học phần
+    //MO TA HOC PHAN
+    public function them_mo_ta_hoc_phan(Request $request) 
     {
         //sửa học phần
         hocPhan::updateOrCreate(['maHocPhan'=>$request->maHocPhan],['moTaHocPhan'=>$request->moTaHocPhan]);
-        
         //phản hồi
-        alert()->success('Thêm mô tả thành công!!','Thông báo');
-        return back();
+        if (Session::has('language') && Session::get('language')=='vi') {
+            alert()->success('Added successfully!!','Message');
+        }else{
+            alert()->success('Thêm thành công!!','Thông báo');
+        }
+        return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
     }
-    
-    public function them_chuan_dau_ra_mon_hoc(Request $request) //thêm chuẩn đầu ra môn học
+    //CHUAN DAU RA MON HOC
+    public function them_chuan_dau_ra_mon_hoc(Request $request) 
     {
-        //1.thêm kết quả học tập
-       
+        //1.them ket qua hoc tap
         kqHTHP::create(['maKQHTVB'=>$request->maKQHTVB,'tenKQHT'=>$request->tenKQHT]);
-        //2.lấy mã kqht mới thêm
+        //2.lay ma kqht mới thêm
         $kqht=kqHTHP::where('isDelete',false)->orderBy('maKQHT','desc')->first();
-        //3.thêm hocphan_kqht
+        //3.them hocphan_kqht
         $arrray_maCDR3=$request->maCDR3;
         foreach ($arrray_maCDR3 as $maCDR3) {
-            hocPhan_kqHTHP::create(['maHocPhan'=>$request->maHocPhan,'maKQHT'=>$kqht->maKQHT,'maCDR3'=>$maCDR3,'maChuanAbet'=>$request->maChuanAbet]);
+            //tim tuong quan chuan dau ra 2 và abet
+            $cdr3=CDR3::where('maCDR3',$maCDR3)->first();
+            if($cdr3){
+                $cdr_abet=cdr2_abet::where('maCDR2',$cdr3->maCDR3)->get();
+                return $cdr_abet;
+                //luu ket qua chuan dau ra theo tuong quan abet
+                foreach ($cdr_abet as $item) {
+                    hocPhan_kqHTHP::create(['maHocPhan'=>$request->maHocPhan,'maKQHT'=>$kqht->maKQHT,'maCDR3'=>$item->maCDR3]);
+                }
+            }else{
+                if (Session::has('language') && Session::get('language')=='vi') {
+                    alert()->warning('LV3 outcome is not exists !!','Message');
+                }else{
+                    alert()->warning('không tìm thấy chuẩn đầu ra 3!!','Thông báo');
+                }
+                return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
+            }
         }
         //phản hồi
-        alert()->success('Thêm chuẩn đầu ra thành công!!','Thông báo');
-        return back();
+        if (Session::has('language') && Session::get('language')=='vi') {
+            alert()->success('Added successfully!!','Message');
+        }else{
+            alert()->success('Thêm thành công!!','Thông báo');
+        }
+        return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
     }
     public function sua_chuan_dau_ra_mon_hoc(Request $request)
     {
@@ -319,11 +353,20 @@ class hocPhanController extends Controller
         //1.thêm kết quả học tập
         kqHTHP::updateOrCreate(['maKQHT'=>$request->maKQHT],['maKQHTVB'=>$request->maKQHTVB,'tenKQHT'=>$request->tenKQHT]);
         // sửa học phần kqht chuẩn đầu ra cdio và chuẩn đầu ra abet
-        hocPhan_kqHTHP::updateOrCreate(['id'=>$request->id],['maHocPhan'=>$request->maHocPhan,'maKQHT'=>$request->maKQHT,'maCDR3'=>$request->maCDR3,'maChuanAbet'=>$request->maChuanAbet]);
+        hocPhan_kqHTHP::updateOrCreate(['id'=>$request->id],['maHocPhan'=>$request->maHocPhan,'maKQHT'=>$request->maKQHT,'maCDR3'=>$request->maCDR3]);
         //phản hồi
-        //alert()->success('Thêm chuẩn đầu ra thành công!!','Thông báo');
-        return back();
+        if (Session::has('language') && Session::get('language')=='vi') {
+            alert()->success('Added successfully!!','Message');
+        }else{
+            alert()->success('Thêm thành công!!','Thông báo');
+        }
+        return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
     }
+    public function xoa_chuan_dau_ra_mon_hoc()
+    {
+        # code...
+    }
+    //NỘI DUNG MÔN HỌC
     public function them_noi_dung_mon_hoc(Request $request)  //thêm nội dung môn học (chương)
     {
         //1.thêm chương mới
@@ -338,9 +381,20 @@ class hocPhanController extends Controller
             }
         }
         //3.phản hồi
-        //phản hồi
-        alert()->success('Thêm nội dung thành công!!','Thông báo');
-        return back();
+        if (Session::has('language') && Session::get('language')=='vi') {
+            alert()->success('Added successfully!!','Message');
+        }else{
+            alert()->success('Thêm thành công!!','Thông báo');
+        }
+        return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
+    }
+    public function sua_noi_dung_mon_hoc(Request $request)
+    {
+        
+    }
+    public function xoa_noi_dung_mon_hoc()
+    {
+        # code...
     }
     public function them_muc_do_ky_nang_uti(Request $request)
     {
@@ -350,24 +404,40 @@ class hocPhanController extends Controller
             mucDoKyNangUIT::create(['id_chuong'=>$request->id_chuong,'maKQHT'=>$kqht[$i],'maCDR1'=>$request->maCDR1,'ky_nang'=>$request->ky_nang]);
         }
         //phản hồi
-        alert()->success('Adding successfully!!','Message');
-        return back();
+        if (Session::has('language') && Session::get('language')=='vi') {
+            alert()->success('Added successfully!!','Message');
+        }else{
+            alert()->success('Thêm thành công!!','Thông báo');
+        }
+        return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
     }
     public function them_muc(Request $request)//thêm mục
     {
         //thêm mục mới
         muc::create($request->all());
         //phản hồi
-        alert()->success('Thêm nội dung thành công!!','Thông báo');
-        return back();
+        if (Session::has('language') && Session::get('language')=='vi') {
+            alert()->success('Added successfully!!','Message');
+        }else{
+            alert()->success('Thêm thành công!!','Thông báo');
+        }
+        return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
+    }
+    public function sua_muc()
+    {
+        # code...
     }
     public function them_phuong_phap_giang_giay(Request $request)//thêm phương pháp giảng dạy
     {
         //thêm bảng hocphan_ppGiangDay
         hocPhan_ppGiangDay::create(['maHocPhan'=>$request->maHocPhan,'maPP'=>$request->maPP,'dienGiai'=>$request->dienGiai]);
         //phản hồi
-        alert()->success('Thêm phương pháp giảng dạy thành công!!','Thông báo');
-        return back();
+        if (Session::has('language') && Session::get('language')=='vi') {
+            alert()->success('Added successfully!!','Message');
+        }else{
+            alert()->success('Thêm thành công!!','Thông báo');
+        }
+        return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
     }
     public function them_hoc_phan_loaiHTDG(Request $request)  //thêm học phần _ loại hình thức đánhg giá
     {
@@ -381,11 +451,14 @@ class hocPhanController extends Controller
             alert()->warning('Tỉ lệ công thức 2 đã đạt 100%, không thể thêm phương thức đánh giá!!','Cảnh báo');
             return back();
         }
-        
         hocPhan_loaiHTDanhGia::create(['maHocPhan'=>$request->maHocPhan,'maLoaiDG'=>$request->maLoaiDG,'maLoaiHTDG'=>$request->maLoaiHTDG,'trongSo'=>$request->trongSo,'groupCT'=>$request->groupCT]);
         //phản hồi
-        alert()->success('Thêm phương thức đánh giá thành công!!','Thông báo');
-        return back();
+        if (Session::has('language') && Session::get('language')=='vi') {
+            alert()->success('Added successfully!!','Message');
+        }else{
+            alert()->success('Thêm thành công!!','Thông báo');
+        }
+        return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
     }
     ///////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////HẾT XỬ LÝ ĐỀ CƯƠNG////////////////

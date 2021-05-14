@@ -14,7 +14,7 @@
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-primary" data-toggle="modal"
                         data-target="#chuDe_{{ $cdr1->maCDR1VB }}">
-                        <i class="fas fa-edit"></i>
+                        <i class="fas fa-plus"></i>
                     </button>
                     <!-- /////////////////// Modal them noi dung mon hoc-->
                     <div class="modal fade" id="chuDe_{{ $cdr1->maCDR1VB }}" tabindex="-1" role="dialog"
@@ -56,15 +56,6 @@
                                                         <option value="{{ $t->maCDR3 }}"> {{ $t->maCDR3VB }} -
                                                             {{ $t->tenCDR3 }}</option>
                                                     @endif
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <select name="maChuanAbet" id="" class="form-control">
-                                                @foreach ($chuan_abet as $abet)
-                                                    <option value="{{ $abet->maChuanAbet }}">
-                                                        {{ $abet->maChuanAbetVB }}--{{ $abet->tenChuanAbet }}
-                                                    </option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -156,9 +147,8 @@
                                         </div>
                                         <div class="form-group">
                                             <label for=""> {{ __('studying results content') }}:</label>
-                                            <input type="text" name="tenKQHT"
-                                                placeholder="Ph�n t�ch, kh�i ni&#7879;m, m� t&#7843;,..."
-                                                class="form-control" value="{{ $x->tenKQHT }}">
+                                            <input type="text" name="tenKQHT" placeholder="" class="form-control"
+                                                value="{{ $x->tenKQHT }}">
                                         </div>
                                         <div class="form-group">
                                             <label for=""> {{ __('Level-3 outcome') }}:</label>
@@ -173,21 +163,6 @@
                                                                 - {{ $t->tenCDR3 }}</option>
                                                         @endif
                                                     @endif
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="">ABET outcomes:</label>
-                                            <select name="maChuanAbet" id="" class="form-control">
-                                                @foreach ($chuan_abet as $abet)
-                                                    {{-- @if ($abet->maChuanAbet = $x->maChuanAbet)
-                          <option value="{{ $abet->maChuanAbet }}" selected>{{ $abet->maChuanAbetVB}}--{{ $abet->tenChuanAbet }} </option>
-                          @else
-                          <option value="{{ $abet->maChuanAbet }}">{{ $abet->maChuanAbetVB}}--{{ $abet->tenChuanAbet }}</option>
-                          @endif --}}
-                                                    <option value="{{ $abet->maChuanAbet }}">
-                                                        {{ $abet->maChuanAbetVB }}--{{ $abet->tenChuanAbet }}
-                                                    </option>
                                                 @endforeach
                                             </select>
                                         </div>

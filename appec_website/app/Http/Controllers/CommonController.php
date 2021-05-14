@@ -63,32 +63,32 @@ class CommonController extends Controller
     public static function tinh_xep_hang($diem)
     {
         $xepHang="";
-        if($diem>=0 && $diem<4){
+        if($diem>=0 && $diem<4){ //kem
             $xepHang=5;
         }
         
-        if($diem>=4 && $diem<=4.9){
+        if($diem>=4 && $diem<=4.9){ //yeu
              $xepHang=4;
         }
-        if($diem>=5 && $diem<=5.4){
+        if($diem>=5 && $diem<=5.4){ //yeu
             $xepHang=4;
         }
 
-        if($diem>=5.5 && $diem<=6.4){
+        if($diem>=5.5 && $diem<=6.4){ //trung binh
             $xepHang=3;
         }
-        if($diem>=6.5 && $diem<=6.9){
+        if($diem>=6.5 && $diem<=6.9){ //trung binh
             $xepHang=3;
         }
 
-        if($diem>=7 && $diem<=7.9){
+        if($diem>=7 && $diem<=7.9){ //kha
             $xepHang=2;
         }
-        if($diem>=8.0 && $diem<=8.9){
+        if($diem>=8.0 && $diem<=8.9){//kha
             $xepHang=2;
         }
         
-        if($diem>=9.0 && $diem<=10){
+        if($diem>=9.0 && $diem<=10){ //gioi
             $xepHang=1;
         }
 

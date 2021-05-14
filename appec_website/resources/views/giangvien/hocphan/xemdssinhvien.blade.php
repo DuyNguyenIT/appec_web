@@ -7,18 +7,18 @@
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <h1 class="m-0 text-dark">
-                            Danh sách sinh viên<noscript></noscript>
+                            {{ __('Students list') }}<noscript></noscript>
                             <nav></nav>
                         </h1>
                     </div>
                     <!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                            <li class="breadcrumb-item"><a href="{{ asset('/giang-vien') }}">{{ __('Home') }}</a></li>
                             <li class="breadcrumb-item">
-                                <a href="{{ asset('giang-vien/hoc-phan') }}">Học phần</a>
+                                <a href="{{ asset('giang-vien/hoc-phan') }}">{{ __('Course') }}</a>
                             </li>
-                            <li class="breadcrumb-item active">Danh sách sinh viên</li>
+                            <li class="breadcrumb-item active">{{ __('Students list') }}</li>
                         </ol>
                     </div>
                     <!-- /.col -->
@@ -43,10 +43,10 @@
                                 <table id="example2" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>STT</th>
-                                            <th>Mã sinh viên</th>
-                                            <th>Tên sinh viên</th>
-                                            <th>Lớp</th>
+                                            <th>{{ __('No.') }}</th>
+                                            <th>{{ __('Student ID') }}</th>
+                                            <th>{{ __('Student name') }}</th>
+                                            <th>{{ __('Class') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>

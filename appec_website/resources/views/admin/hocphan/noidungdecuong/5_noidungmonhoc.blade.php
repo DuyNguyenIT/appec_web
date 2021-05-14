@@ -6,7 +6,7 @@
             <th rowspan="2">Nội dung
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addChuong">
-                    <i class="fas fa-edit"></i>
+                    <i class="fas fa-plus"></i>
                 </button>
                 <!-- Modal thêm nội dung môn học-->
                 <div class="modal fade" id="addChuong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

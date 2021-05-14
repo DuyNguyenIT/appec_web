@@ -81,18 +81,30 @@ class hocPhanController extends Controller
 
     public function them_hoc_phan_giang_day(Request  $request)
     {
-
         //tạo bài quy hoạch mới
         $bqh=new baiQuyHoach();
+        $bqh->tenBaiQH='text';
+        $bqh->noiDungBaiQH='text';
         $bqh->save();
         $bqh=baiQuyHoach::where('isDelete',false)->orderBy('maBaiQH','desc')->first();
 
-        $request->maCDR3=1;
         //tạo giảng dạy
-        $gd=giangDay::create($request->all());
+        $gd=new giangDay();
+        $gd->maHocPhan=$request->maHocPhan;
+        $gd->maLop=$request->maLop;
+        $gd->maGV=$request->maGV;
+        $gd->maHK=$request->maHK;
+        $gd->namHoc=$request->namHoc;
+        $gd->maBaiQH=$bqh->maBaiQH;
+        $gd->maCDR3=1;
+        $gd->save();
 
-
-        return redirect('/giao-vu/hoc-phan-giang-day')->with('success','Thêm thành công!!!');
+        if(session::has('language') && session::get('language'=='vi')){
+            alert()->success('Thêm thành công!!!','Thông báo');
+        }else{
+            alert()->success('Added successfully!!!','Message');
+        }
+        return redirect('/giao-vu/hoc-phan-giang-day');
     }
 
     public function xem_danh_sach_sinh_vien($maHocPhan,$maLop,$maHK,$namHoc)
@@ -101,8 +113,6 @@ class hocPhanController extends Controller
         Session::put('maLop',$maLop);
         Session::put('maHK',$maHK);
         Session::put('namHoc',$namHoc);
-
-
         $hocphan=hocPhan::where('maHocPhan',$maHocPhan)->first();
         $dssv=sinhvien_hocphan::where('maHocPhan',$maHocPhan)->where('maLop',$maLop)
         ->where('maHK',$maHK)->where('namHoc',$namHoc)->with('sinhvien')->get();

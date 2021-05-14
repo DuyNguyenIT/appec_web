@@ -283,8 +283,8 @@
                                                                                 id="edit_ndch_{{ $data->maCauHoi }}"
                                                                                 cols="30" rows="10" class="form-control"
                                                                                 required>
-                                                    {{ $data->noiDungCauHoi }}
-                                                </textarea>
+                                                                                {{ $data->noiDungCauHoi }}
+                                                                            </textarea>
                                                                             <script>
                                                                                 CKEDITOR.replace(
                                                                                     'edit_ndch_{{ $data->maCauHoi }}', {
@@ -307,8 +307,8 @@
                                                                                         id="pa1_{{ $data->maCauHoi }}"
                                                                                         cols="30" rows="10"
                                                                                         class="form-control" required>
-                                                      {{ $data->phuong_an_trac_nghiem[0]->noiDungPA }}
-                                                    </textarea>
+                                                                                    {{ $data->phuong_an_trac_nghiem[0]->noiDungPA }}
+                                                                                    </textarea>
                                                                                     <script>
                                                                                         CKEDITOR.replace(
                                                                                             'pa1_{{ $data->maCauHoi }}', {
@@ -349,8 +349,8 @@
                                                                                         id="pa2_{{ $data->maCauHoi }}"
                                                                                         cols="30" rows="10"
                                                                                         class="form-control" required>
-                                                      {{ $data->phuong_an_trac_nghiem[1]->noiDungPA }}
-                                                    </textarea>
+                                                                                    {{ $data->phuong_an_trac_nghiem[1]->noiDungPA }}
+                                                                                    </textarea>
                                                                                     <script>
                                                                                         CKEDITOR.replace(
                                                                                             'pa2_{{ $data->maCauHoi }}', {
@@ -391,8 +391,8 @@
                                                                                         id="pa3_{{ $data->maCauHoi }}"
                                                                                         cols="30" rows="10"
                                                                                         class="form-control" required>
-                                                      {{ $data->phuong_an_trac_nghiem[2]->noiDungPA }}
-                                                    </textarea>
+                                                                                    {{ $data->phuong_an_trac_nghiem[2]->noiDungPA }}
+                                                                                    </textarea>
                                                                                     <script>
                                                                                         CKEDITOR.replace(
                                                                                             'pa3_{{ $data->maCauHoi }}', {

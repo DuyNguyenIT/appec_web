@@ -34,11 +34,11 @@
                                 <h3 class="card-title">
                                     <a href="{{ asset('giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/them-tieu-chi-danh-gia/' . Session::get('maCTBaiQH')) }}"
                                         class="btn btn-primary">
-                                        <i class="fas fa-plus"></i> Thêm
+                                        <i class="fas fa-plus"></i> 
                                     </a>
-                                    <button class="btn btn-success">
+                                    {{-- <button class="btn btn-success">
                                         <i class="fas fa-print"></i> Xuất tiêu chí đánh giá
-                                    </button>
+                                    </button> --}}
                                 </h3>
                                 <div class="card-tools">
                                     <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/' . Session::get('maHocPhan') . '/' . Session::get('maBaiQH') . '/' . Session::get('maHK') . '/' . Session::get('namHoc') . '/' . Session::get('maLop')) }}"

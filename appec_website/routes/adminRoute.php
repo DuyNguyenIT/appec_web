@@ -69,7 +69,7 @@ Route::group(['middleware' =>'App\Http\Middleware\isAdmin'], function (){
         Route::get('/','AdCDR2_ABETController@index');
         Route::post('/them','AdCDR2_ABETController@them');
         Route::post('/sua','AdCDR2_ABETController@sua');
-        Route::get('/{id}','AdCDR2_ABETController@xoa');
+        Route::get('xoa/{id}','AdCDR2_ABETController@xoa');
     });
     //loai hoc phan
     Route::group(['prefix' => 'loai-hoc-phan'], function () {

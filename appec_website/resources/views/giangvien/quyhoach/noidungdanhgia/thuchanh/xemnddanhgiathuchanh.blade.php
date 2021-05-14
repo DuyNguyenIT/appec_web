@@ -47,7 +47,7 @@
                                     data-target="#exampleModal">
                                     <i class="fas fa-plus"></i>{{ __('Adding a new Exam') }}
                                 </button>
-                                <a href="{{ asset('#') }}" class="btn btn-info">Câu hỏi thực hành</a>
+                              
                                 <!-- Modal -->
                                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">

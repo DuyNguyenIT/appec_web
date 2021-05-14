@@ -119,11 +119,7 @@ class WordController extends Controller
         $section->addText('Hệ:         Chính quy',$normalText);
         
         $section->addText('Điều kiện tham gia môn học',$headding1,array('alignment' => \PhpOffice\PhpWord\SimpleType\Jc::LEFT));
-        
-        
-        
         $monTQ=monTienQuyet::where('maHocPhan',$maHocPhan)->where('isDelete',false)->with('hoc_phan')->get();
-        
         $table = $section->addTable(array('borderSize' => 6, 'borderColor' => '000000'));
         $table->addRow();
         $cell1 = $table->addCell(4000);
@@ -179,25 +175,7 @@ class WordController extends Controller
         \PhpOffice\PhpWord\Shared\Html::addHtml($section, $html, false, false);
         //--------------------------------------4. Chuan dau ra hoc phan------------------------------------------------------------
         $CDR1=CDR1::all();//danh sach chu de
-        $kqht=hocPhan_kqHTHP::where('hocphan_kqht_hp.isDelete',false) //ke qua hoc tap
-        ->where('hocphan_kqht_hp.maHocPhan',$maHocPhan)
-        ->join('kqht_hp',function($y){
-            $y->on('kqht_hp.maKQHT','=','hocphan_kqht_hp.maKQHT')
-            ->where('kqht_hp.isDelete',false);
-        })
-        ->join('cdr_cd3',function($t){
-            $t->on('cdr_cd3.maCDR3','=','hocphan_kqht_hp.maCDR3')
-            ->where('cdr_cd3.isDelete',false);
-        })
-        ->join('cdr_cd2',function($t){
-            $t->on('cdr_cd2.maCDR2','=','cdr_cd3.maCDR2')
-            ->where('cdr_cd2.isDelete',false);
-        })
-        ->join('cdr_cd1',function($t){
-            $t->on('cdr_cd1.maCDR1','=','cdr_cd2.maCDR1')
-            ->where('cdr_cd1.isDelete',false);
-        })
-        ->get();
+        $kqht=hocPhan_kqHTHP::get_kqht_cdr3_abet($maHocPhan);
 
         $section->addText('4. Chuẩn đầu ra học phần:',$headding1);
         $section->addText('Sau khi hoàn thành học phần, sinh viên có thể:',$normalText);
@@ -239,7 +217,7 @@ class WordController extends Controller
         $table_noidunghp->addRow();
         $cell1 = $table_noidunghp->addCell(7000, $cellRowSpan);
         $textrun1 = $cell1->addTextRun($cellHCentered);
-        $textrun1->addText('N&#7897;i dung h&#7885;c ph&#7847;n');
+        $textrun1->addText('Nội dung học phân');
 
         $cell2 = $table_noidunghp->addCell(2000, $cellRowSpan);
         $textrun2 = $cell2->addTextRun($cellHCentered);

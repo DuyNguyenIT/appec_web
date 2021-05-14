@@ -31,6 +31,7 @@ use App\Models\phuongAnTuLuan;
 use App\Models\tieuChiChamDiem;
 use App\Models\ct_bai_quy_hoach;
 use App\Models\quyHoach_hocPhan;
+use App\Models\sinhvien_hocphan;
 use App\Models\tieuChuanDanhGia;
 use App\Models\dethi_cauhoituluan;
 use App\Models\phuongAnTracNghiem;
@@ -50,7 +51,7 @@ class quyhoachController extends Controller
         ->join('hoc_phan',function($q){
             $q->on('hoc_phan.maHocPhan','=','giangday.maHocPhan')
             ->where('hoc_phan.isDelete',false);
-        })->groupBy('maBaiQH')->distinct()->get();
+        })->groupBy(['maBaiQH','giangday.maLop'])->distinct()->get();
         //tạo combobox  năm học
         $date = new Carbon();   
         $current_year=$date->year;
@@ -372,10 +373,11 @@ class quyhoachController extends Controller
                         array_push($massv, $value->maSSV);
                  }
                 
-                 
+                $dssv_hocphan=sinhvien_hocphan::where('maHK',session::get('maHK'))->where('namHoc',session::get('namHoc'))
+                ->where('maLop',session::get('maLop'))->whereNotIn('maSSV',$massv)->pluck('maSSV');
                  //select những sinh viên chưa được gán vào phiếu chấm
                 $dsLop=sinhVien::where('isDelete',false)->where('maLop',Session::get('maLop'))->whereNotIn('maSSV',$massv)->orderBy('maSSV')->get();
-               
+                 
                  //lấy danh sách đề tài
                  $deTai=deThi::where('de_thi.isDelete',false)->where('de_thi.maCTBaiQH',$maCTBaiQH)->get();
 
@@ -605,7 +607,7 @@ class quyhoachController extends Controller
               ->get();
               $noidung[$i]->diem=$diem;  
               $noidung[$i]->phuongAn=$phuongAnTL;
-          }
+            }
         ##tạo mảng các câu hỏi đã chọn->chỉ duyệt những câu hỏi chưa được chọn
         $cauhoidachon=dethi_cauhoituluan::where('maDe',$maDe)->distinct('maCauHoi')->pluck('maCauHoi');
          #thông tin câu hỏi
@@ -673,7 +675,6 @@ class quyhoachController extends Controller
         }
         return back();
     }
-
     
     ///////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////KHU VỰC HÀM CHO TRẮC NGHIỆM/////////////////////////////
@@ -866,8 +867,6 @@ class quyhoachController extends Controller
             // ->get(['tieu_chi_cham_diem.maTCCD','tenTCCD','tieu_chi_cham_diem.maCDR3']);
             ->get();
            
-
-           
             foreach ($ndQh as $tc) {
                  $cdr3=CDR3::where('isDelete',false)
                      ->where('maCDR3', $tc->maCDR3)
@@ -875,8 +874,7 @@ class quyhoachController extends Controller
                  $tc->tenCDR3=$cdr3[0]["tenCDR3"];
                  $tc->maCDR3VB=$cdr3[0]["maCDR3VB"];
             }
-           
-
+        
             // return $ndQh->count('tenTCCD');  //số tiêu chí trong một tiêu chuẩn
             // return $ndQh->groupBy('maCDR3')->count();//số chuẩn đầu ra
             
@@ -965,7 +963,7 @@ class quyhoachController extends Controller
     public function them_tieu_chi_danh_gian_submit(Request $request) // submit form thêm tiêu chí đánh giá mới
     {
         //tạo câu hỏi noiDungCauHoi
-        cauHoi::create(['noiDungCauHoi'=>$request->noiDungCauHoi,'maKQHT'=>$request->maKQHT,'maLoaiHTDG'=>$request->maLoaiHTDG,'id_loaiCH'=>4,'id_muc'=>1]);
+        cauHoi::create(['noiDungCauHoi'=>'text','maKQHT'=>$request->maKQHT,'maLoaiHTDG'=>'T8','id_loaiCH'=>4,'id_muc'=>1]);
         $ch=cauHoi::where('isDelete',false)->orderBy('maCauHoi','desc')->first();
         //noiDungQH->tieuchuan_danhgia
         $noiDungQH=noiDungQH::where('isDelete',false)->where('maCTBaiQH',Session::get('maCTBaiQH'))->where('maKQHT',$request->maKQHT)->first();
@@ -1014,6 +1012,7 @@ class quyhoachController extends Controller
         if($dethi){
             $dethi->tenDe=$request->tenDe;
             $dethi->save();
+            if(session::has('language'))
             alert()->success('Editing  successfully!','Message');
             return back();
         }

@@ -123,7 +123,7 @@
                                                         <div class="form-group">
                                                             <label for="hocphan" style="font-size: 20px">Chọn đề tài</label>
                                                             <!-- Button trigger modal -->
-                                                            <select name="maDe" id="" class="form-control custom-select">
+                                                            <select name="maDe" id="" class="form-control custom-select" required>
                                                                 @foreach ($deTai as $md)
                                                                     <option value="{{ $md->maDe }}">
                                                                         {{ $md->maDeVB }}--{{ $md->tenDe }}
@@ -133,7 +133,7 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="">Chọn sinh viên</label>
-                                                            <select name="maSSV" id="" class="form-control custom-select">
+                                                            <select name="maSSV" id="" class="form-control custom-select" required>
                                                                 @foreach ($dsLop as $sv)
                                                                     <option value="{{ $sv->maSSV }}">
                                                                         {{ $sv->maSSV }}--{{ $sv->HoSV }}

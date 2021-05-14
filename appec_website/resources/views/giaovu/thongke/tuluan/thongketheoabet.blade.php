@@ -44,15 +44,18 @@
                                 <table id="" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>STT</th>
-                                            <th>CĐR</th>
-                                            <th>ABET</th>
-                                            <th>85-100%</th>
-                                            <th>75-85%</th>
-                                            <th>50-75%</th>
-                                            <th>25-50%</th>
-                                            <th>0-25%</th>
-                                            <th>Tổng</th>
+                                            <th rowspan="2">{{ __('No.') }}</th>
+                                            <th rowspan="2">mã ABET</th>
+                                            <th rowspan="2">ABET</th>
+                                            <th colspan="4">Đạt</th>
+                                            <th rowspan="2" title="">Chưa đạt</th>
+                                            <th rowspan="2">Tổng</th>
+                                        </tr>
+                                        <tr>
+                                            <th>A</th>
+                                            <th>B</th>
+                                            <th>C</th>
+                                            <th>D</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -141,7 +144,7 @@
                     var areaChartData = {
                         labels: label,
                         datasets: [{
-                                label: '85-100%',
+                                label: 'achieve(A)',
                                 backgroundColor: 'rgba(60,141,188,0.9)',
                                 borderColor: 'rgba(60,141,188,0.8)',
                                 pointRadius: false,
@@ -152,7 +155,7 @@
                                 data: gioi
                             },
                             {
-                                label: '75-85%',
+                                label: 'achieve(B)',
                                 backgroundColor: 'rgba(0, 255, 0, 0.7)',
                                 borderColor: 'rgba(0, 255, 0, 0.7)',
                                 pointRadius: false,
@@ -162,7 +165,7 @@
                                 pointHighlightStroke: 'rgba(220,220,220,1)',
                                 data: kha
                             }, {
-                                label: '50-75%',
+                                label: 'achieve(C)',
                                 backgroundColor: 'rgba(255, 255, 0, 1)',
                                 borderColor: 'rgba(255, 255, 0, 1)',
                                 pointRadius: false,
@@ -172,7 +175,7 @@
                                 pointHighlightStroke: 'rgba(60,141,188,1)',
                                 data: tb
                             }, {
-                                label: '25-50%',
+                                label: 'achieve(D)',
                                 backgroundColor: 'rgba(255,128,0, 0.8)',
                                 borderColor: 'rgba(255,128,0, 0.8)',
                                 pointRadius: false,
@@ -182,7 +185,7 @@
                                 pointHighlightStroke: 'rgba(60,141,188,1)',
                                 data: yeu
                             }, {
-                                label: '0-25%',
+                                label: 'Fail',
                                 backgroundColor: 'rgba(240,47,47, 1)',
                                 borderColor: 'rgba(240,47,47, 1)',
                                 pointRadius: false,

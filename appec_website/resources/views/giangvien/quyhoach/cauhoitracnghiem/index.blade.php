@@ -46,7 +46,7 @@
                                 <h3 class="d-flex justify-content-between">
                                     <a href="{{ asset('giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/ngan-hang-cau-hoi-trac-nghiem/them-cau-hoi') }}"
                                         class="btn btn-primary"><i class="fas fa-plus"></i></a>
-                                    <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/220060/32/HK1/2017-2018/DA16TT') }}"
+                                    <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/'.Session::get('maHocPhan').'/'.Session::get('maBaiQH').'/'.Session::get('maHK').'/'.Session::get('namHoc').'/'.Session::get('maLop')) }}"
                                         class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
                                 </h3>
                             </div>

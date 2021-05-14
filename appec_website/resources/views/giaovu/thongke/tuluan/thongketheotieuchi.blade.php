@@ -13,15 +13,15 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">Thống kê theo CDIO<noscript></noscript>
+                        <h1 class="m-0 text-dark">Thống kê chuẩn đầu ra 3<noscript></noscript>
                             <nav></nav>
                         </h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                            <li class="breadcrumb-item "><a href="thongke.html">Thống kê</a></li>
-                            <li class="breadcrumb-item "><a href="thongketheohocphan.html">Hệ quản trị cơ sở dữ liệu</a>
+                            <li class="breadcrumb-item"><a href="giao-vu">{{ __('Home') }}</a></li>
+                            <li class="breadcrumb-item "><a href="">Thống kê</a></li>
+                            <li class="breadcrumb-item "><a href="">{{ $hocPhan->tenHocPhan }}</a>
                             </li>
                             <li class="breadcrumb-item active">Thống kê theo CDIO</li>
                         </ol>
@@ -38,21 +38,29 @@
                             <div class="card-header">
                                 <h3 class="card-title">
                                 </h3>
+                                <div class="card-tools">
+                                    <a href="{{ asset('/giao-vu/thong-ke/thong-ke-theo-hoc-phan/'.session::get('maGV').'/'.session::get('maHocPhan').'/'.session::get('maHK').'/'.session::get('namHoc').'/'.session::get('maLop')) }}" class="btn btn-secondary">
+                                        <i class="fas fa-arrow-left"></i>
+                                    </a>
+                                </div>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <table id="" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>STT</th>
-                                            <th>CĐR</th>
-                                            <th>Chuẩn đầu ra CDIO</th>
-                                            <th>85-100%</th>
-                                            <th>75-85%</th>
-                                            <th>50-75%</th>
-                                            <th>25-50%</th>
-                                            <th>0-25%</th>
-                                            <th>Tổng</th>
+                                            <th rowspan="2">{{ __('No.') }}</th>
+                                            <th rowspan="2">CĐR</th>
+                                            <th rowspan="2">Chuẩn đầu ra CDIO</th>
+                                            <th colspan="4">Đạt</th>
+                                            <th rowspan="2" title="">Chưa đạt</th>
+                                            <th rowspan="2">Tổng</th>
+                                        </tr>
+                                        <tr>
+                                            <th>A</th>
+                                            <th>B</th>
+                                            <th>C</th>
+                                            <th>D</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -141,7 +149,7 @@
                     var areaChartData = {
                         labels: label,
                         datasets: [{
-                                label: '85-100%',
+                                label: 'achieve(A)',
                                 backgroundColor: 'rgba(60,141,188,0.9)',
                                 borderColor: 'rgba(60,141,188,0.8)',
                                 pointRadius: false,
@@ -152,7 +160,7 @@
                                 data: gioi
                             },
                             {
-                                label: '75-85%',
+                                label: 'achieve(B)',
                                 backgroundColor: 'rgba(210, 214, 222, 1)',
                                 borderColor: 'rgba(210, 214, 222, 1)',
                                 pointRadius: false,
@@ -162,7 +170,7 @@
                                 pointHighlightStroke: 'rgba(220,220,220,1)',
                                 data: kha
                             }, {
-                                label: '50-75%',
+                                label: 'achieve(C)',
                                 backgroundColor: 'rgba(193,110,25, 0.8)',
                                 borderColor: 'rgba(193,110,25, 0.8)',
                                 pointRadius: false,
@@ -172,7 +180,7 @@
                                 pointHighlightStroke: 'rgba(60,141,188,1)',
                                 data: tb
                             }, {
-                                label: '25-50%',
+                                label: 'achieve(D)',
                                 backgroundColor: 'rgba(30,124,137, 0.8)',
                                 borderColor: 'rgba(30,124,137, 0.8)',
                                 pointRadius: false,
@@ -182,7 +190,7 @@
                                 pointHighlightStroke: 'rgba(60,141,188,1)',
                                 data: yeu
                             }, {
-                                label: '0-25%',
+                                label: 'Fail',
                                 backgroundColor: 'rgba(255,12,73, 0.8)',
                                 borderColor: 'rgba(255,12,73, 0.8)',
                                 pointRadius: false,

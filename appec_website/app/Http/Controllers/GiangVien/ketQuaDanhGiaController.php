@@ -595,6 +595,16 @@ class ketQuaDanhGiaController extends Controller
         return redirect('/giang-vien/ket-qua-danh-gia/nhap-ket-qua-danh-gia/'.Session::get('maCTBaiQH'));
     }
 
+    public function sua_diem_thuc_hanh(Type $var = null)
+    {
+        # code...
+    }
+
+    public function sua_diem_thuc_hanh_submit(Request $request)
+    {
+        # code...
+    }
+    
     public function xem_ket_qua_thuc_hanh($maDe,$maSSV)
     {
          //đề thi

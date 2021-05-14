@@ -6,12 +6,14 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
+                    
                     <div class="col-sm-6">
                         <h1 class="m-0 text-dark">
                             Quy hoạch đánh giá kết quả học tập<noscript></noscript>
                             <nav></nav>
                         </h1>
                     </div>
+
                     <!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -47,6 +49,7 @@
                 {{ session('warning') }}
             </div>
         @endif
+
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
@@ -84,19 +87,19 @@
                                                         <a
                                                             href="{{ asset('/giao-vu/thong-ke/thong-ke-theo-hoc-phan/thong-ke-theo-tieu-chi/' . $x->maCTBaiQH . '/1') }}">
                                                             <button class="btn btn-primary">
-                                                                <i class="fas fa-chart-line"></i>CDIO
+                                                                <i class="fas fa-chart-line"></i>SO
                                                             </button>
                                                         </a>
                                                         <a
                                                             href="{{ asset('giao-vu/thong-ke/thong-ke-theo-hoc-phan/thong-ke-theo-xep-hang/' . $x->maCTBaiQH . '/1') }}">
                                                             <button class="btn btn-primary">
-                                                                <i class="fas fa-chart-line"></i>Xếp hạng
+                                                                <i class="fas fa-chart-line"></i>{{ __('Rank') }}
                                                             </button>
                                                         </a>
                                                         <a
                                                             href="{{ asset('giao-vu/thong-ke/thong-ke-theo-hoc-phan/thong-ke-theo-diem-chu/' . $x->maCTBaiQH . '/1') }}">
                                                             <button class="btn btn-primary">
-                                                                <i class="fas fa-chart-line"></i>Điểm chữ
+                                                                <i class="fas fa-chart-line"></i>{{__('Grate')}}
                                                             </button>
                                                         </a>
                                                     </td>
@@ -107,19 +110,19 @@
                                                         <a
                                                             href="{{ asset('/giao-vu/thong-ke/thong-ke-theo-hoc-phan/thong-ke-theo-tieu-chi/' . $x->maCTBaiQH . '/2') }}">
                                                             <button class="btn btn-primary">
-                                                                <i class="fas fa-chart-line"></i>CDIO
+                                                                <i class="fas fa-chart-line"></i>SO
                                                             </button>
                                                         </a>
                                                         <a
                                                             href="{{ asset('giao-vu/thong-ke/thong-ke-theo-hoc-phan/thong-ke-theo-xep-hang/' . $x->maCTBaiQH . '/2') }}">
                                                             <button class="btn btn-primary">
-                                                                <i class="fas fa-chart-line"></i>Xếp hạng
+                                                                <i class="fas fa-chart-line"></i>{{ __('Rank') }}
                                                             </button>
                                                         </a>
                                                         <a
                                                             href="{{ asset('giao-vu/thong-ke/thong-ke-theo-hoc-phan/thong-ke-theo-diem-chu/' . $x->maCTBaiQH . '/2') }}">
                                                             <button class="btn btn-primary">
-                                                                <i class="fas fa-chart-line"></i>Điểm chữ
+                                                                <i class="fas fa-chart-line"></i>{{__('Grate')}}
                                                             </button>
                                                         </a>
                                                     </td>
@@ -135,22 +138,22 @@
                                                             <a
                                                                 href="{{ asset('/giao-vu/thong-ke/thong-ke-theo-hoc-phan/tu-luan/thong-ke-theo-tieu-chi/' . $x->maCTBaiQH) }}">
                                                                 <button class="btn btn-primary">
-                                                                    <i class="fas fa-chart-line"></i> CDIO
+                                                                    <i class="fas fa-chart-line"></i> SO
                                                                 </button>
                                                             </a>
                                                             <a
                                                                 href="{{ asset('giao-vu/thong-ke/thong-ke-theo-hoc-phan/tu-luan/thong-ke-theo-xep-hang/' . $x->maCTBaiQH) }}">
                                                                 <button class="btn btn-primary">
-                                                                    <i class="fas fa-chart-line"></i>Xếp hạng
+                                                                    <i class="fas fa-chart-line"></i>{{ __('Rank') }}
                                                                 </button>
                                                             </a>
                                                             <a href="{{ asset('giao-vu/thong-ke/thong-ke-theo-hoc-phan/tu-luan/thong-ke-theo-diem-chu/' . $x->maCTBaiQH) }}"
                                                                 class="btn btn-primary">
-                                                                <i class="fas fa-chart-line"></i>Điểm chữ
+                                                                <i class="fas fa-chart-line"></i>{{__('Grate')}}
                                                             </a>
                                                             <a href="{{ asset('giao-vu/thong-ke/thong-ke-theo-hoc-phan/tu-luan/thong-ke-theo-abet/' . $x->maCTBaiQH) }}"
                                                                 class="btn btn-primary">
-                                                                <i class="fas fa-chart-line"></i>ABET
+                                                                <i class="fas fa-chart-line"></i>ABET SO
                                                             </a>
                                                         </td>
                                                     </tr>
@@ -165,24 +168,24 @@
                                                                 <a
                                                                     href="{{ asset('/giao-vu/thong-ke/thong-ke-theo-hoc-phan/thuc-hanh/thong-ke-theo-tieu-chi/' . $x->maCTBaiQH) }}">
                                                                     <button class="btn btn-primary">
-                                                                        <i class="fas fa-chart-line"></i>CDIO
+                                                                        <i class="fas fa-chart-line"></i>SO
                                                                     </button>
                                                                 </a>
                                                                 <a
                                                                     href="{{ asset('giao-vu/thong-ke/thong-ke-theo-hoc-phan/thuc-hanh/thong-ke-theo-xep-hang/' . $x->maCTBaiQH) }}">
                                                                     <button class="btn btn-primary">
-                                                                        <i class="fas fa-chart-line"></i>Xếp hạng
+                                                                        <i class="fas fa-chart-line"></i>{{ __('Rank') }}
                                                                     </button>
                                                                 </a>
                                                                 <a
                                                                     href="{{ asset('giao-vu/thong-ke/thong-ke-theo-hoc-phan/thuc-hanh/thong-ke-theo-diem-chu/' . $x->maCTBaiQH) }}">
                                                                     <button class="btn btn-primary">
-                                                                        <i class="fas fa-chart-line"></i>Điểm chữ
+                                                                        <i class="fas fa-chart-line"></i>{{__('Grate')}}
                                                                     </button>
                                                                 </a>
                                                                 <a href="{{ asset('giao-vu/thong-ke/thong-ke-theo-hoc-phan/thu-hanh/thong-ke-theo-abet/' . $x->maCTBaiQH) }}"
                                                                     class="btn btn-primary">
-                                                                    <i class="fas fa-chart-line"></i>ABET
+                                                                    <i class="fas fa-chart-line"></i>ABET SO
                                                                 </a>
                                                             </td>
                                                         </tr>
