@@ -14,7 +14,7 @@ class hocPhan extends Model
     public $incrementing=false;
     public $fillable=['maHocPhan','tenHocPhan','tongSoTinChi','tinChiLyThuyet','tinChiThucHanh','moTaHocPhan','dacTrung','isDelete','trangThai','maCTKhoiKT'];
     
-    
+    ##-------------function
     public static function getListHocPhan()
     {
         return self::where('isDelete',false)->get();
@@ -31,7 +31,7 @@ class hocPhan extends Model
         return $this->hasMany(hocPhan_ctDaoTao::class, 'maHocPhan', 'maHocPhan');
     }
 
-    ##-------------function
+    //lay hoc phan thong qua ma hoc phan
     public static function getHocPhanByMaHocPhan($maHocPhan)
     {
         return self::where('maHocPhan',$maHocPhan)->where('isDelete',false)->first();

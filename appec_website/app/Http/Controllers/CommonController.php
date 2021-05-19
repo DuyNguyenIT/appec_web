@@ -3,9 +3,31 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use session;
 
 class CommonController extends Controller
 {
+
+    public static function success_notify($vi_text,$en_text)
+    {
+        if (session::has('language') && session::get('language')=='vi') {
+            alert()->success($vi_text,'Thông báo');
+        } else {
+            alert()->success($en_text,'Message');
+        }
+    }
+
+    public static function warning_notify($vi_text,$en_text)
+    {
+        if (session::has('language') && session::get('language')=='vi') {
+             alert()->warning($vi_text,'Thông báo');
+        } else {
+             alert()->warning($en_text,'Message');
+        }
+    }
+
+
+    //ham chuyen chuoi co dau thanh chuoi khong dau
     public static function con_str($in_str){
         $str=$in_str;  
         $str = preg_replace("/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/", "a", $str);
@@ -26,6 +48,7 @@ class CommonController extends Controller
         return $str;
     }
 
+    //ham tinh diem chu
     public static function tinh_diem_chu($diem)
     {
         $diemChu="";
@@ -60,6 +83,7 @@ class CommonController extends Controller
         return $diemChu;
     }
 
+    //ham tinh diem so
     public static function tinh_xep_hang($diem)
     {
         $xepHang="";
@@ -94,4 +118,5 @@ class CommonController extends Controller
 
         return $xepHang;
     }
+
 }

@@ -16,7 +16,7 @@ class hocPhan_kqHTHP extends Model
     {
         return self::where('hocphan_kqht_hp.isDelete',false) 
         ->where('hocphan_kqht_hp.maHocPhan',$maHocPhan)
-        ->join('chuan_abet',function($y){
+        ->Leftjoin('chuan_abet',function($y){
             $y->on('chuan_abet.maChuanAbet','=','hocphan_kqht_hp.maChuanAbet')
             ->where('chuan_abet.isDelete',false);
         })

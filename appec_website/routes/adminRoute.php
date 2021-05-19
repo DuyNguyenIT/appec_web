@@ -94,6 +94,7 @@ Route::group(['middleware' =>'App\Http\Middleware\isAdmin'], function (){
         Route::prefix('/de-cuong-mon-hoc')->group(function () {
             Route::get('/{maHocPhan}','hocPhanController@de_cuong_mon_hoc');
             Route::get('/in-de-cuong-mon-hoc/{maHocPhan}','AdWordController@in_de_cuong_mon_hoc');
+            Route::get('/xoa-ket-qua-hoc-tap-mon-hoc/{maKQHT}','hocPhanController@xoa_ket_qua_hoc_tap_mon_hoc');
             Route::post('/them_chuan_dau_ra_mon_hoc','hocPhanController@them_chuan_dau_ra_mon_hoc');
             Route::post('/sua_chuan_dau_ra_mon_hoc','hocPhanController@sua_chuan_dau_ra_mon_hoc');
             Route::post('/sua_mo_ta_mon_hoc','hocPhanController@them_mo_ta_hoc_phan');

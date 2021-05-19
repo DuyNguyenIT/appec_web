@@ -37,8 +37,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <a class="btn btn-primary"
-                                href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/in-de-thuc-hanh/' . $dethi->maDe . '/' . $hocphan->maHocPhan) }}">Print</a>
+                           
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-md-5">
@@ -58,20 +57,42 @@
                                 <h3 class="card-title"></h3>
                                 <i> {{ $dethi->ghiChu }}</i>
                             </div>
+                            <div class="card-tools">
+                                {{-- <a class="btn btn-primary"
+                                href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/in-de-thuc-hanh/' . $dethi->maDe . '/' . $hocphan->maHocPhan) }}">
+                                Print</a> --}}
+                                <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/' . Session::get('maCTBaiQH')) }}"
+                                class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
+                            </div>
                             <div class="card-body">
                                 @php
                                     $i = 1;
                                 @endphp
                                 @foreach ($noidung as $data)
+                                <a title="Delete" class="btn btn-danger"
+                                onclick="return confirm('Do you want to delete this question?')"
+                                href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/xoa-cau-hoi-de-thuc-hanh/' . $dethi->maDe . '/' . $data->maCauHoi) }}"><i
+                                    class="fa fa-trash"></i></a>
                                     <b>Câu </b> {{ $i++ }} <b>({{ $data->diem }}điểm)</b>
-                                    <a title="Delete" class="btn btn-danger"
-                                        onclick="return confirm('Do you want to delete this question?')"
-                                        href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/xoa-cau-hoi-de-thuc-hanh/' . $dethi->maDe . '/' . $data->maCauHoi) }}"><i
-                                            class="fa fa-trash"></i></a>
+                                   
                                     {!! $data->noiDungCauHoi !!}
-                                    <div style="background-color: dodgerblue; display:float">
-                                        <b>Phương án trả lời:</b> <br>
-                                        @for ($k = 0; $k < count($data->phuongAn); $k++)
+                                    <div class="card" style="background-color: rgb(166, 243, 239); display:float">
+                                        <div class="card-header">
+                                            <div class="card-title">
+                                                Phương án trả lời:
+                                            </div>
+                                            <div class="card-tools">
+                                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                                  <i class="fas fa-minus"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                                                  <i class="fas fa-times"></i>
+                                                </button>
+                                              </div>
+                                        </div>
+                                        
+                                        <div class="card-body">
+                                            @for ($k = 0; $k < count($data->phuongAn); $k++)
                                             [{{ $k + 1 }}] ({{ $data->phuongAn[$k]->diemPA }}
                                             điểm)(ABET:{{ $data->phuongAn[$k]->maChuanAbetVB }})(CDR3:{{ $data->phuongAn[$k]->maCDR3VB }}):
                                             <button type="button" class="btn btn-success" data-toggle="modal"
@@ -168,16 +189,27 @@
                                                 </div>
                                             </div>
                                         @endfor
-                                        <hr>
+                                        </div>
+
                                     </div>
                                 @endforeach
                             </div>
+                            <div class="card-footer">
+                                @if ($dem_cau_hoi < $dethi->soCauHoi)
+                                    <span style="color: red">*Hiện có: {{ $dem_cau_hoi }}/{{ $dethi->soCauHoi }} Câu
+                                        hỏi</span>
+                                @else
+                                    <span style="color: green">Đã đủ: {{ $dem_cau_hoi }}/{{ $dethi->soCauHoi }} Câu
+                                        hỏi</span>
+                                @endif
+                            </div>
                         </div>
-                        <!-- /.card -->
+
+                  <!-- /.card -->
                         <div class="card card-info card-outline">
                             <div class="card-body">
                                 <h5 class="card-title">
-                                    <h3>Adding new content form</h3>
+                                    <h3>{{ __('Questions list') }}</h3>
                                 </h5>
                                 <p class="card-text">
                                     <!-- /.card-header -->
@@ -188,7 +220,7 @@
                                         @csrf
                                         <input type="text" name="maDe" value="{{ $dethi->maDe }}" hidden>
                                         <div class="form-group">
-                                            <label for="">Chọn chuẩn đầu ra:</label>
+                                            <label for="">{{ __('SOs') }}:</label>
                                             <select name="maCDR3" id="" class="form-control" required>
                                                 @foreach ($cdr3 as $data)
                                                     <option value="{{ $data->maCDR3 }}">
@@ -197,8 +229,8 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="">Chọn chuẩn abet:</label>
-                                            <select name="maChuanAbet" id="" class="from-control">
+                                            <label for="">{{ __("ABET's SO") }}:</label>
+                                            <select name="maChuanAbet" id="" class="form-control">
                                                 @foreach ($abet as $ab)
                                                     <option value="{{ $ab->maChuanAbet }}">
                                                         {{ $ab->maChuanAbetVB }}--{{ $ab->tenChuanAbet }}</option>
@@ -206,12 +238,32 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
+                                            <label for="">{{ __('Chapter') }}</label>
+                                            <select name="maChuong" id="chuong" class="form-control">
+                                                <option value="-1">{{ __('All') }}</option>
+                                                @foreach ($chuong as $chg)
+                                                    <option value="{{ $chg->id }}">{{ $chg->tenchuong }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">{{ __('Items') }}</label>
+                                            <select name="maMuc" id="muc" class="form-control">
+                                                <option value="-1">{{ __('All') }}</option>
+                                                @foreach ($muc as $m)
+                                                    <option value="{{ $m->id }}">{{ $m->maMucVB }}: {{ $m->tenMuc }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>  {{ __('Questions list') }}</label>
                                             <table id="example2" class="table table-bordered table-hover">
                                                 <thead>
                                                     <tr>
-                                                        <th>Order</th>
-                                                        <th>Question</th>
-                                                        <th>Choise</th>
+                                                        <th>{{ __('No.') }}</th>
+                                                        <th>{{ __('Question') }}</th>
+                                                        <th>{{ __('Choise') }}</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -256,7 +308,7 @@
                                                 </div>
                                                 <script>
                                                     CKEDITOR.replace('ckcontent_1', {
-                                                        filebrowserUploadUrl: "{{ route('upload', ['_token' => csrf_token()]) }}",
+                                                        filebrowserUploadUrl: "{{ route('uploadgv', ['_token' => csrf_token()]) }}",
                                                         filebrowserUploadMethod: 'form'
                                                     });
 
@@ -264,8 +316,8 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <button class="btn btn-primary" type="submit">Save</button>
-                                            <button class="btn btn-info" type="reset">Cancel</button>
+                                            <button class="btn btn-primary" type="submit">{{ __("Save") }}</button>
+                                            <button class="btn btn-info" type="reset">{{ __('Cancel') }}</button>
                                         </div>
                                     </form>
                                 </div>
@@ -284,6 +336,7 @@
         <!-- /.content -->
     </div>
     <script>
+        //số ý
         $('#soTC').on('change', function() {
             var soTC = this.value;
             console.log(soTC);
@@ -302,11 +355,62 @@
             $('#tbl-content').append(html);
             for (let index = 1; index <= soTC; index++) {
                 CKEDITOR.replace('ckcontent_' + index, {
-                    filebrowserUploadUrl: "{{ route('upload', ['_token' => csrf_token()]) }}",
+                    filebrowserUploadUrl: "{{ route('uploadgv', ['_token' => csrf_token()]) }}",
                     filebrowserUploadMethod: 'form'
                 });
             }
         });
+        //function chuong
+        $('#chuong').change(function() {
+            $('select[id="from_box"]').empty();
+            var ajaxurl = '/giang-vien/hoc-phan/chuong/muc/get-muc-by-machuong/' + $(this).val();
+            $.ajax({
+                type: 'get',
+                url: ajaxurl,
+                success: function(rsp) {
+                    var option = "<option value='-1'>All</option>";
+                    rsp.forEach(element => {
+                        option += "<option value='" + element['id'] + "'>" + element[
+                            'maMucVB'] + "--" + element['tenMuc'] + "</option>";
+                    });
+                    $('#muc').empty();
+                    $('#muc').append(option);
+                },
+                error: function(rsp) {
+                    console.log(rsp);
+                }
+            });
+        })
+        //function muc
+        $('#muc').change(function() {
+            var muc_url = '/giang-vien/hoc-phan/chuong/muc/get-cau-hoi-thuc-hanh-by-mamuc/' + $(this).val();
+            $.ajax({
+                type: 'get',
+                url: muc_url,
+                success: function(rsp) {
+                    
+                    var table_content = "";
+                    var $i=1;
+                    rsp.forEach(element => {
+                        table_content+= "<tr><td>"+$i+"</td>"+
+                            "<td>"+element['noiDungCauHoi']+"</td>"+
+                            "<td>"+
+                               "   <input type='radio' id='ch_"+element['maCauHoi']+"'"+                             
+                                    "name='maCauHoi' value='"+element['maCauHoi']+"'>"+
+                            "</td></tr>" ; 
+                        $i+=1;  
+                    });
+                    console.log(table_content);
+                    $('table[id="example2"]').children('tbody').empty();
+                    $('table[id="example2"]').children('tbody').append(table_content);
+                   
+                    
+                },
+                error: function(rsp) {
+                    console.log(rsp);
+                }
+            });
+        })
 
     </script>
 @endsection

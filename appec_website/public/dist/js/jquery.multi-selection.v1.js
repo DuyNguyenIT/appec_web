@@ -91,7 +91,7 @@
                 $(this).parent().prev().find("select option:selected").each(function(){
                     var options = $(this).parent().find("option");
                     var newPos  = options.index(this) + 1;
-                    if (newPos < options.size()) {
+                    if (newPos < options.length) {
                         options.eq(newPos).after("<option value='"+$(this).val()+"' selected='selected'>"+$(this).text()+"</option>");
                         $(this).remove();
                     }

@@ -10,12 +10,13 @@
     <tbody>
         @foreach ($CDR1 as $cdr1)
             <tr>
-                <td colspan="3"><b>{{ __('Topic') }} {{ $cdr1->maCDR1VB }}: {{ $cdr1->tenCDR1 }}:</b>
+                <td colspan="3">
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-primary" data-toggle="modal"
                         data-target="#chuDe_{{ $cdr1->maCDR1VB }}">
                         <i class="fas fa-plus"></i>
                     </button>
+                    <b>{{ __('Topic') }} {{ $cdr1->maCDR1VB }}: {{ $cdr1->tenCDR1 }}:</b>
                     <!-- /////////////////// Modal them noi dung mon hoc-->
                     <div class="modal fade" id="chuDe_{{ $cdr1->maCDR1VB }}" tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -42,14 +43,14 @@
                                         </div>
                                         <div class="form-group">
                                             <label for=""> {{ __('studying results content') }}:</label>
-                                            <input type="text" name="tenKQHT" placeholder="" class="form-control">
+                                            <input type="text" name="tenKQHT" id="add_tenKQHT" placeholder="" class="form-control">
                                         </div>
                                         <div class="form-group">
                                             <label for=""> {{ __('Level-3 outcome') }}:</label>
-                                            <select name="maCDR3[]" id="" class="form-control" multiple>
+                                            <select name="maCDR3[]" id="" class="form-control select-item" multiple >
                                                 @foreach ($cdr as $t)
                                                     @if ($t->maCDR1 == $cdr1->maCDR1)
-                                                        <option value="{{ $t->maCDR3 }}"> {{ $t->maCDR3VB }} -
+                                                        <option value="{{ $t->maCDR3 }}" > {{ $t->maCDR3VB }} -
                                                             {{ $t->tenCDR3 }}</option>
                                                     @endif
                                                     @if ($cdr1->maCDR1 == '1' && $t->maCDR1 == '4')
@@ -93,7 +94,15 @@
                     @if ($bienchay == 1)
                         <tr>
                             <td rowspan={{ $rs }}>{{ $x->maKQHTVB }}</td>
-                            <td rowspan={{ $rs }}>{{ $x->tenKQHT }}</td>
+                            <td rowspan={{ $rs }}>
+                                <a title="Delete" class="btn btn-danger"
+                                    onclick="return confirm('Confirm?')"
+                                    href="{{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/xoa-ket-qua-hoc-tap-mon-hoc/'.$x->maKQHT) }}">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                                {{ $x->tenKQHT }}
+                              
+                            </td>
                             <td>{{ $x->maCDR3VB }}</td>
                             <td>{{ $x->maChuanAbetVB }}</td>
                             <td>
@@ -148,11 +157,11 @@
                                         <div class="form-group">
                                             <label for=""> {{ __('studying results content') }}:</label>
                                             <input type="text" name="tenKQHT" placeholder="" class="form-control"
-                                                value="{{ $x->tenKQHT }}">
+                                                value="{{ $x->tenKQHT }}" id="tenKQHT">
                                         </div>
                                         <div class="form-group">
                                             <label for=""> {{ __('Level-3 outcome') }}:</label>
-                                            <select name="maCDR3" id="" class="form-control">
+                                            <select name="maCDR3" id="" class="form-control" >
                                                 @foreach ($cdr as $t)
                                                     @if ($t->maCDR1 == $cdr1->maCDR1)
                                                         @if ($t->maCDR3 == $x->maCDR3)
@@ -181,3 +190,13 @@
         @endforeach
     </tbody>
 </table>
+<script>
+   $('.select-item').click(function() {
+            var price = '';
+            $('option:selected', $(this)).each(function() {
+                console.log($(this).text());
+                price += $(this).text();
+            });
+            $('#add_tenKQHT').text(price);
+        });
+</script>

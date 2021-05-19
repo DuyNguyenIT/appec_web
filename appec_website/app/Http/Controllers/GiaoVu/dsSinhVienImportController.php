@@ -17,9 +17,12 @@ class dsSinhVienImportController extends Controller
                  $file=$request->file('file')->store('import');
                 (new dsSinhVienImport)->import($file);
             }else{
-                alert()->warning('Only accept .csv and .xls!','Message');
+                if (session::has('language') && session::get('language')=='vi') {
+                    alert()->warning('Chỉ chấp nhận .csv và .xls!','Thông báo');
+                } else {
+                    alert()->warning('Only accept .csv and .xls!','Message');
+                }
                 return redirect('/giao-vu/quan-ly-lop');
-
             }
         }
         return redirect('/giao-vu/quan-ly-lop/xem-danh-sach-sinh-vien/'.Session::get('maLop'));

@@ -37,6 +37,11 @@
                                 <h3 class="card-title">
 
                                 </h3>
+                                <div class="card-tools">
+                                    <a href="{{ asset('/giang-vien/quy-hoach-danh-gia') }}" class="btn btn-secondary">
+                                           <i class="fas fa-arrow-left"></i>
+                                     </a>
+                            </div>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">

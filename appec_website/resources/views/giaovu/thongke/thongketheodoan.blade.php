@@ -33,20 +33,6 @@
             <!-- /.container-fluid -->
         </div>
         <!-- /.content-header -->
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <h5><i class="icon fas fa-check"></i> Thông báo!</h5>
-                {{ session('success') }}
-            </div>
-        @endif
-        @if (session('warning'))
-            <div class="alert alert-warning alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <h5><i class="icon fas fa-exclamation-triangle"></i> Thông báo!</h5>
-                {{ session('warning') }}
-            </div>
-        @endif
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
@@ -55,6 +41,11 @@
                             <div class="card-header">
                                 <h3 class="card-title">
                                 </h3>
+                                <div class="card-tools">
+                                    <a href="{{ asset('giao-vu/thong-ke') }}" class="btn btn-secondary">
+                                           <i class="fas fa-arrow-left"></i>
+                                     </a>
+                                </div>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">

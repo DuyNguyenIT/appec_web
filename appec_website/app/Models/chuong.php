@@ -30,7 +30,7 @@ class chuong extends Model
     #----------------function---------------
     public static function get_one_chuong_by_id($id)
     {
-        return self::where('id',$id)->first();
+        return self::where('isDelete',false)->where('id',$id)->first();
     }
 
     public static function get_chuong_by_maHocPhan($maHocPhan)

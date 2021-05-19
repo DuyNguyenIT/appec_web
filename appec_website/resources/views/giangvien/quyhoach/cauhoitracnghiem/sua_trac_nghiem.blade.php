@@ -50,6 +50,50 @@
                                         method="post">
                                         @csrf
                                         <div class="form-group">
+                                            <label for="">{{ __('Studying results') }}:</label>
+                                            <select name="maKQHT" id="" class="form-control">
+                                                @foreach ($kqht as $data)
+                                                    @if ($data->maKQHT == $cauhoi->maKQHT)
+                                                        <option value="{{ $data->maKQHT }}" selected>
+                                                            {{ $data->maKQHTVB }}--{{ $data->tenKQHT }}</option>
+                                                    @else
+                                                        <option value="{{ $data->maKQHT }}">
+                                                            {{ $data->maKQHTVB }}--{{ $data->tenKQHT }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">{{ __('Students outcomes') }} 3 (CDIOs):</label>
+                                            <select name="maCDR3" id="" class="form-control">
+                                                @foreach ($cdr3 as $data)
+                                                    @if ($cauhoi->phuong_an_trac_nghiem[0]->maCDR3 == $data->maCDR3)
+                                                        <option value="{{ $data->maCDR3 }}" selected>
+                                                            {{ $data->maCDR3VB }} - {{ $data->tenCDR3 }}</option>
+                                                    @else
+                                                        <option value="{{ $data->maCDR3 }}">{{ $data->maCDR3VB }} -
+                                                            {{ $data->tenCDR3 }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Abet:</label>
+                                            <select name="maChuanAbet" id="" class="form-control">
+                                                @foreach ($abet as $data)
+                                                    @if ($cauhoi->phuong_an_trac_nghiem[0]->maChuanAbet == $data->maChuanAbet)
+                                                        <option value="{{ $data->maChuanAbet }}" selected>
+                                                            {{ $data->maChuanAbetVB }} - {{ $data->tenChuanAbet }}
+                                                        </option>
+                                                    @else
+                                                        <option value="{{ $data->maChuanAbet }}">
+                                                            {{ $data->maChuanAbetVB }} - {{ $data->tenChuanAbet }}
+                                                        </option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
                                             <label for="">{{ __('Question content') }}:</label>
                                             <input type="text" name="maCauHoi" value="{{ $cauhoi->maCauHoi }}" hidden>
                                             <textarea type="text" name="noiDungCauHoi" id="noiDungCauHoi"
@@ -101,50 +145,7 @@
                                                 @endif
                                             @endfor
                                         </div>
-                                        <div class="form-group">
-                                            <label for="">{{ __('Studying results') }}:</label>
-                                            <select name="maKQHT" id="" class="form-control">
-                                                @foreach ($kqht as $data)
-                                                    @if ($data->maKQHT == $cauhoi->maKQHT)
-                                                        <option value="{{ $data->maKQHT }}" selected>
-                                                            {{ $data->maKQHTVB }}--{{ $data->tenKQHT }}</option>
-                                                    @else
-                                                        <option value="{{ $data->maKQHT }}">
-                                                            {{ $data->maKQHTVB }}--{{ $data->tenKQHT }}</option>
-                                                    @endif
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="">{{ __('Students outcomes') }} 3 (CDIOs):</label>
-                                            <select name="maCDR3" id="" class="form-control">
-                                                @foreach ($cdr3 as $data)
-                                                    @if ($cauhoi->phuong_an_trac_nghiem[0]->maCDR3 == $data->maCDR3)
-                                                        <option value="{{ $data->maCDR3 }}" selected>
-                                                            {{ $data->maCDR3VB }} - {{ $data->tenCDR3 }}</option>
-                                                    @else
-                                                        <option value="{{ $data->maCDR3 }}">{{ $data->maCDR3VB }} -
-                                                            {{ $data->tenCDR3 }}</option>
-                                                    @endif
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="">Abet:</label>
-                                            <select name="maChuanAbet" id="" class="form-control">
-                                                @foreach ($abet as $data)
-                                                    @if ($cauhoi->phuong_an_trac_nghiem[0]->maChuanAbet == $data->maChuanAbet)
-                                                        <option value="{{ $data->maChuanAbet }}" selected>
-                                                            {{ $data->maChuanAbetVB }} - {{ $data->tenChuanAbet }}
-                                                        </option>
-                                                    @else
-                                                        <option value="{{ $data->maChuanAbet }}">
-                                                            {{ $data->maChuanAbetVB }} - {{ $data->tenChuanAbet }}
-                                                        </option>
-                                                    @endif
-                                                @endforeach
-                                            </select>
-                                        </div>
+                                      
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
                                             <button type="reset" class="btn btn-info">{{ __('Reset') }}</button>
@@ -162,13 +163,13 @@
         $("#customSwitch1").change(function() {
             if (this.checked) {
                 CKEDITOR.replace('noiDungCauHoi', {
-                    filebrowserUploadUrl: "{{ route('upload', ['_token' => csrf_token()]) }}",
+                    filebrowserUploadUrl: "{{ route('uploadgv', ['_token' => csrf_token()]) }}",
                     filebrowserUploadMethod: 'form'
                 });
                 for (let index = 1; index <= 4; index++) {
                     var name = "phuongAn" + index;
                     CKEDITOR.replace(name, {
-                        filebrowserUploadUrl: "{{ route('upload', ['_token' => csrf_token()]) }}",
+                        filebrowserUploadUrl: "{{ route('uploadgv', ['_token' => csrf_token()]) }}",
                         filebrowserUploadMethod: 'form'
                     });
                 }

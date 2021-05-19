@@ -22,7 +22,7 @@
                             <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
                             <li class="breadcrumb-item "><a href="{{ asset('/giao-vu/thong-ke') }}">Thống kê</a></li>
                             <li class="breadcrumb-item "><a
-                                    href="thongketheohocphan.html">{{ $ct_baiQH->tenLoaiHTDG }}</a>
+                                    href="thongketheohocphan.html">ct</a>
                             </li>
                             <li class="breadcrumb-item active">Thống kê theo điểm chữ</li>
                         </ol>

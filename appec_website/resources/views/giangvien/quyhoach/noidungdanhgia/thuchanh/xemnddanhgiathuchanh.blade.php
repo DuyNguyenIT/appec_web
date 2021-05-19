@@ -134,9 +134,12 @@
                                                 <td>{{ $data->soCauHoi }}</td>
                                                 <td>{{ $data->ghiChu }}</td>
                                                 <td>
-                                                    <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/cau-truc-de-thuc-hanh/' . $data->maDe) }}"
-                                                        class="btn btn-primary">{{ __('Structure') }}</a>
-                                                    <button class="btn btn-danger">{{ __('Delete') }}</button>
+                                                    <div class="btn-group">
+                                                        <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/cau-truc-de-thuc-hanh/' . $data->maDe) }}"
+                                                        class="btn btn-primary"> <i class="fas fa-cogs"></i></a>
+                                                        <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                                                    </div>
+                                                 
                                                 </td>
                                             </tr>
                                         @endforeach

@@ -25,20 +25,7 @@
             <!-- /.container-fluid -->
         </div>
         <!-- /.content-header -->
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <h5><i class="icon fas fa-check"></i> Message!</h5>
-                {{ session('success') }}
-            </div>
-        @endif
-        @if (session('warning'))
-            <div class="alert alert-warning alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <h5><i class="icon fas fa-exclamation-triangle"></i> Notification!</h5>
-                {{ session('warning') }}
-            </div>
-        @endif
+
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
@@ -80,10 +67,10 @@
                                                         <label for="">{{ __('Course Name') }}</label>
                                                         <input type="text" name="tenHocPhan" class="form-control" required>
                                                     </div>
-                                                    <!-- <div class="form-group">
-                                    <label for="">Tổng tín chỉ</label>
-                                    <input type="number" name="tongSoTinChi" class="form-control">
-                                  </div>-->
+                                                    <div class="form-group">
+                                                        <label for="">{{ __('Course Name') }} EN</label>
+                                                        <input type="text" name="tenHocPhanEN" class="form-control" required>
+                                                    </div>
                                                     <div class="form-group">
                                                         <label for="">{{ __('Number of Theory Credits') }}</label>
                                                         <input type="number" name="tinChiLyThuyet" class="form-control"
@@ -154,8 +141,6 @@
                                             <th>{{ __('Course ID') }}</th>
                                             <th>{{ __('Course Name') }}</th>
                                             <th>{{ __('Total Credits') }}</th>
-                                            <th>{{ __('Number of Theory Credits') }}</th>
-                                            <th>{{ __('Number of Practice Credits') }}</th>
                                             <th>{{ __('Knowledge block') }}</th>
                                             <th>{{ __('Curriculum') }}</th>
                                             <th>{{ __('Option') }}</th>
@@ -169,15 +154,20 @@
                                             <tr>
                                                 <td>{{ $i++ }}</td>
                                                 <td>{{ $hp->maHocPhan }}</td>
-                                                <td>{{ $hp->tenHocPhan }}</td>
-                                                <td>{{ $hp->tongSoTinChi }}</td>
-                                                <td>{{ $hp->tinChiLyThuyet }}</td>
-                                                <td>{{ $hp->tinChiThucHanh }}</td>
                                                 <td>
-                                                    @if (Session::has('language') && Session::get('language'))
-                                                        {{ $hp->ctkhoi->tenCTKhoiKTEN }}
+                                                    @if (session::has('language') && session::get('language')=='vi')
+                                                    {{ $hp->tenHocPhan }}
                                                     @else
+                                                    {{ $hp->tenHocPhanEN }}
+                                                    @endif
+                                                    
+                                                </td>
+                                                <td><b>{{ $hp->tongSoTinChi }}</b> ({{ $hp->tinChiLyThuyet }} {{ __('Thoery') }} + {{ $hp->tinChiThucHanh }} {{ __('Practice') }})</td>
+                                                <td>
+                                                    @if (session::has('language') && session::get('language')=='vi')
                                                         {{ $hp->ctkhoi->tenCTKhoiKT }}
+                                                    @else
+                                                        {{ $hp->ctkhoi->tenCTKhoiKTEN }}
                                                     @endif
                                                 </td>
                                                 <td>
@@ -252,7 +242,7 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td>
+                                                <td style='white-space: nowrap'>
                                                     <a href=" {{ asset('/quan-ly/hoc-phan/de-cuong-mon-hoc/' . $hp->maHocPhan) }}"
                                                         class="btn btn-success">
                                                         <i class="fas fa-align-justify"></i> {{ __('Course Syllabus') }}
@@ -291,6 +281,12 @@
                                                                             <input type="text" name="tenHocPhan"
                                                                                 class="form-control"
                                                                                 value="{{ $hp->tenHocPhan }}" required>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="">{{ __('Course Name') }} EN</label>
+                                                                            <input type="text" name="tenHocPhanEN"
+                                                                                class="form-control"
+                                                                                value="{{ $hp->tenHocPhanEN }}" required>
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label

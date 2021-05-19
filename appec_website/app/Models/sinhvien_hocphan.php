@@ -17,4 +17,11 @@ class sinhvien_hocphan extends Model
     {
         return $this->hasOne(sinhVien::class, 'maSSV', 'maSSV');
     }
+
+    //----------function------------------------
+    public static function get_list_sv($maHocPhan,$maLop,$maHK,$namHoc)
+    {
+        return self::where('maHocPhan',$maHocPhan)->where('maLop',$maLop)
+        ->where('maHK',$maHK)->where('namHoc',$namHoc)->with('sinhvien')->get();
+    }
 }

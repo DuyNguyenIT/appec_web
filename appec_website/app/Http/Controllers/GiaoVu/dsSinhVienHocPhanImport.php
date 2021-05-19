@@ -19,7 +19,11 @@ class dsSinhVienHocPhanImport extends Controller
                 $import=new dsSV_HPImport;
                 Excel::import(new dsSV_HPImport,$file);
             }else{
-                alert()->warning('Only accept .csv and .xls!','Message');
+                if (session::has('language') && session::get('language')=='vi') {
+                    alert()->warning('Chỉ chấp nhận .csv and .xls!','Thông báo');
+                } else {
+                    alert()->warning('Only accept .csv and .xls!','Message');
+                }
                 return redirect('/giao-vu/hoc-phan-giang-day/xem-danh-sach-sinh-vien/'.Session::get('maHocPhan').'/'.Session::get('maLop').'/'.Session::get('maHK').'/'.Session::get('namHoc'));
             }
         }

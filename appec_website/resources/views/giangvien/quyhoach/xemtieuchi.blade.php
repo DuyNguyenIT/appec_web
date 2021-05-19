@@ -47,12 +47,12 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example2" class="table table-bordered table-hover">
+                                <table id="example2" class="table table-bordered table-hover" >
                                     <thead>
                                         <tr>
                                             <th>STT</th>
                                             <th>Tiêu chuẩn</th>
-                                            <th>Chuẩn đầu ra</th>
+                                            <th colspan="2">Chuẩn đầu ra - ABET</th>
                                             <th>Tiêu chí</th>
                                             <th>Điểm</th>
                                         </tr>
@@ -102,7 +102,53 @@
                                                     <td rowspan={{ $demTieuChi_TCDG }}><b>{{ $tc->tenTCDG }}</b></td>
                                                     @if ($chayCDR_TCDG == 1)
                                                         <td rowspan={{ $demTC_CDR }}>{{ $tc->maCDR3VB }}:
-                                                            {{ $tc->tenCDR3 }}</td>
+                                                            {{ $tc->tenCDR3 }}; <br> {{ $tc->maChuanAbetVB }}-- {{ $tc->tenChuanAbet }}</td>
+                                                        <td rowspan={{ $demTC_CDR }}>
+                                                            <!-- Button trigger modal -->
+                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit_abet_{{ $tc->maTCDG }}__{{ $tc->maCDR3 }}">
+                                                                <i class="fas fa-edit"></i> ABET's SO
+                                                            </button>
+                                                            
+                                                            <!-- Modal -->
+                                                            <div class="modal fade" id="edit_abet_{{ $tc->maTCDG }}__{{ $tc->maCDR3 }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <form action="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/sua-chuan-abet') }}" method="post">
+                                                                    @csrf
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalLabel">{{ __('Edit') }} </h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <input type="text" name="maTCDG" value="{{ $tc->maTCDG }}" hidden>
+                                                                            <input type="text" name="maCDR3" value="{{ $tc->maCDR3 }}" hidden>
+                                                                            <div class="form-group">
+                                                                                <label >{{ __('SOs') }}</label>
+                                                                                <select name="maChuanAbet" id="" class="form-control">
+                                                                                    @foreach ($ABET as $abet)
+                                                                                        @if ($tc->maChuanAbet==$abet->maChuanAbet)
+                                                                                            <option value="{{ $abet->maChuanAbet }}" selected>{{ $abet->maChuanAbetVB }}-- {{ $abet->tenChuanAbet }}</option>
+                                                                                        @else
+                                                                                            <option value="{{ $abet->maChuanAbet }}" >{{ $abet->maChuanAbetVB }}-- {{ $abet->tenChuanAbet }}</option>
+                                                                                        @endif
+                                                                                    @endforeach
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                        <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Close') }}</button>
+                                                                        </div>
+                                                                    </div>
+                                                                    </form>
+                                                               
+                                                                </div>
+                                                            </div>
+
+                                                        {{-- end modal --}}
+                                                        </td>
                                                         <td>{{ $chayCDR_TCDG }}. {{ $tc->tenTCCD }}</td>
                                                         <td>{{ $tc->diemTCCD }} điểm</td>
                                                     @else
@@ -114,7 +160,54 @@
                                                 <tr>
                                                     @if ($chayCDR_TCDG == 1)
                                                         <td rowspan={{ $demTC_CDR }}>{{ $tc->maCDR3VB }}:
-                                                            {{ $tc->tenCDR3 }}</td>
+                                                            {{ $tc->tenCDR3 }}; <br> {{ $tc->maChuanAbetVB }}-- {{ $tc->tenChuanAbet }}</td>
+                                                        <td rowspan={{ $demTC_CDR }}>
+                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit_abet_{{ $tc->maTCDG }}_{{ $tc->maCDR3 }}">
+                                                                <i class="fas fa-edit"></i> ABET's SO
+                                                            </button>
+                                                            
+                                                            <!-- Modal -->
+                                                            <div class="modal fade" id="edit_abet_{{ $tc->maTCDG }}_{{ $tc->maCDR3 }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <form action="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/sua-chuan-abet') }}" method="post">
+                                                                        @csrf
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                            <h5 class="modal-title" id="exampleModalLabel">{{ __('Edit') }} </h5>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <input type="text" name="maTCDG" value="{{ $tc->maTCDG }}" hidden>
+                                                                                <input type="text" name="maCDR3" value="{{ $tc->maCDR3 }}" hidden>
+
+                                                                                <div class="form-group">
+                                                                                    <label >{{ __('SOs') }}</label>
+                                                                                    <select name="maChuanAbet" id="" class="form-control">
+                                                                                        @foreach ($ABET as $abet)
+                                                                                            @if ($tc->maChuanAbet==$abet->maChuanAbet)
+                                                                                                <option value="{{ $abet->maChuanAbet }}" selected>{{ $abet->maChuanAbetVB }}-- {{ $abet->tenChuanAbet }}</option>
+                                                                                            @else
+                                                                                                <option value="{{ $abet->maChuanAbet }}" >{{ $abet->maChuanAbetVB }}-- {{ $abet->tenChuanAbet }}</option>
+                                                                                            @endif
+                                                                                        @endforeach
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                            <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Close') }}</button>
+                                                                            
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                               
+                                                                </div>
+                                                            </div>
+
+                                                        {{-- end modal --}}
+                                                        </td>
                                                         <td>{{ $chayCDR_TCDG }}. {{ $tc->tenTCCD }}</td>
                                                         <td>{{ $tc->diemTCCD }} điểm</td>
                                                     @else

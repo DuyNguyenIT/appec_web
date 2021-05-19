@@ -102,16 +102,16 @@ class xuLyThongKeController extends Controller
 
                 $tile=number_format($dem/$diem_tieu_chi,2);
 
-                if($tile<0.25){
+                if($tile<0.4){
                     $cdat++;
                 }else{
-                    if($tile>=0.25 && $tile<0.5){
+                    if($tile>=0.4 && $tile<0.5){
                         $dat_D++;
                     }else{
                         if($tile>=0.5 && $tile<0.75){
                             $dat_C++;
                         }else{
-                            if($tile>=0.75 && $tile<0.85){
+                            if($tile>=0.7 && $tile<0.9){
                                 $dat_B++;
                             }else{
                                 $dat_A++;
@@ -225,16 +225,16 @@ class xuLyThongKeController extends Controller
 
                 $tile=number_format($dem/$diem_tieu_chi,2);
 
-                if($tile<0.25){
+                if($tile<0.4){
                     $cdat++;
                 }else{
-                    if($tile>=0.25 && $tile<0.5){
+                    if($tile>=0.4 && $tile<0.5){
                         $dat_D++;
                     }else{
                         if($tile>=0.5 && $tile<0.75){
                             $dat_C++;
                         }else{
-                            if($tile>=0.75 && $tile<0.85){
+                            if($tile>=0.7 && $tile<0.9){
                                 $dat_B++;
                             }else{
                                 $dat_A++;
@@ -295,7 +295,74 @@ class xuLyThongKeController extends Controller
             ->where('phieu_cham.maGV',Session::get('maGV'))
             ->where('phieu_cham.isDelete',false);
         })->get(['phieu_cham.maPhieuCham','phieu_cham.maDe']);
-
+         
+        
+        //bien du lieu thong ke
+         $data=[];
+         foreach ($chuan_abet as $abet) {
+             $temp=[];
+             array_push($temp,$abet->maChuanAbetVB);
+             array_push($temp,$abet->tenChuanAbet);
+             //bien dem
+             $dat_A=$dat_B=$dat_C=$dat_D=$cdat=$diem_tieu_chi=0;
+             
+             foreach ($phieuCham as $pc) {
+                 $t=$abet->maChuanAbet;
+                 //dethi
+                 $dethi=deThi::where('isDelete',false)->where('maDe',$pc->maDe)->first();
+                 //dethi->phuongAn
+                 $phuongan=deThi::where('de_thi.isDelete',false)
+                 ->where('de_thi.maDe',$dethi->maDe)
+                 ->where('maCTBaiQH',$maCTBaiQH)
+                 ->join('de_thi_cauhoi_tuluan',function($x){
+                     $x->on('de_thi_cauhoi_tuluan.maDe','=','de_thi.maDe');
+                 })
+                 ->join('phuong_an_tu_luan',function($x){
+                     $x->on('de_thi_cauhoi_tuluan.maPATL','=','phuong_an_tu_luan.id');
+                 })
+                 ->get(['phuong_an_tu_luan.id','phuong_an_tu_luan.noiDungPA','phuong_an_tu_luan.diemPA','phuong_an_tu_luan.maChuanAbet']);
+                
+                //phuongan->diem_tieu_chi
+                 $diem_tieu_chi=$phuongan->where('maChuanAbet',$abet->maChuanAbet)->sum('diemPA');
+ 
+                 //điếm theo phiếu chấm
+                 $dem=danhgia_tuluan::where('maPhieuCham',$pc->maPhieuCham)
+                 ->join('phuong_an_tu_luan',function($x) use ($t){
+                     $x->on('phuong_an_tu_luan.id','=','danhgia_tuluan.maPATL')
+                     ->where('phuong_an_tu_luan.maChuanAbet',$t);
+                 })
+                 ->sum('danhgia_tuluan.diemDG');
+                
+ 
+                 $tile=number_format($dem/$diem_tieu_chi,2);
+ 
+                 if($tile<0.4){
+                     $cdat++;
+                 }else{
+                     if($tile>=0.4 && $tile<0.5){
+                         $dat_D++;
+                     }else{
+                         if($tile>=0.5 && $tile<0.75){
+                             $dat_C++;
+                         }else{
+                             if($tile>=0.7 && $tile<0.9){
+                                 $dat_B++;
+                             }else{
+                                 $dat_A++;
+                             }
+                         }
+                     }
+                 }
+             }
+             
+             array_push($temp,$dat_A);
+             array_push($temp,$dat_B);
+             array_push($temp,$dat_C);
+             array_push($temp,$dat_D);
+             array_push($temp,$cdat);
+             array_push($data,$temp);
+         }
+         return $data;
     }
 
     //tra ve so lieu thong ke xep hang
@@ -372,6 +439,7 @@ class xuLyThongKeController extends Controller
         foreach ($letter as  $lt) {
             array_push($tiLe,number_format($dethi->where('diemChu',$lt)->count()*100/$dethi->count(),2));
         }
-        return $diemChu;
+        return $tiLe;
     }
+
 }

@@ -9,7 +9,7 @@
                     
                     <div class="col-sm-6">
                         <h1 class="m-0 text-dark">
-                            Quy hoạch đánh giá kết quả học tập<noscript></noscript>
+                            {{ __('Statistics') }}<noscript></noscript>
                             <nav></nav>
                         </h1>
                     </div>
@@ -18,7 +18,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item">
-                                <a href="{{ asset('giang-vien') }}">Trang chủ</a>
+                                <a href="{{ asset('giao-vu') }}">{{ __('Home') }}</a>
                             </li>
                             <li class="breadcrumb-item">
                                 <a href="{{ asset('giang-vien/quy-hoach-danh-gia') }}">{{ $hp->tenHocPhan }}</a>
@@ -35,21 +35,6 @@
             <!-- /.container-fluid -->
         </div>
         <!-- /.content-header -->
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <h5><i class="icon fas fa-check"></i> Thông báo!</h5>
-                {{ session('success') }}
-            </div>
-        @endif
-        @if (session('warning'))
-            <div class="alert alert-warning alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <h5><i class="icon fas fa-exclamation-triangle"></i> Thông báo!</h5>
-                {{ session('warning') }}
-            </div>
-        @endif
-
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
@@ -58,6 +43,11 @@
                             <div class="card-header">
                                 <h3 class="card-title">
                                 </h3>
+                                <div class="card-tools">
+                                    <a href="{{ asset('/giao-vu/thong-ke') }}" class="btn btn-secondary">
+                                           <i class="fas fa-arrow-left"></i>
+                                     </a>
+                                </div>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -68,7 +58,7 @@
                                             <th>Hình thức đánh giá</th>
                                             <th>Tỉ lệ (%)</th>
                                             <th>Phương pháp đánh giá</th>
-                                            <th>Tùy chọn</th>
+                                            <th>{{ __('Option') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -87,7 +77,7 @@
                                                         <a
                                                             href="{{ asset('/giao-vu/thong-ke/thong-ke-theo-hoc-phan/thong-ke-theo-tieu-chi/' . $x->maCTBaiQH . '/1') }}">
                                                             <button class="btn btn-primary">
-                                                                <i class="fas fa-chart-line"></i>SO
+                                                                <i class="fas fa-chart-line"></i>{{ __('SOs') }}
                                                             </button>
                                                         </a>
                                                         <a
@@ -110,7 +100,7 @@
                                                         <a
                                                             href="{{ asset('/giao-vu/thong-ke/thong-ke-theo-hoc-phan/thong-ke-theo-tieu-chi/' . $x->maCTBaiQH . '/2') }}">
                                                             <button class="btn btn-primary">
-                                                                <i class="fas fa-chart-line"></i>SO
+                                                                <i class="fas fa-chart-line"></i>{{ __('SOs') }}
                                                             </button>
                                                         </a>
                                                         <a
@@ -138,7 +128,7 @@
                                                             <a
                                                                 href="{{ asset('/giao-vu/thong-ke/thong-ke-theo-hoc-phan/tu-luan/thong-ke-theo-tieu-chi/' . $x->maCTBaiQH) }}">
                                                                 <button class="btn btn-primary">
-                                                                    <i class="fas fa-chart-line"></i> SO
+                                                                    <i class="fas fa-chart-line"></i> {{ __('SOs') }}
                                                                 </button>
                                                             </a>
                                                             <a
@@ -153,7 +143,7 @@
                                                             </a>
                                                             <a href="{{ asset('giao-vu/thong-ke/thong-ke-theo-hoc-phan/tu-luan/thong-ke-theo-abet/' . $x->maCTBaiQH) }}"
                                                                 class="btn btn-primary">
-                                                                <i class="fas fa-chart-line"></i>ABET SO
+                                                                <i class="fas fa-chart-line"></i>{{ __("ABET's SO") }}
                                                             </a>
                                                         </td>
                                                     </tr>
@@ -168,7 +158,7 @@
                                                                 <a
                                                                     href="{{ asset('/giao-vu/thong-ke/thong-ke-theo-hoc-phan/thuc-hanh/thong-ke-theo-tieu-chi/' . $x->maCTBaiQH) }}">
                                                                     <button class="btn btn-primary">
-                                                                        <i class="fas fa-chart-line"></i>SO
+                                                                        <i class="fas fa-chart-line"></i>{{ __('SOs') }}
                                                                     </button>
                                                                 </a>
                                                                 <a
@@ -185,7 +175,7 @@
                                                                 </a>
                                                                 <a href="{{ asset('giao-vu/thong-ke/thong-ke-theo-hoc-phan/thu-hanh/thong-ke-theo-abet/' . $x->maCTBaiQH) }}"
                                                                     class="btn btn-primary">
-                                                                    <i class="fas fa-chart-line"></i>ABET SO
+                                                                    <i class="fas fa-chart-line"></i>{{ __("ABET's SO") }}
                                                                 </a>
                                                             </td>
                                                         </tr>

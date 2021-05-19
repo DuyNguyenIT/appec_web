@@ -21,7 +21,7 @@ class dsSinhVienImport implements ToModel,WithHeadingRow
             return null;
         }
         $sv=sinhVien::where('maSSV',$row['massv'])->first();
-        if($sv){
+        if($sv){ //sinh vien da nap roi thi khong nap nua
             return null;
         }else{
             return new sinhVien([

@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use App\Models\tieuChiChamDiem;
 use App\Models\ct_bai_quy_hoach;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\CommonController;
 
 class chamDiemBCController extends Controller
 {
@@ -188,9 +189,8 @@ class chamDiemBCController extends Controller
     public function nhap_diem_do_an($maDe,$maSSV)
     {
          //đề tài
-         $deTai=deThi::where('isDelete',false)
-         ->where('maDe',$maDe)
-         ->first();
+         $deTai=deThi::get_de_thi_by_made($maDe);
+
          //giảng viên
          $gv=phieu_cham::where('phieu_cham.isDelete',false)
          ->where('phieu_cham.maGV',Session::get('maGV'))
@@ -203,9 +203,8 @@ class chamDiemBCController extends Controller
          ->first(['giang_vien.maGV','hoGV','tenGV','phieu_cham.maPhieuCham']);
         
          //sinh viên
-         $sv=sinhVien::where('isDelete',false)
-         ->where('maSSV',$maSSV)
-         ->first();
+         $sv=sinhVien:: get_sv_by_massv($maSSV);
+
          //ct_bai-quy_hoach->noi_dung_quy_hoach
          $ndQh=noiDungQH::where('noi_dung_quy_hoach.isDelete',false)
          ->where('noi_dung_quy_hoach.maCTBaiQH',Session::get('maCTBaiQH'))
@@ -221,7 +220,6 @@ class chamDiemBCController extends Controller
              $z->on('tieu_chi_cham_diem.maTCCD','=','cau_hoi_tcchamdiem.maTCCD')
              ->where('tieu_chi_cham_diem.isDelete',false);
          })
-        // ->get(['tieu_chi_cham_diem.maTCCD','tenTCCD','tieu_chi_cham_diem.maCDR3']);
         ->get();
        
         foreach ($ndQh as $tc) {
@@ -251,53 +249,16 @@ class chamDiemBCController extends Controller
         $dg=danhGia::where('maPhieuCham',$request->maPhieuCham)->sum('diemDG');
         
 
-        $pc=phieu_cham::where('maPhieuCham',$request->maPhieuCham)
-        ->first();
-        if($diem>=0 && $diem<4){
-            $pc->diemChu="F";
-            $pc->xepHang=5;
-        }
+        $pc=phieu_cham::where('maPhieuCham',$request->maPhieuCham)->first();
         
-        if($diem>=4 && $diem<=4.9){
-             $pc->diemChu="D";
-             $pc->xepHang=4;
-        }
-        if($diem>=5 && $diem<=5.4){
-            $pc->diemChu="D+";
-            $pc->xepHang=4;
-        }
-        
-
-        if($diem>=5.5 && $diem<=6.4){
-            $pc->diemChu="C";
-            $pc->xepHang=3;
-        }
-        if($diem>=6.5 && $diem<=6.9){
-            $pc->diemChu="C+";
-            $pc->xepHang=3;
-        }
-        
-
-        if($diem>=7 && $diem<=7.9){
-            $pc->diemChu="B";
-            $pc->xepHang=2;
-        }
-        if($diem>=8.0 && $diem<=8.9){
-            $pc->diemChu="B+";
-            $pc->xepHang=2;
-        }
-        
-        if($diem>=9.0 && $diem<=10){
-            $pc->diemChu="A";
-            $pc->xepHang=1;
-        }
-
-        
+        $pc->diemChu=CommonController::tinh_diem_chu($diem);
+        $pc->xepHang=CommonController::tinh_xep_hang($diem);
         $pc->trangThai=true;
         $pc->diemSo=$diem;
         $pc->loaiCB=2;
         $pc->yKienDongGop=$request->yKienDongGop;
         $pc->update();
+
         return redirect('/giang-vien/cham-diem-bao-cao/nhap-ket-qua-danh-gia/'.Session::get('maCTBaiQH'))->with('success','Chấm điểm thành công!');
     }
 
@@ -376,6 +337,7 @@ class chamDiemBCController extends Controller
                 $tc->diemDG=0;
             }
         }
+
         return view('giangvien.chambc.xemketquabc',['tieuchi'=>$ndQh,'sv'=>$sv,'gv'=>$gv,'deTai'=>$deTai]);
     }
 }

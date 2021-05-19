@@ -73,7 +73,16 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                   
+                                    
+                                    <div class="fomr-group">
+                                        <label for="">{{ __("ABET's SO") }}</label>
+                                        <select name="maChuanAbet" id="" class="form-control">
+                                            @foreach ($chuanAbet as $abet)
+                                                <option value="{{ $abet->maChuanAbet }}">
+                                                    {{ $abet->maChuanAbetVB }}--{{ $abet->tenChuanAbet }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                     <hr>
                                     <div class="form-group">
                                         <label for="">{{ __('Planning Content') }}:</label>
@@ -85,7 +94,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="">{{ __('Standard') }}:</label>
+                                        <label for="">{{ __('Standard') }} (Theo thứ tự của phiếu chấm):</label>
                                         <div class="row">
                                             <div class="col-md-9">
                                                 <select name="maTCDG" id="tenTCDG" class="form-control">

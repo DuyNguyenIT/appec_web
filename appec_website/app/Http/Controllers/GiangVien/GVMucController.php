@@ -17,6 +17,7 @@ use App\Models\ct_bai_quy_hoach;
 use App\Models\dethi_cauhoituluan;
 use App\Models\phuongAnTracNghiem;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\CommonController;
 
 class GVMucController extends Controller
 {
@@ -24,7 +25,7 @@ class GVMucController extends Controller
     {
         return $maChuong;
         Session::put('maChuong',$maChuong);
-        $chuong=chuong::where('id',$maChuong)->first();
+        $chuong=chuong::get_one_chuong_by_id($maChuong);
         $muc=muc::where('id_chuong',$maChuong)->with('chuong')->get();
         $hocphan=hocPhan::where('maHocPhan',session::get('maChuong'))->first();
         return view('giangvien.hocphan.chuong.muc.index',compact('muc','chuong','hocphan'));
@@ -47,10 +48,30 @@ class GVMucController extends Controller
              return cauHoi::get_cau_hoi_trac_nghiem_by_mamuc_distinct(Session::get('maDe'),$maMuc);
         }
         else{
-            return cauHoi::get_cau_hoi_trac_nghiem();
+            return cauHoi::get_cau_hoi_trac_nghiem(Session::get('maHocPhan'));
         }
        
     }
+
+    public function get_cau_hoi_tu_luan_by_mamuc($maMuc)
+    {
+        if($maMuc!=-1){ //chọn mục cụ thể
+            return cauHoi::get_cau_hoi_tu_luan_by_mamuc_distinct(Session::get('maDe'),$maMuc);
+        }else{//chọn tât cả
+            return cauHoi::get_cau_hoi_tu_luan(Session::get('maHocPhan'));
+        }
+    }
+
+    public function get_cau_hoi_thuc_hanh_by_mamuc($maMuc)
+    {
+        if($maMuc!=-1){ //chọn mục cụ thể
+            return cauHoi::get_cau_hoi_thuc_hanh_by_mamuc_distinct(Session::get('maDe'),$maMuc);
+        }else{//chọn tât cả
+            return cauHoi::get_cau_hoi_thuc_hanh(Session::get('maHocPhan'));
+        }
+    }
+
+    
     ///////////////////////////CÂU HỎI TỰ LUẬN///////////////////////////////////////////
     public function cau_hoi_tu_luan($maMuc)
     {
@@ -75,19 +96,15 @@ class GVMucController extends Controller
 
     public function them_tu_luan(Request $request)
     {
-        try {
-             //thêm câu hỏi mới, điểm câu hỏi thêm mặc định 12
-            cauHoi::create(['noiDungCauHoi'=>$request->noiDungCauHoi,'diemCauHoi'=>12,'maKQHT'=>$request->maKQHT,'maLoaiHTDG'=>'T1','id_loaiCH'=>'1','id_muc'=>Session::get('maMuc')]);
+         //thêm câu hỏi mới, điểm câu hỏi thêm mặc định 12
+         cauHoi::create(['noiDungCauHoi'=>$request->noiDungCauHoi,'diemCauHoi'=>12,'maKQHT'=>$request->maKQHT,'maLoaiHTDG'=>'T1','id_loaiCH'=>'1','id_muc'=>Session::get('maMuc')]);
            
-            $ch=cauHoi::orderBy('maCauHoi','desc')->first();
-            if($ch){
-                cau_hoi_ndqh::create(['maCauHoi'=>$ch->maCauHoi,'maNoiDungQH'=>$request->maNoiDungQH]);
-            }
-            alert()->success('Added successfully', 'Message');
-            return back();
-        } catch (\Throwable $th) {
-            return $th;
-        }
+         $ch=cauHoi::orderBy('maCauHoi','desc')->first();
+         if($ch){
+             cau_hoi_ndqh::create(['maCauHoi'=>$ch->maCauHoi,'maNoiDungQH'=>$request->maNoiDungQH]);
+         }
+         alert()->success('Added successfully', 'Message');
+         return back();
     }
 
     public function sua_tu_luan(Request $request)
@@ -102,12 +119,13 @@ class GVMucController extends Controller
     public function xoa_tu_luan($maCauHoi)
     {
         if(dethi_cauhoituluan::where('maCauHoi',$maCauHoi)->count('maCauHoi')>0){
-            alert()->warning('The question was used in an examination!','Message');
+            CommonController::warning_notify('Câu hỏi đã được sử dụng trong đề thi, không thể xóa','The question was used in an examination!');
             return redirect('/giang-vien/hoc-phan/chuong/muc/cau-hoi-tu-luan/'.Session::get('maMuc'));
         }else{
             cau_hoi_ndqh::where('maCauHoi',$maCauHoi)->delete();
             cauHoi::where('maCauHoi',$maCauHoi)->delete();
             alert()->success('Deleted','Message');
+            CommonController::success_notitfy('xóa thành công!','Deleted successfully');
             return redirect('/giang-vien/hoc-phan/chuong/muc/cau-hoi-tu-luan/'.Session::get('maMuc'));
         }
     }
@@ -215,8 +233,7 @@ class GVMucController extends Controller
 
     public function them_trac_nghiem(Request $request)
     {
-      
-        //thêm câu hỏi mới, điểm câu hỏi thêm mặc định 12
+        //thêm câu hỏi mới, điểm câu hỏi thêm mặc định 12 vi diem thật được chuyển sang cauhoi_noidung
         cauHoi::create(['noiDungCauHoi'=>$request->noiDungCauHoi,'diemCauHoi'=>12,'maKQHT'=>$request->maKQHT,'maLoaiHTDG'=>'T2','id_muc'=>Session::get('maMuc')]);
         //thêm phương án trắc nghiệm
         $cauhoi=cauHoi::where('isDelete',false)->orderBy('maCauHoi','desc')->first();
@@ -231,10 +248,10 @@ class GVMucController extends Controller
             }
         }
         
-        if($cauHoi){
-            cau_hoi_ndqh::create(['maCauHoi'=>$cauHoi->maCauHoi,'maNoiDungQH'=>$request->maNoiDungQH]);
+        if($cauhoi){
+            cau_hoi_ndqh::create(['maCauHoi'=>$cauhoi->maCauHoi,'maNoiDungQH'=>$request->maNoiDungQH]);
         }
-        alert()->success('Added successfully', 'Message');
+        CommonController::success_notify('Thêm mới thành công!','Added successfully');
         return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/ngan-hang-cau-hoi-trac-nghiem/'.Session::get('maMuc'));
     }
 
@@ -305,17 +322,19 @@ class GVMucController extends Controller
 
     public function xoa_trac_nghiem($maCauHoi)
     {
-       
         //maCauHoi->cauhoi
         $cauhoi=cauHoi::where('isDelete',false)->where('maCauHoi',$maCauHoi)->first();
         //kiem tra cau hoi co duoc su dung trong de thi
         $count_cauhoi_dethi=deThi_cauHoi::where('isDelete',false)->where('maCauHoi',$maCauHoi)->count();
         if($count_cauhoi_dethi>0){
-            alert()->warning('This question is used in examination!', 'Message');
+            CommonController::warning_notify('Câu hỏi đã được sử dụng trong bài thi, không thể xóa!','This question is used in examination!');
+            return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/ngan-hang-cau-hoi-trac-nghiem/'.Session::get('maMuc'));
         }
+        //xoa cau hoi noi dung quy hoach
+        cau_hoi_ndqh::where('maCauHoi',$maCauHoi)->delete();
         //xoa
         $cauhoi->delete();
-        alert()->success('Deleted', 'Message');
+        CommonController::success_notify('Đã xóa','Deleted successfully');
         return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/ngan-hang-cau-hoi-trac-nghiem/'.Session::get('maMuc'));
     }
     ///////////////////////////CÂU HỎI THỰC HÀNH///////////////////////////////////////////
@@ -341,19 +360,20 @@ class GVMucController extends Controller
 
     public function them_thuc_hanh(Request $request)
     {
-        try {
-            //thêm câu hỏi mới, điểm câu hỏi thêm mặc định 12
-            cauHoi::create(['noiDungCauHoi'=>$request->noiDungCauHoi,'diemCauHoi'=>12,'maKQHT'=>$request->maKQHT,
-            'maLoaiHTDG'=>'T3','id_loaiCH'=>'1','id_muc'=>Session::get('maMuc')]);
-            alert()->success('Added successfully', 'Message');
-            $ch=cauHoi::orderBy('maCauHoi','desc')->first();
-            if($ch){
-                cau_hoi_ndqh::create(['maCauHoi'=>$ch->maCauHoi,'maNoiDungQH'=>$request->maNoiDungQH]);
-            }
-            return back();
-        } catch (\Throwable $th) {
-            return $th;
+
+        if($request->maNoiDungQH==null){
+            CommonController::warning_notify('Cần chọn nội dung quy hoạch', 'Please choise assessment content');
         }
+       //thêm câu hỏi mới, điểm câu hỏi thêm mặc định 12
+       cauHoi::create(['noiDungCauHoi'=>$request->noiDungCauHoi,'diemCauHoi'=>12,'maKQHT'=>$request->maKQHT,
+       'maLoaiHTDG'=>'T3','id_loaiCH'=>'1','id_muc'=>Session::get('maMuc')]);
+
+       $ch=cauHoi::orderBy('maCauHoi','desc')->first();
+       if($ch){
+           cau_hoi_ndqh::create(['maCauHoi'=>$ch->maCauHoi,'maNoiDungQH'=>$request->maNoiDungQH]);
+       }
+       CommonController::success_notify("Thêm thành công!",'Added successfully');
+       return redirect('/giang-vien/hoc-phan/chuong/muc/cau-hoi-thuc-hanh/'.Session::get('maMuc')); 
     }
 
     public function sua_thuc_hanh(Request $request)
@@ -361,6 +381,7 @@ class GVMucController extends Controller
         cauHoi::updateOrCreate(['isDelete'=>false,'maCauHoi'=>$request->maCauHoi],
         ['noiDungCauHoi'=>$request->noiDungCauHoi,'diemCauHoi'=>12,'maKQHT'=>$request->maKQHT]);
         alert()->success('Editing successfully', 'Message');
+        CommonController::success_notify('','');
         $chuong=chuong::findOrFail($request->maChuong);
         return back();
     }
@@ -368,12 +389,12 @@ class GVMucController extends Controller
     public function xoa_thuc_hanh($maCauHoi)
     {
         if(dethi_cauhoituluan::where('maCauHoi',$maCauHoi)->count('maCauHoi')>0){
-            alert()->warning('The question was used in an examination!','Message');
+            CommonController::warning_notify('Câu hỏi đã được sử dụng trong đề thi, không thể xóa','The question was used in an examination!');
             return redirect('/giang-vien/hoc-phan/chuong/muc/cau-hoi-thuc-hanh/'.Session::get('maMuc'));
         }else{
             cau_hoi_ndqh::where('maCauHoi',$maCauHoi)->delete();
             cauHoi::where('maCauHoi',$maCauHoi)->delete();
-            alert()->success('Deleted','Message');
+            CommonController::success_notify('Xóa thành công!','Deleted successfully');
             return redirect('/giang-vien/hoc-phan/chuong/muc/cau-hoi-thuc-hanh/'.Session::get('maMuc'));
         }
     }

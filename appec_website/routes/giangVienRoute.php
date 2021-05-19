@@ -33,6 +33,7 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiangVien'], function (){
                         Route::post('/cau-hoi-tu-luan/them','GVMucController@them_tu_luan');
                         Route::post('/cau-hoi-tu-luan/sua','GVMucController@sua_tu_luan');
                         Route::get('/cau-hoi-tu-luan/xoa/{maCauHoi}','GVMucController@xoa_tu_luan');
+                        Route::get('/get-cau-hoi-tu-luan-by-mamuc/{maMuc}','GVMucController@get_cau_hoi_tu_luan_by_mamuc');
                         //thêm sửa câu hỏi trắc nghiệm
                         Route::get('/get-cau-hoi-trac-nghiem-by-mamuc/{maMuc}','GVMucController@get_cau_hoi_trac_nghiem_by_mamuc');
                         Route::get('/cau-hoi-trac-nghiem/{maMuc}','GVMucController@cau_hoi_trac_nghiem');
@@ -41,6 +42,7 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiangVien'], function (){
                         Route::post('/cau-hoi-trac-nghiem/them','GVMucController@them_trac_nghiem');
                         Route::post('/cau-hoi-trac-nghiem/sua','GVMucController@sua_trac_nghiem');
                         //thêm sửa câu hỏi thực hành
+                        Route::get('/get-cau-hoi-thuc-hanh-by-mamuc/{maMuc}','GVMucController@get_cau_hoi_thuc_hanh_by_mamuc');
                         Route::get('/cau-hoi-thuc-hanh/{maMuc}','GVMucController@cau_hoi_thuc_hanh');
                         Route::post('/cau-hoi-thuc-hanh/them','GVMucController@them_thuc_hanh');
                         Route::post('/cau-hoi-thuc-hanh/sua','GVMucController@sua_thuc_hanh');
@@ -79,7 +81,10 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiangVien'], function (){
 
                //nội dung đánh giá
                Route::group(['prefix' => 'noi-dung-danh-gia'], function () {
+
                     Route::get('/xem-tieu-chi-danh-gia/{maCTBaiQH}', 'quyhoachController@xem_tieu_chi_danh_gia');
+                    Route::post('/sua-tieu-chi-danh-gia','quyhoachController@sua_abet_tieu_chi_danh_gia');
+                    Route::post('/sua-chuan-abet','quyhoachController@sua_abet_tieu_chi_danh_gia');
                     Route::get('/them-de-thi-tu-luan','quyhoachController@them_de_thi_tu_luan');
                     Route::get('/them-de-thi-trac-nghiem','quyhoachController@them_de_thi_trac_nghiem');
 
@@ -114,12 +119,9 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiangVien'], function (){
                          Route::get('/{id_muc}','GVMucController@cau_hoi_trac_nghiem');
                     });
 
-
                     //ngan hang cau hoi tu luan
 
                     //ngan hag cau hoi thuc hanh
-
-                   
                     
                     Route::prefix('xem-noi-dung-danh-gia')->group(function () {
                          //ngân hàng câu hỏi
@@ -128,10 +130,11 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiangVien'], function (){
                          Route::get('/cau-truc-de-tu-luan/{maDe}', 'quyhoachController@cau_truc_de_luan'); //
                          Route::post('/them-cau-hoi-de-luan','quyhoachController@them_cau_hoi_de_luan'); //
                          Route::get('/in-de-tu-luan/{maDe}/{maHocPhan}','GVWordController@in_de_thi_tu_luan');
-                         Route::get('/xoa-cau-hoi-de-tu-luan/{maDe}/{maCauHoi}','quyhoachController@xoa_cau_hoi_de_thuc_hanh');
+                         Route::get('/xoa-cau-hoi-de-tu-luan/{maDe}/{maCauHoi}','quyhoachController@xoa_cau_hoi_de_tu_luan');
                          Route::post('sua-phuong-an-tu-luan', 'quyhoachController@chinh_sua_phuong_an_tu_luan');
                          //thực hành
                          Route::get('/cau-truc-de-thuc-hanh/{maDe}', 'quyhoachController@cau_truc_de_thuc_hanh');
+                         Route::get('/xoa-de-thuc-hanh/{maDe}','quyhoachController@xoa_de_thuc_hanh');
                          Route::post('/them-cau-hoi-de-thuc-hanh','quyhoachController@them_cau_hoi_de_thuc_hanh'); //
                          Route::get('/in-de-thuc-hanh/{maDe}/{maHocPhan}','GVWordController@in_de_thi_thuc_hanh');
                          Route::get('/xoa-cau-hoi-de-thuc-hanh/{maDe}/{maCauHoi}','quyhoachController@xoa_cau_hoi_de_thuc_hanh');
@@ -144,16 +147,11 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiangVien'], function (){
                          //xem nội dung
                          Route::get('/{maCTBaiQH}', 'quyhoachController@xem_noi_dung_danh_gia');
                     });
-
                }); 
-
            });
          
-           //thong ke
-          
-      
-          
-           //chấm điểm báo cáo
+
+           //cham diem bao cao
           
            Route::group(['prefix' => 'cham-diem-bao-cao'], function () {
                Route::get('/', 'chamDiemBCController@index');
@@ -164,7 +162,7 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiangVien'], function (){
                Route::get('/xem-ket-qua-danh-gia/{maPhieuCham}','chamDiemBCController@xem_ket_qua_danh_gia');
           });
 
-          //kết quả đánh giá
+          //ket qua danh gia
           Route::group(['prefix' => 'ket-qua-danh-gia'], function () {
                Route::get('/', 'ketQuaDanhGiaController@index');
                Route::get('/ket-qua-hoc-phan/{maHocPhan}/{maBaiQH}/{maHK}/{namHoc}/{maLop}', 'ketQuaDanhGiaController@chi_tiet_quy_hoach_kq_qua_danh_gia');
@@ -198,8 +196,67 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiangVien'], function (){
                });
           });
 
+            //thong ke
           Route::group(['prefix' => 'thong-ke'], function () {
-               
+               Route::group(['prefix' => 'thong-ke-theo-hoc-phan'], function () {            
+                    Route::get('/{maGV}/{maHocPhan}/{maHK}/{namHoc}/{maLop}', 'GVThongkeController@thong_ke_theo_hoc_phan');
+                    
+                    Route::prefix('do-an')->group(function () {
+                         Route::get('/thong-ke-theo-xep-hang/{maCTBaiQH}/{maCanBo}', 'GVThongkeController@thong_ke_theo_xep_hang_doan');
+                         Route::get('/get-xep-hang','GVThongkeController@get_xep_hang_doan');
+                         Route::get('/thong-ke-theo-diem-chu/{maCTBaiQH}/{maCanBo}', 'GVThongkeController@thong_ke_theo_diem_chu_doan');
+                         Route::get('/get-diem-chu','GVThongkeController@get_diem_chu_doan');
+                         Route::get('/thong-ke-theo-tieu-chi/{maCTBaiQH}/{maCanBo}', 'GVThongkeController@thong_ke_theo_tieu_chi_doan');
+                         Route::get('/get-tieu-chi','GVThongkeController@get_tieu_chi_doan'); 
+                         Route::get('/thong-ke-theo-abet/{maCTBaiQH}/{maCanBo}','GVThongkeController@thong_ke_theo_abet_doan');
+                         Route::get('/get-abet','GVThongkeController@get_abet_doan');
+                    });
+                    Route::prefix('khoa-luan')->group(function () {
+                         Route::get('/thong-ke-theo-xep-hang-kl/{maCanBo}','GVThongkeController@thong_ke_theo_xep_hang_kl');
+                         Route::get('/get-xep-hang-kl','GVThongkeController@get_xep_hang_kl');
+                         Route::get('/thong-ke-theo-diem-chu-kl/{maCanBo}','GVThongkeController@thong_ke_theo_diem_chu_kl');
+                         Route::get('/get-diem-chu-kl','GVThongkeController@get_diem_chu_kl');
+                         Route::get('/thong-ke-theo-tieu-chi-kl/{maCanBo}','GVThongkeController@thong_ke_theo_tieu_chi_kl');
+                         Route::get('/get-tieu-chi-kl','GVThongkeController@get_tieu_chi_kl');
+                         
+                    });
+                    Route::prefix('thuc-hanh')->group(function () {
+                        Route::get('thong-ke-theo-xep-hang/{maCTBaiQH}', 'GVThongkeController@thong_ke_theo_xep_hang_thuc_hanh');
+                        Route::get('get-xep-hang','GVThongkeController@get_xep_hang_thuc_hanh');
+                        Route::get('/thong-ke-theo-diem-chu/{maCTBaiQH}', 'GVThongkeController@thong_ke_theo_diem_chu_thuc_hanh');
+                        Route::get('/get-diem-chu','GVThongkeController@get_diem_chu_thuc_hanh');
+                        Route::get('/thong-ke-theo-tieu-chi/{maCTBaiQH}', 'GVThongkeController@thong_ke_theo_tieu_chi_thuc_hanh');
+                        Route::get('/get-tieu-chi','GVThongkeController@get_tieu_chi_thuc_hanh'); 
+                        Route::get('/thong-ke-theo-abet/{maCTBaiQH}', 'GVThongkeController@thong_ke_theo_abet_thuc_hanh');
+                        Route::get('/get-abet','GVThongkeController@get_abet_thuc_hanh'); 
+                        Route::get('thong-ke-theo-kqht/{maCTBaiQH}','GVThongkeController@thong_ke_theo_kqht_thuc_hanh');
+                        Route::get('get-kqht','GVThongkeController@get_kqht_thuc_hanh');
+                    }); 
+                    Route::prefix('tu-luan')->group(function () {
+                        Route::get('thong-ke-theo-xep-hang/{maCTBaiQH}', 'GVThongkeController@thong_ke_theo_xep_hang_tu_luan');
+                        Route::get('get-xep-hang','GVThongkeController@get_xep_hang_tu_luan');
+                        Route::get('/thong-ke-theo-diem-chu/{maCTBaiQH}', 'GVThongkeController@thong_ke_theo_diem_chu_tu_luan');
+                        Route::get('/get-diem-chu','GVThongkeController@get_diem_chu_tu_luan');
+                        Route::get('/thong-ke-theo-tieu-chi/{maCTBaiQH}', 'GVThongkeController@thong_ke_theo_tieu_chi_tu_luan');
+                        Route::get('/get-tieu-chi','GVThongkeController@get_tieu_chi_tu_luan'); 
+                        Route::get('/thong-ke-theo-abet/{maCTBaiQH}', 'GVThongkeController@thong_ke_theo_abet_tu_luan');
+                        Route::get('/get-abet','GVThongkeController@get_abet_tu_luan'); 
+                        Route::get('thong-ke-theo-kqht/{maCTBaiQH}','GVThongkeController@thong_ke_theo_kqht_tu_luan');
+                        Route::get('get-kqht','GVThongkeController@get_kqht_tu_luan');
+                    });
+                    Route::prefix('trac-nghiem')->group(function () {
+                         Route::get('thong-ke-theo-xep-hang/{maCTBaiQH}', 'GVThongkeController@thong_ke_theo_xep_hang_trac_nghiem');
+                         Route::get('get-xep-hang','GVThongkeController@get_xep_hang_trac_nghiem');
+                         Route::get('/thong-ke-theo-diem-chu/{maCTBaiQH}', 'GVThongkeController@thong_ke_theo_diem_chu_trac_nghiem');
+                         Route::get('/get-diem-chu','GVThongkeController@get_diem_chu_trac_nghiem');
+                         Route::get('/thong-ke-theo-tieu-chi/{maCTBaiQH}', 'GVThongkeController@thong_ke_theo_tieu_chi_trac_nghiem');
+                         Route::get('/get-tieu-chi','GVThongkeController@get_tieu_chi_trac_nghiem'); 
+                         Route::get('/thong-ke-theo-abet/{maCTBaiQH}', 'GVThongkeController@thong_ke_theo_abet_trac_nghiem');
+                         Route::get('/get-abet','GVThongkeController@get_abet_trac_nghiem'); 
+                         Route::get('thong-ke-theo-kqht/{maCTBaiQH}','GVThongkeController@thong_ke_theo_kqht_trac_nghiem');
+                         Route::get('get-kqht','GVThongkeController@get_kqht_trac_nghiem');
+                     });
+               });
           });
      });
 });

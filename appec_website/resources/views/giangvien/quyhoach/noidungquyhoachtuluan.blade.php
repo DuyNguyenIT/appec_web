@@ -14,8 +14,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ asset('giang-vien') }}">Trang chủ</a></li>
-                            <li class="breadcrumb-item "><a href="#">Đồ án</a></li>
-                            <li class="breadcrumb-item "><a href="#">Nội dung đánh giá</a></li>
+                            <li class="breadcrumb-item "><a href="#">Tự luận</a></li>
                             <li class="breadcrumb-item active">Nội dung quy hoạch</li>
                         </ol>
                     </div><!-- /.col -->

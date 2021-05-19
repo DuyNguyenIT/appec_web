@@ -5,6 +5,7 @@ use App\Models\muc;
 use App\Models\CDR1;
 use App\Models\CDR3;
 use App\Models\nganh;
+use App\Models\cauHoi;
 use App\Models\chuong;
 use App\Models\cNganh;
 use App\Models\kqHTHP;
@@ -37,7 +38,7 @@ class hocPhanController extends Controller
 {
     public function index()
     {
-        $hocphan=hocPhan::where('isDelete',false)->orderBy('maHocPhan','desc')->with('hocphan_ctdt')->with('ctkhoi')->get();
+        $hocphan=hocPhan::where('isDelete',false)->orderBy('maHocPhan','desc')->with('hocphan_ctdt')->get();
         $ctkhoi=ctKhoiKT::where('isDelete',false)->orderBy('maCTKhoiKT','asc')->get();
         $ctdt=ctDaoTao::all();
         $loaihp=loaiHocPhan::all();
@@ -55,11 +56,11 @@ class hocPhanController extends Controller
     {
         $ct= hocPhan_ctDaoTao::where('maHocPhan',$request->maHocPhan)->where('maCT',$request->maCT)->first();
         if($ct){
-            alert()->warning('Chương trình đã được chọn','Thông báo');
+            CommonController::warning_notify('Chương trình đã được chọn!!',"The program is used!!");
             return redirect('quan-ly/hoc-phan');
         }
         hocPhan_ctDaoTao::create($request->all());
-        alert()->success('Thêm thành công','Thông báo');
+        CommonController::success_notify('Thêm thành công','Added successfully');
         return redirect('quan-ly/hoc-phan');
     }
     public function them(Request $request) //thêm học phần mới
@@ -67,11 +68,11 @@ class hocPhanController extends Controller
         //tính tổng số tín chỉ
         $request->tongSoTinChi=$request->tinChiLyThuyet+$request->tinChiThucHanh;
         //tạo học phần
-        hocPhan::create(['maHocPhan'=>$request->maHocPhan,'tenHocPhan'=>$request->tenHocPhan,'tongSoTinChi'=>$request->tongSoTinChi,
+        hocPhan::create(['maHocPhan'=>$request->maHocPhan,'tenHocPhan'=>$request->tenHocPhan,'tenHocPhanEN'=>$request->tenHocPhanEN,'tongSoTinChi'=>$request->tongSoTinChi,
         'tinChiLyThuyet'=>$request->tinChiLyThuyet,'tinChiThucHanh'=>$request->tinChiThucHanh,'maCTKhoiKT'=>$request->maCTKhoiKT]);
         hocPhan_ctDaoTao::create($request->all());
         //phản hồi
-        alert()->success('Thêm thành công','Thông báo');
+        CommonController::success_notify('Thêm thành công','Added successfully');
         return redirect('quan-ly/hoc-phan');
     }
      //Sửa học phần
@@ -82,9 +83,9 @@ class hocPhanController extends Controller
              $tcth=$request->tinChiThucHanh;
              $tongtc=$tclt+$tcth;
              //echo $tongtc;
-             $hp=hocPhan::updateOrCreate(['maHocPhan'=>$request->maHocPhan],['tenHocPhan'=>$request->tenHocPhan,'tongSoTinChi'=>$tongtc,'tinChiLyThuyet'=>$request->tinChiLyThuyet,'tinChiThucHanh'=>$request->tinChiThucHanh,'moTaHocPhan'=>$request->moTaHocPhan,'maCTKhoiKT'=>$request->maCTKhoiKT] );
+             $hp=hocPhan::updateOrCreate(['maHocPhan'=>$request->maHocPhan],['tenHocPhan'=>$request->tenHocPhan,'tenHocPhanEN'=>$request->tenHocPhanEN,'tongSoTinChi'=>$tongtc,'tinChiLyThuyet'=>$request->tinChiLyThuyet,'tinChiThucHanh'=>$request->tinChiThucHanh,'moTaHocPhan'=>$request->moTaHocPhan,'maCTKhoiKT'=>$request->maCTKhoiKT] );
              
-             alert()->success('Updated successfully', 'Message');
+             CommonController::success_notify('Thêm thành công','Added successfully');
              return redirect('/quan-ly/hoc-phan');
          } catch (\Throwable $th) {
             // dd ("lỗi ".$th); hiện lỗi thử
@@ -98,7 +99,7 @@ class hocPhanController extends Controller
      {
          try {
              $hp=hocPhan::updateOrCreate(['maHocPhan'=>$maHocPhan],['isDelete'=>true]);
-             alert()->success('Deleted successful', 'Message');
+             CommonController::success_notify('Xóa thành công','Deleted successfully');
              return redirect('/quan-ly/hoc-phan');
          } catch (\Throwable $th) {
              alert()->error('Error:'.$th, 'Delete failed');
@@ -111,7 +112,7 @@ class hocPhanController extends Controller
     {
         Session::put('mahocphan',$mahocphan);
         //học phần
-        $hp=hocPhan::where('isDelete',false)->where('maHocPhan',$mahocphan)->first();
+        $hp=hocPhan::getHocPhanByMaHocPhan($mahocphan);
         //học phần ctdao
         $hp_ctdt=hocPhan_ctDaoTao::where('isDelete',false)->where('maHocPhan',$mahocphan)
         ->with('ctDaoTao')
@@ -129,6 +130,7 @@ class hocPhanController extends Controller
             hocPhan_ctDaoTao::updateOrCreate(['id'=>$request->id],['maHocPhan'=>$request->maHocPhan,'maCT'=>$request->maCT,
             'phanPhoiHocKy'=>$request->phanPhoiHocKy,'maLoaiHocPhan'=>$request->maLoaiHocPhan,'maHocPhan'=>$request->maHocPhan]);
         }
+        CommonController::success_notify('Sửa thành công','Edited successfully');
         return redirect('/quan-ly/hoc-phan/hoc-phan-ct-dao-tao/'.Session::get('mahocphan'));
     }
     public function xoa_hocphan_ctdtao($id){
@@ -236,11 +238,7 @@ class hocPhanController extends Controller
     {
         monTienQuyet::create(['maHocPhan'=>$request->maHocPhan,'maMonTienQuyet'=>$request->maMonTienQuyet]);
         //phản hồi
-        if (Session::has('language') && Session::get('language')=='vi') {
-            alert()->success('Added successfully!!','Message');
-        }else{
-            alert()->success('Thêm thành công!!','Thông báo');
-        }
+        CommonController::success_notify('Thêm thành công','Added successfully');
         return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
     }
     //GIAO TRINH
@@ -249,11 +247,7 @@ class hocPhanController extends Controller
         //sửa tài liệu tham khảo
         tai_lieu_tham_khao::updateOrCreate(['maHocPhan'=>$request->maHocPhan],['giaoTrinh'=>$request->giaoTrinh]);
         //phản hồi
-        if (Session::has('language') && Session::get('language')=='vi') {
-            alert()->success('Added successfully!!','Message');
-        }else{
-            alert()->success('Thêm thành công!!','Thông báo');
-        }
+        CommonController::success_notify('Thêm thành công','Added successfully');
         return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
     }
     // TAI LIEU THAM KHAO
@@ -262,11 +256,7 @@ class hocPhanController extends Controller
         //sửa tài liệu tham khảo
         tai_lieu_tham_khao::updateOrCreate(['maHocPhan'=>$request->maHocPhan],['thamKhaoThem'=>$request->thamKhaoThem]);
         //phản hồi
-        if (Session::has('language') && Session::get('language')=='vi') {
-            alert()->success('Added successfully!!','Message');
-        }else{
-            alert()->success('Thêm thành công!!','Thông báo');
-        }
+        CommonController::success_notify('Thêm thành công','Added successfully');
         return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
     }
     //TAI LIEU KHAC
@@ -275,11 +265,7 @@ class hocPhanController extends Controller
         //sửa tài liệu tham khảo
         tai_lieu_tham_khao::updateOrCreate(['maHocPhan'=>$request->maHocPhan],['taiLieuKhac'=>$request->taiLieuKhac]);
         //phản hồi
-        if (Session::has('language') && Session::get('language')=='vi') {
-            alert()->success('Added successfully!!','Message');
-        }else{
-            alert()->success('Thêm thành công!!','Thông báo');
-        }
+        CommonController::success_notify('Thêm thành công','Added successfully');
         return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
     }
     //YEU CAU HOC PHAN
@@ -291,11 +277,7 @@ class hocPhanController extends Controller
         $hp->yeuCau=$request->yeuCau;
         $hp->save();
         //phản hồi
-        if (Session::has('language') && Session::get('language')=='vi') {
-            alert()->success('Added successfully!!','Message');
-        }else{
-            alert()->success('Thêm thành công!!','Thông báo');
-        }
+        CommonController::success_notify('Thêm thành công','Added successfully');
         return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
     }
     //MO TA HOC PHAN
@@ -304,11 +286,7 @@ class hocPhanController extends Controller
         //sửa học phần
         hocPhan::updateOrCreate(['maHocPhan'=>$request->maHocPhan],['moTaHocPhan'=>$request->moTaHocPhan]);
         //phản hồi
-        if (Session::has('language') && Session::get('language')=='vi') {
-            alert()->success('Added successfully!!','Message');
-        }else{
-            alert()->success('Thêm thành công!!','Thông báo');
-        }
+        CommonController::success_notify('Thêm thành công','Added successfully');
         return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
     }
     //CHUAN DAU RA MON HOC
@@ -324,27 +302,18 @@ class hocPhanController extends Controller
             //tim tuong quan chuan dau ra 2 và abet
             $cdr3=CDR3::where('maCDR3',$maCDR3)->first();
             if($cdr3){
-                $cdr_abet=cdr2_abet::where('maCDR2',$cdr3->maCDR3)->get();
-                return $cdr_abet;
+                $cdr2_abet=cdr2_abet::where('maCDR2',$cdr3->maCDR2)->get();
                 //luu ket qua chuan dau ra theo tuong quan abet
-                foreach ($cdr_abet as $item) {
-                    hocPhan_kqHTHP::create(['maHocPhan'=>$request->maHocPhan,'maKQHT'=>$kqht->maKQHT,'maCDR3'=>$item->maCDR3]);
+                foreach ($cdr2_abet as $item) {
+                    hocPhan_kqHTHP::create(['maHocPhan'=>$request->maHocPhan,'maKQHT'=>$kqht->maKQHT,'maCDR3'=>$cdr3->maCDR3,'maChuanAbet'=>$item->maChuanAbet]);
                 }
             }else{
-                if (Session::has('language') && Session::get('language')=='vi') {
-                    alert()->warning('LV3 outcome is not exists !!','Message');
-                }else{
-                    alert()->warning('không tìm thấy chuẩn đầu ra 3!!','Thông báo');
-                }
+                CommonController::warning_notify('Không tìm thấy CDR3','LV3 outcome is not exits');
                 return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
             }
         }
         //phản hồi
-        if (Session::has('language') && Session::get('language')=='vi') {
-            alert()->success('Added successfully!!','Message');
-        }else{
-            alert()->success('Thêm thành công!!','Thông báo');
-        }
+        CommonController::success_notify('Thêm thành công','Added successfully');
         return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
     }
     public function sua_chuan_dau_ra_mon_hoc(Request $request)
@@ -355,16 +324,28 @@ class hocPhanController extends Controller
         // sửa học phần kqht chuẩn đầu ra cdio và chuẩn đầu ra abet
         hocPhan_kqHTHP::updateOrCreate(['id'=>$request->id],['maHocPhan'=>$request->maHocPhan,'maKQHT'=>$request->maKQHT,'maCDR3'=>$request->maCDR3]);
         //phản hồi
-        if (Session::has('language') && Session::get('language')=='vi') {
-            alert()->success('Added successfully!!','Message');
-        }else{
-            alert()->success('Thêm thành công!!','Thông báo');
-        }
+        CommonController::success_notify('Thêm thành công','Added successfully');
         return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
     }
-    public function xoa_chuan_dau_ra_mon_hoc()
+    public function xoa_ket_qua_hoc_tap_mon_hoc($maKQHT)
     {
-        # code...
+        //kiem tra kqht co duoc su dung
+        $chuong_kqht=chuong_kqht::where('maKQHT',$maKQHT)->count('id');
+        if($chuong_kqht>0){
+            CommonController::warning_notify('Kết quả có liên kết với chương, không thể xóa','This result is used in a chaprer, delete denied!');
+            return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
+        }
+        $cauhoi=cauHoi::where('maKQHT',$maKQHT)->count('maCauHoi');
+        if($chuong_kqht>0){
+            CommonController::warning_notify('Kết quả có liên kết với câu hỏi, không thể xóa','This result is used in a question, delete denied!');
+            return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
+        }
+        //tien hanh xoa
+        hocPhan_kqHTHP::where('maHocPhan',Session::get('maGV'))->where('maKQHT',$maKQHT)->delete();
+        kqHTHP::find($maKQHT)->delete();
+        //phản hồi
+        CommonController::success_notify('Xóa thành công','Deleted successfully');
+        return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
     }
     //NỘI DUNG MÔN HỌC
     public function them_noi_dung_mon_hoc(Request $request)  //thêm nội dung môn học (chương)
@@ -381,11 +362,7 @@ class hocPhanController extends Controller
             }
         }
         //3.phản hồi
-        if (Session::has('language') && Session::get('language')=='vi') {
-            alert()->success('Added successfully!!','Message');
-        }else{
-            alert()->success('Thêm thành công!!','Thông báo');
-        }
+        CommonController::success_notify('Thêm thành công','Added successfully');
         return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
     }
     public function sua_noi_dung_mon_hoc(Request $request)
@@ -404,11 +381,7 @@ class hocPhanController extends Controller
             mucDoKyNangUIT::create(['id_chuong'=>$request->id_chuong,'maKQHT'=>$kqht[$i],'maCDR1'=>$request->maCDR1,'ky_nang'=>$request->ky_nang]);
         }
         //phản hồi
-        if (Session::has('language') && Session::get('language')=='vi') {
-            alert()->success('Added successfully!!','Message');
-        }else{
-            alert()->success('Thêm thành công!!','Thông báo');
-        }
+        CommonController::success_notify('Thêm thành công','Added successfully');
         return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
     }
     public function them_muc(Request $request)//thêm mục
@@ -416,11 +389,7 @@ class hocPhanController extends Controller
         //thêm mục mới
         muc::create($request->all());
         //phản hồi
-        if (Session::has('language') && Session::get('language')=='vi') {
-            alert()->success('Added successfully!!','Message');
-        }else{
-            alert()->success('Thêm thành công!!','Thông báo');
-        }
+        CommonController::success_notify('Thêm thành công','Added successfully');
         return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
     }
     public function sua_muc()
@@ -432,11 +401,7 @@ class hocPhanController extends Controller
         //thêm bảng hocphan_ppGiangDay
         hocPhan_ppGiangDay::create(['maHocPhan'=>$request->maHocPhan,'maPP'=>$request->maPP,'dienGiai'=>$request->dienGiai]);
         //phản hồi
-        if (Session::has('language') && Session::get('language')=='vi') {
-            alert()->success('Added successfully!!','Message');
-        }else{
-            alert()->success('Thêm thành công!!','Thông báo');
-        }
+        CommonController::success_notify('Thêm thành công','Added successfully');
         return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
     }
     public function them_hoc_phan_loaiHTDG(Request $request)  //thêm học phần _ loại hình thức đánhg giá
@@ -453,13 +418,10 @@ class hocPhanController extends Controller
         }
         hocPhan_loaiHTDanhGia::create(['maHocPhan'=>$request->maHocPhan,'maLoaiDG'=>$request->maLoaiDG,'maLoaiHTDG'=>$request->maLoaiHTDG,'trongSo'=>$request->trongSo,'groupCT'=>$request->groupCT]);
         //phản hồi
-        if (Session::has('language') && Session::get('language')=='vi') {
-            alert()->success('Added successfully!!','Message');
-        }else{
-            alert()->success('Thêm thành công!!','Thông báo');
-        }
+        CommonController::success_notify('Thêm thành công','Added successfully');
         return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
     }
+
     ///////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////HẾT XỬ LÝ ĐỀ CƯƠNG////////////////
     //////////////////////////////////////////////////////////////////////////////////

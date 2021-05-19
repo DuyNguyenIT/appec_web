@@ -169,7 +169,7 @@ class ketQuaDanhGiaController extends Controller
             return view('giangvien.ketqua.thuchanh.ketquathuchanh',compact('hp','dssv','deThi','phieucham'));
         }
 
-        if($loaiHTDG->maLoaiHTDG=="T8") /// nếu kết quả là đồ án
+        if($loaiHTDG->maLoaiHTDG=="T8"  || $loaiHTDG->maLoaiHTDG=="T6") /// nếu kết quả là đồ án
         {
             $hp=hocPhan::where('maHocPhan',Session::get('maHocPhan'))
             ->where('isDelete',false)->first();

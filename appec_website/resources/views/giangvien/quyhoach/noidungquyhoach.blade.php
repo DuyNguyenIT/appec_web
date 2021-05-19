@@ -14,8 +14,8 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ asset('giang-vien') }}">Trang chủ</a></li>
-                            <li class="breadcrumb-item "><a href="quyhoachKQHT.html">Đồ án</a></li>
-                            <li class="breadcrumb-item "><a href="noidungdanhgia_3.html">Nội dung đánh giá</a></li>
+                            <li class="breadcrumb-item "><a href="#">Đồ án</a></li>
+                            <li class="breadcrumb-item "><a href="#">Nội dung đánh giá</a></li>
                             <li class="breadcrumb-item active">Nội dung quy hoạch</li>
                         </ol>
                     </div><!-- /.col -->
@@ -34,7 +34,7 @@
                                         data-target="#exampleModal">
                                         <i class="fas fa-plus"></i>
                                     </button>
-                                    <!-- Modal -->
+                                    <!-- Modal add -->
                                     <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1"
                                         role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-lg" role="document">
@@ -105,9 +105,9 @@
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="submit" class="btn btn-primary">Lưu</button>
+                                                        <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
                                                         <button type="button" class="btn btn-secondary"
-                                                            data-dismiss="modal">Hủy</button>
+                                                            data-dismiss="modal">{{ __('Cancel') }}</button>
                                                     </div>
                                                 </div>
                                             </form>
@@ -124,9 +124,9 @@
                                 <table id="example2" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>STT</th>
+                                            <th>{{ __('No.') }}</th>
                                             <th>Tên nội dung quy hoạch</th>
-                                            <th>Tùy chọn</th>
+                                            <th>{{ __('Option') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>

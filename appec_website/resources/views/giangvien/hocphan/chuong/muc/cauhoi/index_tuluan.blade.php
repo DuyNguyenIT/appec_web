@@ -17,19 +17,11 @@
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ asset('/') }}">Trang chủ</a></li>
                             <li class="breadcrumb-item">
-                                <a href="{{ asset('/giang-vien/hoc-phan') }}">
-                                    {{ \Illuminate\Support\Str::limit(html_entity_decode($hocphan->tenHocPhan), $limit = 20, $end = '...') }}
+                                <a href="{{ asset('#') }}">
+                                    Ngân hàng câu hỏi
                                 </a>
                             </li>
-                            <li class="breadcrumb-item ">
-                                <a href="{{ asset('/giang-vien/hoc-phan/chuong/' . Session::get('maHocPhan_chuong')) }}">
-                                    {{ \Illuminate\Support\Str::limit(html_entity_decode($chuong->tenchuong), $limit = 20, $end = '...') }}
-                                </a>
-                            </li>
-                            <li class="breadcrumb-item"><a href="#">
-                                    <a href="{{ asset('/giang-vien/hoc-phan/chuong/muc/' . Session::get('maMuc')) }}">
-                                        {{ \Illuminate\Support\Str::limit(html_entity_decode($muc->tenMuc), $limit = 20, $end = '...') }}
-                                    </a></a></li>
+
                             <li class="breadcrumb-item active">Câu hỏi tự luận</li>
                         </ol>
                     </div>
@@ -69,7 +61,7 @@
                                         data-target="#exampleModal">
                                         <i class="fas fa-plus"></i>
                                     </button>
-                                    <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/'.Session::get('maMonHoc').'/'.Session::get('maBaiQH').'/'.Session::get('maHK').'/'.Session::get('namHoc').'/'.Session::get('maLop')) }}"
+                                    <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/'.Session::get('maHocPhan').'/'.Session::get('maBaiQH').'/'.Session::get('maHK').'/'.Session::get('namHoc').'/'.Session::get('maLop')) }}"
                                         class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
                                 </h3>
 
@@ -207,7 +199,7 @@
                                                                                 <script>
                                                                                     CKEDITOR.replace(
                                                                                         'ckcontent_{{ $x->maCauHoi }}', {
-                                                                                            filebrowserUploadUrl: "{{ route('upload', ['_token' => csrf_token()]) }}",
+                                                                                            filebrowserUploadUrl: "{{ route('uploadgv', ['_token' => csrf_token()]) }}",
                                                                                             filebrowserUploadMethod: 'form'
                                                                                         });
 

@@ -53,11 +53,11 @@
                                                 <td>{{ $i++ }}</td>
                                                 <td>{{ $item->tenHocPhan }}</td>
                                                 <td style='white-space: nowrap'>
-                                                    <a class="btn btn-primary"
+                                                    {{-- <a class="btn btn-primary"
                                                         href="{{ asset('/giang-vien/hoc-phan/in-de-cuong-mon-hoc/' . $item->maHocPhan) }}">
                                                         <i class="fas fa-download"></i>
                                                         {{ __('Course Syllabus') }}
-                                                    </a>
+                                                    </a> --}}
                                                     <a href="{{ asset('/giang-vien/hoc-phan/chuong/' . $item->maHocPhan) }}"
                                                         class="btn btn-success">
                                                         <i class="fas fa-list-ol"></i> {{ __('Chapter') }}

@@ -16,9 +16,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ asset('/giang-vien') }}">{{ __('Home') }}</a></li>
-                            <li class="breadcrumb-item">Tên học phần</li>
-                            <li class="breadcrumb-item ">Tên chương</li>
-                            <li class="breadcrumb-item"> Tên mục</li>
+                            <li class="breadcrumb-item">Ngân hàng câu hỏi trắc nghiệm</li>
                             <li class="breadcrumb-item ">Câu hỏi trắc nghiệm</li>
                             <li class="breadcrumb-item active">Thêm CH trắc nghiệm</li>
                         </ol>
@@ -49,6 +47,43 @@
                                         action="{{ asset('giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/ngan-hang-cau-hoi-trac-nghiem/them-cau-hoi-submit') }}"
                                         method="post">
                                         @csrf
+                                        <div class="form-group">
+                                            <label for="">Kết quả học tập:</label>
+                                            <select name="maKQHT" class="form-control">
+                                                @foreach ($kqht as $data)
+                                                    <option value="{{ $data->maKQHT }}">
+                                                        {{ $data->maKQHTVB }}--{{ $data->tenKQHT }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">{{ __('SO') }}:</label>
+                                            <select name="maCDR3" class="form-control">
+                                                @foreach ($cdr3 as $data)
+                                                    <option value="{{ $data->maCDR3 }}">{{ $data->maCDR3VB }} -
+                                                        {{ $data->tenCDR3 }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">{{ __("ABET's SO") }}:</label>
+                                            <select name="maChuanAbet" class="form-control">
+                                                @foreach ($abet as $data)
+                                                    <option value="{{ $data->maChuanAbet }}">
+                                                        {{ $data->maChuanAbetVB }} - {{ $data->tenChuanAbet }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for=""> Nội dung qh:</label>
+                                            <select name="maNoiDungQH" id="" class="form-control" required>
+                                                @foreach ($ndqh as $nd)
+                                                    <option value="{{ $nd->maNoiDungQH }}">{{ $nd->tenNoiDungQH }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                         <div class="form-group">
                                             <label for="">Nội dung câu hỏi:</label>
                                             <textarea type="text" name="noiDungCauHoi" id="noiDungCauHoi"
@@ -81,43 +116,7 @@
                                             C <input type="radio" name="choice" value="2">
                                             D <input type="radio" name="choice" value="3">
                                         </div>
-                                        <div class="form-group">
-                                            <label for="">Kết quả học tập:</label>
-                                            <select name="maKQHT" class="form-control">
-                                                @foreach ($kqht as $data)
-                                                    <option value="{{ $data->maKQHT }}">
-                                                        {{ $data->maKQHTVB }}--{{ $data->tenKQHT }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="">Chuẩn đầu ra 3:</label>
-                                            <select name="maCDR3" class="form-control">
-                                                @foreach ($cdr3 as $data)
-                                                    <option value="{{ $data->maCDR3 }}">{{ $data->maCDR3VB }} -
-                                                        {{ $data->tenCDR3 }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="">Chuẩn abet:</label>
-                                            <select name="maChuanAbet" class="form-control">
-                                                @foreach ($abet as $data)
-                                                    <option value="{{ $data->maChuanAbet }}">
-                                                        {{ $data->maChuanAbetVB }} - {{ $data->tenChuanAbet }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for=""> Nội dung qh:</label>
-                                            <select name="maNoiDungQH" id="" class="form-control" required>
-                                                @foreach ($ndqh as $nd)
-                                                    <option value="{{ $nd->maNoiDungQH }}">{{ $nd->tenNoiDungQH }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+                                        
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
                                             <button type="reset" class="btn btn-info">{{ __('Reset') }}</button>
@@ -135,13 +134,13 @@
         $("#customSwitch1").change(function() {
             if (this.checked) {
                 CKEDITOR.replace('noiDungCauHoi', {
-                    filebrowserUploadUrl: "{{ route('upload', ['_token' => csrf_token()]) }}",
+                    filebrowserUploadUrl: "{{ route('uploadgv', ['_token' => csrf_token()]) }}",
                     filebrowserUploadMethod: 'form'
                 });
                 for (let index = 1; index <= 4; index++) {
                     var name = "phuongAn" + index;
                     CKEDITOR.replace(name, {
-                        filebrowserUploadUrl: "{{ route('upload', ['_token' => csrf_token()]) }}",
+                        filebrowserUploadUrl: "{{ route('uploadgv', ['_token' => csrf_token()]) }}",
                         filebrowserUploadMethod: 'form'
                     });
                 }

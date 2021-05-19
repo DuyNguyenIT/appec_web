@@ -30,4 +30,9 @@ class deThi extends Model
         ->orderBy('phieu_cham.maDe','desc')
         ->get(['de_thi.maDeVB','de_thi.maDe','de_thi.tenDe','sinh_vien.maSSV','sinh_vien.HoSV','sinh_vien.TenSV','phieu_cham.maPhieuCham','phieu_cham.trangThai','phieu_cham.diemSo']);
     }
+
+    public static function get_de_thi_by_made($maDe)
+    {
+        return self::where('isDelete',false)->where('maDe',$maDe)->first();
+    }
 }

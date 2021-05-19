@@ -28,39 +28,30 @@ class GVChuongController extends Controller
     }
     public function them(Request $request)
     {
-        try {
+       
             chuong::create(['tenchuong'=>$request->tenchuong,
             'tenkhongdau'=>CommonController::con_str($request->tenchuong),
             'mota'=>$request->mota,
             'maHocPhan'=>Session::get('maHocPhan_chuong')]);
+            CommonController::success_notify('Thêm thành công!!','Added successfully');
             return redirect('giang-vien/hoc-phan/chuong/'.Session::get('maHocPhan_chuong'))->with('success','Thêm thành công');
-        } catch (\Throwable $th) {
-            return redirect('giang-vien/hoc-phan/chuong/'.Session::get('maHocPhan_chuong'))->with('warning','Có lỗi '.$th);
-        }
+        
     }
 
     public function sua(Request $request)
     {
-        try {
+       
             $chuong=chuong::updateOrCreate(['id'=>$request->id],['tenchuong'=>$request->tenchuong,
             'tenkhongdau'=>CommonController::con_str($request->tenchuong),
             'mota'=>$request->mota,
             'maHocPhan'=>Session::get('maHocPhan_chuong')]);
-          
             return redirect('giang-vien/hoc-phan/chuong/'.Session::get('maHocPhan_chuong'))->with('success','Sửa thành công');
-        } catch (\Throwable $th) {
-            return redirect('giang-vien/hoc-phan/chuong/'.Session::get('maHocPhan_chuong'))->with('warning','Có lỗi '.$th);
-        }
     }
 
     public function xoa($id)
     {
-        try {
-            $chuong=chuong::updateOrCreate(['id'=>$id],['isDelete'=>$request->tenchuong]);
-            return redirect('giang-vien/hoc-phan/chuong/'.Session::get('maHocPhan_chuong'))->with('success','Sửa thành công');
-        } catch (\Throwable $th) {
-            return redirect('giang-vien/hoc-phan/chuong/'.Session::get('maHocPhan_chuong'))->with('warnini','Có lỗi '.$th);
-        }
+        $chuong=chuong::updateOrCreate(['id'=>$id],['isDelete'=>$request->tenchuong]);
+        return redirect('giang-vien/hoc-phan/chuong/'.Session::get('maHocPhan_chuong'))->with('success','Sửa thành công');
     }
 
     

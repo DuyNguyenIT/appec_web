@@ -17,14 +17,15 @@ class GVCauHoiTuLuanController extends Controller
     {
         //idchuong->|chuong_cauhoi|->[idchuong_maCauHoi]->|cauhoi|->[idchuong_maCauHoi_noiDungCauHoi]
         $chuong_cauhoi=chuong_cauhoi::where('isDelete',false)->where('maChuong',$idchuong)->get();
-        $chuong=chuong::where('isDelete',false)->where('id',$idchuong)->first();
-        $hocphan=hocPhan::where('isDelete',false)->where('maHocPhan',Session::get('maHocPhan_chuong'))->first();
+        $chuong=chuong::get_one_chuong_by_id($idchuong);
+        $hocphan=hocPhan::get_muc_by_maHocPhan(Session::get('maHocPhan_chuong'));
         foreach ($chuong_cauhoi as $x) {
-            $cauhoi=cauHoi::where('isDelete',false)->where('maCauHoi',$x->maCauHoi)->first();
+            $cauhoi=cauHoi::get_cau_hoi_by_maCH($x->maCauHoi);
             $x->noiDungCauHoi=$cauhoi->noiDungCauHoi;
             $x->diemCauHoi=$cauhoi->diemCauHoi;
         }
-        $kqht=kqHTHP::where('isdelete',false)->get();
+        $kqht=kqHTHP::get_kqht_by_mahocphan(Session::get('maHocPhan_chuong'));
+        //--
         return view('giangvien.hocphan.chuong.cauhoi.index_tuluan',
         ['cauhoi'=>$chuong_cauhoi,'chuong'=>$chuong,'hocphan'=>$hocphan,'kqht'=>$kqht]);
     }
@@ -55,6 +56,7 @@ class GVCauHoiTuLuanController extends Controller
     public function xoa($maCauHoi)
     {
         try {
+
             cauHoi::updateOrCreate(['isDelete'=>false,'maCauHoi'=>$maCauHoi],['isDelete'=>true]);
         } catch (\Throwable $th) {
             return $th;

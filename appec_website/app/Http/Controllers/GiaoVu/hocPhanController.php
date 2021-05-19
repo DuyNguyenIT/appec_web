@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\GiaoVu;
 
+use Session;
 use Carbon\Carbon;
 use App\Models\lop;
 use App\Models\hocPhan;
@@ -11,7 +12,7 @@ use App\Models\baiQuyHoach;
 use Illuminate\Http\Request;
 use App\Models\sinhvien_hocphan;
 use App\Http\Controllers\Controller;
-use Session;
+use App\Http\Controllers\CommonController;
 
 class hocPhanController extends Controller
 {
@@ -27,8 +28,7 @@ class hocPhanController extends Controller
         $lop=lop::where('isDelete',false)
         ->get();
         //giang day data
-        $gd_data=giangDay::where('giangday.isDelete',false)
-        ->get();
+        $gd_data=giangDay::where('giangday.isDelete',false)->get();
         //giang day
         $gd_rs=giangDay::where('giangday.isDelete',false)
         ->join('hoc_phan',function($x){
@@ -37,16 +37,13 @@ class hocPhanController extends Controller
         })
         ->distinct()
         ->get(['hoc_phan.maHocPhan','maHK','namHoc','hoc_phan.tenHocPhan','giangday.maLop']);
-        //count student
+        
+        //dem so sinh vien trong moi hoc phan giang day
         foreach ($gd_rs as $x) {
-            $count=sinhvien_hocphan::where('maHocPhan',$x->maHocPhan)
-            ->where('maLop',$x->maLop)->where('maHK',$x->maHK)
-            ->where('namHoc',$x->namHoc)->count('maSSV');
-            $x->countsv=$count;
+            $x->countsv=sinhvien_hocphan::get_list_sv($x->maHocPhan,$x->maLop,$x->maHK,$x->namHoc)->count('maSSV');;
         }
         
-
-        //------t&#7841;o combobox n&#259;m h&#7885;c
+        //------tao combobox nam hoc
         $date = new Carbon();   
         $current_year=$date->year;
         $years_array=[];
@@ -81,6 +78,20 @@ class hocPhanController extends Controller
 
     public function them_hoc_phan_giang_day(Request  $request)
     {
+
+        //check da ton tai
+        $check=giangDay::where('maHocPhan',$request->maHocPhan)
+        ->where('maHK',$request->maHK)
+        ->where('namHoc',$request->namHoc)
+        ->where('maLop',$request->maLop)
+        ->where('maGV',$request->maGV)->count();
+
+        if($check>0)
+        {
+            CommonController::warning_notify('Phân công đã tồn tại, hãy kiểm tra lại','Plan is exist, please check');
+            return redirect('/giao-vu/hoc-phan-giang-day');
+        }
+
         //tạo bài quy hoạch mới
         $bqh=new baiQuyHoach();
         $bqh->tenBaiQH='text';
@@ -98,12 +109,8 @@ class hocPhanController extends Controller
         $gd->maBaiQH=$bqh->maBaiQH;
         $gd->maCDR3=1;
         $gd->save();
-
-        if(session::has('language') && session::get('language'=='vi')){
-            alert()->success('Thêm thành công!!!','Thông báo');
-        }else{
-            alert()->success('Added successfully!!!','Message');
-        }
+        
+        CommonController::warning_notify('Thêm thành công!!!','Added successfully!!!');
         return redirect('/giao-vu/hoc-phan-giang-day');
     }
 
@@ -113,10 +120,12 @@ class hocPhanController extends Controller
         Session::put('maLop',$maLop);
         Session::put('maHK',$maHK);
         Session::put('namHoc',$namHoc);
-        $hocphan=hocPhan::where('maHocPhan',$maHocPhan)->first();
-        $dssv=sinhvien_hocphan::where('maHocPhan',$maHocPhan)->where('maLop',$maLop)
-        ->where('maHK',$maHK)->where('namHoc',$namHoc)->with('sinhvien')->get();
-       
+
+        $hocphan=hocPhan::getHocPhanByMaHocPhan($maHocPhan);
+        $dssv=sinhvien_hocphan::get_list_sv($maHocPhan,$maLop,$maHK,$namHoc);
         return view('giaovu.hocphan.danhsachSV',compact('dssv','hocphan','maLop','maHK','namHoc'));
     }
+
+    
+
 }

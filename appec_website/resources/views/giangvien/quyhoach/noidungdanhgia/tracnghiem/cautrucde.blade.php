@@ -47,10 +47,10 @@
                                 <h3 class="card-title">
                                 </h3>
                                 <div class="card-tools">
-                                    <a class="btn btn-primary"
+                                    {{-- <a class="btn btn-primary"
                                         href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/in-de-trac-nghiem/' . $dethi->maDe . '/' . $hocphan->maHocPhan) }}">
                                         <i class="fas fa-download"></i>
-                                    </a>
+                                    </a> --}}
                                     <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/' . Session::get('maCTBaiQH')) }}"
                                         class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
                                 </div>
@@ -78,11 +78,12 @@
                                     
                                 @endphp
                                 @foreach ($noidung as $data)
+                                <a
+                                href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/xoa-cau-hoi-trac-nghiem/' . $data->maCauHoi) }}">
+                                <i class="fas fa-trash"></i>
+                            </a>    
                                     <b>Câu </b> {{ $index++ }} <b>({{ $data->diem }} điểm)</b> <br>
-                                    {!! $data->noiDungCauHoi !!} <a
-                                        href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/xoa-cau-hoi-trac-nghiem/' . $data->maCauHoi) }}">
-                                        <i class="fas fa-trash"></i>
-                                    </a><br>
+                                    {!! $data->noiDungCauHoi !!}<br>
                                     @for ($i = 0; $i < count($data->phuong_an); $i++)
                                         @if ($data->phuong_an[$i]->isCorrect == true)
                                             <b> {!! $data->phuong_an[$i]->noiDungPA !!}</b> <br>
@@ -117,7 +118,7 @@
                                 <div class="form-group">
                                     <label for="">{{ __('Items') }}</label>
                                     <select name="maMuc" id="muc" class="form-control">
-                                        <option value="-1">All</option>
+                                        <option value="-1">{{ __('All') }}</option>
                                         @foreach ($muc as $m)
                                             <option value="{{ $m->id }}">{{ $m->maMucVB }}: {{ $m->tenMuc }}
                                             </option>
@@ -148,7 +149,7 @@
                                         <button type="button" class="btn-down"></button>
                                         <button type="button" id="get">get</button>
                                     </div>
-                                    <span id="ch">text</span>
+                                  
                                 </div>
                                 <script>
                                     $(".jp-multiselect").jQueryMultiSelection();
@@ -156,21 +157,6 @@
                                 </script>
                             </div>
                             {{-- /card --}}
-                        </div>
-                        <!-- Modal -->
-                        <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                <h3 id="myModalLabel">Modal header</h3>
-                            </div>
-                            <div class="modal-body">
-                                <p>One fine body…</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                                <button class="btn btn-primary">Save changes</button>
-                            </div>
                         </div>
                     </div>
                     <!-- /.col -->
@@ -263,9 +249,7 @@
                 }
             })
         })
-        $('#from_box option').dblclick(function() {
-            alert('Double click');
-        })
+
 
     </script>
 @endsection

@@ -13,7 +13,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">Hệ quản trị cơ sở dữ liệu<noscript></noscript>
+                        <h1 class="m-0 text-dark">Thống kê theo xếp hạng<noscript></noscript>
                             <nav></nav>
                         </h1>
                     </div><!-- /.col -->
@@ -21,8 +21,6 @@
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
                             <li class="breadcrumb-item "><a href="thongke.html">Thống kê</a></li>
-                            <li class="breadcrumb-item "><a href="thongketheohocphan.html">Hệ quản trị cơ sở dữ liệu</a>
-                            </li>
                             <li class="breadcrumb-item active">Thống kê theo xếp hạng</li>
                         </ol>
                     </div><!-- /.col -->
@@ -52,6 +50,10 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @php
+                                            $tongXepHang=0;
+                                            $tongTiLe=0;
+                                        @endphp
                                         @for ($i = 0; $i < count($xepHang); $i++)
                                             <tr>
                                                 <td>{{ $i + 1 }}</td>
@@ -79,7 +81,21 @@
                                                 <td>{{ $tiLe[$i] }}%</td>
                                                 <td></td>
                                             </tr>
+                                            @php
+                                                $tongXepHang+=$xepHang[$i];
+                                                $tongTiLe+=$tiLe[$i];
+                                            @endphp
                                         @endfor
+                                            <tr>
+                                                <td colspan="2"><b>Tổng</b></td>
+                                                <td>
+                                                    {{ $tongXepHang }}
+                                                </td>
+                                                <td>
+                                                    {{ $tongTiLe }}%
+                                                </td>
+                                                <td></td>
+                                            </tr>
                                     </tbody>
                                     <tfoot>
                                     </tfoot>

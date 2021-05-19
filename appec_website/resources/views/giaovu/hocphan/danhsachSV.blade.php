@@ -7,18 +7,18 @@
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <h1 class="m-0 text-dark">
-                            Danh sách sinh viên<noscript></noscript>
+                            {{ __('Students list') }}<noscript></noscript>
                             <nav></nav>
                         </h1>
                     </div>
                     <!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                            <li class="breadcrumb-item"><a href="{{ asset('/giao-vu') }}">{{ __('Home') }}</a></li>
                             <li class="breadcrumb-item">
-                                Danh sach sinh vien
+                                {{ $hocphan->tenHocPhan }}  - {{ $maHK }} - Nam
                             </li>
-                            <li class="breadcrumb-item active">Danh sách sinh viên</li>
+                            <li class="breadcrumb-item active">{{ __('Students list') }}</li>
                         </ol>
                     </div>
                     <!-- /.col -->
@@ -36,8 +36,8 @@
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">
-                                    {{ __('Course') }}: {{ $hocphan->tenHocPhan }} {{ __('Semester') }}:
-                                    {{ $maHK }}
+                                    {{ __('Course') }}: {{ $hocphan->tenHocPhan }} 
+                                    <br>{{ __('Semester') }}: {{ $maHK }}
                                 </h3>
                                 <div class="card-tools">
                                     <a href="{{ asset('/giao-vu/hoc-phan-giang-day') }}" class="btn btn-secondary"><i
@@ -48,9 +48,9 @@
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-primary" data-toggle="modal"
                                     data-target="#importExcel">
-                                    Import excel
+                                    {{ __('Import excel') }}
                                 </button>
-                                <a href="{{ asset('/giao-vu/hoc-phan-giang-day/tai-file-mau') }}">Template file excel</a>
+                                <a href="{{ asset('/giao-vu/hoc-phan-giang-day/tai-file-mau') }}">{{ __('Template file excel') }}</a>
                                 <!-- Modal -->
                                 <div class="modal fade" id="importExcel" tabindex="-1" role="dialog"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -61,7 +61,7 @@
                                             @csrf
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Import excel</h5>
+                                                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Import excel') }}</h5>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
@@ -73,9 +73,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="submit" class="btn btn-primary">Save</button>
+                                                    <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
                                                     <button type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal">Close</button>
+                                                        data-dismiss="modal">{{ __('Close') }}</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -87,10 +87,11 @@
                                 <table id="example2" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>STT</th>
-                                            <th>Mã sinh viên</th>
-                                            <th>Tên sinh viên</th>
-                                            <th>Lớp</th>
+                                            <th>{{ __('No.') }}</th>
+                                            <th>{{ __('Student ID') }}</th>
+                                            <th>{{ __('Student name') }}</th>
+                                            <th>{{ __('Class') }}</th>
+                                            <th>{{ __('Option') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -103,6 +104,9 @@
                                                 <td>{{ $sv->maSSV }}</td>
                                                 <td>{{ $sv->sinhvien->HoSV }} {{ $sv->sinhvien->TenSV }}</td>
                                                 <td>{{ $sv->sinhvien->maLop }}</td>
+                                                <td>
+                                                    
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>

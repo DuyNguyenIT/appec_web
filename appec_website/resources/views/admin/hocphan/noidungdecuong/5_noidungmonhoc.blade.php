@@ -3,7 +3,7 @@
 <table class="table table-bordered">
     <thead style="background-color: green">
         <tr>
-            <th rowspan="2">Nội dung
+            <th rowspan="2"> {{ __('Course contents') }}
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addChuong">
                     <i class="fas fa-plus"></i>
@@ -17,7 +17,7 @@
                             @csrf
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Thêm nội dung</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Add') }}/h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -25,7 +25,7 @@
                                 <div class="modal-body">
                                     <input type="text" name="maHocPhan" value="{{ $hocPhan->maHocPhan }}" hidden>
                                     <div class="form-group">
-                                        <label for="">Tên chương:</label>
+                                        <label for="">{{ __('Chapter name') }}:</label>
                                         <input type="text" name="tenchuong" class="form-control" required>
                                     </div>
                                     <div class="form-group">

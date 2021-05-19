@@ -9,5 +9,8 @@ class loaiHTDanhGia extends Model
 {
     use HasFactory;
     protected $table='loai_ht_danhgia';
+
+    protected $primaryKey = 'maLoaiHTDG';
+    public $incrementing = false;
     public $fillable=['maLoaiHTDG','tenLoaiHTDG','isDelete'];
 }

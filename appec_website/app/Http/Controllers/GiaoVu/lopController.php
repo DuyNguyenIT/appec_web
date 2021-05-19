@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\GiaoVu;
 
-use App\Http\Controllers\Controller;
+use Session;
 use App\Models\lop;
 use App\Models\sinhVien;
 use Illuminate\Http\Request;
-use Session;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\CommonController;
 
 class lopController extends Controller
 {
@@ -23,11 +24,11 @@ class lopController extends Controller
     {
         $lop=lop::where('maLop',$request->maLop)->first();
         if($lop){
-            alert()->waring('Class is exist','Warning');
+            CommonController::warning_notify('Lớp đã tồn tại!!!','Class is exist');
             return redirect('/giao-vu/quan-ly-lop');
         }
         lop::create($request->all());
-        alert()->success('Added successfully','Message');
+        CommonController::success_notify('Thêm thành công!','Added successfully!');
         return redirect('/giao-vu/quan-ly-lop');
     }
 
@@ -35,17 +36,18 @@ class lopController extends Controller
     public function editClass(Request $request)
     {
         lop::updateOrCreate(['maLop'=>$request->maLop],['tenLop'=>$request->tenLop,'namTS'=>$request->namTS]);
+        CommonController::success_notify('Sửa thành công','Edited successfully');
         return redirect('/giao-vu/quan-ly-lop');
     }
 
     public function delClass($maLop)
     {
         if(sinhVien::where('maLop',$maLop)->count('maSSV')>0){
-            alert()->warning('Class has students','Message');
+            CommonController::wacrning_notify('Lớp đã có sinh viên, không thể xóa!!!','Class has students,delete denied!!!');
             return redirect('/giao-vu/quan-ly-lop');
         }
          lop::find($maLop)->delete();
-         alert()->success('Deleted successfully','Message');
+         CommonController::success_notify('Xóa thành công','Deleted successfully');
          return redirect('/giao-vu/quan-ly-lop');
          
     }
@@ -54,5 +56,17 @@ class lopController extends Controller
         Session::put('maLop',$maLop);
         $dssv=sinhVien::where('isDelete',false)->where('maLop',$maLop)->get();
         return view('giaovu.lop.danhsachsv',['dssv'=>$dssv,'maLop'=>$maLop]);
+    }
+
+    public function them_sinh_vien_lop(Request $request)
+    {
+        //kiem tra sinh vien da ton tai
+        if (sinhVien::find($request->maSSV)) {
+            CommonController::wacrning_notify('Sinh viên đã tồn tại','The student exitsted');
+
+        } else {
+            # code...
+        }
+        
     }
 }

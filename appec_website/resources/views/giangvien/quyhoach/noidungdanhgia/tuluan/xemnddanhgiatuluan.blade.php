@@ -12,11 +12,12 @@
                             <nav></nav>
                         </h1>
                     </div>
+                    
                     <!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item">
-                                <a href="{{ asset('/giang-vien') }}">Home</a>
+                                <a href="{{ asset('/giang-vien') }}">{{ __('Home') }}</a>
                             </li>
                             <li class="breadcrumb-item">
                                 <a href="#">Essay</a>
@@ -46,7 +47,7 @@
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-primary" data-toggle="modal"
                                     data-target="#exampleModal">
-                                    <i class="fas fa-plus"></i>Adding a new Exam
+                                    <i class="fas fa-plus"></i>{{ __('Adding a new Exam') }}
                                 </button>
                                 <!-- Modal -->
                                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
@@ -58,7 +59,7 @@
                                             @csrf
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Adding a new exame</h5>
+                                                    <h5 class="modal-title" id="exampleModalLabel">{{ _('Adding a new exame') }}</h5>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
@@ -66,32 +67,32 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="form-group">
-                                                        <label for="">Exame ID</label>
+                                                        <label for="">{{ __('Exame ID') }}</label>
                                                         <input type="text" class="form-control" name="maDeVB" required>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="">Title</label>
+                                                        <label for="">{{ __('Title') }}</label>
                                                         <input type="text" class="form-control" name="tenDe" required>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="">Duration (minutes)</label>
+                                                        <label for="">{{ __('Duration') }} ({{ __('minutes') }})</label>
                                                         <input type="number" class="form-control" name="thoiGian" min="30"
                                                             max="180">
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="">The number of question</label>
+                                                        <label for="">{{ __('The number of question') }}</label>
                                                         <input type="number" class="form-control" name="soCauHoi" min="1"
                                                             required>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="">Note</label>
+                                                        <label for="">{{ __('Note') }}</label>
                                                         <input type="text" class="form-control" name="ghiChu">
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="submit" class="btn btn-primary">Save</button>
+                                                    <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
                                                     <button type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal">Cancel</button>
+                                                        data-dismiss="modal">{{ __('Cancel') }}</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -105,13 +106,13 @@
                                 <table id="example2" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>Order</th>
-                                            <th>Exame ID</th>
-                                            <th>Title</th>
-                                            <th>Duration</th>
-                                            <th>The number of question</th>
-                                            <th>Note</th>
-                                            <th>Option</th>
+                                            <th>{{ __('No.') }}</th>
+                                            <th>{{ __('Exame ID') }}</th>
+                                            <th>{{ __('Title') }}</th>
+                                            <th>{{ __('Duration') }}</th>
+                                            <th>{{ __('The number of question') }}</th>
+                                            <th>{{ __('Note') }}</th>
+                                            <th>{{ __('Option') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -131,9 +132,11 @@
                                                 <td>{{ $data->soCauHoi }}</td>
                                                 <td>{{ $data->ghiChu }}</td>
                                                 <td>
-                                                    <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/cau-truc-de-tu-luan/' . $data->maDe) }}"
-                                                        class="btn btn-primary">Cấu trúc nội dung</a>
-                                                    <button class="btn btn-danger">Xóa</button>
+                                                    <div class="btn-group">
+                                                        <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/cau-truc-de-tu-luan/' . $data->maDe) }}"
+                                                            class="btn btn-primary"><i class="fas fa-cogs"></i></a></a>
+                                                        <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         @endforeach

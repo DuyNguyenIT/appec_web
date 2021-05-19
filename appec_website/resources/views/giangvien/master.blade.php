@@ -154,16 +154,17 @@
                   <p>Đề đánh giá</p>
                 </a>
               </li> --}}
-                        {{-- <li class="nav-item">
-                <a href="{{ asset('/giang-vien/ket-qua-danh-gia') }}" class="nav-link">
-                  <i class="nav-icon fas fa-user-friends"></i>
-                  <p>{{ __('Assessment Result') }}</p>
-                </a>
-              </li> --}}
+                       
                         <li class="nav-item">
                             <a href="{{ asset('/giang-vien/cham-diem-bao-cao') }}" class="nav-link">
                                 <i class="fas fa-balance-scale-left"></i>
                                 <p>{{ __('Instructor') }}</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ asset('/giang-vien/tai-khoan') }}" class="nav-link">
+                                <i class="fas fa-user-cog"></i>
+                            <p>{{ __('Account') }}</p>
                             </a>
                         </li>
                     </ul>

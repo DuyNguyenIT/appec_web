@@ -11,6 +11,7 @@ class loginController extends Controller
 {
     public function index()
     {
+        Session::put('language','vi');
         if(Session::get('user_permission') == 1)	
             return redirect('/quan-ly');
         if(Session::get('user_permission') == 2)

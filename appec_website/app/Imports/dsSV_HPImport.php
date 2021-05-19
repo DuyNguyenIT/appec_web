@@ -21,10 +21,10 @@ class dsSV_HPImport implements ToModel,WithHeadingRow
         }
         $sv=sinhVien::where('maSSV',$row['massv'])->first();
         if($sv){
-            $sv_hp=sinhvien_hocphan::where('maSSV',$row['massv'])->where('maHocPhan',Session::get('mahocphan'))
-            ->where('maLop',Session::get('malop'))->where('maHK',Session::get('maHK'))
-            ->where('namHoc',Session::get('namhoc'))->first();
-
+            //kiem tra neu sinh vien da duoc them roi thi khong them
+            $sv_hp=sinhvien_hocphan::where('maSSV',$row['massv'])->where('maHocPhan',Session::get('maHocPhan'))
+            ->where('maLop',Session::get('maLop'))->where('maHK',Session::get('maHK'))
+            ->where('namHoc',Session::get('namHoc'))->first();
             if($sv_hp){
                 return null;
             }else{
@@ -37,7 +37,6 @@ class dsSV_HPImport implements ToModel,WithHeadingRow
                     'isDelete'=>false
                 ]);
             }
-            
         }else{
             return null;
         }

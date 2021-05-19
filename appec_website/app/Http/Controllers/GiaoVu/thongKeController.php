@@ -111,10 +111,8 @@ class thongKeController extends Controller
                 })
                 ->get();
             }
-      
             return view('giaovu.thongke.thongketheodoan',['qh'=>$qh,'hp'=>$hp,
             'ldg'=>$ldg,'lhtdg'=>$lhtdg]);
-            
         }else{//môn binh thường
             $qh=ct_bai_quy_hoach::where('ct_bai_quy_hoach.isDelete',false)
             ->where('ct_bai_quy_hoach.maBaiQH',$baiQH[0]->maBaiQH)
@@ -517,7 +515,7 @@ class thongKeController extends Controller
         
         if($dethi->count()==0)
         {
-            if(session::has('language') && session::get('language')='vi'){
+            if(session::has('language') && session::get('language')=='vi'){
                 alert()->warning('Không có đề thi nào!','Thong báo');
             }else{
                 alert()->warning('There are no examination!','Message');
@@ -615,6 +613,8 @@ class thongKeController extends Controller
             ->where('ct_bai_quy_hoach.isDelete',false);
         })
         ->first();
+
+        
         Session::put('maGV_2',$ct_baiQH->maGV_2);
 
         if($maCanBo==1){
@@ -1919,5 +1919,8 @@ class thongKeController extends Controller
 
         return response()->json($bieuDo);
     }
-
+    ///----------------------------------------------------------------------------
+    //----------------------FILTER - LOC ------------------------------------------
+    //-----------------------------------------------------------------------------
+    
 }

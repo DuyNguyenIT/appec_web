@@ -15,21 +15,14 @@
                     <!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ asset('/') }}">Trang chủ</a></li>
+                            <li class="breadcrumb-item"><a href="{{ asset('/giang-vien') }}">Trang chủ</a></li>
                             <li class="breadcrumb-item">
-                                <a href="{{ asset('/giang-vien/hoc-phan') }}">
-                                    {{ \Illuminate\Support\Str::limit(html_entity_decode($hocphan->tenHocPhan), $limit = 20, $end = '...') }}
-                                </a>
+                                Quy hoạch
                             </li>
                             <li class="breadcrumb-item ">
-                                <a href="{{ asset('/giang-vien/hoc-phan/chuong/' . Session::get('maHocPhan_chuong')) }}">
-                                    {{ \Illuminate\Support\Str::limit(html_entity_decode($chuong->tenchuong), $limit = 20, $end = '...') }}
-                                </a>
+                                Ngân hàng câu hỏi
                             </li>
-                            <li class="breadcrumb-item"><a href="#">
-                                    <a href="{{ asset('/giang-vien/hoc-phan/chuong/muc/' . Session::get('maMuc')) }}">
-                                        {{ \Illuminate\Support\Str::limit(html_entity_decode($muc->tenMuc), $limit = 20, $end = '...') }}
-                                    </a></a></li>
+                            
                             <li class="breadcrumb-item active">Câu hỏi thực hành</li>
                         </ol>
                     </div>
@@ -40,20 +33,7 @@
             <!-- /.container-fluid -->
         </div>
         <!-- /.content-header -->
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <h5><i class="icon fas fa-check"></i> Thông báo!</h5>
-                {{ session('success') }}
-            </div>
-        @endif
-        @if (session('warning'))
-            <div class="alert alert-warning alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <h5><i class="icon fas fa-exclamation-triangle"></i> Thông báo!</h5>
-                {{ session('warning') }}
-            </div>
-        @endif
+        
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
@@ -80,7 +60,7 @@
                                             @csrf
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Thêm câu hỏi thực hành
+                                                    <h5 class="modal-title" id="exampleModalLabel">{{ __('Add') }}
                                                     </h5>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
@@ -91,19 +71,19 @@
                                                     <input type="text" name="maChuong" value="{{ $chuong->id }}" id=""
                                                         hidden>
                                                     <div class="form-group">
-                                                        <label for="">Nhập nội dung câu hỏi:</label>
+                                                        <label for="">{{ __('Question content') }}:</label>
                                                         <textarea name="noiDungCauHoi" id="ckcontent" cols="30" rows="10"
                                                             class="form-control" required></textarea>
                                                         <script>
                                                             CKEDITOR.replace('ckcontent', {
-                                                                filebrowserUploadUrl: "{{ route('upload', ['_token' => csrf_token()]) }}",
+                                                                filebrowserUploadUrl: "{{ route('uploadgv', ['_token' => csrf_token()]) }}",
                                                                 filebrowserUploadMethod: 'form'
                                                             });
 
                                                         </script>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for=""> Đáp ứng kết quả học tập:</label>
+                                                        <label for=""> {{ __('SOs') }}:</label>
                                                         <select name="maKQHT" id="" class="form-control" required>
                                                             @foreach ($kqht as $x)
                                                                 <option value="{{ $x->maKQHT }}">
@@ -112,7 +92,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for=""> Nội dung qh:</label>
+                                                        <label for=""> Nội dung quy hoạch:</label>
                                                         <select name="maNoiDungQH" id="" class="form-control" required>
                                                             @foreach ($ndqh as $nd)
                                                                 <option value="{{ $nd->maNoiDungQH }}">
@@ -122,9 +102,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="submit" class="btn btn-primary">Lưu</button>
+                                                    <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
                                                     <button type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal">Đóng</button>
+                                                        data-dismiss="modal">{{ __('Cancle') }}</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -135,10 +115,10 @@
                                     <table id="example2" class="table table-bordered table-hover">
                                         <thead>
                                             <tr>
-                                                <th>STT</th>
-                                                <th>Nội dung câu hỏi</th>
-                                                <th>Kết quả học tập</th>
-                                                <th>Tùy chọn</th>
+                                                <th>{{ __('No.') }}</th>
+                                                <th>{{ __('Question content') }}</th>
+                                                <th>{{ __('SOs') }}</th>
+                                                <th>{{ __('Option') }}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -175,7 +155,7 @@
                                                                     <div class="modal-content">
                                                                         <div class="modal-header">
                                                                             <h5 class="modal-title" id="exampleModalLabel">
-                                                                                Sửa nội dung câu hỏi thực hành</h5>
+                                                                                {{ __('Edit') }}</h5>
                                                                             <button type="button" class="close"
                                                                                 data-dismiss="modal" aria-label="Close">
                                                                                 <span aria-hidden="true">&times;</span>
@@ -187,25 +167,24 @@
                                                                             <input type="text" name="maCauHoi"
                                                                                 value="{{ $x->maCauHoi }}" id="" hidden>
                                                                             <div class="form-group">
-                                                                                <label for="">Nhập nội dung câu hỏi:</label>
+                                                                                <label for="">{{ __('Question content') }}:</label>
                                                                                 <textarea name="noiDungCauHoi"
                                                                                     id="ckcontent_{{ $x->maCauHoi }}"
                                                                                     cols="30" rows="10" class="form-control"
                                                                                     required>
-                                                  {{ $x->noiDungCauHoi }}
-                                                </textarea>
+                                                                                {{ $x->noiDungCauHoi }}
+                                                                                </textarea>
                                                                                 <script>
                                                                                     CKEDITOR.replace(
                                                                                         'ckcontent_{{ $x->maCauHoi }}', {
-                                                                                            filebrowserUploadUrl: "{{ route('upload', ['_token' => csrf_token()]) }}",
+                                                                                            filebrowserUploadUrl: "{{ route('uploadgv', ['_token' => csrf_token()]) }}",
                                                                                             filebrowserUploadMethod: 'form'
                                                                                         });
 
                                                                                 </script>
                                                                             </div>
                                                                             <div class="form-group">
-                                                                                <label for=""> Đáp ứng kết quả học
-                                                                                    tập:</label>
+                                                                                <label for=""> {{ __('Studying results') }}:</label>
                                                                                 <select name="maKQHT" id=""
                                                                                     class="form-control" required>
                                                                                     @foreach ($kqht as $x)
@@ -219,9 +198,9 @@
                                                                         </div>
                                                                         <div class="modal-footer">
                                                                             <button type="submit"
-                                                                                class="btn btn-primary">Lưu</button>
+                                                                                class="btn btn-primary">{{ __('Save') }}</button>
                                                                             <button type="button" class="btn btn-secondary"
-                                                                                data-dismiss="modal">Đóng</button>
+                                                                                data-dismiss="modal">{{ __('Cancel') }}</button>
                                                                         </div>
                                                                     </div>
                                                                 </form>
