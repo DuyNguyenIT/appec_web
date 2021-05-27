@@ -220,6 +220,8 @@
             }
             $('#tbl-content').append(html);
         });
+
+
         $('#maNoiDungQH').on('change', function() {
             var maNoiDungQH = this.value;
             $('input[id=maNoiDungQH]').val(this.value);
@@ -232,6 +234,22 @@
                 }
             })
         })
+
+        $('select[name="maCDR3"]').change(function () { 
+            var url='/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/get-abet-by-cdr3/'+$('select[name="maCDR3"]').val();
+            $.ajax({
+                type: "get",
+                url: url,
+                success: function (data) {
+                    $('select[name="maChuanAbet"]').empty();
+                    var html='';
+                    data.forEach(element => {
+                        html+="<option value='"+element['maChuanAbet']+"'>"+element['maChuanAbetVB']+"--"+element['tenChuanAbet']+"</option>";
+                    });
+                    $('select[name="maChuanAbet"]').append(html);
+                }
+            });
+        });
 
     </script>
 @endsection

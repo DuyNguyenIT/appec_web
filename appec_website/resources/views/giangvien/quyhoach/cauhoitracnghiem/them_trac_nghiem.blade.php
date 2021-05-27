@@ -17,8 +17,7 @@
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ asset('/giang-vien') }}">{{ __('Home') }}</a></li>
                             <li class="breadcrumb-item">Ngân hàng câu hỏi trắc nghiệm</li>
-                            <li class="breadcrumb-item ">Câu hỏi trắc nghiệm</li>
-                            <li class="breadcrumb-item active">Thêm CH trắc nghiệm</li>
+                            <li class="breadcrumb-item active">Thêm câu hỏi</li>
                         </ol>
                     </div>
                     <!-- /.col -->
@@ -34,7 +33,7 @@
                                 <div class="card-header">
                                     <div class="d-flex justify-content-between">
                                         <h3 class="card-title">Nhập câu hỏi</h3>
-                                        <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/ngan-hang-cau-hoi-trac-nghiem/' . Session::get('maMuc')) }}"
+                                        <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/ngan-hang-cau-hoi-trac-nghiem/' . Session::get('maMuc').'/'.Session::get('maCTBaiQH')) }}"
                                             class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
                                     </div>
                                 </div>
@@ -47,7 +46,7 @@
                                         action="{{ asset('giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/ngan-hang-cau-hoi-trac-nghiem/them-cau-hoi-submit') }}"
                                         method="post">
                                         @csrf
-                                        <div class="form-group">
+                                        {{-- <div class="form-group">
                                             <label for="">Kết quả học tập:</label>
                                             <select name="maKQHT" class="form-control">
                                                 @foreach ($kqht as $data)
@@ -55,10 +54,19 @@
                                                         {{ $data->maKQHTVB }}--{{ $data->tenKQHT }}</option>
                                                 @endforeach
                                             </select>
+                                        </div> --}}
+                                        <div class="form-group">
+                                            <label for=""> Nội dung quy hoạch:</label>
+                                            <select name="maNoiDungQH" id="" class="form-control" required>
+                                                @foreach ($ndqh as $nd)
+                                                    <option value="{{ $nd->maNoiDungQH }}">{{ $nd->tenNoiDungQH }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="">{{ __('SO') }}:</label>
-                                            <select name="maCDR3" class="form-control">
+                                            <select name="maCDR3" id="maCDR3" class="form-control">
                                                 @foreach ($cdr3 as $data)
                                                     <option value="{{ $data->maCDR3 }}">{{ $data->maCDR3VB }} -
                                                         {{ $data->tenCDR3 }}</option>
@@ -67,7 +75,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="">{{ __("ABET's SO") }}:</label>
-                                            <select name="maChuanAbet" class="form-control">
+                                            <select name="maChuanAbet" id="maChuanAbet" class="form-control">
                                                 @foreach ($abet as $data)
                                                     <option value="{{ $data->maChuanAbet }}">
                                                         {{ $data->maChuanAbetVB }} - {{ $data->tenChuanAbet }}
@@ -75,15 +83,7 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="form-group">
-                                            <label for=""> Nội dung qh:</label>
-                                            <select name="maNoiDungQH" id="" class="form-control" required>
-                                                @foreach ($ndqh as $nd)
-                                                    <option value="{{ $nd->maNoiDungQH }}">{{ $nd->tenNoiDungQH }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+                                       
                                         <div class="form-group">
                                             <label for="">Nội dung câu hỏi:</label>
                                             <textarea type="text" name="noiDungCauHoi" id="noiDungCauHoi"
@@ -156,6 +156,23 @@
                     }
                 }
             }
+        });
+
+        $('select[name="maCDR3"]').change(function () { 
+            
+            var url='/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/get-abet-by-cdr3/'+$('select[name="maCDR3"]').val();
+            $.ajax({
+                type: "get",
+                url: url,
+                success: function (data) {
+                    $('select[name="maChuanAbet"]').empty();
+                    var html='';
+                    data.forEach(element => {
+                        html+="<option value='"+element['maChuanAbet']+"'>"+element['maChuanAbetVB']+"--"+element['tenChuanAbet']+"</option>";
+                    });
+                    $('select[name="maChuanAbet"]').append(html);
+                }
+            });
         });
 
     </script>

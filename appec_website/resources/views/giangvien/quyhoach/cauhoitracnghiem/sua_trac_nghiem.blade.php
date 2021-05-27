@@ -16,11 +16,8 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ asset('/giang-vien') }}">{{ __('Home') }}</a></li>
-                            <li class="breadcrumb-item">Tên học phần</li>
-                            <li class="breadcrumb-item ">Tên chương</li>
-                            <li class="breadcrumb-item"> Tên mục</li>
-                            <li class="breadcrumb-item ">Câu hỏi trắc nghiệm</li>
-                            <li class="breadcrumb-item active">Sửa CH trắc nghiệm</li>
+                            <li class="breadcrumb-item ">Ngân hàng câu hỏi trắc nghiệm</li>
+                            <li class="breadcrumb-item active">Sửa câu hỏi</li>
                         </ol>
                     </div>
                     <!-- /.col -->
@@ -36,7 +33,7 @@
                                 <div class="card-header">
                                     <h3 class="d-flex justify-content-between">
                                         {{ __('Edit') }} {{ __('Multiple choices question') }}
-                                        <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/ngan-hang-cau-hoi-trac-nghiem/' . Session::get('maMuc')) }}"
+                                        <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/ngan-hang-cau-hoi-trac-nghiem/' . Session::get('maMuc').'/'.Session::get('maCTBaiQH')) }}"
                                             class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
                                     </h3>
                                 </div>
@@ -50,16 +47,15 @@
                                         method="post">
                                         @csrf
                                         <div class="form-group">
-                                            <label for="">{{ __('Studying results') }}:</label>
-                                            <select name="maKQHT" id="" class="form-control">
-                                                @foreach ($kqht as $data)
-                                                    @if ($data->maKQHT == $cauhoi->maKQHT)
-                                                        <option value="{{ $data->maKQHT }}" selected>
-                                                            {{ $data->maKQHTVB }}--{{ $data->tenKQHT }}</option>
-                                                    @else
-                                                        <option value="{{ $data->maKQHT }}">
-                                                            {{ $data->maKQHTVB }}--{{ $data->tenKQHT }}</option>
-                                                    @endif
+                                            <label for=""> Nội dung quy hoạch:</label>
+                                            <select name="maNoiDungQH" id="" class="form-control" required>
+                                                @foreach ($ndqh_dropdownlist as $nd)
+                                                @if ($nd->maNoiDungQH==$ndqh->maNoiDungQH)
+                                                    <option value="{{ $nd->maNoiDungQH }}" selected>{{ $nd->tenNoiDungQH }}</option>
+                                                @else
+                                                    <option value="{{ $nd->maNoiDungQH }}">{{ $nd->tenNoiDungQH }}</option>
+                                                @endif
+                                                  
                                                 @endforeach
                                             </select>
                                         </div>
@@ -185,6 +181,22 @@
                     }
                 }
             }
+        });
+        $('select[name="maCDR3"]').change(function () { 
+            
+            var url='/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/get-abet-by-cdr3/'+$('select[name="maCDR3"]').val();
+            $.ajax({
+                type: "get",
+                url: url,
+                success: function (data) {
+                    $('select[name="maChuanAbet"]').empty();
+                    var html='';
+                    data.forEach(element => {
+                        html+="<option value='"+element['maChuanAbet']+"'>"+element['maChuanAbetVB']+"--"+element['tenChuanAbet']+"</option>";
+                    });
+                    $('select[name="maChuanAbet"]').append(html);
+                }
+            });
         });
 
     </script>

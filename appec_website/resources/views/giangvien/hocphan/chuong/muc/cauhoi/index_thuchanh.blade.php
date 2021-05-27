@@ -70,6 +70,15 @@
                                                 <div class="modal-body">
                                                     <input type="text" name="maChuong" value="{{ $chuong->id }}" id=""
                                                         hidden>
+                                                        <div class="form-group">
+                                                            <label for=""> Nội dung quy hoạch:</label>
+                                                            <select name="maNoiDungQH" id="" class="form-control" required>
+                                                                @foreach ($ndqh as $nd)
+                                                                    <option value="{{ $nd->maNoiDungQH }}">
+                                                                        {{ $nd->tenNoiDungQH }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
                                                     <div class="form-group">
                                                         <label for="">{{ __('Question content') }}:</label>
                                                         <textarea name="noiDungCauHoi" id="ckcontent" cols="30" rows="10"
@@ -82,7 +91,7 @@
 
                                                         </script>
                                                     </div>
-                                                    <div class="form-group">
+                                                    {{-- <div class="form-group">
                                                         <label for=""> {{ __('SOs') }}:</label>
                                                         <select name="maKQHT" id="" class="form-control" required>
                                                             @foreach ($kqht as $x)
@@ -90,16 +99,8 @@
                                                                     {{ $x->maKQHTVB }}-{{ $x->tenKQHT }}</option>
                                                             @endforeach
                                                         </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for=""> Nội dung quy hoạch:</label>
-                                                        <select name="maNoiDungQH" id="" class="form-control" required>
-                                                            @foreach ($ndqh as $nd)
-                                                                <option value="{{ $nd->maNoiDungQH }}">
-                                                                    {{ $nd->tenNoiDungQH }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
+                                                    </div> --}}
+                                                    
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>

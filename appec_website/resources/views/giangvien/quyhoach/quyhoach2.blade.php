@@ -205,7 +205,7 @@
                                                                                                         @foreach ($ch->muc as $m)
                                                                                                             <li><span><i
                                                                                                                         class="far fa-file"></i><a 
-                                                                                                                        href="{{ asset('giang-vien/hoc-phan/chuong/muc/cau-hoi-tu-luan/' . $m->id) }}">
+                                                                                                                        href="{{ asset('giang-vien/hoc-phan/chuong/muc/cau-hoi-tu-luan/' . $m->id.'/'.$x->maCTBaiQH) }}">
                                                                                                                         {{ $m->maMucVB }}
                                                                                                                         {{ $m->tenMuc }}</a></span>
                                                                                                             </li>
@@ -257,7 +257,7 @@
                                                                                                             @foreach ($ch->muc as $m)
                                                                                                                 <li><span><i
                                                                                                                             class="far fa-file"></i><a 
-                                                                                                                            href="{{ asset('giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/ngan-hang-cau-hoi-trac-nghiem/' . $m->id) }}">
+                                                                                                                            href="{{ asset('giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/ngan-hang-cau-hoi-trac-nghiem/' . $m->id.'/'.$x->maCTBaiQH) }}">
                                                                                                                             {{ $m->maMucVB }}
                                                                                                                             {{ $m->tenMuc }}</a></span>
                                                                                                                 </li>
@@ -309,7 +309,7 @@
                                                                                                                 @foreach ($ch->muc as $m)
                                                                                                                     <li><span><i
                                                                                                                                 class="far fa-file"></i><a 
-                                                                                                                                href="{{ asset('giang-vien/hoc-phan/chuong/muc/cau-hoi-thuc-hanh/' . $m->id) }}">
+                                                                                                                                href="{{ asset('giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/ngan-hang-cau-hoi-thuc-hanh/' . $m->id.'/'.$x->maCTBaiQH) }}">
                                                                                                                                 {{ $m->maMucVB }}
                                                                                                                                 {{ $m->tenMuc }}</a></span>
                                                                                                                     </li>
@@ -323,12 +323,12 @@
                                                                             @endif
                                                                         @endif
                                                                         <li><span><i class="far fa-circle"></i><a 
-                                                                                    href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/' . $x->maCTBaiQH) }}">
+                                                                                    href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/'.$x->maCTBaiQH) }}">
                                                                                     3. {{ __('Examination') }}</a></span>
                                                                         </li>
                                                                     @endif
                                                                     <li><span><i class="far fa-circle"></i><a 
-                                                                                href="{{ asset('/giang-vien/ket-qua-danh-gia/nhap-ket-qua-danh-gia/' . $x->maCTBaiQH) }}">
+                                                                                href="{{ asset('/giang-vien/ket-qua-danh-gia/nhap-ket-qua-danh-gia/'.$x->maCTBaiQH) }}">
                                                                                 4. {{ __('Result') }}</a></span></li>
                                                                     <li>
                                                                                 <span><a style="color:#000; text-decoration:none;"
@@ -375,6 +375,9 @@
                                                                                                         <div class="collapse" id="project_CP1_{{ $x->maLoaiHTDG }}">
                                                                                                             <ul>
                                                                                                                 <li><span><i class="far fa-circle"></i><a 
+                                                                                                                    href="{{ asset('giang-vien/thong-ke/thong-ke-theo-hoc-phan/do-an/thong-ke-theo-clo/' . $x->maCTBaiQH.'/1') }}">
+                                                                                                                    {{ __("CLOs") }}</a></span></li>
+                                                                                                                <li><span><i class="far fa-circle"></i><a 
                                                                                                                     href="{{ asset('/giang-vien/thong-ke/thong-ke-theo-hoc-phan/do-an/thong-ke-theo-abet/' . $x->maCTBaiQH).'/1' }}">
                                                                                                                      {{ __("ABET'sSO") }}</a></span></li>
                                                                                                                 <li><span><i class="far fa-circle"></i><a 
@@ -389,6 +392,7 @@
                                                                                                             </ul>
                                                                                                         </div>
                                                                                                     </li>
+                                                                                                    @if ($x->maGV_2!='00000')
                                                                                                     <li> 
                                                                                                         <span><a style="color:#000; text-decoration:none;"
                                                                                                         data-toggle="collapse"
@@ -404,7 +408,10 @@
                                                                                                         <div class="collapse" id="project_CP2_{{ $x->maLoaiHTDG }}">
                                                                                                             <ul>
                                                                                                                 <li><span><i class="far fa-circle"></i><a 
-                                                                                                                    href="{{ asset('/giang-vien/thong-ke/thong-ke-theo-hoc-phan/do-an/thong-ke-theo-abet/' . $x->maCTBaiQH).'/2'}}">
+                                                                                                                    href="{{ asset('giang-vien/thong-ke/thong-ke-theo-hoc-phan/do-an/thong-ke-theo-clo/' . $x->maCTBaiQH.'/2') }}">
+                                                                                                                    {{ __("CLOs") }}</a></span></li>
+                                                                                                                <li><span><i class="far fa-circle"></i><a 
+                                                                                                                    href="{{ asset('/giang-vien/thong-ke/thong-ke-theo-hoc-phan/do-an/thong-ke-theo-abet/' . $x->maCTBaiQH.'/2')}}">
                                                                                                                      {{ __("ABET'sSO") }}</a></span></li>
                                                                                                                 <li><span><i class="far fa-circle"></i><a 
                                                                                                                     href="{{ asset('/giang-vien/thong-ke/thong-ke-theo-hoc-phan/do-an/thong-ke-theo-tieu-chi/' . $x->maCTBaiQH . '/2') }}">
@@ -418,11 +425,16 @@
                                                                                                             </ul>
                                                                                                         </div>
                                                                                                     </li>
+                                                                                                    @endif
+                                                                                                    
                                                                                                 </ul>
                                                                                             </div>
                                                                                     </li>
                                                                                 @endif
                                                                                 @if ($x->maLoaiHTDG=='T1')  {{-- tu luan --}}
+                                                                                    <li><span><i class="far fa-circle"></i><a 
+                                                                                        href="{{ asset('giang-vien/thong-ke/thong-ke-theo-hoc-phan/tu-luan/thong-ke-theo-clo/' . $x->maCTBaiQH) }}">
+                                                                                        {{ __("CLOs") }}</a></span></li>
                                                                                     <li><span><i class="far fa-circle"></i><a 
                                                                                         href="{{ asset('giang-vien/thong-ke/thong-ke-theo-hoc-phan/tu-luan/thong-ke-theo-abet/' . $x->maCTBaiQH) }}">
                                                                                          {{ __("ABET'sSO") }}</a></span></li>
@@ -438,6 +450,9 @@
                                                                                 @else
                                                                                     @if ($x->maLoaiHTDG=='T2'){{-- trac nghiem --}}
                                                                                         <li><span><i class="far fa-circle"></i><a 
+                                                                                            href="{{ asset('giang-vien/thong-ke/thong-ke-theo-hoc-phan/trac-nghiem/thong-ke-theo-clo/' . $x->maCTBaiQH) }}">
+                                                                                            {{ __("CLOs") }}</a></span></li>
+                                                                                        <li><span><i class="far fa-circle"></i><a 
                                                                                             href="{{ asset('giang-vien/thong-ke/thong-ke-theo-hoc-phan/trac-nghiem/thong-ke-theo-abet/' . $x->maCTBaiQH) }}">
                                                                                             {{ __("ABET'sSO") }}</a></span></li>
                                                                                         <li><span><i class="far fa-circle"></i><a 
@@ -451,6 +466,9 @@
                                                                                             {{ __('Grate') }}</a></span></li>
                                                                                     @else
                                                                                         @if ($x->maLoaiHTDG=='T3'){{-- thuc hanh --}}
+                                                                                            <li><span><i class="far fa-circle"></i><a 
+                                                                                                href="{{ asset('giang-vien/thong-ke/thong-ke-theo-hoc-phan/thuc-hanh/thong-ke-theo-clo/' . $x->maCTBaiQH) }}">
+                                                                                                {{ __("CLOs") }}</a></span></li>
                                                                                             <li><span><i class="far fa-circle"></i><a 
                                                                                                 href="{{ asset('giang-vien/thong-ke/thong-ke-theo-hoc-phan/thuc-hanh/thong-ke-theo-abet/' . $x->maCTBaiQH) }}">
                                                                                                 {{ __("ABET'sSO") }}</a></span></li>

@@ -9,4 +9,5 @@ class cauHoi_tieuChiChamDiem extends Model
 {
     use HasFactory;
     protected $table='cau_hoi_tcchamdiem';
+    protected $fillable = ['maCauHoi','maTCCD','maTCDG','isDelete'];
 }

@@ -25,7 +25,7 @@
                     <!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                            <li class="breadcrumb-item"><a href="{{ asset('giang-vien') }}">Trang chủ</a></li>
                             <li class="breadcrumb-item ">Nội dung đánh giá</li>
                             <li class="breadcrumb-item ">Trắc ngiệm</li>
                             <li class="breadcrumb-item active">Cấu trúc đề thi</li>
@@ -67,10 +67,20 @@
                                         <b>{{ $dethi->tenDe }}</b><br>
                                         <b>Học phần:</b> {{ $hocphan->tenHocPhan }} <br>
                                         <b>Thời gian thi:</b> {{ $dethi->thoiGian }} phút <br>
+                                        <b>Số câu hỏi:</b> {{ $dethi->soCauHoi }} <br>
                                         <b>Mã đề:</b> {{ $dethi->maDeVB }}
                                     </div>
                                 </div>
                                 <i> {{ $dethi->ghiChu }}</i>
+                            </div>
+                            <div class="card-footer">
+                                @if ($dem_cau_hoi < $dethi->soCauHoi)
+                                    <span style="color: red">*Hiện có: {{ $dem_cau_hoi }}/{{ $dethi->soCauHoi }} Câu
+                                        hỏi</span>
+                                @else
+                                    <span style="color: green">Đã đủ: {{ $dem_cau_hoi }}/{{ $dethi->soCauHoi }} Câu
+                                        hỏi</span>
+                                @endif
                             </div>
                             <div class="card-body">
                                 @php
@@ -78,7 +88,7 @@
                                     
                                 @endphp
                                 @foreach ($noidung as $data)
-                                <a
+                                <a onclick="return confirm('Confirm?')"
                                 href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/xoa-cau-hoi-trac-nghiem/' . $data->maCauHoi) }}">
                                 <i class="fas fa-trash"></i>
                             </a>    
@@ -229,6 +239,7 @@
                 $i++;
             });
             console.log(data);
+          
             var url_cau_hoi =
                 '/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/them-cau-hoi-trac-nghiem';
             $.ajaxSetup({
@@ -236,14 +247,16 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+            
             $.ajax({
                 type: 'post',
                 url: url_cau_hoi,
                 data: {
                     array: data,
                     _token: '{{ csrf_token() }}'
-                },
+                 },
                 success: function(rsp) {
+                    //alert(rsp)
                     //console.log(rsp);
                     window.location.href = rsp;
                 }

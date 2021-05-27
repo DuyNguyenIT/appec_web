@@ -476,22 +476,41 @@ class ketQuaDanhGiaController extends Controller
 
     }
 
-  
-
     ####-----------------------------THỰC HÀNH---------------
-    public function them_mot_phieu_cham_thuc_hanh(Request $request)
+    public function them_mot_phieu_cham_thuc_hanh(Request $request)  // CHẠY--ĐÃ TEST
     {
+        //kiem tra de thi da du cau hoi
+        $deThi=deThi::find($request->maDe);
+        $soCauHoi=dethi_cauhoituluan::where('maDe',$request->maDe)
+        ->distinct(['maDe','maCauHoi'])
+        ->get(['maDe','maCauHoi']);
+        if($deThi->soCauHoi>$soCauHoi->count('maCauHoi')){
+            CommonController::warning_notify('Đề thi chưa đủ câu hỏi','The examination don not enough question');
+            return redirect('/giang-vien/ket-qua-danh-gia/nhap-ket-qua-danh-gia/'.session::get('maCTBaiQH'));
+        }
+        if($request->dssv==null){
+            CommonController::warning_notify('Không tìm thấy sinh viên','Do not found students');
+            return redirect('/giang-vien/ket-qua-danh-gia/nhap-ket-qua-danh-gia/'.session::get('maCTBaiQH'));
+        }
+        //tien hanh them
         foreach ($request->dssv as $sv) {
             phieu_cham::create(['maGV'=>Session::get('maGV'),'maSSV'=>$sv,'maDe'=>$request->maDe]);
         }
-        alert()->success('Adding successfully','Message');
-        return back();
-        //thêm phiếu châm tự luạn
-
+        CommonController::success_notify('Thêm thành công','Adding successfully');
+        return redirect('/giang-vien/ket-qua-danh-gia/nhap-ket-qua-danh-gia/'.session::get('maCTBaiQH'));
     }
 
-    public function them_nhieu_phieu_cham_thuc_hanh(Request $request)
+    public function them_nhieu_phieu_cham_thuc_hanh(Request $request)  //CHƯA CHẠY
     {
+        $deThi=deThi::find($request->maDe);
+        $soCauHoi=dethi_cauhoituluan::where('maDe',$request->maDe)
+        ->distinct(['maDe','maCauHoi'])
+        ->get(['maDe','maCauHoi']);
+        if($deThi->soCauHoi>$soCauHoi->count('maCauHoi')){
+            CommonController::warning_notify('Đề thi chưa đủ câu hỏi','The examination don not enough question');
+            return redirect('/giang-vien/ket-qua-danh-gia/nhap-ket-qua-danh-gia/'.session::get('maCTBaiQH'));
+        }
+
         //danh sach sinh vien da co ma de
         $svdachon=deThi::where('de_thi.isDelete',false)->where('de_thi.maCTBaiQH',Session::get('maCTBaiQH'))
         ->Leftjoin('phieu_cham','phieu_cham.maDe','=','de_thi.maDe')
@@ -516,11 +535,13 @@ class ketQuaDanhGiaController extends Controller
         foreach ($dssv as $data) {
             phieu_cham::create(['maGV'=>Session::get('maGV'),'maSSV'=>$data->maSSV,'maDe'=>$request->maDe]);
         }
-        alert()->success('Adding successfully','Message');
-        return back();
+
+        CommonController::success_notify('Thêm thành công','Adding successfully');
+        return redirect('/giang-vien/ket-qua-danh-gia/nhap-ket-qua-danh-gia/'.session::get('maCTBaiQH'));
+
     }
 
-    public function nhap_diem_thuc_hanh($maDe,$maSSV)
+    public function nhap_diem_thuc_hanh($maDe,$maSSV)  //CHẠY --ĐÃ TEST
     {
          //đề thi
          $dethi=deThi::where('isDelete',false)->where('maDe',$maDe)
@@ -564,7 +585,7 @@ class ketQuaDanhGiaController extends Controller
 
     }
 
-    public function cham_diem_thuc_hanh_submit(Request $request)
+    public function cham_diem_thuc_hanh_submit(Request $request) //CHẠY -- ĐÃ TEST
     {
         $diem=0;
         foreach ($request->chamdiem as $maPATL) {
@@ -591,18 +612,18 @@ class ketQuaDanhGiaController extends Controller
         $pc->yKienDongGop=$request->yKienDongGop;
         $pc->update();
 
-        alert()->success('Successfull','Message');
+        CommonController::success_notify('Thêm thành công','Adding successfully');
         return redirect('/giang-vien/ket-qua-danh-gia/nhap-ket-qua-danh-gia/'.Session::get('maCTBaiQH'));
     }
 
     public function sua_diem_thuc_hanh(Type $var = null)
     {
-        # code...
+        return 'Đang tiến hành...';
     }
 
     public function sua_diem_thuc_hanh_submit(Request $request)
     {
-        # code...
+        return 'Đang tiến hành...';
     }
     
     public function xem_ket_qua_thuc_hanh($maDe,$maSSV)
@@ -657,7 +678,7 @@ class ketQuaDanhGiaController extends Controller
                 }
            }
         }else{
-            alert()->warning("Can't found examination",'Warning');
+            CommonController::warning_notify('Không tìm thấy bài thi',"Can't found examination");
             return back();
         }
 
@@ -672,6 +693,19 @@ class ketQuaDanhGiaController extends Controller
     ###-----------------------------tuc luan----------------
     public function them_mot_phieu_cham_tu_luan(Request $request)
     {
+        $deThi=deThi::find($request->maDe);
+        $soCauHoi=dethi_cauhoituluan::where('maDe',$request->maDe)
+        ->distinct(['maDe','maCauHoi'])
+        ->get(['maDe','maCauHoi']);
+        if($deThi->soCauHoi>$soCauHoi->count('maCauHoi')){
+            CommonController::warning_notify('Đề thi chưa đủ câu hỏi','The examination don not enough question');
+            return redirect('/giang-vien/ket-qua-danh-gia/nhap-ket-qua-danh-gia/'.session::get('maCTBaiQH'));
+        }
+
+        if($request->dssv==null){
+            CommonController::warning_notify('Không tìm thấy sinh viên','Do not found students');
+            return redirect('/giang-vien/ket-qua-danh-gia/nhap-ket-qua-danh-gia/'.session::get('maCTBaiQH'));
+        }
         foreach ($request->dssv as $sv) {
             phieu_cham::create(['maGV'=>Session::get('maGV'),'maSSV'=>$sv,'maDe'=>$request->maDe]);
         }
@@ -682,6 +716,15 @@ class ketQuaDanhGiaController extends Controller
 
     public function them_nhieu_phieu_cham_tu_luan(Request $request)
     {
+        $deThi=deThi::find($request->maDe);
+        $soCauHoi=dethi_cauhoituluan::where('maDe',$request->maDe)
+        ->distinct(['maDe','maCauHoi'])
+        ->get(['maDe','maCauHoi']);
+        if($deThi->soCauHoi>$soCauHoi->count('maCauHoi')){
+            CommonController::warning_notify('Đề thi chưa đủ câu hỏi','The examination don not enough question');
+            return redirect('/giang-vien/ket-qua-danh-gia/nhap-ket-qua-danh-gia/'.session::get('maCTBaiQH'));
+        }
+
         //danh sach sinh vien da co ma de
         $svdachon=deThi::where('de_thi.isDelete',false)->where('de_thi.maCTBaiQH',Session::get('maCTBaiQH'))
         ->Leftjoin('phieu_cham','phieu_cham.maDe','=','de_thi.maDe')
@@ -728,9 +771,7 @@ class ketQuaDanhGiaController extends Controller
          ->first(['giang_vien.maGV','hoGV','tenGV','phieu_cham.maPhieuCham']);
         
          //sinh viên
-        $sv=sinhVien::where('isDelete',false)
-        ->where('maSSV',$maSSV)
-        ->first();
+        $sv=sinhVien::where('isDelete',false)->where('maSSV',$maSSV)->first();
 
         //noi dung de thi thuc  hanh
         if($dethi){
@@ -854,7 +895,19 @@ class ketQuaDanhGiaController extends Controller
     ###--------------------------trac nghiem-------------------
     public function them_mot_phieu_cham_trac_nghiem(Request $request)
     {
-        # code...
+        $deThi=deThi::find($request->maDe);
+        $soCauHoi=deThi_cauHoi::where('maDe',$request->maDe)
+        ->distinct(['maDe','maCauHoi'])
+        ->get(['maDe','maCauHoi']);
+        if($deThi->soCauHoi>$soCauHoi->count('maCauHoi')){
+            CommonController::warning_notify('Đề thi chưa đủ câu hỏi','The examination don not enough question');
+            return redirect('/giang-vien/ket-qua-danh-gia/nhap-ket-qua-danh-gia/'.session::get('maCTBaiQH'));
+        }
+
+        if($request->dssv==null){
+            CommonController::warning_notify('Không tìm thấy sinh viên','Do not found students');
+            return redirect('/giang-vien/ket-qua-danh-gia/nhap-ket-qua-danh-gia/'.session::get('maCTBaiQH'));
+        }
         foreach ($request->dssv as $sv) {
             phieu_cham::create(['maGV'=>Session::get('maGV'),'maSSV'=>$sv,'maDe'=>$request->maDe]);
         }
@@ -864,6 +917,14 @@ class ketQuaDanhGiaController extends Controller
 
     public function them_nhieu_phieu_cham_trac_nghiem(Request $request)
     {
+        $deThi=deThi::find($request->maDe);
+        $soCauHoi=deThi_cauHoi::where('maDe',$request->maDe)
+        ->distinct(['maDe','maCauHoi'])
+        ->get(['maDe','maCauHoi']);
+        if($deThi->soCauHoi>$soCauHoi->count('maCauHoi')){
+            CommonController::warning_notify('Đề thi chưa đủ câu hỏi','The examination don not enough question');
+            return redirect('/giang-vien/ket-qua-danh-gia/nhap-ket-qua-danh-gia/'.session::get('maCTBaiQH'));
+        }
         # code...
         //danh sach sinh vien da co ma de
         $svdachon=deThi::where('de_thi.isDelete',false)->where('de_thi.maCTBaiQH',Session::get('maCTBaiQH'))

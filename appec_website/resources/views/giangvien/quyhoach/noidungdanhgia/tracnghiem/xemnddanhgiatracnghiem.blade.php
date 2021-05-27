@@ -114,6 +114,7 @@
                                             <th>{{ __('Title') }}</th>
                                             <th>{{ __('Duration') }}</th>
                                             <th>{{ __('The number of question') }}</th>
+                                            <th>Số câu hỏi hiện có</th>
                                             <th>{{ __('Note') }}</th>
                                             <th>{{ __('Option') }}</th>
                                         </tr>
@@ -133,6 +134,7 @@
                                                 <td>{{ $data->tenDe }}</td>
                                                 <td>{{ $data->thoiGian }} phút</td>
                                                 <td>{{ $data->soCauHoi }}</td>
+                                                <td>{{ $data->cauHoiHienCo }}</td>
                                                 <td>{{ $data->ghiChu }}</td>
                                                 <td>
                                                     <div class="btn-group">
@@ -140,9 +142,59 @@
                                                             href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/cau-truc-de-trac-nghiem/' . $data->maDe) }}">
                                                             <i class="fas fa-cogs"></i>
                                                         </a>
-                                                        <button class="btn btn-danger" title="{{ __('Delete') }}">
-                                                            <i class="fas fa-trash"></i>
+                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit_{{ $data->maDe }}">
+                                                            <i class="fas fa-edit"></i>
                                                         </button>
+                                                        <a onclick="return confirm('Confirm?')" href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/xoa-de-thi-trac-nghiem/'.$data->maDe) }}" class="btn btn-danger" title="{{ __('Delete') }}">
+                                                            <i class="fas fa-trash"></i>
+                                                        </a>
+                                                    </div>
+                                                    <!-- Button trigger modal -->
+                                                    
+                                                    
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="edit_{{ $data->maDe }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <form action="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/sua-thong-tin-de-trac-nghiem') }}" method="post">
+                                                            @csrf
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">{{ __('Edit') }}</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <input type="text" name="maDe" value="{{ $data->maDe }}" hidden>
+                                                                <div class="form-group">
+                                                                    <label for="">{{ __('Exame ID') }}</label>
+                                                                    <input type="text" name="maDeVB" value="{{ $data->maDeVB }}" class="form-control">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="">{{ __('Title') }}</label>
+                                                                    <input type="text" name="tenDe" value="{{ $data->tenDe }}" class="form-control">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="">{{ __('Duration') }}
+                                                                        ({{ __('minutes') }})</label>
+                                                                    <input type="number" class="form-control" name="thoiGian" min="30" max="180" value="{{ $data->thoiGian }}">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="">{{ __('The number of question') }}</label>
+                                                                    <input type="number" class="form-control" name="soCauHoi" value="{{ $data->soCauHoi }}" min="1" required>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="">{{ __('Note') }}</label>
+                                                                    <input type="text" class="form-control" name="ghiChu" value="{{ $data->ghiChu }}">
+                                                                </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Cancel') }}</button>
+                                                                </div>
+                                                            </div>
+                                                            </form>
+                                                        </div>
                                                     </div>
                                                 </td>
                                             </tr>

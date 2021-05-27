@@ -317,19 +317,19 @@ class thongKeController extends Controller
                 })
                 ->sum('danhgia_tuluan.diemDG');
                 $tile=$dem/$diem_tieu_chi;
-                if($tile<0.25){
-                    $kem++;
+                if($tile<0.4){
+                    $c_dat++;
                 }else{
-                    if($tile>=0.25 && $tile<0.5){
-                        $yeu++;
+                    if($tile>=0.4 && $tile<0.54){
+                        $dat_d++;
                     }else{
-                        if($tile>=0.5 && $tile<0.75){
-                            $tb++;
+                        if($tile>=0.55 && $tile<0.69){
+                            $dat_c++;
                         }else{
-                            if($tile>=0.75 && $tile<0.85){
-                                $kha++;
+                            if($tile>=0.70 && $tile<0.89){
+                                $dat_b++;
                             }else{
-                                $gioi++;
+                                $dat_a++;
                             }
                         }
                     }
@@ -437,19 +437,19 @@ class thongKeController extends Controller
                 })
                 ->sum('danhgia_tuluan.diemDG');
                 $tile=$dem/$diem_tieu_chi;
-                if($tile<0.25){
-                    $kem++;
+                if($tile<0.4){
+                    $c_dat++;
                 }else{
-                    if($tile>=0.25 && $tile<0.5){
-                        $yeu++;
+                    if($tile>=0.4 && $tile<0.54){
+                        $dat_d++;
                     }else{
-                        if($tile>=0.5 && $tile<0.75){
-                            $tb++;
+                        if($tile>=0.55 && $tile<0.69){
+                            $dat_c++;
                         }else{
-                            if($tile>=0.75 && $tile<0.85){
-                                $kha++;
+                            if($tile>=0.70 && $tile<0.89){
+                                $dat_b++;
                             }else{
-                                $gioi++;
+                                $dat_a++;
                             }
                         }
                     }
@@ -908,19 +908,19 @@ class thongKeController extends Controller
                 })
                 ->sum('danh_gia.diemDG');
                 $tile=$dem/$diem_tieu_chi;
-                if($tile<0.25){
-                    $kem++;
+                if($tile<0.4){
+                    $c_dat++;
                 }else{
-                    if($tile>=0.25 && $tile<0.5){
-                        $yeu++;
+                    if($tile>=0.4 && $tile<0.54){
+                        $dat_d++;
                     }else{
-                        if($tile>=0.5 && $tile<0.75){
-                            $tb++;
+                        if($tile>=0.55 && $tile<0.69){
+                            $dat_c++;
                         }else{
-                            if($tile>=0.75 && $tile<0.85){
-                                $kha++;
+                            if($tile>=0.70 && $tile<0.89){
+                                $dat_b++;
                             }else{
-                                $gioi++;
+                                $dat_a++;
                             }
                         }
                     }
@@ -1042,19 +1042,19 @@ class thongKeController extends Controller
                 })
                 ->sum('danh_gia.diemDG');
                 $tile=$dem/$diem_tieu_chi;
-                if($tile<0.25){
-                    $kem++;
+                if($tile<0.4){
+                    $c_dat++;
                 }else{
-                    if($tile>=0.25 && $tile<0.5){
-                        $yeu++;
+                    if($tile>=0.4 && $tile<0.54){
+                        $dat_d++;
                     }else{
-                        if($tile>=0.5 && $tile<0.75){
-                            $tb++;
+                        if($tile>=0.55 && $tile<0.69){
+                            $dat_c++;
                         }else{
-                            if($tile>=0.75 && $tile<0.85){
-                                $kha++;
+                            if($tile>=0.70 && $tile<0.89){
+                                $dat_b++;
                             }else{
-                                $gioi++;
+                                $dat_a++;
                             }
                         }
                     }
@@ -1683,19 +1683,19 @@ class thongKeController extends Controller
                
 
 
-                if($tile<0.25){
-                    $kem++;
+                if($tile<0.4){
+                    $c_dat++;
                 }else{
-                    if($tile>=0.25 && $tile<0.5){
-                        $yeu++;
+                    if($tile>=0.4 && $tile<0.54){
+                        $dat_d++;
                     }else{
-                        if($tile>=0.5 && $tile<0.75){
-                            $tb++;
+                        if($tile>=0.55 && $tile<0.69){
+                            $dat_c++;
                         }else{
-                            if($tile>=0.75 && $tile<0.85){
-                                $kha++;
+                            if($tile>=0.70 && $tile<0.89){
+                                $dat_b++;
                             }else{
-                                $gioi++;
+                                $dat_a++;
                             }
                         }
                     }
@@ -1891,19 +1891,19 @@ class thongKeController extends Controller
                
 
 
-                if($tile<0.25){
-                    $kem++;
+                if($tile<0.4){
+                    $c_dat++;
                 }else{
-                    if($tile>=0.25 && $tile<0.5){
-                        $yeu++;
+                    if($tile>=0.4 && $tile<0.54){
+                        $dat_d++;
                     }else{
-                        if($tile>=0.5 && $tile<0.75){
-                            $tb++;
+                        if($tile>=0.55 && $tile<0.69){
+                            $dat_c++;
                         }else{
-                            if($tile>=0.75 && $tile<0.85){
-                                $kha++;
+                            if($tile>=0.70 && $tile<0.89){
+                                $dat_b++;
                             }else{
-                                $gioi++;
+                                $dat_a++;
                             }
                         }
                     }

@@ -1,4 +1,4 @@
-@extends('giaovu.master')
+@extends('giangvien.master')
 @section('content')
     <!-- jQuery -->
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>

@@ -35,14 +35,14 @@
                         <!-- small box -->
                         <div class="small-box bg-info">
                             <div class="inner">
-                                <h3>1</h3>
+                                <h3>{{ $dem_hp }}</h3>
 
                                 <p>{{ __('Courses') }}</p>
                             </div>
                             <div class="icon">
                                 <i class="icon ion-document"></i>
                             </div>
-                            <a href="#" class="small-box-footer">{{ __('Details') }} <i
+                            <a href="{{ asset('giang-vien/hoc-phan') }}" class="small-box-footer">{{ __('Details') }} <i
                                     class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
@@ -51,14 +51,14 @@
                     <div class="col-lg-2 col-6">
                         <div class="small-box bg-success">
                             <div class="inner">
-                                <h3>83</h3>
+                                <h3>{{ $dem_quy_hoach }}</h3>
 
-                                <p>Quy hoạch đánh giá</p>
+                                <p>{{ __('Assessment Planing') }}</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-clipboard"></i>
                             </div>
-                            <a href="#" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="{{ asset('/giang-vien/quy-hoach-danh-gia') }}" class="small-box-footer">{{ __('Details') }}  <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <!------------------------------------------- -->
@@ -73,7 +73,7 @@
                             <div class="icon">
                                 <i class="ion ion-email"></i>
                             </div>
-                            <a href="#" class="small-box-footer">Xem thêm<i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="#" class="small-box-footer">{{ __('Details') }}<i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <!--------------------------------------------------- -->
@@ -88,7 +88,7 @@
                             <div class="icon">
                                 <i class="ion ion-checkmark-round"></i>
                             </div>
-                            <a href="#" class="small-box-footer">Xem thêm<i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="#" class="small-box-footer">{{ __('Details') }}<i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <!-- ---------------------------------------------------->
@@ -103,7 +103,7 @@
                             <div class="icon">
                                 <i class="ion ion-pie-graph"></i>
                             </div>
-                            <a href="#" class="small-box-footer">Xem thêm<i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="#" class="small-box-footer">{{ __('Details') }}<i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <!-- ---------------------------------------------------->
@@ -118,7 +118,7 @@
                             <div class="icon">
                                 <i class="ion ion-printer"></i>
                             </div>
-                            <a href="#" class="small-box-footer">Xem thêm<i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="#" class="small-box-footer">{{ __('Details') }}<i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <!-- ./col -->

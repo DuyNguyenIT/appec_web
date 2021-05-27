@@ -16,15 +16,9 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ asset('/giang-vien') }}">{{ __('Home') }}</a></li>
+                           
                             <li class="breadcrumb-item">
-                                {{ \Illuminate\Support\Str::limit(html_entity_decode($hocphan->tenHocPhan), $limit = 20, $end = '...') }}
-                            </li>
-                            <li class="breadcrumb-item ">
-                                {{ \Illuminate\Support\Str::limit(html_entity_decode($chuong->tenchuong), $limit = 20, $end = '...') }}
-                            </li>
-                            <li class="breadcrumb-item">
-                                {{ $muc->maMucVB }}
-                                {{ \Illuminate\Support\Str::limit(html_entity_decode($muc->tenMuc), $limit = 20, $end = '...') }}
+                               Ngân hàng câu hỏi trắc nghiệm
                             </li>
                             <li class="breadcrumb-item active">Trắc nghiệm</li>
                         </ol>
@@ -58,6 +52,8 @@
                                             <th>{{ __('No.') }}</th>
                                             <th>{{ __('Question content') }}</th>
                                             <th>{{ __('Studying results') }}</th>
+                                            <th>{{ __('SOs') }}</th>
+                                            <th>{{ __("ABET's SO") }}</th>
                                             <th>{{ __('Option') }}</th>
                                         </tr>
                                     </thead>
@@ -87,6 +83,12 @@
                                                 </td>
                                                 <td>
                                                     {{ $data->maKQHTVB }}-- {{ $data->tenKQHT }}
+                                                </td>
+                                                <td>
+                                                     {{ $data->maCDR3VB }} {{---- {{ $data->tenCDR3 }} --}}
+                                                </td>
+                                                <td>
+                                                    {{ $data->maChuanAbetVB }}{{--  -- {{ $data->tenChuanAbet }} --}}
                                                 </td>
                                                 <td>
                                                     <div class="btn-group">

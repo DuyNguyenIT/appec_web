@@ -156,11 +156,11 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="submit" class="btn btn-primary">
-                                                            Lưu
+                                                            {{ __('Save') }}
                                                         </button>
                                                         <button type="button" class="btn btn-secondary"
                                                             data-dismiss="modal">
-                                                            Hủy
+                                                            {{ __("Cancel") }}
                                                         </button>
                                                     </div>
                                                 </div>
@@ -181,7 +181,7 @@
                                 <table id="example2" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>STT</th>
+                                            <th>{{ __("No.") }}</th>
                                             <th>Mã đề tài</th>
                                             <th>
 
@@ -259,11 +259,12 @@
                                                 <tr>
                                                     <td rowspan={{ $demTenDT }}>{{ $i++ }}</td>
                                                     <td rowspan={{ $demTenDT }}>{{ $dt->maDeVB }}</td>
-                                                    <td rowspan={{ $demTenDT }}>{{ $dt->tenDe }}
+                                                    <td rowspan={{ $demTenDT }}>
                                                         <button type="button" class="btn btn-primary" data-toggle="modal"
                                                             data-target="#editTen_{{ $dt->maDe }}">
                                                             <i class="fas fa-edit"></i>
                                                         </button>
+                                                        {{ $dt->tenDe }}
                                                         <!-- Modal -->
                                                         <div class="modal fade" id="editTen_{{ $dt->maDe }}"
                                                             tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -308,11 +309,11 @@
                                                     <td>{{ $dt->hoGV }} {{ $dt->tenGV }}</td>
                                                     <td>
                                                         <button class="btn btn-primary">
-                                                            <i class="fas fa-edit"></i> Chỉnh sửa
+                                                            <i class="fas fa-edit"></i>
                                                         </button>
                                                         <a class="btn btn-danger"
                                                             href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xoa-phieu-cham-do-an/' . $dt->maDe . '/' . $dt->maSSV) }}"
-                                                            onclick="confirm('x�c nh&#7853;n x�a?')"><i
+                                                            onclick="confirm('Confirm?')"><i
                                                                 class="fas fa-trash"></i></a>
                                                     </td>
                                                 </tr>
@@ -323,11 +324,11 @@
                                                     <td>{{ $dt->hoGV }} {{ $dt->tenGV }}</td>
                                                     <td>
                                                         <button class="btn btn-primary">
-                                                            <i class="fas fa-edit"></i> Chỉnh sửa
+                                                            <i class="fas fa-edit"></i> 
                                                         </button>
                                                         <a class="btn btn-danger"
                                                             href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xoa-phieu-cham-do-an/' . $dt->maDe . '/' . $dt->maSSV) }}"
-                                                            onclick="confirm('x�c nh&#7853;n x�a?')"><i
+                                                            onclick="confirm('Confirm?')"><i
                                                                 class="fas fa-trash"></i></a>
                                                     </td>
                                             @endif

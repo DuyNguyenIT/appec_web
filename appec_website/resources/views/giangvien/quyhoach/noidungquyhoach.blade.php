@@ -13,9 +13,7 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ asset('giang-vien') }}">Trang chủ</a></li>
-                            <li class="breadcrumb-item "><a href="#">Đồ án</a></li>
-                            <li class="breadcrumb-item "><a href="#">Nội dung đánh giá</a></li>
+                            <li class="breadcrumb-item"><a href="{{ asset('giang-vien') }}">{{ __('Home') }}</a></li>
                             <li class="breadcrumb-item active">Nội dung quy hoạch</li>
                         </ol>
                     </div><!-- /.col -->
@@ -98,7 +96,7 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="hocphan" style="font-size:20px">Nhập tên nội dung
-                                                                quy hoạch</label>
+                                                                quy hoạch (*)</label>
                                                             <!-- Button trigger modal -->
                                                             <input type="text" name="tenNoiDungQH" class="form-control"
                                                                 id="" placeholder="Nhập tên nội dung quy hoạch...">
@@ -126,17 +124,21 @@
                                         <tr>
                                             <th>{{ __('No.') }}</th>
                                             <th>Tên nội dung quy hoạch</th>
+                                            <th>Mức độ đánh giá (Bloom)</th>
+                                            <th>{{ __('SOs') }}</th>
                                             <th>{{ __('Option') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @php
-                                            $i = 1;
+                                            $index = 1;
                                         @endphp
                                         @foreach ($noiDungQH as $nd)
                                             <tr>
-                                                <td>{{ $i++ }}</td>
+                                                <td>{{ $index++ }}</td>
                                                 <td>{{ $nd->tenNoiDungQH }}</td>
+                                                <td>{{ $nd->muc_do_dg->tenMucDoDG }}</td>
+                                                <td>{{ $nd->kqht->maKQHTVB }} - {{ $nd->kqht->tenKQHT }}</td>
                                                 <td>
                                                     <div class="btn-group">
                                                         <!-- Button edit modal -->
@@ -168,15 +170,55 @@
                                                                         </button>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        <input type="text" name="maNoiDungQH"
+                                                                        <div class="form-group">
+                                                                            <input type="text" name="maNoiDungQH"
                                                                             value="{{ $nd->maNoiDungQH }}" hidden>
                                                                         <div class="form-group">
-                                                                            <label for="">Tên nội dung quy hoạch</label>
+                                                                            <label for="">Tên nội dung quy hoạch (*)</label>
                                                                             <input type="text" name="tenNoiDungQH"
                                                                                 class="form-control"
                                                                                 value="{{ $nd->tenNoiDungQH }}" required>
+                                                                        </div></div>
+                                                                        
+                                                                        <div class="form-group">
+                                                                            <label for="">Chọn mức độ đánh giá</label>
+                                                                            <select name="maMucDoDG" id="" class="form-control">
+                                                                                @foreach ($mucDoDG as $md)
+                                                                                    @if ($md->maMucDoDG==$nd->maMucDoDG)
+                                                                                        <option value="{{ $md->maMucDoDG }}" selected>
+                                                                                            {{ $md->tenMucDoDG }}</option>
+                                                                                    @else
+                                                                                        <option value="{{ $md->maMucDoDG }}">
+                                                                                            {{ $md->tenMucDoDG }}</option>
+                                                                                    @endif
+                                                                                    @php
+                                                                                        $i++;
+                                                                                    @endphp
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="">Chọn kết quả học tập</label>
+                                                                            <select name="maKQHT" id="" class="form-control">
+                                                                              
+                                                                                @foreach ($ketQuaHT as $kqht)
+                                                                                    @if ($kqht->maKQHT==$nd->maKQHT)
+                                                                                        <option value="{{ $kqht->maKQHT }}" selected>
+                                                                                            {{ $kqht->maKQHTVB }}--{{ $kqht->tenKQHT }}
+                                                                                        </option>
+                                                                                    @else
+                                                                                        <option value="{{ $kqht->maKQHT }}">
+                                                                                            {{ $kqht->maKQHTVB }}--{{ $kqht->tenKQHT }}
+                                                                                        </option>
+                                                                                    @endif
+                                                                                    @php
+                                                                                        $i++;
+                                                                                    @endphp
+                                                                                @endforeach
+                                                                            </select>
                                                                         </div>
                                                                     </div>
+                                                                   
                                                                     <div class="modal-footer">
                                                                         <button type="sumbit"
                                                                             class="btn btn-primary">{{ __('Save') }}</button>

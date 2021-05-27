@@ -8,5 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class raDe extends Model
 {
     use HasFactory;
-    protected $table='ra_de';
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'ra_de';
+    protected $primaryKey = 'id_RaDe';
+    protected $fillable = ['maDe','maGV','maHocPhan','maLop','lanThu'];
 }

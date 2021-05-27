@@ -37,16 +37,19 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class=""></h3>
-                                {{-- <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/them-de-thi-tu-luan') }}" class="btn btn-primary">
-                           <i class="fas fa-plus"></i>Thêm đề thi
-                         </a> --}}
-                                <!-- Button trigger modal -->
-                                <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-primary" data-toggle="modal"
-                                    data-target="#exampleModal">
-                                    <i class="fas fa-plus"></i>{{ __('Adding a new Exam') }}
-                                </button>
+                                <div class="card-title">
+                                      <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#exampleModal">
+                                        <i class="fas fa-plus"></i>{{ __('Adding a new Exam') }}
+                                    </button>
+                                </div>
+                                <div class="card-tools">
+                                    <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/' . Session::get('maHocPhan') . '/' . Session::get('maBaiQH') . '/' . Session::get('maHK') . '/' . Session::get('namHoc') . '/' . Session::get('maLop')) }}"
+                                            class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
+                                </div>
+                                
+                              
                               
                                 <!-- Modal -->
                                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
@@ -102,6 +105,7 @@
                                 </div>
 
                             </div>
+                            
                             {{-- <div class="card-header">Giảng viên cộng tác: <b>Võ Thành C</b></div> --}}
                             <!-- /.card-header -->
                             <div class="card-body">

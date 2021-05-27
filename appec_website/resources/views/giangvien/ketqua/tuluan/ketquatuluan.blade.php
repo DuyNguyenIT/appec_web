@@ -37,7 +37,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="">
+                                <h4 class="card-title">
                                     <!-- Button trigger modal -->
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addOne">
                                         Chọn đề cho từng sinh viên
@@ -132,7 +132,13 @@
                                         </div>
                                     </div>
                                 </h4>
+                                <div class="card-tools">
+                                    <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/'.session::get('maHocPhan').'/'.session::get('maBaiQH').'/'.session::get('maHK').'/'.session::get('namHoc').'/'.session::get('maLop')) }}" class="btn btn-secondary">
+                                           <i class="fas fa-arrow-left"></i>
+                                     </a>
+                                </div>
                             </div>
+                            
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <table id="example2" class="table table-bordered table-hover">

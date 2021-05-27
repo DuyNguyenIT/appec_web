@@ -19,7 +19,7 @@
                     <!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ asset('gian-vien') }}">Trang chủ</a></li>
+                            <li class="breadcrumb-item"><a href="{{ asset('giang-vien') }}">Trang chủ</a></li>
                             <li class="breadcrumb-item "><a href="{{ asset('/giang-vien/quy-hoach-danh-gia') }}">Nội dung
                                     đánh giá</a></li>
                             <li class="breadcrumb-item "><a href="#"></a> Tự luận</li>
@@ -55,16 +55,17 @@
                                         <b>Mã đề:</b> {{ $dethi->maDeVB }}
                                     </div>
                                 </div>
-                                <h3 class="card-title"></h3>
+                               
                                 <i> {{ $dethi->ghiChu }}</i>
+                                <div class="card-tools">
+                                    {{-- <a class="btn btn-primary"
+                                    href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/in-de-thuc-hanh/' . $dethi->maDe . '/' . $hocphan->maHocPhan) }}"><i
+                                        class="fas fa-download"></i></a> --}}
+                                        <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/' . Session::get('maCTBaiQH')) }}"
+                                        class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
+                                </div>
                             </div>
-                            <div class="card-tools">
-                                {{-- <a class="btn btn-primary"
-                                href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/in-de-thuc-hanh/' . $dethi->maDe . '/' . $hocphan->maHocPhan) }}"><i
-                                    class="fas fa-download"></i></a> --}}
-                                    <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/' . Session::get('maCTBaiQH')) }}"
-                                    class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
-                            </div>
+                           
                             <div class="card-body">
                                 @php
                                     $i = 1;
@@ -211,13 +212,13 @@
                                     <!-- /.card-header -->
                                 <div class="card-body" style="background-color: whitesmoke">
                                     <form
-                                        action="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/them-cau-hoi-de-thuc-hanh') }}"
+                                        action="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/them-cau-hoi-de-tu-luan') }}"
                                         method="post">
                                         @csrf
                                         <input type="text" name="maDe" value="{{ $dethi->maDe }}" hidden>
                                         <div class="form-group">
                                             <label for="">{{ __('SOs') }}:</label>
-                                            <select name="maCDR3" id="" class="form-control" required>
+                                            <select name="maCDR3" id="them_maCDR3" class="form-control" required>
                                                 @foreach ($cdr3 as $data)
                                                     <option value="{{ $data->maCDR3 }}">
                                                         {{ $data->maCDR3VB }}--{{ $data->tenCDR3 }}</option>
@@ -226,7 +227,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="">{{ __("ABET's SO") }}:</label>
-                                            <select name="maChuanAbet" id="" class="form-control">
+                                            <select name="maChuanAbet" id="them_maChuanAbet" class="form-control">
                                                 @foreach ($abet as $ab)
                                                     <option value="{{ $ab->maChuanAbet }}">
                                                         {{ $ab->maChuanAbetVB }}--{{ $ab->tenChuanAbet }}</option>
@@ -284,14 +285,7 @@
                                         <div class="form-group">
                                             <div class="form-group">
                                                 <label for="">Chọn số ý trả lời:</label>
-                                                <select name="" id="soTC" class="form-control">
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                    <option value="5">5</option>
-                                                    <option value="6">6</option>
-                                                </select>
+                                                <input type="number" min="1" max="20" id="soTC" class="form-control">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -387,10 +381,16 @@
             });
         })
 
-        $('#soTC').on('change', function() {
+        $('#soTC').on('keyup', function() {
             var soTC = this.value;
             console.log(soTC);
             var html = "";
+            if(soTC>20){
+                alert('Quá nhiều ý!');
+                $('#soTC').val(0);
+                $('#tbl-content').empty();
+                return;
+            }
             $('#tbl-content').empty();
             for (let index = 1; index <= soTC; index++) {
                 html += "<div class='form-group'>" +
@@ -409,6 +409,22 @@
                     filebrowserUploadMethod: 'form'
                 });
             }
+        });
+        $('#them_maCDR3').change(function () {     
+            var url='/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/get-abet-by-cdr3/'+$('#them_maCDR3').val();
+            $.ajax({
+                type: "get",
+                url: url,
+                success: function (data) {
+                    $('them_maChuanAbet').empty();
+                    var html='';
+                    data.forEach(element => {
+                        html+="<option value='"+element['maChuanAbet']+"'>"+element['maChuanAbetVB']+"--"+element['tenChuanAbet']+"</option>";
+                    });
+                    $('#them_maChuanAbet').empty();
+                    $('#them_maChuanAbet').append(html);
+                }
+            });
         });
 
     </script>

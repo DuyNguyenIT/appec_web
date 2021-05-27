@@ -161,8 +161,8 @@
                             },
                             {
                                 label: 'achieve(B)',
-                                backgroundColor: 'rgba(210, 214, 222, 1)',
-                                borderColor: 'rgba(210, 214, 222, 1)',
+                                backgroundColor: 'rgba(0, 255, 0, 0.7)',
+                                borderColor: 'rgba(0, 255, 0, 0.7)',
                                 pointRadius: false,
                                 pointColor: 'rgba(210, 214, 222, 1)',
                                 pointStrokeColor: '#c1c7d1',
@@ -171,8 +171,8 @@
                                 data: kha
                             }, {
                                 label: 'achieve(C)',
-                                backgroundColor: 'rgba(193,110,25, 0.8)',
-                                borderColor: 'rgba(193,110,25, 0.8)',
+                                backgroundColor: 'rgba(255, 255, 0, 1)',
+                                borderColor: 'rgba(255, 255, 0, 1)',
                                 pointRadius: false,
                                 pointColor: '#3b8bba',
                                 pointStrokeColor: 'rgba(60,141,188,1)',
@@ -181,8 +181,8 @@
                                 data: tb
                             }, {
                                 label: 'achieve(D)',
-                                backgroundColor: 'rgba(30,124,137, 0.8)',
-                                borderColor: 'rgba(30,124,137, 0.8)',
+                                backgroundColor: 'rgba(255,128,0, 0.8)',
+                                borderColor: 'rgba(255,128,0, 0.8)',
                                 pointRadius: false,
                                 pointColor: '#3b8bba',
                                 pointStrokeColor: 'rgba(60,141,188,1)',
@@ -191,8 +191,8 @@
                                 data: yeu
                             }, {
                                 label: 'Fail',
-                                backgroundColor: 'rgba(255,12,73, 0.8)',
-                                borderColor: 'rgba(255,12,73, 0.8)',
+                                backgroundColor: 'rgba(240,47,47, 1)',
+                                borderColor: 'rgba(240,47,47, 1)',
                                 pointRadius: false,
                                 pointColor: '#3b8bba',
                                 pointStrokeColor: 'rgba(60,141,188,1)',
