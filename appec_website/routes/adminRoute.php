@@ -44,6 +44,7 @@ Route::group(['middleware' =>'App\Http\Middleware\isAdmin'], function (){
         Route::post('sua', 'chuongTrinhDTController@sua');
         Route::get('xoa/{maCT}', 'chuongTrinhDTController@xoa');
         Route::get('/excel','chuongTrinhDTController@excel');
+        
     });
 
     //chuan dau ra
@@ -71,6 +72,17 @@ Route::group(['middleware' =>'App\Http\Middleware\isAdmin'], function (){
         Route::post('/sua','AdCDR2_ABETController@sua');
         Route::get('xoa/{id}','AdCDR2_ABETController@xoa');
     });
+
+
+    //chuan dau ra 2 <-> abet
+    Route::prefix('chuan-dau-ra3-abet')->group(function () {
+        Route::get('/','AdCDR3_ABETController@index');
+        Route::post('/them','AdCDR3_ABETController@them');
+        Route::post('/sua','AdCDR3_ABETController@sua');
+        Route::get('xoa/{id}','AdCDR3_ABETController@xoa');
+    });
+
+
     //loai hoc phan
     Route::group(['prefix' => 'loai-hoc-phan'], function () {
         Route::get('/', 'loaiHocPhanController@index');
@@ -79,7 +91,7 @@ Route::group(['middleware' =>'App\Http\Middleware\isAdmin'], function (){
         Route::get('xoa/{maLoaiHocPhan}', 'loaiHocPhanController@xoa');
     });
 
-    //hoc phan
+    ///quan-ly/hoc-phan
     Route::group(['prefix' => 'hoc-phan'], function () {
         Route::get('/', 'hocPhanController@index');
         Route::post('them', 'hocPhanController@them');
@@ -90,13 +102,17 @@ Route::group(['middleware' =>'App\Http\Middleware\isAdmin'], function (){
         Route::get('/hoc-phan-ct-dao-tao/{mahocphan}','hocPhanController@hocphan_ctdtao');
         Route::post('/chinh-sua-hoc-phan-ct-dao-tao','hocPhanController@sua_hocphan_ctdtao');
         Route::get('/xoa-hoc-phan-ct-dao-tao/{id}','hocPhanController@xoa_hocphan_ctdtao');
-        //de cuong
+        
+        ///quan-ly/hoc-phan/de-cuong-mon-hoc/
         Route::prefix('/de-cuong-mon-hoc')->group(function () {
             Route::get('/{maHocPhan}','hocPhanController@de_cuong_mon_hoc');
             Route::get('/in-de-cuong-mon-hoc/{maHocPhan}','AdWordController@in_de_cuong_mon_hoc');
             Route::get('/xoa-ket-qua-hoc-tap-mon-hoc/{maKQHT}','hocPhanController@xoa_ket_qua_hoc_tap_mon_hoc');
+            
             Route::post('/them_chuan_dau_ra_mon_hoc','hocPhanController@them_chuan_dau_ra_mon_hoc');
             Route::post('/sua_chuan_dau_ra_mon_hoc','hocPhanController@sua_chuan_dau_ra_mon_hoc');
+            Route::get('/xoa_chuan_dau_ra_mon_hoc/{id}','hocPhanController@xoa_chuan_dau_ra_mon_hoc');
+
             Route::post('/sua_mo_ta_mon_hoc','hocPhanController@them_mo_ta_hoc_phan');
             Route::post('/sua_yeu_cau_mon_hoc','hocPhanController@them_yeu_cau_hoc_phan');
             Route::post('/sua_giao_trinh','hocPhanController@them_giao_trinh');
@@ -109,8 +125,10 @@ Route::group(['middleware' =>'App\Http\Middleware\isAdmin'], function (){
             Route::post('/them_noi_dung_muc_chuong','hocPhanController@them_muc');
             Route::post('/them_phuong_phap_danh_gia','hocPhanController@them_hoc_phan_loaiHTDG');
         });
+
         // Route::post('sua/{id}', '');
-        // Route::post('xoa/{id}', '');
+        // Route::post('xoa/{id}', '');\
+
     });
 
     //khoi kien thuc

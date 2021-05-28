@@ -24,7 +24,7 @@ class hocPhan_kqHTHP extends Model
             $y->on('kqht_hp.maKQHT','=','hocphan_kqht_hp.maKQHT')
             ->where('kqht_hp.isDelete',false);
         })
-        ->orderBy('kqht_hp.maKQHTVB')
+        ->orderBy('kqht_hp.maKQHT')
         ->join('cdr_cd3',function($t){
             $t->on('cdr_cd3.maCDR3','=','hocphan_kqht_hp.maCDR3')
             ->where('cdr_cd3.isDelete',false);

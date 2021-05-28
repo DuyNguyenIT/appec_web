@@ -187,7 +187,13 @@
                         <li class="nav-item">
                             <a href="{{ asset('/quan-ly/chuan-dau-ra2-abet') }}" class="nav-link">
                                 <i class="nav-icon fas fa-book-reader"></i>
-                                <p>{{ __('Correlation student outcome and abet') }}</p>
+                                <p>CLOs level2 <->ABET's SOs</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ asset('/quan-ly/chuan-dau-ra3-abet') }}" class="nav-link">
+                                <i class="nav-icon fas fa-book-reader"></i>
+                                <p>CLOs level 3 <->ABET's SOs</p>
                             </a>
                         </li>
                         <li class="nav-item">

@@ -39,6 +39,15 @@
                         <div class="card">
                            
                             <div class="card-header">
+                                <h3 class="card-title"></h3>
+                                <div class="card-tools">
+                                    <a class="btn btn-primary"
+                                    href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/in-de-thuc-hanh/' . $dethi->maDe . '/' . $hocphan->maHocPhan) }}">
+                                    <i class="fas fa-download"></i></a>
+                                    <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/' . Session::get('maCTBaiQH')) }}"
+                                    class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
+                                </div>
+
                                 <div class="row">
                                     <div class="col-md-5">
                                         <b>Trường: </b>Đại học Trà Vinh <br>
@@ -57,13 +66,7 @@
                                 <h3 class="card-title"></h3>
                                 <i> {{ $dethi->ghiChu }}</i>
                             </div>
-                            <div class="card-tools">
-                                {{-- <a class="btn btn-primary"
-                                href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/in-de-thuc-hanh/' . $dethi->maDe . '/' . $hocphan->maHocPhan) }}">
-                                Print</a> --}}
-                                <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/' . Session::get('maCTBaiQH')) }}"
-                                class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
-                            </div>
+                            
                             <div class="card-body">
                                 @php
                                     $i = 1;

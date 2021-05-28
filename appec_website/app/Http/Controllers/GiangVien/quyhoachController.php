@@ -380,6 +380,10 @@ class quyhoachController extends Controller
             //------------------------------thực hành
             if ($maLoaiHTDG->maLoaiHTDG=="T3") { 
                 $dethi=deThi::where('isDelete',false)->where('maCTBaiQH',$maCTBaiQH)->get();
+                foreach ($dethi as  $dt) {
+                    $sch=dethi_cauhoituluan::where('maDe',$dt->maDe)->distinct(['maCauHoi','maDe'])->count('maCauHoi');
+                    $dt->cauHoiHienCo=$sch;
+                }
                 return view('giangvien.quyhoach.noidungdanhgia.thuchanh.xemnddanhgiathuchanh',compact('dethi','maCTBaiQH'));
             }
 

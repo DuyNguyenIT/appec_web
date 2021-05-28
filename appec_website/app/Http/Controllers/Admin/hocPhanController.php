@@ -14,6 +14,7 @@ use App\Models\ctDaoTao;
 use App\Models\ctKhoiKT;
 use App\Models\bacDaoTao;
 use App\Models\cdr2_abet;
+use App\Models\cdr3_abet;
 use App\Models\chuan_abet;
 use App\Models\ppGiangDay;
 use App\Models\chuong_kqht;
@@ -63,6 +64,8 @@ class hocPhanController extends Controller
         CommonController::success_notify('Thêm thành công','Added successfully');
         return redirect('quan-ly/hoc-phan');
     }
+
+
     public function them(Request $request) //thêm học phần mới
     {
         //tính tổng số tín chỉ
@@ -75,6 +78,7 @@ class hocPhanController extends Controller
         CommonController::success_notify('Thêm thành công','Added successfully');
         return redirect('quan-ly/hoc-phan');
     }
+
      //Sửa học phần
      public function sua(Request $request)
      {
@@ -82,10 +86,20 @@ class hocPhanController extends Controller
              $tclt=$request->tinChiLyThuyet;
              $tcth=$request->tinChiThucHanh;
              $tongtc=$tclt+$tcth;
-             //echo $tongtc;
-             $hp=hocPhan::updateOrCreate(['maHocPhan'=>$request->maHocPhan],['tenHocPhan'=>$request->tenHocPhan,'tenHocPhanEN'=>$request->tenHocPhanEN,'tongSoTinChi'=>$tongtc,'tinChiLyThuyet'=>$request->tinChiLyThuyet,'tinChiThucHanh'=>$request->tinChiThucHanh,'moTaHocPhan'=>$request->moTaHocPhan,'maCTKhoiKT'=>$request->maCTKhoiKT] );
-             
-             CommonController::success_notify('Thêm thành công','Added successfully');
+             //hocPhan::updateOrCreate(['maHocPhan'=>$request->maHocPhan],['tenHocPhan'=>$request->tenHocPhan,'tenHocPhanEN'=>$request->tenHocPhanEN,'tongSoTinChi'=>$tongtc,'tinChiLyThuyet'=>$request->tinChiLyThuyet,'tinChiThucHanh'=>$request->tinChiThucHanh,'moTaHocPhan'=>$request->moTaHocPhan,'maCTKhoiKT'=>$request->maCTKhoiKT] );
+             //dòng trên không chạy nên dùng code hướng đối tượng
+             $hp=hocPhan::find($request->maHocPhan);
+             if($hp){
+                $hp->tenHocPhan=$request->tenHocPhan;
+                $hp->tenHocPhanEN=$request->tenHocPhanEN;
+                $hp->tongSoTinChi=$tongtc;
+                $hp->tinChiLyThuyet=$request->tinChiLyThuyet;
+                $hp->tinChiThucHanh=$request->tinChiThucHanh;
+                $hp->moTaHocPhan=$request->moTaHocPhan;
+                $hp->maCTKhoiKT=$request->maCTKhoiKT;
+                $hp->update();
+                CommonController::success_notify('Sửa thành công','Edited successfully');
+             }
              return redirect('/quan-ly/hoc-phan');
          } catch (\Throwable $th) {
             // dd ("lỗi ".$th); hiện lỗi thử
@@ -302,11 +316,10 @@ class hocPhanController extends Controller
             //tim tuong quan chuan dau ra 2 và abet
             $cdr3=CDR3::where('maCDR3',$maCDR3)->first();
             if($cdr3){
-                $cdr2_abet=cdr2_abet::where('maCDR2',$cdr3->maCDR2)->get();
+                $cdr3_abet=cdr3_abet::where('maCDR3',$cdr3->maCDR3)->first();
                 //luu ket qua chuan dau ra theo tuong quan abet
-                foreach ($cdr2_abet as $item) {
-                    hocPhan_kqHTHP::create(['maHocPhan'=>$request->maHocPhan,'maKQHT'=>$kqht->maKQHT,'maCDR3'=>$cdr3->maCDR3,'maChuanAbet'=>$item->maChuanAbet]);
-                }
+                hocPhan_kqHTHP::create(['maHocPhan'=>$request->maHocPhan,'maKQHT'=>$kqht->maKQHT,'maCDR3'=>$cdr3->maCDR3,'maChuanAbet'=>$cdr3_abet->maChuanAbet]);
+                
             }else{
                 CommonController::warning_notify('Không tìm thấy CDR3','LV3 outcome is not exits');
                 return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
@@ -327,6 +340,14 @@ class hocPhanController extends Controller
         CommonController::success_notify('Thêm thành công','Added successfully');
         return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
     }
+
+    public function xoa_chuan_dau_ra_mon_hoc($id)
+    {
+        hocPhan_kqHTHP::find($id)->delete();
+        CommonController::success_notify('Xóa thành công','Deleted successfully');
+        return redirect('/quan-ly/hoc-phan/de-cuong-mon-hoc/'.session::get('maHocPhan'));
+    }
+
     public function xoa_ket_qua_hoc_tap_mon_hoc($maKQHT)
     {
         //kiem tra kqht co duoc su dung

@@ -205,7 +205,7 @@
                                                                                                         @foreach ($ch->muc as $m)
                                                                                                             <li><span><i
                                                                                                                         class="far fa-file"></i><a 
-                                                                                                                        href="{{ asset('giang-vien/hoc-phan/chuong/muc/cau-hoi-tu-luan/' . $m->id.'/'.$x->maCTBaiQH) }}">
+                                                                                                                        href="{{ asset('giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/ngan-hang-cau-hoi-tu-luan/' . $m->id.'/'.$x->maCTBaiQH) }}">
                                                                                                                         {{ $m->maMucVB }}
                                                                                                                         {{ $m->tenMuc }}</a></span>
                                                                                                             </li>

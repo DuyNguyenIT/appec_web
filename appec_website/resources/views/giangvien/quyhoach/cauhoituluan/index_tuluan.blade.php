@@ -52,12 +52,12 @@
                                 </h3>
 
 
-                                <!-- Modal -->
+                                <!-- Modal add-->
                                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-lg" role="document">
                                         <form
-                                            action="{{ asset('/giang-vien/hoc-phan/chuong/muc/cau-hoi-tu-luan/them') }}"
+                                            action="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/ngan-hang-cau-hoi-tu-luan/cau-hoi-tu-luan/them') }}"
                                             method="post">
                                             @csrf
                                             <div class="modal-content">
@@ -145,7 +145,7 @@
                                                             </button>
 
                                                             <a class="btn btn-danger" onclick="return confirm('Confirm?')"
-                                                                href="{{ asset('/giang-vien/hoc-phan/chuong/muc/cau-hoi-tu-luan/xoa/' . $x->maCauHoi) }}">
+                                                                href="{{ asset('giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/ngan-hang-cau-hoi-tu-luan/cau-hoi-tu-luan/xoa/' . $x->maCauHoi) }}">
                                                                 <i class="fas fa-trash"></i>
                                                             </a>
                                                         </div>
@@ -157,7 +157,7 @@
                                                             aria-hidden="true">
                                                             <div class="modal-dialog modal-lg" role="document">
                                                                 <form
-                                                                    action="{{ asset('/giang-vien/hoc-phan/chuong/muc/cau-hoi-tu-luan/sua') }}"
+                                                                    action="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/ngan-hang-cau-hoi-tu-luan/cau-hoi-tu-luan/sua') }}"
                                                                     method="post">
                                                                     @csrf
                                                                     <div class="modal-content">

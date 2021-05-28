@@ -8,7 +8,7 @@
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <h1 class="m-0 text-dark">
-                            Essay Exam<noscript></noscript>
+                           {{ __('Essay Exam') }}<noscript></noscript>
                             <nav></nav>
                         </h1>
                     </div>
@@ -155,6 +155,7 @@
                                                             </button>
                                                             </div>
                                                             <div class="modal-body">
+                                                                <input type="text" name="maDe" value="{{ $data->maDe }}" hidden>
                                                                 <div class="form-group">
                                                                     <label for="">{{ __('Exame ID') }}</label>
                                                                     <input type="text" class="form-control" name="maDeVB" value="{{ $data->maDeVB }}" required>

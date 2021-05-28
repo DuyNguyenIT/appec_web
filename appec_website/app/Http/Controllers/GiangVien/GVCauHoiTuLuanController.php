@@ -12,12 +12,13 @@ use App\Models\noiDungQH;
 use App\Models\cau_hoi_ndqh;
 use Illuminate\Http\Request;
 use App\Models\chuong_cauhoi;
+use App\Models\dethi_cauhoituluan;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\CommonController;
 
 class GVCauHoiTuLuanController extends Controller
 {
-    public function index($maMuc,$maCTBaiQH)
+    public function index($maMuc,$maCTBaiQH)   //Đã test
     {
         Session::put('maMuc',$maMuc);
         Session::put('maCTBaiQH',$maCTBaiQH);
@@ -32,15 +33,15 @@ class GVCauHoiTuLuanController extends Controller
             $ndqh=[];
         }
         $kqht=kqHTHP::get_kqht_by_mahocphan($chuong->maHocPhan);
-        $cauhoi =cauHoi::where('id_muc',$maMuc)->where('maLoaiHTDG','T1')->get();
+        $cauhoi =cauHoi::where('id_muc',$maMuc)->where('maGV',session::get('maGV'))->where('maLoaiHTDG','T1')->get();
       
         return view('giangvien.quyhoach.cauhoituluan.index_tuluan',
         compact('hocphan','kqht','cauhoi','muc','chuong','ndqh'));
     }
-    public function them(Request $request)
+    public function them(Request $request)  //Đã test
     {
         //select kqht tu noi dung quy hoach
-        $ndqh=noiDungQH::where($request->maNoiDungQH)->first();
+        $ndqh=noiDungQH::where('maNoiDungQH',$request->maNoiDungQH)->first();
         if($ndqh){
             //thêm câu hỏi mới, điểm câu hỏi thêm mặc định 12
             cauHoi::create(['noiDungCauHoi'=>$request->noiDungCauHoi,'diemCauHoi'=>12,
@@ -54,10 +55,10 @@ class GVCauHoiTuLuanController extends Controller
         }else{
             CommonController::success_notify('Không tìm thấy nội dung quy hoạch!','Can not found assesment contents');
         }
-        return redirect('/giang-vien/hoc-phan/chuong/muc/cau-hoi-tu-luan/'.Session::get('maMuc'));
+        return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/ngan-hang-cau-hoi-tu-luan/'.Session::get('maMuc').'/'.Session::get('maCTBaiQH'));
     }
 
-    public function sua(Request $request)
+    public function sua(Request $request)  //Đã test
     {
         $ndqh=noiDungQH::where($request->maNoiDungQH)->first();
         if($ndqh){
@@ -69,19 +70,22 @@ class GVCauHoiTuLuanController extends Controller
         }else{
             CommonController::success_notify('Không tìm thấy nội dung quy hoạch!','Can not found assesment contents');
         }
-        return redirect('/giang-vien/hoc-phan/chuong/muc/cau-hoi-tu-luan/'.Session::get('maMuc'));
+        return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/ngan-hang-cau-hoi-tu-luan/'.Session::get('maMuc').'/'.Session::get('maCTBaiQH'));
+
     }
 
-    public function xoa($maCauHoi)
+    public function xoa($maCauHoi)  //Đã test
     {
         if(dethi_cauhoituluan::where('maCauHoi',$maCauHoi)->count('maCauHoi')>0){
             CommonController::warning_notify('Câu hỏi đã được sử dụng trong đề thi, không thể xóa','The question was used in an examination!');
-            return redirect('/giang-vien/hoc-phan/chuong/muc/cau-hoi-tu-luan/'.Session::get('maMuc'));
+            return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/ngan-hang-cau-hoi-tu-luan/'.Session::get('maMuc').'/'.Session::get('maCTBaiQH'));
+
         }else{
             cau_hoi_ndqh::where('maCauHoi',$maCauHoi)->delete();
             cauHoi::where('maCauHoi',$maCauHoi)->delete();
             CommonController::success_notify('xóa thành công!','Deleted successfully');
-            return redirect('/giang-vien/hoc-phan/chuong/muc/cau-hoi-tu-luan/'.Session::get('maMuc'));
+            return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/ngan-hang-cau-hoi-tu-luan/'.Session::get('maMuc').'/'.Session::get('maCTBaiQH'));
+
         }
     }
 }

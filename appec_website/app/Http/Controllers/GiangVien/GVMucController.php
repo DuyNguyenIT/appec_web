@@ -90,7 +90,7 @@ class GVMucController extends Controller
             $ndqh=[];
         }
         $kqht=kqHTHP::get_kqht_by_mahocphan($chuong->maHocPhan);
-        $cauhoi =cauHoi::where('id_muc',$maMuc)->where('maLoaiHTDG','T1')->get();
+        $cauhoi =cauHoi::where('id_muc',$maMuc)->where('maGV',session::get('maGV'))->where('maLoaiHTDG','T1')->get();
       
         return view('giangvien.hocphan.chuong.muc.cauhoi.index_tuluan',
         compact('hocphan','kqht','cauhoi','muc','chuong','ndqh'));

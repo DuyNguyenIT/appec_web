@@ -17,7 +17,7 @@ use App\Http\Controllers\CommonController;
 
 class GVCauHoiThucHanhController extends Controller
 {
-    
+
     public function index(Request $request,$maMuc,$maCTBaiQH) //-OK
     {
         //luu session
@@ -88,7 +88,7 @@ class GVCauHoiThucHanhController extends Controller
         return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/ngan-hang-cau-hoi-thuc-hanh/'.Session::get('maMuc').'/'.Session::get('maCTBaiQH'));
     }
 
-    public function xoa($maCauHoi)
+    public function xoa($maCauHoi) //--OK
     {
         if(dethi_cauhoituluan::where('maCauHoi',$maCauHoi)->count('maCauHoi')>0){
             CommonController::warning_notify('Câu hỏi đã được sử dụng trong đề thi, không thể xóa','The question was used in an examination!');

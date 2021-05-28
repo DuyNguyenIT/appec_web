@@ -47,10 +47,10 @@
                                 <h3 class="card-title">
                                 </h3>
                                 <div class="card-tools">
-                                    {{-- <a class="btn btn-primary"
+                                    <a class="btn btn-primary"
                                         href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/in-de-trac-nghiem/' . $dethi->maDe . '/' . $hocphan->maHocPhan) }}">
                                         <i class="fas fa-download"></i>
-                                    </a> --}}
+                                    </a>
                                     <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/' . Session::get('maCTBaiQH')) }}"
                                         class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
                                 </div>

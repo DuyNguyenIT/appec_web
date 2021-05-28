@@ -156,7 +156,7 @@
                                                 <td>{{ $hp->maHocPhan }}</td>
                                                 <td>
                                                     @if (session::has('language') && session::get('language')=='vi')
-                                                    {{ $hp->tenHocPhan }}
+                                                    {{ $hp->tenHocPhan }} - ({{ $hp->tenHocPhanEN }})
                                                     @else
                                                     {{ $hp->tenHocPhanEN }}
                                                     @endif

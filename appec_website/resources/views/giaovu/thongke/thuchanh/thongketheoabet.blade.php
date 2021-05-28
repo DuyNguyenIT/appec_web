@@ -41,74 +41,12 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="" class="table table-bordered table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>STT</th>
-                                            <th>CĐR</th>
-                                            <th>Chuẩn đầu ra CDIO</th>
-                                            <th>85-100%</th>
-                                            <th>75-85%</th>
-                                            <th>50-75%</th>
-                                            <th>25-50%</th>
-                                            <th>0-25%</th>
-                                            <th>Tổng</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @php
-                                            $i = 1;
-                                        @endphp
-                                        @foreach ($bieuDo as $bd)
-                                            @php
-                                                $sum = 0;
-                                                for ($t = 1; $t < 7; $t++) {
-                                                    # code...
-                                                    $sum += intval($bd[$t]);
-                                                }
-                                            @endphp
-                                            <tr>
-                                                <td>{{ $i++ }}</td>
-                                                <td>{{ $bd[0] }}</td>
-                                                <td>{{ $bd[1] }}</td>
-                                                <td>{{ $bd[2] }}</td>
-                                                <td>{{ $bd[3] }}</td>
-                                                <td>{{ $bd[4] }}</td>
-                                                <td>{{ $bd[5] }}</td>
-                                                <td>{{ $bd[6] }}</td>
-                                                <td>{{ $sum }}</td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                    <tfoot>
-                                    </tfoot>
-                                </table>
+                                @include('layouts.thongke.thongke_abet')
                             </div>
                             <!-- /.card-body -->
                         </div>
                         <!-- /.card -->
-                        <!-- STACKED BAR CHART -->
-                        <div class="card card-success">
-                            <div class="card-header">
-                                <h3 class="card-title">Biểu đồ</h3>
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart">
-                                    <canvas id="barChart"
-                                        style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                                </div>
-                            </div>
-                            <!-- /.card-body -->
-                        </div>
-                        <!-- /.card -->
+                        @include('layouts.thongke.bieudo')
                     </div>
                     <!-- /.col -->
                 </div>

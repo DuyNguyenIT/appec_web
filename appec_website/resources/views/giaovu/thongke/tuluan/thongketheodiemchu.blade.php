@@ -21,9 +21,6 @@
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
                             <li class="breadcrumb-item "><a href="{{ asset('/giao-vu/thong-ke') }}">Thống kê</a></li>
-                            <li class="breadcrumb-item "><a
-                                    href="thongketheohocphan.html">ct</a>
-                            </li>
                             <li class="breadcrumb-item active">Thống kê theo điểm chữ</li>
                         </ol>
                     </div><!-- /.col -->
@@ -43,58 +40,12 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="" class="table table-bordered table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>STT</th>
-                                            <th>Điểm chữ</th>
-                                            <th>Số lượng</th>
-                                            <th>Tỉ lệ (%)</th>
-                                            <th>Tỉ lệ tích lũy</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @for ($i = 0; $i < 8; $i++)
-                                            <tr>
-                                                <td>{{ $i + 1 }}</td>
-                                                <td>
-                                                    {{ $chu[$i] }}
-                                                </td>
-                                                <td>{{ $diemChu[$i] }}</td>
-                                                <td>{{ $tiLe[$i] }}%</td>
-                                                <td></td>
-                                            </tr>
-                                        @endfor
-                                    </tbody>
-                                    <tfoot>
-                                    </tfoot>
-                                </table>
+                               @include('layouts.thongke.thongke_diemchu')
                             </div>
                             <!-- /.card-body -->
                         </div>
                         <!-- /.card -->
-                        <!-- STACKED BAR CHART -->
-                        <div class="card card-success">
-                            <div class="card-header">
-                                <h3 class="card-title">Biểu đồ</h3>
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart">
-                                    <canvas id="stackedBarChart"
-                                        style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                                </div>
-                            </div>
-                            <!-- /.card-body -->
-                        </div>
-                        <!-- /.card -->
+                        @include('layouts.thongke.bieudo')
                     </div>
                     <!-- /.col -->
                 </div>

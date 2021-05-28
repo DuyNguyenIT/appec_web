@@ -2,15 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\giangVien;
-use App\Models\users;
-use Illuminate\Http\Request;
 use Session;
+use App\Models\users;
+use App\Models\hocPhan;
+use App\Models\cdr3_abet;
+use App\Models\giangVien;
+use Illuminate\Http\Request;
+use App\Models\hocPhan_kqHTHP;
+use App\Models\phuongAnTracNghiem;
+use App\Http\Controllers\CommonController;
 
 class loginController extends Controller
 {
     public function index()
     {
+    //    $hocPhan=hocPhan::pluck('maHocPhan');
+    //    $hp_kqht=phuongAnTracNghiem::all();
+    //    foreach ($hp_kqht as $key => $value) {
+    //        $cdr3_abet=cdr3_abet::where('maCDR3',$value->maCDR3)->first();
+    //        if($cdr3_abet){
+    //             $value->maChuanAbet=$cdr3_abet->maChuanAbet;
+    //             $value->update();
+    //        }
+    //    }
+        // foreach ($hp_kqht as $key => $value) {
+        //     if(hocPhan_kqHTHP::where('maHocPhan',$value->maHocPhan)
+        //     ->where('maKQHT',$value->maKQHT)->where('maCDR3',$value->maCDR3)
+        //     ->where('maChuanAbet',$value->maChuanAbet)
+        //     ->count(['maHocPhan'])>1)
+        //     {
+        //          $value->delete();
+        //     }
+        // }
+        //return $hp_kqht;
         Session::put('language','vi');
         if(Session::get('user_permission') == 1)	
             return redirect('/quan-ly');
@@ -37,19 +61,19 @@ class loginController extends Controller
             }
             Session::put('user_permission',$Users->permission);
             Session::put('user_name',$Users->username);
-            if($Users->permission == 1)	 //quản trị
+            if($Users->permission == 1)	 //quan tri
                 return redirect('/quan-ly'); 
-            if($Users->permission == 2){  //giảng viên
+            if($Users->permission == 2){  //giang vien
                 $gv=giangVien::where('username',$request->username)->first();
                 Session::put('maGV',$gv->maGV);
                 Session::put('hoGV',$gv->hoGV);
                 Session::put('tenGV',$gv->tenGV);
                 return redirect('/giang-vien');
             }    
-            if($Users->permission== 3){   //giáo vụ
+            if($Users->permission== 3){   //giao vu
                 return redirect('/giao-vu');
             }
-            if($Users->permission==4){//bộ môn
+            if($Users->permission==4){//bo mon
                 return redirect('/bo-mon');
             }
        }

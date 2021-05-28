@@ -110,17 +110,15 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiangVien'], function (){
                     });
 
                     //ngan hang cau hoi tu luan
-
                     Route::prefix('ngan-hang-cau-hoi-tu-luan')->group(function () {
-                        Route::get('/cau-hoi-tu-luan/{maMuc}/{maCTBaiQH}','GVCauHoiTuLuanController@index');
+                        Route::get('/{maMuc}/{maCTBaiQH}','GVCauHoiTuLuanController@index');
                         Route::post('/cau-hoi-tu-luan/them','GVCauHoiTuLuanController@them');
                         Route::post('/cau-hoi-tu-luan/sua','GVCauHoiTuLuanController@sua');
                         Route::get('/cau-hoi-tu-luan/xoa/{maCauHoi}','GVCauHoiTuLuanController@xoa');
                         Route::get('/get-cau-hoi-tu-luan-by-mamuc/{maMuc}','GVMucController@get_cau_hoi_tu_luan_by_mamuc');
                     });
-
+                    
                     //ngan hag cau hoi thuc hanh
-
                     Route::prefix('ngan-hang-cau-hoi-thuc-hanh')->group(function () {
                         Route::get('/get-cau-hoi-thuc-hanh-by-mamuc/{maMuc}/{maCTBaiQH}','GVMucController@get_cau_hoi_thuc_hanh_by_mamuc');
                         Route::get('/{maMuc}/{maCTBaiQH}','GVCauHoiThucHanhController@index');
@@ -139,6 +137,7 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiangVien'], function (){
                     Route::prefix('xem-noi-dung-danh-gia')->group(function () {
                          //ngân hàng câu hỏi
                          Route::get('ngan-hang-cau-hoi', 'GVChuongController@ngan_hang_cau_hoi');
+                         
                          //tự luận
                          Route::get('/cau-truc-de-tu-luan/{maDe}', 'GVDeThiTuLuanController@cau_truc_de_luan'); //
                          Route::post('/them-cau-hoi-de-tu-luan','GVDeThiTuLuanController@them_cau_hoi_de_luan'); //
@@ -147,6 +146,7 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiangVien'], function (){
                          Route::post('sua-phuong-an-tu-luan', 'GVDeThiTuLuanController@chinh_sua_phuong_an_tu_luan');
                          Route::post('/sua-thong-tin-de-tu-luan','GVDeThiTuLuanController@sua_thong_tin_de_luan');
                          Route::get('/xoa-de-tu-luan/{maDe}', 'GVDeThiTuLuanController@xoa_de_tu_luan');
+                         
                          //thực hành
                          Route::get('/cau-truc-de-thuc-hanh/{maDe}', 'GVDeThiThucHanhController@cau_truc_de_thuc_hanh');
                          Route::get('/xoa-de-thuc-hanh/{maDe}','GVDeThiThucHanhController@xoa_de_thuc_hanh');
@@ -154,6 +154,7 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiangVien'], function (){
                          Route::get('/in-de-thuc-hanh/{maDe}/{maHocPhan}','GVWordController@in_de_thi_thuc_hanh');
                          Route::get('/xoa-cau-hoi-de-thuc-hanh/{maDe}/{maCauHoi}','GVDeThiThucHanhController@xoa_cau_hoi_de_thuc_hanh');
                          Route::post('sua-phuong-an-thuc-hanh', 'GVDeThiThucHanhController@chinh_sua_phuong_an_thuc_hanh');
+                         
                          //trắc nghiệm
                          Route::get('/cau-truc-de-trac-nghiem/{maDe}','GVDeThiTracNghiemController@cau_truc_de_trac_nghiem');
                          Route::post('/them-cau-hoi-trac-nghiem','GVDeThiTracNghiemController@them_cau_hoi_de_trac_nghiem');
@@ -161,6 +162,7 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiangVien'], function (){
                          Route::get('/xoa-cau-hoi-trac-nghiem/{maCauHoi}','GVDeThiTracNghiemController@xoa_cau_hoi_de_trac_nghiem');
                          Route::get('/xoa-de-thi-trac-nghiem/{maDe}','GVDeThiTracNghiemController@xoa_de_thi');
                          Route::post('sua-thong-tin-de-trac-nghiem','GVDeThiTracNghiemController@chinh_sua_thong_tin_de');
+                         
                          //xem nội dung
                          Route::get('/{maCTBaiQH}', 'quyhoachController@xem_noi_dung_danh_gia');
                     });
