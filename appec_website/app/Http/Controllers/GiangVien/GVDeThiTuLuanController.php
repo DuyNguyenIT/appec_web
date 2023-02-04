@@ -8,6 +8,7 @@ use App\Models\deThi;
 use App\Models\cauHoi;
 use App\Models\chuong;
 use App\Models\hocPhan;
+use App\Models\cdr3_abet;
 use App\Models\chuan_abet;
 use App\Models\phieu_cham;
 use Illuminate\Http\Request;
@@ -25,6 +26,15 @@ class GVDeThiTuLuanController extends Controller
 
     public function them_de_thi_tu_luan_submit(Request $request)  //thêm tiêu đèn, ngày thi, giờ thi,...
     {   
+        //thay viet code
+        $madevb1= deThi::where('maDeVB',$request->maDeVB)->where('maCTBaiQH',Session::get('maCTBaiQH'))->first();
+       // return $madevb1;
+        if($madevb1)
+        {
+            CommonController::warning_notify('Mã đề bị trùng!!!!','Duplicate exam code!!!!');
+            return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/'.Session::get('maCTBaiQH'));
+        }
+        //thay viet code
         deThi::create(['maDeVB'=>$request->maDeVB,'soCauHoi'=>$request->soCauHoi,'tenDe'=>$request->tenDe,'thoiGian'=>$request->thoiGian,'ghiChu'=>$request->ghiChu,'maCTBaiQH'=>Session::get('maCTBaiQH')]);
         $dethi=deThi::orderBy('maDe','desc')->first();
         raDe::create(['maDe'=>$dethi->maDe,'maGV'=>session::get('maGV'),'maHocPhan'=>session::get('maHocPhan'),'maLop'=>session::get('maLop')]);
@@ -74,6 +84,7 @@ class GVDeThiTuLuanController extends Controller
         ##tạo mảng các câu hỏi đã chọn->chỉ duyệt những câu hỏi chưa được chọn
         $cauhoidachon=dethi_cauhoituluan::where('maDe',$maDe)->distinct('maCauHoi')->pluck('maCauHoi');
          #thông tin câu hỏi
+         
          $cauhoi=[];
          foreach ($muc as  $value) {
              $temp=cauHoi::where('isdelete',false)->where('maGV',session::get('maGV'))->where('id_muc',$value->id)
@@ -120,8 +131,10 @@ class GVDeThiTuLuanController extends Controller
         
         //duyêt mảng phương án
         for ($i=0; $i < count($request->phuongAn); $i++) { 
-            # lưu phương án tự luận
-            phuongAnTuLuan::create(['noiDungPA'=>$request->phuongAn[$i],'diemPA'=>$request->diem[$i],'maCDR3'=>$request->maCDR3]);
+            //tim su tuong quan cdr3 va abet
+            $cdr3_abet=cdr3_abet::where('maCDR3',$request->maCDR3)->first();
+            $maChuanAbet = ($cdr3_abet) ? $cdr3_abet->maChuanAbet : 1 ;
+            phuongAnTuLuan::create(['noiDungPA'=>$request->phuongAn[$i],'diemPA'=>$request->diem[$i],'maCDR3'=>$request->maCDR3,'maChuanAbet'=>$maChuanAbet]);
             # lưu maCauHoi, maDe, maPhuongAn vào nội dung đề thi
             $pa=phuongAnTuLuan::orderBy('id','desc')->first();
             dethi_cauhoituluan::create(['maDe'=>$maDe,'maCauHoi'=>$request->maCauHoi,'maPATL'=>$pa->id]);
@@ -136,27 +149,40 @@ class GVDeThiTuLuanController extends Controller
       
         //kiem tra neu cau hoi da duoc su dung trong phieu cham thi khong the xoa
         //maDe->maPhieuCham?
-        if(phieu_cham::where('maDe',$maDe)->count()>0){
+        if(count(phieu_cham::where('maDe',$maDe)->get())>0){
             CommonController::warning_notify('Đề thi đã được sử dụng, không thể xóa câu hỏi!','The examination is being used, you can not delete question');
             return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/cau-truc-de-tu-luan/'.$maDe);
         }
-        $cauhoi=dethi_cauhoituluan::where('maDe',$maDe)->where('maCauHoi',$maCauHoi)->first();
+        $cauhoi=dethi_cauhoituluan::where('maDe',$maDe)->where('maCauHoi',$maCauHoi)->get();
         if($cauhoi){
-            //kiem tra neu co phuong an duoc su dung trong phieu cham thi khong cho xoa
-            $phuong_an=phuongAnTuLuan::where('id',$cauhoi->maPATL)->get();
-            foreach($phuong_an as $pa){
-                if(danhgia_tuluan::where('maPATL',$pa->id)->count()>0){
-                    CommonController::warning_notify('Có tồn tại phương án trong phiếu chấm!',"There are answers of the question in a answer sheet!");
-                    return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/cau-truc-de-tu-luan/'.$maDe);
+            foreach ($cauhoi as $ch) {
+                # code...
+                 //kiem tra neu co phuong an duoc su dung trong phieu cham thi khong cho xoa
+                if($ch){
+                    $phuong_an=phuongAnTuLuan::where('id',$ch->maPATL)->get();
+                    foreach($phuong_an as $pa){
+                        if(danhgia_tuluan::where('maPATL',$pa->id)->count()>0){
+                            CommonController::warning_notify('Có tồn tại phương án trong phiếu chấm!',"There are answers of the question in a answer sheet!");
+                            return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/cau-truc-de-tu-luan/'.$maDe);
+                        }
+                    }
+                }
+                 
+            }
+           
+            //dong for de xoa
+            foreach ($cauhoi as $key => $ch) {
+                $phuong_an=phuongAnTuLuan::where('id',$ch->maPATL)->get();
+                //tien hanh xoa phuong an
+                foreach($phuong_an as $pa){
+                    if($pa){
+                        dethi_cauhoituluan::where('maCauHoi',$ch->maCauHoi)->where('maDe',$maDe)->where('maPATL',$pa->id)->delete();
+                        $pa->delete();
+                    }
                 }
             }
-            //tien hanh xoa phuong an
-            foreach($phuong_an as $pa){
-                if($pa){
-                    dethi_cauhoituluan::where('maCauHoi',$cauhoi->maCauHoi)->where('maDe',$maDe)->where('maPATL',$pa->id)->delete();
-                    $pa->delete();
-                }
-            }
+           
+           
             alert()->success("Deleting successfully",'Message');
             CommonController::success_notify('Đã xóa câu hỏi!',"Deleting successfully");
             return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/cau-truc-de-tu-luan/'.$maDe);
@@ -173,7 +199,9 @@ class GVDeThiTuLuanController extends Controller
             $patl->noiDungPA=$request->noiDungPA;
             $patl->diemPA=$request->diemPA;
             $patl->maCDR3=$request->maCDR3;
-            $patl->maChuanAbet=$request->maChuanAbet;
+            $cdr3_abet=cdr3_abet::where('maCDR3',$request->maCDR3)->first();
+            $maChuanAbet = ($cdr3_abet) ? $cdr3_abet->maChuanAbet : 1 ;
+            $patl->maChuanAbet=$maChuanAbet;
             $patl->update();
         }
         return back();
@@ -198,7 +226,10 @@ class GVDeThiTuLuanController extends Controller
                 return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/'.Session::get('maCTBaiQH'));
             } else {
                 deThi::updateOrCreate(['maDe'=>$request->maDe],['maDeVB'=>$request->maDeVB,'soCauHoi'=>$request->soCauHoi,
-                'thoiGian'=>$request->thoiGian,'ghiChu'=>$request->ghiChu]);
+                'thoiGian'=>$request->thoiGian,'ghiChu'=>$request->ghiChu,'tenDe'=>$request->tenDe]);
+
+                
+
                 CommonController::success_notify('Sửa thành công!!','Edited successfully');
                 return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/'.Session::get('maCTBaiQH'));
             }

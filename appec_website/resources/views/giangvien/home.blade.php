@@ -53,7 +53,7 @@
                             <div class="inner">
                                 <h3>{{ $dem_quy_hoach }}</h3>
 
-                                <p>{{ __('Assessment Planing') }}</p>
+                                <p>{{ __('Assessment Planning') }}</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-clipboard"></i>
@@ -63,64 +63,64 @@
                     </div>
                     <!------------------------------------------- -->
                     <!-- --------------------------cột 3---------------- -->
-                    <div class="col-lg-2 col-6">
+                    {{-- <div class="col-lg-2 col-6">
                         <div class="small-box bg-warning">
                             <div class="inner">
-                                <h3>1</h3>
+                                <h3>3</h3>
 
-                                <p>Bài kiểm tra mới</p>
+                                <p>New examinations</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-email"></i>
                             </div>
                             <a href="#" class="small-box-footer">{{ __('Details') }}<i class="fas fa-arrow-circle-right"></i></a>
                         </div>
-                    </div>
+                    </div> --}}
                     <!--------------------------------------------------- -->
                     <!--------------------cột 4------------------------------ -->
-                    <div class="col-lg-2 col-6">
+                    {{-- <div class="col-lg-2 col-6">
                         <div class="small-box bg-success">
                             <div class="inner">
                                 <h3>20</h3>
 
-                                <p>Tiêu chuẩn đạt</p>
+                                <p>Standards</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-checkmark-round"></i>
                             </div>
                             <a href="#" class="small-box-footer">{{ __('Details') }}<i class="fas fa-arrow-circle-right"></i></a>
                         </div>
-                    </div>
+                    </div> --}}
                     <!-- ---------------------------------------------------->
                     <!--------------------cột 5------------------------------ -->
-                    <div class="col-lg-2 col-6">
+                    {{-- <div class="col-lg-2 col-6">
                         <div class="small-box bg-info">
                             <div class="inner">
                                 <h3>20</h3>
 
-                                <p>Thống kê</p>
+                                <p>Statistics</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-pie-graph"></i>
                             </div>
                             <a href="#" class="small-box-footer">{{ __('Details') }}<i class="fas fa-arrow-circle-right"></i></a>
                         </div>
-                    </div>
+                    </div> --}}
                     <!-- ---------------------------------------------------->
                     <!-- ---------------------cột 6------------------------ -->
-                    <div class="col-lg-2 col-6">
+                    {{-- <div class="col-lg-2 col-6">
                         <div class="small-box bg-danger">
                             <div class="inner">
                                 <h3>20</h3>
 
-                                <p>In ấn</p>
+                                <p>Printer</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-printer"></i>
                             </div>
                             <a href="#" class="small-box-footer">{{ __('Details') }}<i class="fas fa-arrow-circle-right"></i></a>
                         </div>
-                    </div>
+                    </div> --}}
                     <!-- ./col -->
                 </div>
                 <!-- /.row -->

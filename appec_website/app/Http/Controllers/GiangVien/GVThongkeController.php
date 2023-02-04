@@ -17,14 +17,32 @@ use App\Models\baiQuyHoach;
 use App\Models\loaiDanhGia;
 use App\Models\deThi_cauHoi;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Excel;
 use App\Models\loaiHTDanhGia;
 use App\Models\danhgia_tuluan;
 use App\Models\ct_bai_quy_hoach;
 use App\Models\tieuChuanDanhGia;
 use App\Models\danhgia_tracnghiem;
 use App\Http\Controllers\Controller;
+use App\Models\thongke_abet_hocphan;
 use App\Models\cauHoi_tieuChiChamDiem;
+use App\Exports\thongke\doan\doAnSOExport;
+use App\Http\Controllers\CommonController;
+use App\Exports\thongke\doan\doAnCLOExport;
+use App\Exports\thongke\doan\doAnAbetExport;
+use App\Exports\thongke\doan\doAnRankExport;
+use App\Exports\thongke\doan\doAnGrateExport;
 use App\Http\Controllers\xuLyThongKeController;
+use App\Exports\thongke\thuchanh\thucHanhSOExport;
+use App\Exports\thongke\thuchanh\thucHanhCLOExport;
+use App\Exports\thongke\thuchanh\thucHanhAbetExport;
+use App\Exports\thongke\thuchanh\thucHanhRankExport;
+use App\Exports\thongke\thuchanh\thucHanhGrateExport;
+use App\Exports\thongke\tracnghiem\tracnghiemSOExport;
+use App\Exports\thongke\tracnghiem\tracnghiemCLOExport;
+use App\Exports\thongke\tracnghiem\tracnghiemAbetExport;
+use App\Exports\thongke\tracnghiem\tracnghiemRankExport;
+use App\Exports\thongke\tracnghiem\tracnghiemGrateExport;
 
 class GVThongkeController extends Controller
 {
@@ -37,14 +55,40 @@ class GVThongkeController extends Controller
     public function thong_ke_theo_qkht_thuc_hanh($maCTBaiQH)
     {
         Session::put('maCTBaiQH',$maCTBaiQH);
-       $bieuDo=xuLyThongKeController::thong_ke_kqht($maCTBaiQH);
-      
+        $bieuDo=xuLyThongKeController::thong_ke_kqht($maCTBaiQH);
        return view('giangvien.thongke.thuchanh.thongketheokqht',compact('bieuDo'));
     }
+    //Thầy Việt code
+
+    public function thong_ke_theo_clo_thuc_hanh_cuoi1($maCTBaiQH,$loaiCB)
+    {
+      //  return "toi roi";
+        Session::put('maCTBaiQH',$maCTBaiQH);
+        Session::put('loaiCB',$loaiCB);
+        $bieuDo=xuLyThongKeController::thong_ke_kqht_clo_th_cuoi1($maCTBaiQH);
+       return view('giangvien.thongke.thuchanh.thongketheokqht',compact('bieuDo'));
+    }
+
+    public function thong_ke_theo_clo_thuc_hanh_cuoi2($maCTBaiQH, $macb2)
+    {
+      //  return "toi roi";
+        Session::put('maCTBaiQH',$maCTBaiQH);
+        Session::put('macb2',$macb2);
+      
+        $bieuDo=xuLyThongKeController::thong_ke_kqht_clo_th_cuoi2($maCTBaiQH);
+       return view('giangvien.thongke.thuchanh.thongketheokqht',compact('bieuDo'));
+    }
+    // hết thầy Việt code
 
     public function get_kqht_thuc_hanh(Type $var = null)
     {
         return xuLyThongKeController::thong_ke_kqht(Session::get('maCTBaiQH'));
+    }
+
+    public function export_thong_ke_theo_clo_thuc_hanh(Excel $excel,$maCTBaiQH)
+    {
+        Session::put('maCTBaiQH',$maCTBaiQH);
+        return $excel->download(new thucHanhCLOExport,'thong_ke_clo_thuc_hanh.xlsx');
     }
     //abet
     public function thong_ke_theo_abet_thuc_hanh($maCTBaiQH) //chay
@@ -54,10 +98,26 @@ class GVThongkeController extends Controller
         $bieuDo=xuLyThongKeController::thong_ke_abet($maCTBaiQH);
         return view('giangvien.thongke.thuchanh.thongketheoabet',['bieuDo'=>$bieuDo]);
     }
+    //thầy Việt code
+    public function thong_ke_theo_abet_thuc_hanh2($maCTBaiQH,$macb2) //chay
+    {
+        Session::put('maCTBaiQH',$maCTBaiQH);
+        Session::put('macb2',$macb2);
+        //lấy danh sách cdr3
+        $bieuDo=xuLyThongKeController::thong_ke_abet2($maCTBaiQH);
+        return view('giangvien.thongke.thuchanh.thongketheoabet',['bieuDo'=>$bieuDo]);
+    }
+    //hết Thầy Việt code
     public function get_abet_thuc_hanh() // chạy
     {
           $bieuDo=xuLyThongKeController::thong_ke_abet(session::get('maCTBaiQH'));
           return response()->json($bieuDo);
+    }
+
+    public function export_thong_ke_theo_abet_thuc_hanh(Excel $excel,$maCTBaiQH)
+    {
+        Session::put('maCTBaiQH',$maCTBaiQH);
+        return $excel->download(new thucHanhAbetExport,'thong_ke_abet_thuc_hanh.xlsx');
     }
     //xep hang
     public function thong_ke_theo_xep_hang_thuc_hanh($maCTBaiQH) //chạy
@@ -83,12 +143,41 @@ class GVThongkeController extends Controller
         return view('giangvien.thongke.thuchanh.thongkexephang',['xepHang'=>$xepHang,
         'tiLe'=>$tiLe]);
     }
+    //thầy Việt code
+    public function thong_ke_theo_xep_hang_thuc_hanh2($maCTBaiQH,$macb2) //chạy
+    {
+        Session::put('maCTBaiQH',$maCTBaiQH);
+        //học phần
+         //đề thi
+         $dethi=deThi::where('de_thi.isDelete',false)
+         ->where('maCTBaiQH',$maCTBaiQH)->get();
+         if($dethi->count()==0)
+         {
+             if(session::has('language') && session::get('language')=='vi'){
+                alert()->warning('There are no examination!','Message');
+             }else{
+                alert()->warning('Không có bài thi nào!','Thông báo');
+             }
+             return redirect('/giang-vien/thong-ke/thong-ke-theo-hoc-phan/'.$macb2.'/'.session::get('maHocPhan').'/'.session::get('maHK').'/'.session::get('namHoc').'/'.session::get('maLop'));
+         } 
+    
+        //xếp hạng
+        $xepHang=xuLyThongKeController::thong_ke_xep_hang($maCTBaiQH,$macb2);
+        $tiLe=xuLyThongKeController::thong_ke_ti_le_xep_hang($maCTBaiQH,$macb2);
+        return view('giangvien.thongke.thuchanh.thongkexephang',['xepHang'=>$xepHang,
+        'tiLe'=>$tiLe]);
+    }
+    //hết thầy Việt code
 
     public function get_xep_hang_thuc_hanh() //chạy
     {
         return response()->json(xuLyThongKeController::thong_ke_xep_hang(Session::get('maCTBaiQH'),Session::get('maGV')));
     }   
-
+    public function export_thong_ke_theo_xep_hang_thuc_hanh(Excel $excel,$maCTBaiQH)
+    {
+        Session::put('maCTBaiQH',$maCTBaiQH);
+        return $excel->download(new thucHanhRankExport,'thong_ke_xep_hang_thuc_hanh.xlsx');
+    }
     //diem chu
     public function thong_ke_theo_diem_chu_thuc_hanh($maCTBaiQH) //chạy
     {
@@ -126,6 +215,46 @@ class GVThongkeController extends Controller
         return view('giangvien.thongke.thuchanh.thongketheodiemchu',['diemChu'=>$diemChu,'tiLe'=>$tiLe,
         'hp'=>$hp,'chu'=>$letter]);
     }
+    //Thầy Việt code
+    public function thong_ke_theo_diem_chu_thuc_hanh2($maCTBaiQH, $macb2) //chạy
+    {
+
+       // return $macb2;
+        Session::put('maCTBaiQH',$maCTBaiQH);
+        Session::put('macb2',$macb2);
+
+        //học phần 
+        $hp=hocPhan::where('isDelete',false)
+        ->where('maHocPhan',Session::get('maHocPhan'))
+        ->first();
+       
+        
+        //đề thi
+        $dethi=deThi::where('de_thi.isDelete',false)
+        ->where('maCTBaiQH',$maCTBaiQH)
+        ->join('phieu_cham',function($x){
+            $x->on('phieu_cham.maDe','=','de_thi.maDe')
+            ->where('phieu_cham.maGV',Session::get('macb2'))
+            ->where('phieu_cham.isDelete',false)->where('phieu_cham.loaiCB',2);
+        })
+        ->get(['maPhieuCham','diemChu']);
+        if($dethi->count()==0)
+        {
+            alert()->warning('There are no examination!','Message');
+            return redirect('/giang-vien/thong-ke/thong-ke-theo-hoc-phan/'.$macb2.'/'.session::get('maHocPhan').'/'.session::get('maHK').'/'.session::get('namHoc').'/'.session::get('maLop'));
+        } 
+        $diemChu=[];
+        $tiLe=[];
+        $letter=['A','B+','B','C+','C','D+','D','F'];
+        foreach ($letter as  $lt) {
+            array_push($diemChu,$dethi->where('diemChu',$lt)->count());
+            array_push($tiLe,number_format($dethi->where('diemChu',$lt)->count()*100/$dethi->count(),2));
+        }
+        
+        return view('giangvien.thongke.thuchanh.thongketheodiemchu',['diemChu'=>$diemChu,'tiLe'=>$tiLe,
+        'hp'=>$hp,'chu'=>$letter]);
+    }
+    //hết thầy Việt code
 
     public function get_diem_chu_thuc_hanh() //chạy
     {
@@ -147,6 +276,11 @@ class GVThongkeController extends Controller
         return response()->json($diemChu);
     }
 
+    public function export_thong_ke_theo_diem_chu_thuc_hanh(Excel $excel,$maCTBaiQH)
+    {
+        Session::put('maCTBaiQH',$maCTBaiQH);
+        return $excel->download(new thucHanhGrateExport,'thong_ke_diem_chu_thuc_hanh.xlsx');
+    }
     //tieu chí
      public function thong_ke_theo_tieu_chi_thuc_hanh($maCTBaiQH)
      {
@@ -156,15 +290,35 @@ class GVThongkeController extends Controller
         //infor
         $hp=hocPhan::findOrFail(session::get('maHocPhan'));
  
-         return view('giangvien.thongke.thuchanh.thongketheotieuchi',['bieuDo'=>$bieuDo,'hocPhan'=>$hp]);
+        return view('giangvien.thongke.thuchanh.thongketheotieuchi',['bieuDo'=>$bieuDo,'hocPhan'=>$hp]);
  
      }
+     //thầy Việt code
+     public function thong_ke_theo_tieu_chi_thuc_hanh2($maCTBaiQH, $macb2)
+     {
+        Session::put('maCTBaiQH',$maCTBaiQH);
+        Session::put('macb2',$macb2);
+
+        $bieuDo=xuLyThongKeController::thong_ke_CDR3_2($maCTBaiQH);
+        //infor
+        $hp=hocPhan::findOrFail(session::get('maHocPhan'));
+ 
+        return view('giangvien.thongke.thuchanh.thongketheotieuchi',['bieuDo'=>$bieuDo,'hocPhan'=>$hp]);
+ 
+     }
+     //hết thầy Việt code
 
      public function get_tieu_chi_thuc_hanh()
      {
         $bieuDo=xuLyThongKeController::thong_ke_CDR3(session::get('maCTBaiQH'));
          return response()->json($bieuDo);
      }
+
+     public function export_thong_ke_theo_tieu_chi_thuc_hanh(Excel $excel,$maCTBaiQH)
+    {
+        Session::put('maCTBaiQH',$maCTBaiQH);
+        return $excel->download(new thucHanhSOExport,'thong_ke_diem_tieu_chi_hanh.xlsx');
+    }
 
      //______________________________________________________________________
      ///----------------------------------------------TỰ LUẬN----------------
@@ -183,7 +337,14 @@ class GVThongkeController extends Controller
          return xuLyThongKeController::thong_ke_kqht(Session::get('maCTBaiQH'));
      }
 
-        //abet
+     public function export_thong_ke_theo_clo_tu_luan(Excel $excel,$maCTBaiQH)
+     {
+         Session::put('maCTBaiQH',$maCTBaiQH);
+         return $excel->download(new thucHanhCLOExport,'thong_ke_clo_tu_luan.xlsx');
+     }
+
+     
+    //abet
     public function thong_ke_theo_abet_tu_luan($maCTBaiQH) //chạy
     {
         Session::put('maCTBaiQH',$maCTBaiQH);
@@ -195,6 +356,11 @@ class GVThongkeController extends Controller
     {
         $bieuDo=xuLyThongKeController::thong_ke_abet(session::get('maCTBaiQH'));
         return response()->json($bieuDo);
+    }
+    public function export_thong_ke_theo_abet_tu_luan(Excel $excel,$maCTBaiQH)
+    {
+        Session::put('maCTBaiQH',$maCTBaiQH);
+        return $excel->download(new thucHanhAbetExport,'thong_ke_abet_tu_luan.xlsx');
     }
      //tieu chí
     public function thong_ke_theo_tieu_chi_tu_luan($maCTBaiQH) //chạy
@@ -214,6 +380,11 @@ class GVThongkeController extends Controller
         return response()->json($bieuDo);
     }
 
+    public function export_thong_ke_theo_tieu_chi_tu_luan(Excel $excel,$maCTBaiQH)
+    {
+        Session::put('maCTBaiQH',$maCTBaiQH);
+        return $excel->download(new thucHanhSOExport,'thong_ke_diem_tieu_chi_tu_luan.xlsx');
+    }
       //xếp hạng
     public function thong_ke_theo_xep_hang_tu_luan($maCTBaiQH) // chạy
     {
@@ -225,8 +396,8 @@ class GVThongkeController extends Controller
          ->where('maCTBaiQH',$maCTBaiQH)->get();
          if($dethi->count()==0)
          {
-             alert()->warning('There are no examination!','Message');
-             return redirect('/giang-vien/thong-ke/thong-ke-theo-hoc-phan/'.session::get('maGV').'/'.session::get('maHocPhan').'/'.session::get('maHK').'/'.session::get('namHoc').'/'.session::get('maLop'));
+             CommonController::warning_notify('Không có đề thi nào','There are not examination');
+             return redirect()->back();
          } 
         
         $xepHang=xuLyThongKeController::thong_ke_xep_hang($maCTBaiQH,Session::get('maGV'));
@@ -241,12 +412,16 @@ class GVThongkeController extends Controller
     {
         return response()->json(xuLyThongKeController::thong_ke_xep_hang(session::get('maCTBaiQH'),Session::get('maGV')));
     }
-    //tiêu chí
+
+    public function export_thong_ke_theo_xep_hang_tu_luan(Excel $excel,$maCTBaiQH)
+    {
+        Session::put('maCTBaiQH',$maCTBaiQH);
+        return $excel->download(new thucHanhRankExport,'thong_ke_xep_hang_tu_luan.xlsx');
+    }
+    //diem chu
     public function thong_ke_theo_diem_chu_tu_luan($maCTBaiQH) //chay
     {
-
         Session::put('maCTBaiQH',$maCTBaiQH);
-
         //học phần 
         $hp=hocPhan::where('isDelete',false)
         ->where('maHocPhan',Session::get('maHocPhan'))
@@ -292,7 +467,11 @@ class GVThongkeController extends Controller
         }
         return response()->json($diemChu);
     }
-
+    public function export_thong_ke_theo_diem_chu_tu_luan(Excel $excel,$maCTBaiQH)
+    {
+        Session::put('maCTBaiQH',$maCTBaiQH);
+        return $excel->download(new thucHanhGrateExport,'thong_ke_diem_chu_tu_luan.xlsx');
+    }
     //__________________________________________________________________
     //------------------------------------------------TRẮC NGHIỆM------
     //___________________________________________________________________
@@ -308,11 +487,16 @@ class GVThongkeController extends Controller
              alert()->warning('There are no examination!','Message');
              return redirect('/giang-vien/thong-ke/thong-ke-theo-hoc-phan/'.session::get('maGV').'/'.session::get('maHocPhan').'/'.session::get('maHK').'/'.session::get('namHoc').'/'.session::get('maLop'));
          } 
-        
         $xepHang=xuLyThongKeController::thong_ke_xep_hang($maCTBaiQH,Session::get('maGV'));
         $tiLe=xuLyThongKeController::thong_ke_ti_le_xep_hang($maCTBaiQH,Session::get('maGV'));
 
         return view('giangvien.thongke.tracnghiem.thongkexephang',['xepHang'=>$xepHang,'tiLe'=>$tiLe]);
+    }
+
+    public function export_thong_ke_theo_xep_hang_trac_nghiem(Excel $excel,$maCTBaiQH)
+    {
+        Session::put('maCTBaiQH',$maCTBaiQH);
+        return $excel->download(new tracnghiemRankExport,'thong_ke_xep_hang_trac_nghiem.xlsx');
     }
     
     public function get_xep_hang_trac_nghiem()
@@ -359,7 +543,12 @@ class GVThongkeController extends Controller
         return response()->json($diemChu);
     }
 
-    //tieu chi
+    public function export_thong_ke_theo_diem_chu_trac_nghiem(Excel $excel,$maCTBaiQH)
+    {
+        Session::put('maCTBaiQH',$maCTBaiQH);
+        return $excel->download(new tracnghiemGrateExport,'thong_ke_diem_chu_trac_nghiem.xlsx');
+    }
+    //tieu chi  -- SO --- CDR3
     public function thong_ke_theo_tieu_chi_trac_nghiem($maCTBaiQH)
     {
         Session::put('maCTBaiQH',$maCTBaiQH);
@@ -421,7 +610,11 @@ class GVThongkeController extends Controller
             $temp=[];
             //lay noi dung cdr3
             array_push($temp,$cdr3->maCDR3VB);
-            array_push($temp,$cdr3->tenCDR3);
+            if(Session::get('language') && Session::get("language")=='en'){
+                array_push($temp,$cdr3->tenCDR3EN);
+            }else{
+                array_push($temp,$cdr3->tenCDR3);
+            }
             //bien dem
             $dat_A=$dat_B=$dat_C=$dat_D=$cdat=$diem_tieu_chi=0;
             //duyet qua phieu cham
@@ -483,6 +676,9 @@ class GVThongkeController extends Controller
             array_push($temp,$dat_D);
             array_push($temp,$cdat);
             array_push($bieuDo,$temp);
+            $t=new xuLyThongKeController();
+            $t->cap_nhat_thongke_so_hocphan($maCTBaiQH,$cdr3->maCDR3,$dat_A,$dat_B,$dat_C,$dat_D,$cdat);
+
         }
 
         return view('giangvien.thongke.tracnghiem.thongketheotieuchi',compact('bieuDo'));
@@ -606,6 +802,12 @@ class GVThongkeController extends Controller
         }
         return $bieuDo;
     }
+
+    public function export_thong_ke_theo_tieu_chi_trac_nghiem(Excel $excel,$maCTBaiQH)
+    {
+        Session::put('maCTBaiQH',$maCTBaiQH);
+        return $excel->download(new tracnghiemSOExport,'thong_ke_SO_trac_nghiem.xlsx');
+    }
     //abet
     public function thong_ke_theo_abet_trac_nghiem($maCTBaiQH)
     {
@@ -614,7 +816,7 @@ class GVThongkeController extends Controller
         $ds_de_thi=deThi::where('de_thi.isDelete',false)->where('maCTBaiQH',$maCTBaiQH)->get();
         if($ds_de_thi->count()==0)
         {
-            CommonController::warning_notity('Không có đề thi nào!','There are no examination!');
+            CommonController::warning_notify('Không có đề thi nào!','There are no examination!');
             return redirect()->back();
         } 
         
@@ -664,11 +866,14 @@ class GVThongkeController extends Controller
         //duyet qua tieu chi
         $bieuDo=[];
         foreach ($chuan_abet as $abet) {
-            
             $temp=[];
             //lay noi dung abet
             array_push($temp,$abet->maChuanAbetVB);
-            array_push($temp,$abet->tenChuanAbet);
+            if(Session::get('language') && Session::get('language')=='en'){
+                array_push($temp,$abet->tenChuanAbet_EN);
+            }else{
+                array_push($temp,$abet->tenChuanAbet);
+            }
             //bien dem
             $dat_A=$dat_B=$dat_C=$dat_D=$cdat=$diem_tieu_chi=0;
             //duyet qua phieu cham
@@ -730,6 +935,20 @@ class GVThongkeController extends Controller
             array_push($temp,$dat_D);
             array_push($temp,$cdat);
             array_push($bieuDo,$temp);
+
+             //cap nhat bang thongke_abet_hocphan
+             $tk=thongke_abet_hocphan::where('maCTBaiQH',$maCTBaiQH)->where('maChuanAbet',$abet->maChuanAbet)->first();
+             if($tk){  //neu da co thong ke truoc do thi cap nhat lai
+                 $tk->dat_A=$dat_A;
+                 $tk->dat_B=$dat_B;
+                 $tk->dat_C=$dat_C;
+                 $tk->dat_D=$dat_D;
+                 $tk->chua_dat=$cdat;
+                 $tk->update();
+             }else{  //neu khong thi tao ra dong du lieu thong ke moi
+                 thongke_abet_hocphan::create(['maCTBaiQH'=>$maCTBaiQH,'maChuanAbet'=>$abet->maChuanAbet,
+                 'dat_A'=>$dat_A,'dat_B'=>$dat_B,'dat_C'=>$dat_C,'dat_D'=>$dat_D,'chua_dat'=>$cdat]);
+             }
         }
         return view('giangvien.thongke.tracnghiem.thongketheoabet',compact('bieuDo'));
     }
@@ -854,10 +1073,15 @@ class GVThongkeController extends Controller
         }
         return $bieuDo;
     }
-
+    public function export_thong_ke_theo_abet_trac_nghiem(Excel $excel,$maCTBaiQH)
+    {
+        Session::put('maCTBaiQH',$maCTBaiQH);
+        return $excel->download(new tracnghiemAbetExport,'thong_ke_ABET_trac_nghiem.xlsx');
+    }
     //clo
     public function thong_ke_theo_kqht_trac_nghiem($maCTBaiQH)
     {
+  
         Session::put('maCTBaiQH',$maCTBaiQH);
         $ket_qua_ht=[];
         $kqht_array=[];
@@ -869,6 +1093,7 @@ class GVThongkeController extends Controller
             CommonController::warning_notity('Không có đề thi nào!','There are no examination!');
             return redirect()->back();
         }
+        
          //tach lay kqht trong de thi
          $i=0;
          foreach($ds_de_thi as $dt){
@@ -884,15 +1109,17 @@ class GVThongkeController extends Controller
                  $y->on('de_thi_cau_hoi.maCauHoi','=','cau_hoi.maCauHoi');
              })
              ->get(['cau_hoi.maKQHT']);
+             
              //tach ma kqht tu nhieu de thi thanh 1 mang
              foreach ($kqht as $value) {
+               
                  if(!in_array($value['maKQHT'],$kqht_array)){
                      $kqht_array[$i]=$value['maKQHT'];
                      $i++;
                  }
              }
          }
- 
+
          //get thong tin kqht tu csdls
         $ket_qua_ht=kqHTHP::whereIn('maKQHT',$kqht_array)->orderBy('maKQHTVB')->get();
         
@@ -904,13 +1131,14 @@ class GVThongkeController extends Controller
              ->where('phieu_cham.maGV',Session::get('maGV'))
              ->where('phieu_cham.isDelete',false);
          })->get(['phieu_cham.maPhieuCham','phieu_cham.maDe']);
+        
         //bien du lieu thong ke
         $bieuDo=[];
-      
         foreach ($ket_qua_ht as $kqht) {
             $temp=[];
             array_push($temp,$kqht->maKQHTVB);
             array_push($temp,$kqht->tenKQHT);
+ 
             //bien dem
             $dat_A=$dat_B=$dat_C=$dat_D=$cdat=$diem_tieu_chi=0;
             
@@ -929,12 +1157,11 @@ class GVThongkeController extends Controller
                    $y->on('de_thi_cau_hoi.maCauHoi','=','cau_hoi.maCauHoi');
                 })
                ->get(['cau_hoi.maCauHoi','cau_hoi.maKQHT','de_thi_cau_hoi.diem']);
-               
                //phuongan->diem_tieu_chi
                $diem_tieu_chi=$phuongan->where('maKQHT',$kqht->maKQHT)->sum('diem');
-               
+              
                 //điếm theo phiếu chấm
-                $dem=danhgia_tracnghiem::where('maPhieuCham',556)
+                $dem=danhgia_tracnghiem::where('maPhieuCham',$pc->maPhieuCham)
                 ->join('phuong_an_trac_nghiem',function($x){
                     $x->on('phuong_an_trac_nghiem.id','=','danhgia_tracnghiem.maPA');
                 })
@@ -943,12 +1170,16 @@ class GVThongkeController extends Controller
                 })
                 ->join('cau_hoi',function($z) use($t){
                     $z->on('de_thi_cau_hoi.maCauHoi','=','cau_hoi.maCauHoi')
-                    ->where('cau_hoi.maKQHT',9);
+                    ->where('cau_hoi.maKQHT',$t);
                  })
                  ->sum('danhgia_tracnghiem.diem');
                 
-                $dem=number_format($dem,2);
-
+                 
+                //$dem=number_format($dem,2);
+                 
+                 if($diem_tieu_chi==0){
+                     continue;
+                 }
                 $tile=number_format($dem/$diem_tieu_chi,2);
                  
                if($tile<0.4){
@@ -976,6 +1207,9 @@ class GVThongkeController extends Controller
             array_push($temp,$dat_D);
             array_push($temp,$cdat);
             array_push($bieuDo,$temp);
+            $t=new xuLyThongKeController();
+            $t->cap_nhat_thongke_clo_hocphan($maCTBaiQH,$kqht->maKQHT,$dat_A,$dat_B,$dat_C,$dat_D,$cdat);
+
         }
         return view('giangvien.thongke.tracnghiem.thongketheokqht',compact('bieuDo'));
     }
@@ -1098,7 +1332,11 @@ class GVThongkeController extends Controller
         }
         return $bieuDo;
     }
-
+    public function export_thong_ke_theo_clo_trac_nghiem(Excel $excel,$maCTBaiQH)
+    {
+        Session::put('maCTBaiQH',$maCTBaiQH);
+        return $excel->download(new tracnghiemCLOExport,'thong_ke_CLO_trac_nghiem.xlsx');
+    }
     //____________________________________________________________________
     //------------------------------------------------ĐỒ ÁN---------------
     //____________________________________________________________________
@@ -1195,6 +1433,11 @@ class GVThongkeController extends Controller
         return response()->json($xepHang);
     }
 
+    public function export_thong_ke_theo_xep_hang_do_an(Excel $excel,$maCTBaiQH)
+    {
+        Session::put('maCTBaiQH',$maCTBaiQH);
+        return $excel->download(new doAnRankExport,'thong_ke_xep_hang_do_an.xlsx');
+    }
     //diem chu
     public function thong_ke_theo_diem_chu_doan($maCTBaiQH,$maCanBo) //chạy
     {
@@ -1273,7 +1516,6 @@ class GVThongkeController extends Controller
               })
               ->get(['maPhieuCham','diemChu']);
          }
-       
         $diemChu=[];
         $letter=['A','B+','B','C+','C','D+','D','F'];
         foreach ($letter as  $lt) {
@@ -1281,7 +1523,12 @@ class GVThongkeController extends Controller
         }
         return response()->json($diemChu);
     }
-
+    
+    public function export_thong_ke_theo_diem_chu_do_an(Excel $excel,$maCTBaiQH)
+    {
+        Session::put('maCTBaiQH',$maCTBaiQH);
+        return $excel->download(new doAnGrateExport,'thong_ke_diem_chu_do_an.xlsx');
+    }
 
     //tiêu chí
     public function thong_ke_theo_tieu_chi_doan($maCTBaiQH,$maCanBo) //chạy
@@ -1324,7 +1571,7 @@ class GVThongkeController extends Controller
             })
             ->distinct(['cdr_cd3.maCDR3','cdr_cd3.maCDR3VB','cdr_cd3.tenCDR3'])
             ->orderBy('cdr_cd3.maCDR3')
-            ->get(['cdr_cd3.maCDR3','cdr_cd3.maCDR3VB','cdr_cd3.tenCDR3']);
+            ->get(['cdr_cd3.maCDR3','cdr_cd3.maCDR3VB','cdr_cd3.tenCDR3','cdr_cd3.tenCDR3EN']);
             
             $temp_tc=tieuChuanDanhGia::where('tieuchuan_danhgia.isDelete',false)
             ->where('tieuchuan_danhgia.maNoiDungQH',$x->maNoiDungQH)
@@ -1370,8 +1617,12 @@ class GVThongkeController extends Controller
         foreach ($chuan_dau_ra3 as $cdr3) {
             $temp=[];
             array_push($temp,$cdr3->maCDR3VB);
-            array_push($temp,$cdr3->tenCDR3);
-           
+            if(Session::get('language') && Session::get("language")=='en'){
+                array_push($temp,$cdr3->tenCDR3EN);
+            }else{
+                array_push($temp,$cdr3->tenCDR3);
+            }
+            
             $gioi=0;
             $kha=0;
             $tb=0;
@@ -1424,6 +1675,8 @@ class GVThongkeController extends Controller
             array_push($temp,$yeu);
             array_push($temp,$kem);
             array_push($bieuDo,$temp);
+            $t=new xuLyThongKeController();
+            $t->cap_nhat_thongke_so_hocphan($maCTBaiQH,$cdr3->maCDR3,$gioi,$kha,$tb,$yeu,$kem,$maCanBo);
         }
         
 
@@ -1562,6 +1815,11 @@ class GVThongkeController extends Controller
         return response()->json($bieuDo);
     }
 
+    public function export_thong_ke_theo_tieu_chi_do_an(Excel $excel,$maCTBaiQH)
+    {
+        Session::put('maCTBaiQH',$maCTBaiQH);
+        return $excel->download(new doAnSOExport,'thong_ke_tieu_chi_do_an.xlsx');
+    }
 
     //abet
     public function thong_ke_theo_abet_doan($maCTBaiQH,$maCanBo) //chạy
@@ -1572,12 +1830,16 @@ class GVThongkeController extends Controller
         return view('giangvien.thongke.doan.thongketheoabet',['bieuDo'=>$bieuDo]);
     }
 
-
     public function get_abet_doan() //chạy
     {
         return xuLyThongKeController::thong_ke_abet_do_an(Session::get('maCTBaiQH'),Session::get('maCanBo'));
     }
 
+    public function export_thong_ke_theo_abet_do_an(Excel $excel,$maCTBaiQH)
+    {
+        Session::put('maCTBaiQH',$maCTBaiQH);
+        return $excel->download(new doAnAbetExport,'thong_ke_abet_do_an.xlsx');
+    }
 
     //clo
     public function thong_ke_theo_kqht_doan($maCTBaiQH,$maCanBo)
@@ -1593,5 +1855,11 @@ class GVThongkeController extends Controller
     public function get_clo_doan(Type $var = null)
     {
         return xuLyThongKeController::thong_ke_clo_do_an(Session::get('maCTBaiQH'),Session::get('maCanBo'));
+    }
+
+    public function export_thong_ke_theo_clo_do_an(Excel $excel,$maCTBaiQH)
+    {
+        Session::put('maCTBaiQH',$maCTBaiQH);
+        return $excel->download(new doAnCLOExport,'thong_ke_clo_do_an.xlsx');
     }
 }

@@ -16,12 +16,20 @@
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}" />
 </head>
 
-<body class="hold-transition login-page">
+<body class="hold-transition login-page" style="background: #ebeced47">
+    <div style="text-align:center;">
+        <b>  <h2  style="font-weight: 900; line-height: 1.5;">HỆ THỐNG HỖ TRỢ CÔNG TÁC ĐÁNH GIÁ THEO CHUẨN ĐẦU RA <br> CỦA CHƯƠNG TRÌNH ĐÀO TẠO  PHỤC VỤ CẢI TIẾN, NÂNG CAO CHẤT LƯỢNG ĐÀO TẠO</h2> </b>
+       <i>  <h2 style="line-height: 1.5;">(Learning outcomes evaluation system <br>
+       For  curriculum to support improvement and advanced training quality)</h2> </i>
+    </div>
+
     <form action="{{ asset('/dang-nhap') }}" method="post" enctype="multipart/form-data">
         @csrf
+
         <div class="login-box">
+            
             <div class="login-logo">
-                <a href="#"><b>{{ __('Login') }}</b></a>
+                {{-- <a href="#"><b>{{ __('Login') }}</b></a> --}}
             </div>
             <!-- /.login-logo -->
             <div class="card">
@@ -46,15 +54,15 @@
                         </div>
                         <div class="row">
                             <!--<div class="col-7">
-                      <div class="icheck-primary">
-                        <input type="checkbox" id="remember" />
-                        <label for="remember"> Remember </label>
-                      </div>
-                    </div>-->
+                                <div class="icheck-primary">
+                                    <input type="checkbox" id="remember" />
+                                    <label for="remember"> Remember </label>
+                                </div>
+                            </div>-->
                             <!-- /.col -->
                             <div class="col-12">
                                 <button type="submit" class="btn btn-primary btn-block">
-                                    Submit
+                                    {{ __('Login') }}
                                 </button>
                             </div>
                             <!-- /.col -->

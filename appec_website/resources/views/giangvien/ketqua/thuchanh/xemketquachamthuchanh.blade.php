@@ -12,16 +12,15 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">Phiếu đánh giá thực hành<noscript></noscript>
+                        <h1 class="m-0 text-dark">Practice answer sheet<noscript></noscript>
                             <nav></nav>
                         </h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ asset('giang-vien') }}">Trang chủ</a></li>
-                            <li class="breadcrumb-item "><a href="#">Tên môn</a></li>
-                            <li class="breadcrumb-item "><a href="#">Thực hành</a></li>
-                            <li class="breadcrumb-item active">Phiếu chấm</li>
+                            <li class="breadcrumb-item"><a href="{{ asset('giang-vien') }}">Home</a></li>
+                            <li class="breadcrumb-item "><a href="#">Practice</a></li>
+                            <li class="breadcrumb-item active">Practice answer sheet</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -37,22 +36,25 @@
                         <div class="card">
                             <div class="card-header">
                                 <h5 class="">
-                                    1. Giảng viên chấm: {{ $gv->hoGV }} {{ $gv->tenGV }} <br>
-                                    2. Chức danh: <br>
-                                    3. Đơn vị công tác: <br>
-                                    4. Đề thi: {{ $dethi->tenDe }} <br>
-                                    5. Học và tên sinh viên: {{ $sv->HoSV }} {{ $sv->TenSV }} <br>
+                                    1. Instructor: {{ $gv->hoGV }} {{ $gv->tenGV }} <br>
+                                    2. Project title: {{ $dethi->tenDe }} <br>
+                                    3.  Student name: {{ $sv->HoSV }} {{ $sv->TenSV }} <br>
                                 </h5>
+                                <div class="card-tools">
+                                    <a href="{{ asset('/giang-vien/ket-qua-danh-gia/nhap-ket-qua-danh-gia/'.Session::get('maCTBaiQH')) }}" class="btn btn-success" >
+                                       <i class="fa fa-arrow-left" aria-hidden="true"></i> 
+                                     </a>
+                                </div>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <table id="example2" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>STT</th>
-                                            <th>Câu hỏi</th>
-                                            <th>Phương án</th>
-                                            <th>Điểm chấm </th>
+                                            <th>No.</th>
+                                            <th>Question</th>
+                                            <th>Answer</th>
+                                            <th>Mark </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -102,25 +104,25 @@
                                                 <tr>
                                                     <td rowspan={{ $demPA_CauHoi }}>{{ $i++ }}</td>
                                                     <td rowspan={{ $demPA_CauHoi }}>{!! $tc->noiDungCauHoi !!} <b>(
-                                                            {{ $diemCauHoi }} điểm)</b></td>
+                                                            {{ $diemCauHoi }} mark)</b></td>
                                                     @if ($chayCDR_PATL == 1)
-                                                        <td>{!! $tc->noiDungPA !!} <b>({{ $tc->diemPA }} điểm)</b></td>
+                                                        <td>{!! $tc->noiDungPA !!} <b>({{ $tc->diemPA }} mark)</b></td>
                                                     @else
-                                                        <td>{!! $tc->noiDungPA !!} <b>({{ $tc->diemPA }} điểm)</b></td>
+                                                        <td>{!! $tc->noiDungPA !!} <b>({{ $tc->diemPA }} mark)</b></td>
                                                     @endif
                                                     <td>
-                                                        {{ $tc->diemDG }} điểm
+                                                        {{ $tc->diemDG }} mark
                                                     </td>
                                                 </tr>
                                             @else
                                                 <tr>
                                                     @if ($chayCDR_PATL == 1)
-                                                        <td>{!! $tc->noiDungPA !!} <b>({{ $tc->diemPA }} điểm)</b></td>
+                                                        <td>{!! $tc->noiDungPA !!} <b>({{ $tc->diemPA }} mark)</b></td>
                                                     @else
-                                                        <td>{!! $tc->noiDungPA !!} <b>({{ $tc->diemPA }} điểm)</b></td>
+                                                        <td>{!! $tc->noiDungPA !!} <b>({{ $tc->diemPA }} mark)</b></td>
                                                     @endif
                                                     <td>
-                                                        {{ $tc->diemDG }} điểm
+                                                        {{ $tc->diemDG }} mark
                                                     </td>
                                                 </tr>
                                             @endif
@@ -131,7 +133,7 @@
                                 </table>
                                 <hr>
                                 <div class="form-group">
-                                    <h5><b>Ý kiến đóng góp:</b> {{ $pc->yKienDongGop }}</h5>
+                                    <h5><b>Comment:</b> {{ $pc->yKienDongGop }}</h5>
                                 </div>
                             </div>
                             <!-- /.card-body -->

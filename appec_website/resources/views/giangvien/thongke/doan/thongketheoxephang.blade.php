@@ -13,15 +13,15 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">Thống kê đồ án <noscript></noscript>
+                        <h1 class="m-0 text-dark">Statistic<noscript></noscript>
                             <nav></nav>
                         </h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ asset('giang-vien') }}">Trang chủ</a></li>
-                            <li class="breadcrumb-item "><a href="#">Thống kê</a></li>
-                            <li class="breadcrumb-item active">Thống kê theo xếp hạng</li>
+                            <li class="breadcrumb-item"><a href="{{ asset('giang-vien') }}">Home</a></li>
+                            <li class="breadcrumb-item "><a href="#">statistic</a></li>
+                            <li class="breadcrumb-item active">statistic of range</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -37,7 +37,10 @@
                                 <h3 class="card-title">
                                 </h3>
                                 <div class="card-tools">
-                                    <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/'.session::get('maHocPhan').'/'.session::get('maBaiQH').'/'.session::get('maHK').'/'.session::get('namHoc').'/'.session::get('maLop')) }}" class="btn btn-secondary">
+                                    <a href="{{ asset('/giang-vien/thong-ke/thong-ke-theo-hoc-phan/do-an/xuat-thong-ke-xep-hang/'.Session::get('maCTBaiQH')) }}" class="btn btn-success">
+                                        <i class="fas fa-download"></i> <i class="fas fa-file-excel"></i>
+                                    </a>
+                                    <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/'.session::get('maHocPhan').'/'.session::get('maBaiQH').'/'.session::get('maHK').'/'.session::get('namHoc').'/'.session::get('maLop')) }}" class="btn btn-success">
                                           <i class="fas fa-arrow-left"></i>
                                     </a>
                             </div>
@@ -47,11 +50,11 @@
                                 <table id="" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>STT</th>
-                                            <th>Xếp loại</th>
-                                            <th>Số lượng</th>
-                                            <th>Tỉ lệ (%)</th>
-                                            <th>Tỉ lệ tích lũy</th>
+                                            <th>No.</th>
+                                            <th>Range</th>
+                                            <th>Quantity</th>
+                                            <th>Ratio (%)</th>
+                                            <th>Cumulative rate</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -65,19 +68,19 @@
                                             <td>
                                                 @switch($i+1)
                                                     @case(1)
-                                                        Giỏi
+                                                        Excellent
                                                     @break
                                                     @case(2)
-                                                        Khá
+                                                        Good
                                                     @break
                                                     @case(3)
-                                                        Trung bình
+                                                        Average
                                                     @break
                                                     @case(4)
-                                                        Yếu
+                                                        Below Average
                                                     @break
                                                     @case(5)
-                                                        Kém
+                                                        Weak
                                                     @break
                                                     @default
                                                 @endswitch
@@ -92,7 +95,7 @@
                                         @endphp
                                     @endfor
                                         <tr>
-                                            <td colspan="2"><b>Tổng</b></td>
+                                            <td colspan="2"><b>Total</b></td>
                                             <td>
                                                 {{ $tongXepHang }}
                                             </td>
@@ -130,7 +133,7 @@
                             console.log(xepHang);
                         }
                         var areaChartData = {
-                            labels: ['Giỏi', 'Khá', 'Trung Bình', 'Yếu', 'Kém'],
+                            labels: ['Excellent', 'Good', 'Average', 'Below Average', 'Weak'],
                             datasets: [{
                                 label: 'số Lượng',
                                 backgroundColor: 'rgba(60,141,188,0.9)',

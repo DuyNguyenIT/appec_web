@@ -17,7 +17,7 @@
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ asset('/giang-vien') }}">{{ __('Home') }}</a></li>
                             <li class="breadcrumb-item">Ngân hàng câu hỏi trắc nghiệm</li>
-                            <li class="breadcrumb-item active">Thêm câu hỏi</li>
+                            <li class="breadcrumb-item active">Thêm câu hỏi trắc nghiệm</li>
                         </ol>
                     </div>
                     <!-- /.col -->
@@ -32,7 +32,7 @@
                             <div class="card">
                                 <div class="card-header">
                                     <div class="d-flex justify-content-between">
-                                        <h3 class="card-title">Nhập câu hỏi</h3>
+                                        <h3 class="card-title">Thêm câu hỏi:</h3>
                                         <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/ngan-hang-cau-hoi-trac-nghiem/' . Session::get('maMuc').'/'.Session::get('maCTBaiQH')) }}"
                                             class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
                                     </div>
@@ -40,7 +40,7 @@
                                 <div class="card-body">
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                                        <label class="custom-control-label" for="customSwitch1">CKeditor</label>
+                                        <label class="custom-control-label" for="customSwitch1">Bộ soạn thảo văn bản - CKeditor</label>
                                     </div>
                                     <form
                                         action="{{ asset('giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/ngan-hang-cau-hoi-trac-nghiem/them-cau-hoi-submit') }}"
@@ -64,22 +64,19 @@
                                                 @endforeach
                                             </select>
                                         </div>
+                                        
                                         <div class="form-group">
-                                            <label for="">{{ __('SO') }}:</label>
+                                            <label for="">{{ __("CDIO's SOs") }}:</label>
                                             <select name="maCDR3" id="maCDR3" class="form-control">
                                                 @foreach ($cdr3 as $data)
                                                     <option value="{{ $data->maCDR3 }}">{{ $data->maCDR3VB }} -
-                                                        {{ $data->tenCDR3 }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="">{{ __("ABET's SO") }}:</label>
-                                            <select name="maChuanAbet" id="maChuanAbet" class="form-control">
-                                                @foreach ($abet as $data)
-                                                    <option value="{{ $data->maChuanAbet }}">
-                                                        {{ $data->maChuanAbetVB }} - {{ $data->tenChuanAbet }}
-                                                    </option>
+                                                    @if (Session::get('language') && Session::get('language')=='en')
+                                                        {{ $data->tenCDR3EN }}
+                                                    @else
+                                                        {{ $data->tenCDR3 }}
+                                                    @endif
+                                                        
+                                                        </option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -90,27 +87,27 @@
                                                 class="form-control" required></textarea>
                                         </div>
                                         <div class="form-group">
-                                            <label for="">Lựa chọn A</label>
+                                            <label for="">Phương án A</label>
                                             <textarea type="text" name="phuongAn[]" id="phuongAn1" class="form-control"
                                                 required></textarea>
                                         </div>
                                         <div class="form-group">
-                                            <label for="">Lựa chọn B</label>
+                                            <label for="">Phương án B</label>
                                             <textarea type="text" name="phuongAn[]" id="phuongAn2" class="form-control"
                                                 required></textarea>
                                         </div>
                                         <div class="form-group">
-                                            <label for="">Lựa chọn C</label>
+                                            <label for="">Phương án C</label>
                                             <textarea type="text" name="phuongAn[]" id="phuongAn3" class="form-control"
                                                 required></textarea>
                                         </div>
                                         <div class="form-group">
-                                            <label for="">Lựa chọn D</label>
+                                            <label for="">Phương án D</label>
                                             <textarea type="text" name="phuongAn[]" id="phuongAn4" class="form-control"
                                                 required></textarea>
                                         </div>
                                         <div class="form-group">
-                                            <label for="">Đáp án</label><br>
+                                            <label for="">Phương án đúng:</label><br>
                                             A <input type="radio" name="choice" value="0" checked>
                                             B <input type="radio" name="choice" value="1">
                                             C <input type="radio" name="choice" value="2">

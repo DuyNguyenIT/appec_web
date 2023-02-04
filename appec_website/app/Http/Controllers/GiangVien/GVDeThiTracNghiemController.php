@@ -20,6 +20,15 @@ class GVDeThiTracNghiemController extends Controller
     //-------OK
     public function them_de_thi_trac_nghiem_submit (Request $request)//thêm tiêu đèn, ngày thi, giờ thi,...
     {
+        //thay viet code
+        $madevb1= deThi::where('maDeVB',$request->maDeVB)->where('maCTBaiQH',Session::get('maCTBaiQH'))->first();
+        // return $madevb1;
+         if($madevb1)
+         {
+             CommonController::warning_notify('Mã đề bị trùng!!!!','Duplicate exam code!!!!');
+             return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/'.Session::get('maCTBaiQH'));
+         }
+         //--thay viet code
         deThi::create(['maDeVB'=>$request->maDeVB,'soCauHoi'=>$request->soCauHoi,'tenDe'=>$request->tenDe,'thoiGian'=>$request->thoiGian,'ghiChu'=>$request->ghiChu,'maCTBaiQH'=>Session::get('maCTBaiQH')]);
         $dethi=deThi::orderBy('maDe','desc')->first();
         raDe::create(['maDe'=>$dethi->maDe,'maGV'=>session::get('maGV'),'maHocPhan'=>session::get('maHocPhan'),'maLop'=>session::get('maLop')]);
@@ -40,8 +49,15 @@ class GVDeThiTracNghiemController extends Controller
                 CommonController::warning_notify('Đề thi hiện có '.$soCauHoi.', không thể ít hơn!!','The examination must be at least '.$soCauHoi.' questions!');
                 return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/'.Session::get('maCTBaiQH'));
             } else {
-                deThi::updateOrCreate(['maDe'=>$request->maDe],['maDeVB'=>$request->maDeVB,'soCauHoi'=>$request->soCauHoi,
+                deThi::updateOrCreate(['maDe'=>$request->maDe],['maDeVB'=>$request->maDeVB,'soCauHoi'=>$request->soCauHoi,'tenDe'=>$request->tenDe,
                 'thoiGian'=>$request->thoiGian,'ghiChu'=>$request->ghiChu]);
+                //nếu chinh sửa thêm hoac bớt câu hoi trong de thi phai điều chỉnh lại số điểm cho các câu hỏi
+                $dethi=deThi::where('maDe',$request->maDe)->first();
+                if($dethi){
+                    $diem=number_format(10/$dethi->soCauHoi,2);
+                    deThi_cauHoi::updateOrCreate(['maDe'=>$request->maDe],['diem'=>$diem]);
+                }
+                //thong bao
                 CommonController::success_notify('Sửa thành công!!','Edited successfully');
                 return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/'.Session::get('maCTBaiQH'));
             }
@@ -51,7 +67,7 @@ class GVDeThiTracNghiemController extends Controller
     //---------------OK
     public function xoa_de_thi($maDe)
     {
-        //check content
+        //neu co noi dung, khong the xoa
         if(phieu_cham::where('maDe',$maDe)->count('maDe')>0)
         {
             CommonController::warning_notify('Đề thi đã được sử dụng, không thể xóa!!','The examination is used, can not delete');
@@ -146,13 +162,13 @@ class GVDeThiTracNghiemController extends Controller
             return '/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/cau-truc-de-trac-nghiem/'.Session::get('maDe');
         }
        
-        $dethi=deThi::where('maDe',$maDe)->first();
+        $dethi=deThi::where('maDe',Session::get('maDe'))->first();
         
         if($dethi){
             //kiem tra cau hoi da duoc su dung trong de thi
             $diem=number_format(10/$dethi->soCauHoi,2);
            
-            $dem_cau_hoi=deThi_cauHoi::where('maDe',$maDe)->count();
+            $dem_cau_hoi=deThi_cauHoi::where('maDe',Session::get('maDe'))->count();
            
             if($dem_cau_hoi==$dethi->soCauHoi){//de thi da du so cau hoi
                 CommonController::warning_notify('Đề thi đã đủ số câu hỏi!','The examination is enough question!');
@@ -162,15 +178,15 @@ class GVDeThiTracNghiemController extends Controller
                
                 foreach ($request->array as  $value) {
                     //neu cau hoi da duoc su dung thi khong them
-                    $check_ques=deThi_cauHoi::where('maDe',$maDe)->where('maCauHoi',$value['id'])->count();
+                    $check_ques=deThi_cauHoi::where('maDe',Session::get('maDe'))->where('maCauHoi',$value['id'])->count();
                   
                     if($check_ques>0){
                         continue;
                     }
                     deThi_cauHoi::create(['maDe'=>Session::get('maDe'),'maCauHoi'=>$value['id'],'diem'=>$diem]);
                     $demCauHoiDaThem+=1;
-                    $dem_cau_hoi=deThi_cauHoi::where('maDe',$maDe)->count();
-                    if($dem_cau_hoi=$dethi->soCauHoi){
+                    $dem_cau_hoi=deThi_cauHoi::where('maDe',Session::get('maDe'))->count();
+                    if($dem_cau_hoi==$dethi->soCauHoi){
                         break;
                     }
                 }
@@ -193,6 +209,24 @@ class GVDeThiTracNghiemController extends Controller
         }
         $ch=deThi_cauHoi::where('maCauHoi',$maCauHoi)->where('maDe',$maDe)->delete();
         CommonController::success_notify('Xóa thành công!','Delete successfully!');
+        return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/cau-truc-de-trac-nghiem/'.Session::get('maDe'));
+
+    }
+
+    public function xoa_nhieu_cau_hoi_de_trac_nghiem(Request $request)
+    {
+        if(phieu_cham::where('maDe',Session::get('maDe'))->count('maDe')>0){
+            CommonController::warning_notify('Đề thi đã được sử dụng, không thể xóa câu hỏi!','The examination is used, can not delete!');
+            return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/cau-truc-de-trac-nghiem/'.Session::get('maDe'));
+        }
+
+        if($request->select_all){
+            foreach ($request->select_all as $maCauHoi) {
+                deThi_cauHoi::where('maCauHoi',$maCauHoi)->where('maDe',Session::get('maDe'))->delete();
+            }
+            CommonController::success_notify('Xóa thành công!','Delete successfully!');
+        }
+       
         return redirect('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/cau-truc-de-trac-nghiem/'.Session::get('maDe'));
 
     }

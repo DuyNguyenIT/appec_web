@@ -105,6 +105,7 @@
                                                           aria-hidden="true">
                                                           <div class="modal-dialog" role="document">
                                                               {{-- form --}}
+                                                              
                                                               <form action="{{ asset('quan-ly/bac-dao-tao/sua') }}"
                                                                   method="post" enctype="multipart/form-data">
                                                                   @csrf

@@ -1,0 +1,39 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class Create24LopHocCtdaotaoTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('LOP_HOC_CTDAOTAO', function (Blueprint $table) {
+           
+            $table->increments('id');
+            $table->string('maLop',20);
+            $table->integer('maCT')->unsigned()->nullable()->default(1);
+
+            $table->boolean('isDelete')->nullable()->default(false);
+            $table->foreign('maCT')->references('maCT')->on('CT_DAO_TAO')->onUpdate('restrict')->onDelete('cascade');
+            $table->foreign('maLop')->references('maLop')->on('LOP')->onUpdate('restrict')->onDelete('cascade');
+            $table->timestamps();
+
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('LOP_HOC_CTDAOTAO');
+    }
+}

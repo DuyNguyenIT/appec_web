@@ -9,6 +9,7 @@ use App\Models\cauHoi;
 use App\Models\chuong;
 use App\Models\kqHTHP;
 use App\Models\hocPhan;
+use App\Models\cdr3_abet;
 use App\Models\noiDungQH;
 use App\Models\chuan_abet;
 use App\Models\cau_hoi_ndqh;
@@ -92,7 +93,7 @@ class GVCauHoiTracNghiemController extends Controller
             $y->on('cdr_cd3.maCDR3','=','hocphan_kqht_hp.maCDR3')
             ->where('cdr_cd3.isDelete',false);
         })
-        ->get(['hocphan_kqht_hp.maCDR3','cdr_cd3.maCDR3VB','cdr_cd3.tenCDR3']);
+        ->get(['hocphan_kqht_hp.maCDR3','cdr_cd3.maCDR3VB','cdr_cd3.tenCDR3','cdr_cd3.tenCDR3EN']);
 
         //combobox abet
         $abet=hocPhan::where('hoc_phan.maHocPhan',$chuong->maHocPhan)
@@ -105,7 +106,7 @@ class GVCauHoiTracNghiemController extends Controller
             $y->on('chuan_abet.maChuanAbet','=','hocphan_kqht_hp.maChuanAbet')
             ->where('chuan_abet.isDelete',false);
         })
-        ->get(['hocphan_kqht_hp.maChuanAbet','chuan_abet.maChuanAbetVB','chuan_abet.tenChuanAbet']);
+        ->get(['hocphan_kqht_hp.maChuanAbet','chuan_abet.maChuanAbetVB','chuan_abet.tenChuanAbet','chuan_abet.tenChuanAbet_EN']);
        
         //combobox kqht
         $kqht_arr=hocPhan_kqHTHP::where('hocphan_kqht_hp.isDelete',false)
@@ -141,13 +142,15 @@ class GVCauHoiTracNghiemController extends Controller
             //thêm phương án trắc nghiệm
             $cauhoi=cauHoi::where('isDelete',false)->orderBy('maCauHoi','desc')->first();
             for ($i=0; $i <count($request->phuongAn) ; $i++) { 
+                $cdr3_abet=cdr3_abet::where('maCDR3',$request->maCDR3)->first();
+                $maChuanAbet = ($cdr3_abet) ? $cdr3_abet->maChuanAbet : 1 ;
                 if($request->choice==$i){
                     phuongAnTracNghiem::create(['noiDungPA'=>$request->phuongAn[$i],'isCorrect'=>true,'diemPA'=>12,
-                    'maCauHoi'=>$cauhoi->maCauHoi,'maCDR3'=>$request->maCDR3,'maChuanAbet'=>$request->maChuanAbet]);
+                    'maCauHoi'=>$cauhoi->maCauHoi,'maCDR3'=>$request->maCDR3,'maChuanAbet'=>$maChuanAbet]);
                 }
                 else{
                     phuongAnTracNghiem::create(['noiDungPA'=>$request->phuongAn[$i],'isCorrect'=>false,'diemPA'=>12,
-                    'maCauHoi'=>$cauhoi->maCauHoi,'maCDR3'=>$request->maCDR3,'maChuanAbet'=>$request->maChuanAbet]);
+                    'maCauHoi'=>$cauhoi->maCauHoi,'maCDR3'=>$request->maCDR3,'maChuanAbet'=>$maChuanAbet]);
                 }
             }
             if($cauhoi){
@@ -232,8 +235,10 @@ class GVCauHoiTracNghiemController extends Controller
                if($request->choice==$i){
                    $correct=true;
                }
+               $cdr3_abet=cdr3_abet::where('maCDR3',$request->maCDR3)->first();
+               $maChuanAbet = ($cdr3_abet) ? $cdr3_abet->maChuanAbet : 1 ;
                phuongAnTracNghiem::updateOrCreate(['id'=>$request->maPhuongAn[$i]],['noiDungPA'=>$request->phuongAn[$i],
-               'isCorrect'=>$correct,'diemPA'=>$request->diemPA[$i],'maCauHoi'=>$cauhoi->maCauHoi,'maCDR3'=>$request->maCDR3,'maChuanAbet'=>$request->maChuanAbet]);
+               'isCorrect'=>$correct,'diemPA'=>$request->diemPA[$i],'maCauHoi'=>$cauhoi->maCauHoi,'maCDR3'=>$request->maCDR3,'maChuanAbet'=>$maChuanAbet]);
             }
             CommonController::success_notify('Sửa thành công','Edited successfully');
         } else {

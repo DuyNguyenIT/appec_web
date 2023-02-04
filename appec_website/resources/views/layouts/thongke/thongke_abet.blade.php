@@ -2,11 +2,11 @@
     <thead>
         <tr>
             <th rowspan="2">{{ __('No.') }}</th>
-            <th rowspan="2">mã ABET</th>
-            <th rowspan="2">ABET</th>
-            <th colspan="4">Đạt</th>
-            <th rowspan="2" title="">Chưa đạt</th>
-            <th rowspan="2">Tổng</th>
+            <th rowspan="2">ABET's SOs ID</th>
+            <th rowspan="2">ABET's SOs title</th>
+            <th colspan="4">Achieve</th>
+            <th rowspan="2" title="">Fail</th>
+            <th rowspan="2">Total</th>
         </tr>
         <tr>
             <th>A</th>

@@ -12,7 +12,11 @@ class deThi extends Model
     protected $primaryKey='maDe';
     public $incrementing = false;
     public $fillable=['maDeVB','soCauHoi','tenDe','thoiGian','maCTBaiQH','ghiChu','isDelete'];
-    
+
+    public function de_thi_cauhoi_tuluan()
+    {
+        return $this->hasMany(de_thi_cauhoi_tuluan::class, 'maDe', 'maDe');
+    }
 
     public static function getPhieuChamByCTBQH($maCTBaiQH,$maGV)
     {
@@ -27,7 +31,7 @@ class deThi extends Model
             $y->on('phieu_cham.maSSV','=','sinh_vien.maSSV')
             ->where('sinh_vien.isDelete',false);
         })
-        ->orderBy('phieu_cham.maDe','desc')
+        //->orderBy('phieu_cham.maSSV','desc')
         ->get(['de_thi.maDeVB','de_thi.maDe','de_thi.tenDe','sinh_vien.maSSV','sinh_vien.HoSV','sinh_vien.TenSV','phieu_cham.maPhieuCham','phieu_cham.trangThai','phieu_cham.diemSo']);
     }
 

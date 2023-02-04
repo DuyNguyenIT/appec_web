@@ -49,7 +49,7 @@ class hocPhan extends Model
             $y->on('cdr_cd3.maCDR3','=','hocphan_kqht_hp.maCDR3')
             ->where('cdr_cd3.isDelete',false);
         })
-        ->get(['hocphan_kqht_hp.maCDR3','cdr_cd3.maCDR3VB','cdr_cd3.tenCDR3']);
+        ->get(['hocphan_kqht_hp.maCDR3','cdr_cd3.maCDR3VB','cdr_cd3.tenCDR3','cdr_cd3.tenCDR3EN']);
         return $cdr;
     }
 

@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use Session;
 use App\Models\users;
+use App\Models\cauHoi;
 use App\Models\hocPhan;
 use App\Models\cdr3_abet;
 use App\Models\giangVien;
 use Illuminate\Http\Request;
 use App\Models\hocPhan_kqHTHP;
+use App\Models\phuongAnTuLuan;
+use App\Models\tieuChiChamDiem;
 use App\Models\phuongAnTracNghiem;
 use App\Http\Controllers\CommonController;
 
@@ -16,15 +19,15 @@ class loginController extends Controller
 {
     public function index()
     {
-    //    $hocPhan=hocPhan::pluck('maHocPhan');
-    //    $hp_kqht=phuongAnTracNghiem::all();
-    //    foreach ($hp_kqht as $key => $value) {
-    //        $cdr3_abet=cdr3_abet::where('maCDR3',$value->maCDR3)->first();
-    //        if($cdr3_abet){
-    //             $value->maChuanAbet=$cdr3_abet->maChuanAbet;
-    //             $value->update();
-    //        }
-    //    }
+        //    $hocPhan=hocPhan::pluck('maHocPhan');
+        //    $hp_kqht=tieuChiChamDiem::all();
+        //    foreach ($hp_kqht as $key => $value) {
+        //        $cdr3_abet=cdr3_abet::where('maCDR3',$value->maCDR3)->first();
+        //        if($cdr3_abet){
+        //             $value->maChuanAbet=$cdr3_abet->maChuanAbet;
+        //             $value->update();
+        //        }
+        //    }
         // foreach ($hp_kqht as $key => $value) {
         //     if(hocPhan_kqHTHP::where('maHocPhan',$value->maHocPhan)
         //     ->where('maKQHT',$value->maKQHT)->where('maCDR3',$value->maCDR3)
@@ -35,7 +38,24 @@ class loginController extends Controller
         //     }
         // }
         //return $hp_kqht;
-        Session::put('language','vi');
+
+        //duyet qua bang
+        // $pa_tn=phuongAnTuLuan::all();
+        // foreach ($pa_tn as $pa) {
+        //     if($pa->maCDR3!=null){
+        //         $cdr3_abet=cdr3_abet::where('maCDR3',$pa->maCDR3)->first();
+        //         if($cdr3_abet){
+        //             $pa->maChuanAbet=$cdr3_abet->maChuanAbet;
+        //             $pa->update();
+        //         }
+        //     }
+        // }
+        
+        $cauHoi=cauHoi::all();
+        foreach($cauHoi as $ch){
+            
+        }
+        Session::put('language','en');
         if(Session::get('user_permission') == 1)	
             return redirect('/quan-ly');
         if(Session::get('user_permission') == 2)

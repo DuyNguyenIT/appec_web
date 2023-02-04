@@ -12,16 +12,15 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">Phiếu đánh giá thực hành<noscript></noscript>
+                        <h1 class="m-0 text-dark">Essay answer sheet<noscript></noscript>
                             <nav></nav>
                         </h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ asset('giang-vien') }}">Trang chủ</a></li>
-                            <li class="breadcrumb-item "><a href="#">Tên môn</a></li>
-                            <li class="breadcrumb-item "><a href="#">Thực hành</a></li>
-                            <li class="breadcrumb-item active">Phiếu chấm</li>
+                            <li class="breadcrumb-item"><a href="{{ asset('giang-vien') }}">{{ __('Home') }}</a></li>
+                            <li class="breadcrumb-item "><a href="#">Esay</a></li>
+                            <li class="breadcrumb-item active">Anser sheet</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -38,11 +37,9 @@
                         <div class="card">
                             <div class="card-header">
                                 <h5 class="">
-                                    1. Giảng viên chấm: {{ $gv->hoGV }} {{ $gv->tenGV }} <br>
-                                    2. Chức danh: <br>
-                                    3. Đơn vị công tác: <br>
-                                    4. Đề thi: {{ $dethi->tenDe }} <br>
-                                    5. Học và tên sinh viên: {{ $sv->HoSV }} {{ $sv->TenSV }} <br>
+                                    1. Instructor: {{ $gv->hoGV }} {{ $gv->tenGV }} <br>
+                                    2. Examination: {{ $dethi->tenDe }} <br>
+                                    3. Student name: {{ $sv->HoSV }} {{ $sv->TenSV }} <br>
                                 </h5>
                             </div>
                             <!-- /.card-header -->
@@ -50,10 +47,10 @@
                                 <table id="example2" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>STT</th>
-                                            <th>Câu hỏi</th>
-                                            <th>Phương án</th>
-                                            <th>Điểm chấm </th>
+                                            <th>No.</th>
+                                            <th>{{ __('Question content') }}</th>
+                                            <th>{{ __('Answer') }}</th>
+                                            <th>{{ __('Granding') }} </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -103,25 +100,25 @@
                                                 <tr>
                                                     <td rowspan={{ $demPA_CauHoi }}>{{ $i++ }}</td>
                                                     <td rowspan={{ $demPA_CauHoi }}>{!! $tc->noiDungCauHoi !!} <b>(
-                                                            {{ $diemCauHoi }} điểm)</b></td>
+                                                            {{ $diemCauHoi }} {{ __('Mark') }})</b></td>
                                                     @if ($chayCDR_PATL == 1)
-                                                        <td>{!! $tc->noiDungPA !!} <b>({{ $tc->diemPA }} điểm)</b></td>
+                                                        <td>{!! $tc->noiDungPA !!} <b>({{ $tc->diemPA }} {{ __('Mark') }})</b></td>
                                                     @else
-                                                        <td>{!! $tc->noiDungPA !!} <b>({{ $tc->diemPA }} điểm)</b></td>
+                                                        <td>{!! $tc->noiDungPA !!} <b>({{ $tc->diemPA }} {{ __('Mark') }})</b></td>
                                                     @endif
                                                     <td>
-                                                        {{ $tc->diemDG }} điểm
+                                                        {{ $tc->diemDG }} {{ __('Mark') }}
                                                     </td>
                                                 </tr>
                                             @else
                                                 <tr>
                                                     @if ($chayCDR_PATL == 1)
-                                                        <td>{!! $tc->noiDungPA !!} <b>({{ $tc->diemPA }} điểm)</b></td>
+                                                        <td>{!! $tc->noiDungPA !!} <b>({{ $tc->diemPA }} {{ __('Mark') }})</b></td>
                                                     @else
-                                                        <td>{!! $tc->noiDungPA !!} <b>({{ $tc->diemPA }} điểm)</b></td>
+                                                        <td>{!! $tc->noiDungPA !!} <b>({{ $tc->diemPA }} {{ __('Mark') }})</b></td>
                                                     @endif
                                                     <td>
-                                                        {{ $tc->diemDG }} điểm
+                                                        {{ $tc->diemDG }} {{ __('Mark') }}
                                                     </td>
                                                 </tr>
                                             @endif
@@ -132,7 +129,7 @@
                                 </table>
                                 <hr>
                                 <div class="form-group">
-                                    <h5><b>Ý kiến đóng góp:</b> {{ $pc->yKienDongGop }}</h5>
+                                    <h5><b>{{ __('Comments') }}:</b> {{ $pc->yKienDongGop }}</h5>
                                 </div>
                             </div>
                             <!-- /.card-body -->

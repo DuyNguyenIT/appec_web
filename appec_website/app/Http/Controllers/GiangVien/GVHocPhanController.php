@@ -5,6 +5,7 @@ namespace App\Http\Controllers\GiangVien;
 use Session;
 use App\Models\CDR3;
 use App\Models\hocPhan;
+use App\Models\ctDaoTao;
 use App\Models\giangDay;
 use App\Models\sinhVien;
 use Illuminate\Http\Request;
@@ -16,6 +17,7 @@ class GVHocPhanController extends Controller
 {
     public function index()
     {
+        
         $mhp_arr=giangDay::where('giangday.isDelete',false)->where('maGV',Session::get('maGV'))
         ->join('hoc_phan',function($q){
             $q->on('hoc_phan.maHocPhan','=','giangday.maHocPhan')
@@ -24,7 +26,15 @@ class GVHocPhanController extends Controller
         ->pluck('giangday.maHocPhan');
         
         $gd=hocPhan::where('isDelete',false)->whereIn('maHocPhan',$mhp_arr)->get();
-       
+        foreach ($gd as $hp) {
+            foreach ($hp->hocphan_ctdt as $hp_ctdt) {
+                $ct=ctDaoTao::where('maCT',$hp_ctdt->maCT)->first();
+                $hp_ctdt->tenCT=$ct->tenCT;
+                $hp_ctdt->tenCT_EN=$ct->tenCT_EN;
+                $hp_ctdt->soQuyetDinh=$ct->soQuyetDinh;
+                $hp_ctdt->ngayBanHanh=$ct->ngayBanHanh;
+            }
+        }
         return view('giangvien.hocphan.hocphan',['gd'=>$gd]);
     }
     ////////////////---------------Xem kết quả học tập của học phần

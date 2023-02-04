@@ -7,16 +7,15 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">Xem phiếu đánh giá đồ án<noscript></noscript>
+                        <h1 class="m-0 text-dark">Project answer sheet<noscript></noscript>
                             <nav></nav>
                         </h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ asset('giang-vien') }}">Trang chủ</a></li>
-                            <li class="breadcrumb-item "><a href="#">Tên môn</a></li>
-                            <li class="breadcrumb-item "><a href="#">Đồ án</a></li>
-                            <li class="breadcrumb-item active">Xem phiếu chấm</li>
+                            <li class="breadcrumb-item"><a href="{{ asset('giang-vien') }}">Home</a></li>
+                            <li class="breadcrumb-item "><a href="#">Project</a></li>
+                            <li class="breadcrumb-item active">Project answer sheet</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -31,25 +30,28 @@
                         <!-- /.card -->
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="">
-                                    1. Họ và tên (thành viên chấm): {{ $gv->hoGV }} {{ $gv->tenGV }} <br>
-                                    2. Chức danh: <br>
-                                    3. Đơn vị công tác: <br>
-                                    4. Tên đề tài: {{ $deTai->tenDe }} <br>
-                                    5. Học và tên sinh viên bảo vệ: {{ $sv->HoSV }} {{ $sv->TenSV }} <br>
+                                <h5 class="card-title">
+                                    1. Instructor: {{ $gv->hoGV }} {{ $gv->tenGV }} <br>
+                                    2. Project title: {{ $deTai->tenDe }} <br>
+                                    3. Student name: {{ $sv->HoSV }} {{ $sv->TenSV }} <br>
                                 </h5>
+                                <div class="card-tools">
+                                    <a href="{{ asset('/giang-vien/ket-qua-danh-gia/nhap-ket-qua-danh-gia/'.Session::get('maCTBaiQH')) }}" class="btn btn-success" >
+                                       <i class="fa fa-arrow-left" aria-hidden="true"></i> 
+                                     </a>
+                                </div>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <i>(Thành viên chấm chọn tiêu chí tương ứng với mức độ mà sinh viên đạt được)</i>
+                                {{-- <i>(Thành viên chấm chọn tiêu chí tương ứng với mức độ mà sinh viên đạt được)</i> --}}
                                 <table id="example2" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>STT</th>
-                                            <th>Tiêu chuẩn</th>
-                                            <th>Chuẩn đầu ra</th>
-                                            <th>Tiêu chí</th>
-                                            <th>Điểm đánh giá</th>
+                                            <th>No.</th>
+                                            <th>Classify assessment</th>
+                                            <th>CDIO's SOs - ABET's SOs</th>
+                                            <th>Evaluation criteria</th>
+                                            <th>Mark</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -61,8 +63,7 @@
                                             $cdrHienTai = 0;
                                         @endphp
                                         @foreach ($tieuchi as $tc)
-                                            @php
-                                                
+                                            @php   
                                                 if ($cdrHienTai != $tc->maCDR3) {
                                                     //kiểm tra nếu chuẩn đầu ra thay đổi thì chuyển biến chạy về 1
                                                     $cdrHienTai = $tc->maCDR3;
@@ -84,7 +85,7 @@
                                                 $demTCDG = $tieuchi->groupBy('tenTCDG')->count();
                                                 $demCDR_TCDG = $tieuchi
                                                     ->where('maTCDG', $tc->maTCDG)
-                                                    ->groupBy('tenCDR3')
+                                                    ->groupBy('tenCDR3EN')
                                                     ->count();
                                                 $demTieuChi_TCDG = $tieuchi->where('maTCDG', $tc->maTCDG)->count('tenTCCD');
                                                 $demTC_CDR = $tieuchi
@@ -97,15 +98,15 @@
                                                 <tr>
                                                     <td rowspan={{ $demTieuChi_TCDG }}>{{ $i++ }}</td>
                                                     <td rowspan={{ $demTieuChi_TCDG }}>{{ $tc->tenTCDG }}
-                                                        <b>({{ $tc->diem }} điểm)</b>
+                                                        <b>({{ $tc->diem }} mark)</b>
                                                     </td>
                                                     @if ($chayCDR_TCDG == 1)
                                                         <td rowspan={{ $demTC_CDR }}>{{ $tc->maCDR3VB }}:
-                                                            {{ $tc->tenCDR3 }}</td>
-                                                        <td>{{ $tc->tenTCCD }} <b>({{ $tc->diemTCCD }} điểm)</b></td>
+                                                            {{ $tc->tenCDR3EN }}</td>
+                                                        <td>{{ $tc->tenTCCD }} <b>({{ $tc->diemTCCD }} mark)</b></td>
                                                         <td>{{ $tc->diemDG }}</td>
                                                     @else
-                                                        <td>{{ $tc->tenTCCD }} <b>({{ $tc->diemTCCD }} điểm)</b></td>
+                                                        <td>{{ $tc->tenTCCD }} <b>({{ $tc->diemTCCD }} mark)</b></td>
                                                         <td>{{ $tc->diemDG }}</td>
                                                     @endif
                                                 </tr>
@@ -113,11 +114,11 @@
                                                 <tr>
                                                     @if ($chayCDR_TCDG == 1)
                                                         <td rowspan={{ $demTC_CDR }}>{{ $tc->maCDR3VB }}:
-                                                            {{ $tc->tenCDR3 }}</td>
-                                                        <td>{{ $tc->tenTCCD }} <b>({{ $tc->diemTCCD }} điểm)</b></td>
+                                                            {{ $tc->tenCDR3EN }}</td>
+                                                        <td>{{ $tc->tenTCCD }} <b>({{ $tc->diemTCCD }} mark)</b></td>
                                                         <td>{{ $tc->diemDG }}</td>
                                                     @else
-                                                        <td>{{ $tc->tenTCCD }} <b>({{ $tc->diemTCCD }} điểm)</b></td>
+                                                        <td>{{ $tc->tenTCCD }} <b>({{ $tc->diemTCCD }} mark)</b></td>
                                                         <td>{{ $tc->diemDG }}</td>
                                                     @endif
                                                 </tr>
@@ -140,4 +141,5 @@
             <!-- /.container-fluid -->
         </section>
         <!-- /.content -->
+    </div>
     @endsection

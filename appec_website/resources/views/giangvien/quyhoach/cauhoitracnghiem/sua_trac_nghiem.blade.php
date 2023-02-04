@@ -73,22 +73,7 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="">Abet:</label>
-                                            <select name="maChuanAbet" id="" class="form-control">
-                                                @foreach ($abet as $data)
-                                                    @if ($cauhoi->phuong_an_trac_nghiem[0]->maChuanAbet == $data->maChuanAbet)
-                                                        <option value="{{ $data->maChuanAbet }}" selected>
-                                                            {{ $data->maChuanAbetVB }} - {{ $data->tenChuanAbet }}
-                                                        </option>
-                                                    @else
-                                                        <option value="{{ $data->maChuanAbet }}">
-                                                            {{ $data->maChuanAbetVB }} - {{ $data->tenChuanAbet }}
-                                                        </option>
-                                                    @endif
-                                                @endforeach
-                                            </select>
-                                        </div>
+                                       
                                         <div class="form-group">
                                             <label for="">{{ __('Question content') }}:</label>
                                             <input type="text" name="maCauHoi" value="{{ $cauhoi->maCauHoi }}" hidden>
@@ -96,7 +81,7 @@
                                                 class="form-control">{{ $cauhoi->noiDungCauHoi }}</textarea>
                                         </div>
                                         <div class="form-group">
-                                            <label for="">Lựa chọn A</label>
+                                            <label for="">Phương án A</label>
                                             <input type="text" name="maPhuongAn[]"
                                                 value="{{ $cauhoi->phuong_an_trac_nghiem[0]->id }}" hidden>
                                             <textarea type="text" name="phuongAn[]" id="phuongAn1" class="form-control">
@@ -104,7 +89,7 @@
                                   </textarea>
                                         </div>
                                         <div class="form-group">
-                                            <label for="">Lựa chọn B</label>
+                                            <label for="">Phương án B</label>
                                             <input type="text" name="maPhuongAn[]"
                                                 value="{{ $cauhoi->phuong_an_trac_nghiem[1]->id }}" hidden>
                                             <textarea type="text" name="phuongAn[]" id="phuongAn2" class="form-control">
@@ -112,7 +97,7 @@
                                   </textarea>
                                         </div>
                                         <div class="form-group">
-                                            <label for="">Lựa chọn C</label>
+                                            <label for="">Phương án C</label>
                                             <input type="text" name="maPhuongAn[]"
                                                 value="{{ $cauhoi->phuong_an_trac_nghiem[2]->id }}" hidden>
                                             <textarea type="text" name="phuongAn[]" id="phuongAn3" class="form-control">
@@ -120,7 +105,7 @@
                                   </textarea>
                                         </div>
                                         <div class="form-group">
-                                            <label for="">Lựa chọn D</label>
+                                            <label for="">Phương án D</label>
                                             <input type="text" name="maPhuongAn[]"
                                                 value="{{ $cauhoi->phuong_an_trac_nghiem[3]->id }}" hidden>
                                             <textarea type="text" name="phuongAn[]" id="phuongAn4" class="form-control">

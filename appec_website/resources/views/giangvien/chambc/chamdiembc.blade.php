@@ -7,15 +7,15 @@
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <h1 class="m-0 text-dark">
-                            Chấm điểm báo cáo<noscript></noscript>
+                            Instructor<noscript></noscript>
                             <nav></nav>
                         </h1>
                     </div>
                     <!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                            <li class="breadcrumb-item active">Chấm điểm báo cáo</li>
+                            <li class="breadcrumb-item"><a href="{{ asset('/giang-vien') }}">Home</a></li>
+                            <li class="breadcrumb-item active">Instructor</li>
                         </ol>
                     </div>
                     <!-- /.col -->
@@ -60,14 +60,14 @@
                                                 role="grid" aria-describedby="example2_info">
                                                 <thead>
                                                     <tr>
-                                                        <th>STT</th>
-                                                        <th>Tên học phần</th>
-                                                        <th>Giảng viên giảng dạy</th>
-                                                        <th>Học kì</th>
-                                                        <th>Năm học</th>
-                                                        <th>Lớp</th>
-                                                        <th>Trạng thái</th>
-                                                        <th>Tùy chọn</th>
+                                                        <th>{{ __('No.') }}</th>
+                                                        <th>Course</th>
+                                                        <th>Lecture</th>
+                                                        <th>Semester</th>
+                                                        <th>Year</th>
+                                                        <th>Class</th>
+                                                        <th>Status</th>
+                                                        <th>Option</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -82,13 +82,12 @@
                                                             <td>{{ $hp[0]->maHK }}</td>
                                                             <td>{{ $hp[0]->namHoc }}</td>
                                                             <td>{{ $hp[0]->maLop }}</td>
-                                                            <td>Đang chờ</td>
+                                                            <td>Wating</td>
                                                             <td>
                                                                 <a
                                                                     href="{{ asset('giang-vien/cham-diem-bao-cao/noi-dung-danh-gia/' . $hp[0]->maBaiQH . '/' . $hp[0]->maHocPhan) }}">
                                                                     <button class="btn btn-success">
-                                                                        <i class="fas fa-align-justify"></i> Tiến hành
-                                                                        đánh giá
+                                                                        <i class="fas fa-align-justify"></i> Granding now
                                                                     </button>
                                                                 </a>
                                                             </td>

@@ -10,18 +10,18 @@
         <!-- Content Header (Page header) -->
         <div class="content-header">
             <div class="container-fluid">
+                
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">Phiếu đánh giá trắc nghiệm<noscript></noscript>
+                        <h1 class="m-0 text-dark">{{ __('Multiple choice answer sheet') }}<noscript></noscript>
                             <nav></nav>
                         </h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ asset('giang-vien') }}">Trang chủ</a></li>
-                            <li class="breadcrumb-item "><a href="#">Tên môn</a></li>
-                            <li class="breadcrumb-item "><a href="#">Trắc nghiệm</a></li>
-                            <li class="breadcrumb-item active">Phiếu chấm</li>
+                            <li class="breadcrumb-item"><a href="{{ asset('giang-vien') }}">Home</a></li>
+                            <li class="breadcrumb-item "><a href="#">Multiple choice question</a></li>
+                            <li class="breadcrumb-item active">Multiple choice answer sheet</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -36,23 +36,27 @@
                         <input type="text" name="maPhieuCham" hidden value={{ $gv->maPhieuCham }}>
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="">
-                                    1. Giảng viên chấm: {{ $gv->hoGV }} {{ $gv->tenGV }} <br>
-                                    2. Chức danh: <br>
-                                    3. Đơn vị công tác: <br>
-                                    4. Đề thi: {{ $dethi->tenDe }} <br>
-                                    5. Học và tên sinh viên: {{ $sv->HoSV }} {{ $sv->TenSV }} <br>
+                                <h5 class="card-title">
+                                    1. Examiner: {{ $gv->hoGV }} {{ $gv->tenGV }} <br>
+                                    2. Exam title: {{ $dethi->tenDe }} <br>
+                                    3. Student: {{ $sv->HoSV }} {{ $sv->TenSV }} <br>
                                 </h5>
+                                <div class="card-tools">
+                                    <a href="{{ asset('/giang-vien/ket-qua-danh-gia/nhap-ket-qua-danh-gia/'.Session::get('maCTBaiQH')) }}" class="btn btn-success" >
+                                       <i class="fa fa-arrow-left" aria-hidden="true"></i> 
+                                     </a>
+                                </div>
                             </div>
+
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <table id="example2" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>STT</th>
-                                            <th>Câu hỏi</th>
-                                            <th>Phương án</th>
-                                            <th>Lựa chọn của sinh viên </th>
+                                            <th>No.</th>
+                                            <th>Questions</th>
+                                            <th>Answers</th>
+                                            <th>Student's answer </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -101,7 +105,7 @@
                                                 <tr>
                                                     <td rowspan={{ $demPA_CauHoi }}>{{ $i++ }}</td>
                                                     <td rowspan={{ $demPA_CauHoi }}>{!! $tc->noiDungCauHoi !!} <b>(
-                                                            {{ $diemCauHoi['diem'] }} điểm)</b></td>
+                                                            {{ $diemCauHoi['diem'] }} mark)</b></td>
                                                     @if ($chayCDR_PATL == 1)
                                                         <td>{!! $tc->noiDungPA !!} <b>(
                                                                 @if ($tc->isCorrect == false)
@@ -109,7 +113,7 @@
                                                                 @else
                                                                     {{ $diemCauHoi['diem'] }}
                                                                 @endif
-                                                                điểm)
+                                                                mark)
                                                             </b></td>
                                                     @else
                                                         <td>{!! $tc->noiDungPA !!} <b>(
@@ -118,19 +122,21 @@
                                                                 @else
                                                                     {{ $diemCauHoi['diem'] }}
                                                                 @endif
-                                                                điểm)
+                                                                mark)
                                                             </b></td>
                                                     @endif
                                                     <td>
                                                         @if ($tc->chon != null)
                                                             <!--co chon-->
-                                                            @if ($tc->isCorrect == true)
-                                                                <!--chon dung-->
-                                                                <i class="fas fa-check-circle"></i>
+                                                            <!--co chon-->
+                                                            <input type="radio" id="{{ $tc->maCauHoi }}"
+                                                            name="chon_{{ $tc->maCauHoi }}"
+                                                            value="{{ $tc->id }}"  checked/>
+                                                         
                                                             @else
-                                                                <!--chon sai-->
-                                                                <i class="fas fa-times-circle"></i>
-                                                            @endif
+                                                            <input type="radio" id="{{ $tc->maCauHoi }}"
+                                                                name="chon_{{ $tc->maCauHoi }}"
+                                                                value="{{ $tc->id }}" />
                                                         @endif
                                                     </td>
                                                 </tr>
@@ -143,7 +149,7 @@
                                                                 @else
                                                                     {{ $diemCauHoi['diem'] }}
                                                                 @endif
-                                                                điểm)
+                                                                mark)
                                                             </b></td>
                                                     @else
                                                         <td>{!! $tc->noiDungPA !!} <b>(
@@ -152,18 +158,21 @@
                                                                 @else
                                                                     {{ $diemCauHoi['diem'] }}
                                                                 @endif
-                                                                điểm)
+                                                                mark)
                                                             </b></td>
                                                     @endif
                                                     <td>
                                                         @if ($tc->chon != null)
                                                             <!--co chon-->
                                                             @if ($tc->isCorrect == true)
-                                                                <!--chon dung-->
-                                                                <i class="fas fa-check-circle"></i>
-                                                            @else
-                                                                <!--chon sai-->
-                                                                <i class="fas fa-times-circle"></i>
+                                                            <input type="radio" id="{{ $tc->maCauHoi }}"
+                                                            name="chon_{{ $tc->maCauHoi }}"
+                                                            value="{{ $tc->id }}"  checked/>
+
+                                                        @else
+                                                        <input type="radio" id="{{ $tc->maCauHoi }}"
+                                                            name="chon_{{ $tc->maCauHoi }}"
+                                                            value="{{ $tc->id }}" />
                                                             @endif
                                                         @endif
                                                     </td>
@@ -176,7 +185,7 @@
                                 </table>
                                 <hr>
                                 <div class="form-group">
-                                    <h5><b>Ý kiến đóng góp:</b> {{ $pc->yKienDongGop }}</h5>
+                                    <h5><b>Recommend:</b> {{ $pc->yKienDongGop }}</h5>
                                 </div>
                             </div>
                             <!-- /.card-body -->

@@ -39,6 +39,7 @@
     <!-- jQuery UI 1.11.4 -->
     <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.css') }}">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -209,6 +210,13 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ asset('quan-ly/bien-soan-va-phan-bien-de-cuong') }}" class="nav-link">
+                                <i class="nav-icon fas fa-book-reader"></i>
+                                <p>{{ __('Edit and Revise Curriculum') }}</p>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
                             <a href="{{ asset('/quan-ly/khoi-kien-thuc') }}" class="nav-link">
                                 <i class="nav-icon fas fa-book-reader"></i>
                                 <p>{{ __('Knowledge block') }}</p>
@@ -232,6 +240,12 @@
                                 <p>{{ __('Statistics') }} </p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ asset('/quan-ly/thong-ke-ket-qua-theo-hoc-ki/chuong-trinh') }}" class="nav-link">
+                                <i class="nav-icon  fas fa-chart-bar"></i>
+                                <p>{{ __('Statistic results') }}</p>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
@@ -242,7 +256,7 @@
         @yield('content')
         <footer class="main-footer">
             <strong>Copyright &copy; 2020-2021
-                <a href="https://adminlte.io"> CAP</a>.</strong>
+                <a href="#"> CAP</a>.</strong>
             <div class="float-right d-none d-sm-inline-block">
                 <b>Version</b> 1.0
             </div>
@@ -259,6 +273,8 @@
         $.widget.bridge("uibutton", $.ui.button);
 
     </script>
+
+    <script type="text/javascript" src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
     <!-- Bootstrap 4 -->
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- ChartJS -->
@@ -296,6 +312,7 @@
                 "responsive": true,
                 "autoWidth": false,
             });
+            $('.select2').select2();
         });
 
     </script>

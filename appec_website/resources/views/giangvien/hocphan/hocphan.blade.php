@@ -41,6 +41,7 @@
                                         <tr>
                                             <th>{{ __('No.') }}</th>
                                             <th>{{ __('Course name') }}</th>
+                                            <th>{{ __('Curriculum') }}</th>
                                             <th>{{ __('Option') }}</th>
                                         </tr>
                                     </thead>
@@ -51,8 +52,25 @@
                                         @foreach ($gd as $item)
                                             <tr>
                                                 <td>{{ $i++ }}</td>
-                                                <td>{{ $item->tenHocPhan }}</td>
-                                                <td style='white-space: nowrap'>
+                                                <td>
+                                                    ({{ $item->maHocPhan }})
+                                                    @if (Session::get('language') && Session::get('language')=='en')
+                                                    {{ $item->tenHocPhanEN }}
+                                                    @else
+                                                    {{ $item->tenHocPhan }}
+                                                    @endif
+                                                   
+                                                    </td>
+                                                <td>
+                                                    @if (Session::get('language') && Session::get('language')=='en')
+                                                    {{ $item->hocphan_ctdt[0]->tenCT_EN}} 
+                                                    @else
+                                                    {{ $item->hocphan_ctdt[0]->tenCT}}  
+                                                    @endif
+                                                    ({{ __('Desision No') }}: {{ $item->hocphan_ctdt[0]->soQuyetDinh }}, {{ __('Desision Date') }}:{{ $item->hocphan_ctdt[0]->ngayBanHanh }})
+                                                </td>
+
+                                               <td style='white-space: nowrap'>
                                                     {{-- <a class="btn btn-primary"
                                                         href="{{ asset('/giang-vien/hoc-phan/in-de-cuong-mon-hoc/' . $item->maHocPhan) }}">
                                                         <i class="fas fa-download"></i>
@@ -62,7 +80,7 @@
                                                         class="btn btn-success">
                                                         <i class="fas fa-list-ol"></i> {{ __('Chapter') }}
                                                     </a>
-                                                </td>
+                                                </td> 
                                             </tr>
                                         @endforeach
 

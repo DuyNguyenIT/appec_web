@@ -7,15 +7,15 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Thống kê theo CLOs<noscript></noscript>
+                    <h1 class="m-0 text-dark">Statistics of CLOs<noscript></noscript>
                         <nav></nav>
                     </h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ asset('giang-vien') }}">{{ __('Home') }}</a></li>
-                        <li class="breadcrumb-item "><a href="#">Thống kê</a></li>
-                        <li class="breadcrumb-item active">Thống kê theo CLOs</li>
+                        <li class="breadcrumb-item "><a href="#">Statistics</a></li>
+                        <li class="breadcrumb-item active">Statistics of CLOs</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -32,7 +32,10 @@
                             <h3 class="card-title">
                             </h3>
                             <div class="card-tools">
-                                <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/'.session::get('maHocPhan').'/'.session::get('maBaiQH').'/'.session::get('maHK').'/'.session::get('namHoc').'/'.session::get('maLop')) }}" class="btn btn-secondary">
+                                <a href="{{ asset('/giang-vien/thong-ke/thong-ke-theo-hoc-phan/tu-luan/xuat-thong-ke-clo/'.Session::get('maCTBaiQH')) }}" class="btn btn-success">
+                                    <i class="fas fa-download"></i> <i class="fas fa-file-excel"></i>
+                                </a>
+                                <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/'.session::get('maHocPhan').'/'.session::get('maBaiQH').'/'.session::get('maHK').'/'.session::get('namHoc').'/'.session::get('maLop')) }}" class="btn btn-success">
                                        <i class="fas fa-arrow-left"></i>
                                  </a>
                             </div>
@@ -43,11 +46,11 @@
                                 <thead>
                                     <tr>
                                         <th rowspan="2">{{ __('No.') }}</th>
-                                        <th rowspan="2">mã CLO</th>
+                                        <th rowspan="2">CLO ID</th>
                                         <th rowspan="2">CLO</th>
-                                        <th colspan="4">Đạt</th>
-                                        <th rowspan="2" title="">Chưa đạt</th>
-                                        <th rowspan="2">Tổng</th>
+                                        <th colspan="4">Achieve</th>
+                                        <th rowspan="2" title="">Fail</th>
+                                        <th rowspan="2">All</th>
                                     </tr>
                                     <tr>
                                         <th>A</th>

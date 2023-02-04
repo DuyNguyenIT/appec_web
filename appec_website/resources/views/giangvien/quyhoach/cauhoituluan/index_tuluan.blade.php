@@ -18,7 +18,12 @@
                             <li class="breadcrumb-item"><a href="{{ asset('/giang-vien') }}">{{ __('Home') }}</a></li>
                             <li class="breadcrumb-item">
                                 <a href="{{ asset('#') }}">
-                                    Ngân hàng câu hỏi
+                                    Nội dung quy hoạch
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="{{ asset('#') }}">
+                                    Tự luận
                                 </a>
                             </li>
 
@@ -51,7 +56,6 @@
                                         class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
                                 </h3>
 
-
                                 <!-- Modal add-->
                                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -62,7 +66,7 @@
                                             @csrf
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Thêm câu hỏi tự luận
+                                                    <h5 class="modal-title" id="exampleModalLabel">Thêm câu hỏi
                                                     </h5>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
@@ -73,7 +77,7 @@
                                                     <input type="text" name="maChuong" value="{{ $chuong->id }}" id=""
                                                         hidden>
                                                     <div class="form-group">
-                                                        <label for="">Nhập nội dung câu hỏi:</label>
+                                                        <label for="">Nội dung câu hỏi:</label>
                                                         <textarea name="noiDungCauHoi" id="ckcontent" cols="30" rows="10"
                                                             class="form-control" required></textarea>
                                                         <script>
@@ -83,6 +87,15 @@
                                                             });
 
                                                         </script>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for=""> Nội dung quy hoạch:</label>
+                                                        <select name="maNoiDungQH" id="" class="form-control" required>
+                                                            @foreach ($ndqh as $nd)
+                                                                <option value="{{ $nd->maNoiDungQH }}">
+                                                                    {{ $nd->tenNoiDungQH }}</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
 
                                                     {{-- <div class="form-group">
@@ -94,15 +107,8 @@
                                                             @endforeach
                                                         </select>
                                                     </div> --}}
-                                                    <div class="form-group">
-                                                        <label for=""> Nội dung qh:</label>
-                                                        <select name="maNoiDungQH" id="" class="form-control" required>
-                                                            @foreach ($ndqh as $nd)
-                                                                <option value="{{ $nd->maNoiDungQH }}">
-                                                                    {{ $nd->tenNoiDungQH }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
+                                                    
+                                                    
 
                                                 </div>
                                                 <div class="modal-footer">
@@ -112,11 +118,8 @@
                                                 </div>
                                             </div>
                                         </form>
-
                                     </div>
                                 </div>
-
-
                                 <!-- /.card-header -->
                                 <div class="card-body">
                                     <table id="example2" class="table table-bordered table-hover">
@@ -163,7 +166,7 @@
                                                                     <div class="modal-content">
                                                                         <div class="modal-header">
                                                                             <h5 class="modal-title" id="exampleModalLabel">
-                                                                                Sửa nội dung câu hỏi</h5>
+                                                                                Chỉnh sửa</h5>
                                                                             <button type="button" class="close"
                                                                                 data-dismiss="modal" aria-label="Close">
                                                                                 <span aria-hidden="true">&times;</span>
@@ -175,7 +178,7 @@
                                                                             <input type="text" name="maCauHoi"
                                                                                 value="{{ $x->maCauHoi }}" id="" hidden>
                                                                             <div class="form-group">
-                                                                                <label for="">Nhập nội dung câu hỏi:</label>
+                                                                                <label for="">Nội dung câu hỏi:</label>
                                                                                 <textarea name="noiDungCauHoi"
                                                                                     id="ckcontent_{{ $x->maCauHoi }}"
                                                                                     cols="30" rows="10" class="form-control"
@@ -193,8 +196,7 @@
                                                                             </div>
 
                                                                             <div class="form-group">
-                                                                                <label for=""> Đáp ứng kết quả học
-                                                                                    tập:</label>
+                                                                                <label for=""> Chuẩn đầu ra:</label>
                                                                                 <select name="maKQHT" id=""
                                                                                     class="form-control" required>
                                                                                     @foreach ($kqht as $x)
@@ -205,6 +207,7 @@
                                                                                     @endforeach
                                                                                 </select>
                                                                             </div>
+
                                                                         </div>
                                                                         <div class="modal-footer">
                                                                             <button type="submit"

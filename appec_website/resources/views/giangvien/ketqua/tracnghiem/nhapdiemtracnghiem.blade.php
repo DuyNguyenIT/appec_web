@@ -7,7 +7,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">Phiếu đánh giá trắc nghiệm<noscript></noscript>
+                        <h1 class="m-0 text-dark">{{ __('Multiple choice answer sheet') }}<noscript></noscript>
                             <nav></nav>
                         </h1>
                     </div><!-- /.col -->
@@ -133,9 +133,15 @@
                                                                 </b></td>
                                                         @endif
                                                         <td>
-                                                            <input type="radio" id="{{ $tc->maCauHoi }}"
-                                                                name="chon_{{ $tc->maCauHoi }}"
-                                                                value="{{ $tc->id }}" />
+                                                            @if ($tc->isCorrect == true)
+                                                                <input type="radio" id="{{ $tc->maCauHoi }}"
+                                                                    name="chon_{{ $tc->maCauHoi }}"
+                                                                    value="{{ $tc->id }}" checked/>
+                                                            @else
+                                                                <input type="radio" id="{{ $tc->maCauHoi }}"
+                                                                    name="chon_{{ $tc->maCauHoi }}"
+                                                                    value="{{ $tc->id }}" />
+                                                            @endif
                                                         </td>
                                                     </tr>
                                                 @else
@@ -160,9 +166,16 @@
                                                                 </b></td>
                                                         @endif
                                                         <td>
-                                                            <input type="radio" id="{{ $tc->maCauHoi }}"
-                                                                name="chon_{{ $tc->maCauHoi }}"
-                                                                value="{{ $tc->id }}" />
+                                                            @if ($tc->isCorrect == true)
+                                                                <input type="radio" id="{{ $tc->maCauHoi }}"
+                                                                    name="chon_{{ $tc->maCauHoi }}"
+                                                                    value="{{ $tc->id }}" checked/>
+                                                            @else
+                                                                <input type="radio" id="{{ $tc->maCauHoi }}"
+                                                                    name="chon_{{ $tc->maCauHoi }}"
+                                                                    value="{{ $tc->id }}" />
+                                                            @endif
+                                                           
                                                         </td>
                                                     </tr>
                                                 @endif

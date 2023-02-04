@@ -23,7 +23,7 @@
                                 <a href="#">Essay</a>
                             </li>
                             <li class="breadcrumb-item"><a href="#">Assessment Content</a></li>
-                            <li class="breadcrumb-item active">Xem nội dung đánh giá</li>
+                            <li class="breadcrumb-item active">Content</li>
                         </ol>
                     </div>
                     <!-- /.col -->
@@ -111,7 +111,7 @@
                                             <th>{{ __('Title') }}</th>
                                             <th>{{ __('Duration') }}</th>
                                             <th>{{ __('The number of question') }}</th>
-                                            <th>Câu hỏi hiện có</th>
+                                            <th>The number of current question</th>
                                             <th>{{ __('Note') }}</th>
                                             <th>{{ __('Option') }}</th>
                                         </tr>

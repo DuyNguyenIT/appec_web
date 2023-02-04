@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lecture</title>
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="http://127.0.0.1:8000/plugins/fontawesome-free/css/all.min.css" />
+    <!-- flag-icon-css -->
+    <link rel="stylesheet" href="http://127.0.0.1:8000/plugins/flag-icon-css/css/flag-icon.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+    <!-- Tempusdominus Bootstrap 4 -->
+    
+    <!-- iCheck -->
+    <link rel="stylesheet" href="http://127.0.0.1:8000/plugins/icheck-bootstrap/icheck-bootstrap.min.css" />
+    <!-- JQVMap -->
+    <link rel="stylesheet" href="http://127.0.0.1:8000/plugins/jqvmap/jqvmap.min.css" />
+    <!-- Theme style -->
+    <link rel="stylesheet" href="http://127.0.0.1:8000/dist/css/adminlte.min.css" />
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="http://127.0.0.1:8000/plugins/overlayScrollbars/css/OverlayScrollbars.min.css" />
+    <!-- Daterange picker -->
+    
+    <!-- summernote -->
+    
+    <!-- DataTables -->
+    <link rel="stylesheet" href="http://127.0.0.1:8000/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="http://127.0.0.1:8000/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <script src="http://127.0.0.1:8000/ckeditor/ckeditor.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <link rel="stylesheet" href="http://127.0.0.1:8000/plugins/select2/css/select2.css">
+    <!-- jQuery -->
+    <script src="http://127.0.0.1:8000/plugins/jquery/jquery.min.js"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="http://127.0.0.1:8000/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="http://127.0.0.1:8000/giang-vien" class="nav-link">Home</a>
+                </li>
+            </ul>
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+                <!-- Language Dropdown Menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                                                    <i class="flag-icon flag-icon-us"></i>
+                                            </a>
+                    <div class="dropdown-menu dropdown-menu-right p-0">
+                                                    <a href="http://127.0.0.1:8000/language/en" class="dropdown-item active">
+                                <i class="flag-icon flag-icon-us mr-2"></i> English
+                            </a>
+                            <a href="http://127.0.0.1:8000/language/vi" class="dropdown-item">
+                                <i class="flag-icon flag-icon-vn mr-2"></i> Vietnamese
+                            </a>
+                                            </div>
+                </li>
+                <!-- Messages Dropdown Menu -->
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="fullscreen" href="http://127.0.0.1:8000/dang-xuat" role="button">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <a href="index.html" class="brand-link">
+                <img src="http://127.0.0.1:8000/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
+                    class="brand-image img-circle elevation-3" style="opacity: 0.8" />
+                <span class="brand-text font-weight-light">Lecture</span>
+            </a>
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar user panel (optional) -->
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        <img src="http://127.0.0.1:8000/dist/img/avatar3.png" class="img-circle elevation-2"
+                            alt="User Image" />
+                    </div>
+                    <div class="info">
+                        <a href="#" class="d-block">Phan Thị Phương Nam</a>
+                    </div>
+                </div>
+                <!-- SidebarSearch Form -->
+                <div class="form-inline">
+                    <div class="input-group" data-widget="sidebar-search">
+                        <input class="form-control form-control-sidebar" type="search" placeholder="Tìm kiếm...."
+                            aria-label="Search" />
+                        <div class="input-group-append">
+                            <button class="btn btn-sidebar">
+                                <i class="fas fa-search fa-fw"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                        data-accordion="false">
+                        <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+                        <li class="nav-item">
+                            <a href="http://127.0.0.1:8000/giang-vien" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>Dashboard</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="http://127.0.0.1:8000/giang-vien/hoc-phan" class="nav-link">
+                                <i class="nav-icon fas fa-book-reader"></i>
+                                <p>Courses</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="http://127.0.0.1:8000/giang-vien/quy-hoach-danh-gia" class="nav-link">
+                                <i class="nav-icon fas fa-gavel"></i>
+                                <p>Assessment Planing</p>
+                            </a>
+                        </li>
+                        
+                       
+                        <li class="nav-item">
+                            <a href="http://127.0.0.1:8000/giang-vien/cham-diem-bao-cao" class="nav-link">
+                                <i class="fas fa-balance-scale-left"></i>
+                                <p>Instructor</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="http://127.0.0.1:8000/giang-vien/bien-soan-de-cuong" class="nav-link">
+                                <i class="fas fa-business-time"></i>
+                                <p>edit syllabus</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="http://127.0.0.1:8000/giang-vien/phan-bien-de-cuong" class="nav-link">
+                                <i class="fas fa-business-time"></i>
+                                <p>revise syllabus</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="http://127.0.0.1:8000/giang-vien/tai-khoan" class="nav-link">
+                                <i class="fas fa-user-cog"></i>
+                            <p>Account</p>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+            
+        </aside>
+                    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">
+                            Practice<noscript></noscript>
+                            <nav></nav>
+                        </h1>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item">
+                                <a href="http://127.0.0.1:8000/giang-vien">Home</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia">
+                                                                        Database management systems
+                                                                    </a>
+                            </li>
+                            <li class="breadcrumb-item active">Practice</li>
+                        </ol>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addOne">
+                                        Chọn đề cho từng sinh viên
+                                    </button>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#exampleModal">
+                                        Chọn đề cho cả lớp
+                                    </button>
+                                    <!-- Modal thêm 1-->
+                                    <div class="modal fade" id="addOne" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <form
+                                                action="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/them-mot-phieu-cham"
+                                                method="post">
+                                                <input type="hidden" name="_token" value="dTFCc0KkCjVLG4JcJBZ2fKbU4i0FkybNhURW7oN9">                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Adding a new
+                                                            Assessment Rubrics</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="form-group">
+                                                            <label for="">Chọn đề thi</label>
+                                                            <select name="maDe" id="" class="form-control">
+                                                                                                                                    <option value="70">3
+                                                                    </option>
+                                                                                                                                    <option value="71">4
+                                                                    </option>
+                                                                                                                                    <option value="72">5
+                                                                    </option>
+                                                                                                                                    <option value="73">6
+                                                                    </option>
+                                                                                                                                    <option value="113">abc
+                                                                    </option>
+                                                                                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="">Chọn sinh viên</label>
+                                                            <select name="dssv[]" id="" class="form-control" multiple>
+                                                                                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-primary">Save</button>
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Cancel</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <!-- Modal thêm nhiều-->
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <form
+                                                action="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/them-nhieu-phieu-cham"
+                                                method="post">
+                                                <input type="hidden" name="_token" value="dTFCc0KkCjVLG4JcJBZ2fKbU4i0FkybNhURW7oN9">                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Thêm 1 đề thi cho cả
+                                                            lớp</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="form-group">
+                                                            <label for="">Chọn đề thi</label>
+                                                            <select name="maDe" id="" class="form-control">
+                                                                                                                                    <option value="70">
+                                                                        3</option>
+                                                                                                                                    <option value="71">
+                                                                        4</option>
+                                                                                                                                    <option value="72">
+                                                                        5</option>
+                                                                                                                                    <option value="73">
+                                                                        6</option>
+                                                                                                                                    <option value="113">
+                                                                        abc</option>
+                                                                                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-primary">Save</button>
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </h4>
+                                <div class="card-tools">
+                                    <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xuat-bang-diem-thuc-hanh/37" class="btn btn-success">
+                                        <i class="fas fa-download"></i> <i class="fas fa-file-excel"></i>
+                                    </a>
+                                    <a href="http://127.0.0.1:8000/giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/220060/38/HK2/2020-2021/Da19tta" 
+                                        class="btn btn-success">
+                                           <i class="fas fa-arrow-left"></i>
+                                     </a>
+                                </div>
+                            </div>
+                            
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table id="example2" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>Student name</th>
+                                            <th>Student Name</th>
+                                            <th>Exame ID</th>
+                                            <th>Mark</th>
+                                            <th>Status</th>
+                                            <th>Option</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                                                                                                            <tr>
+                                                <td>1</td>
+                                                <td>110119001</td>
+                                                <td>Lê Quốc  Anh</td>
+                                                <td>6</td>
+                                                <td>7</td>
+                                                <td>
+                                                                                                            <span class="badge bg-success">Granded</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xem-ket-qua-danh-gia-thuc-hanh/73/110119001"
+                                                        class="btn btn-primary">Viewing Result</a>
+
+                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/73/110119001"
+                                                            class="btn btn-primary">Edit</a>
+                                                        
+                                                                                                </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <td>2</td>
+                                                <td>110119035</td>
+                                                <td>Tô Trọng  Nhân</td>
+                                                <td>6</td>
+                                                <td>10</td>
+                                                <td>
+                                                                                                            <span class="badge bg-success">Granded</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xem-ket-qua-danh-gia-thuc-hanh/73/110119035"
+                                                        class="btn btn-primary">Viewing Result</a>
+
+                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/73/110119035"
+                                                            class="btn btn-primary">Edit</a>
+                                                        
+                                                                                                </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <td>3</td>
+                                                <td>110119024</td>
+                                                <td>Lâm Vũ  Luân</td>
+                                                <td>6</td>
+                                                <td>3</td>
+                                                <td>
+                                                                                                            <span class="badge bg-success">Granded</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xem-ket-qua-danh-gia-thuc-hanh/73/110119024"
+                                                        class="btn btn-primary">Viewing Result</a>
+
+                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/73/110119024"
+                                                            class="btn btn-primary">Edit</a>
+                                                        
+                                                                                                </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <td>4</td>
+                                                <td>110119029</td>
+                                                <td>Nguyễn Hoài  Nam</td>
+                                                <td>6</td>
+                                                <td>8</td>
+                                                <td>
+                                                                                                            <span class="badge bg-success">Granded</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xem-ket-qua-danh-gia-thuc-hanh/73/110119029"
+                                                        class="btn btn-primary">Viewing Result</a>
+
+                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/73/110119029"
+                                                            class="btn btn-primary">Edit</a>
+                                                        
+                                                                                                </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <td>5</td>
+                                                <td>110119016</td>
+                                                <td>Trương Quốc  Huy</td>
+                                                <td>6</td>
+                                                <td>0</td>
+                                                <td>
+                                                                                                            <span class="badge bg-warning">Waiting</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                    <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/73/110119016"
+                                                    class="btn btn-primary">Granding</a>
+                                                                                                </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <td>6</td>
+                                                <td>110119053</td>
+                                                <td>Trần Trung  Tín</td>
+                                                <td>6</td>
+                                                <td>9</td>
+                                                <td>
+                                                                                                            <span class="badge bg-success">Granded</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xem-ket-qua-danh-gia-thuc-hanh/73/110119053"
+                                                        class="btn btn-primary">Viewing Result</a>
+
+                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/73/110119053"
+                                                            class="btn btn-primary">Edit</a>
+                                                        
+                                                                                                </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <td>7</td>
+                                                <td>110119045</td>
+                                                <td>Thạch Hoàn  Sinh</td>
+                                                <td>6</td>
+                                                <td>2</td>
+                                                <td>
+                                                                                                            <span class="badge bg-success">Granded</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xem-ket-qua-danh-gia-thuc-hanh/73/110119045"
+                                                        class="btn btn-primary">Viewing Result</a>
+
+                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/73/110119045"
+                                                            class="btn btn-primary">Edit</a>
+                                                        
+                                                                                                </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <td>8</td>
+                                                <td>110119036</td>
+                                                <td>Huỳnh Phi  Nhật</td>
+                                                <td>6</td>
+                                                <td>4.5</td>
+                                                <td>
+                                                                                                            <span class="badge bg-success">Granded</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xem-ket-qua-danh-gia-thuc-hanh/73/110119036"
+                                                        class="btn btn-primary">Viewing Result</a>
+
+                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/73/110119036"
+                                                            class="btn btn-primary">Edit</a>
+                                                        
+                                                                                                </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <td>9</td>
+                                                <td>110119051</td>
+                                                <td>Dương Phước  Thịnh</td>
+                                                <td>6</td>
+                                                <td>2.5</td>
+                                                <td>
+                                                                                                            <span class="badge bg-success">Granded</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xem-ket-qua-danh-gia-thuc-hanh/73/110119051"
+                                                        class="btn btn-primary">Viewing Result</a>
+
+                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/73/110119051"
+                                                            class="btn btn-primary">Edit</a>
+                                                        
+                                                                                                </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <td>10</td>
+                                                <td>110119007</td>
+                                                <td>Trần Quốc  Đảm</td>
+                                                <td>5</td>
+                                                <td>6.5</td>
+                                                <td>
+                                                                                                            <span class="badge bg-success">Granded</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xem-ket-qua-danh-gia-thuc-hanh/72/110119007"
+                                                        class="btn btn-primary">Viewing Result</a>
+
+                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/72/110119007"
+                                                            class="btn btn-primary">Edit</a>
+                                                        
+                                                                                                </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <td>11</td>
+                                                <td>110119006</td>
+                                                <td>Nguyễn Minh  Chiến</td>
+                                                <td>5</td>
+                                                <td>7</td>
+                                                <td>
+                                                                                                            <span class="badge bg-success">Granded</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xem-ket-qua-danh-gia-thuc-hanh/72/110119006"
+                                                        class="btn btn-primary">Viewing Result</a>
+
+                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/72/110119006"
+                                                            class="btn btn-primary">Edit</a>
+                                                        
+                                                                                                </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <td>12</td>
+                                                <td>110119066</td>
+                                                <td>Nguyễn Chánh  Đức</td>
+                                                <td>5</td>
+                                                <td>1.5</td>
+                                                <td>
+                                                                                                            <span class="badge bg-success">Granded</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xem-ket-qua-danh-gia-thuc-hanh/72/110119066"
+                                                        class="btn btn-primary">Viewing Result</a>
+
+                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/72/110119066"
+                                                            class="btn btn-primary">Edit</a>
+                                                        
+                                                                                                </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <td>13</td>
+                                                <td>110119072</td>
+                                                <td>Thạch  Tết</td>
+                                                <td>5</td>
+                                                <td>2</td>
+                                                <td>
+                                                                                                            <span class="badge bg-success">Granded</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xem-ket-qua-danh-gia-thuc-hanh/72/110119072"
+                                                        class="btn btn-primary">Viewing Result</a>
+
+                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/72/110119072"
+                                                            class="btn btn-primary">Edit</a>
+                                                        
+                                                                                                </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <td>14</td>
+                                                <td>110119044</td>
+                                                <td>Nguyễn Văn  Thái Sang</td>
+                                                <td>5</td>
+                                                <td>9</td>
+                                                <td>
+                                                                                                            <span class="badge bg-success">Granded</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xem-ket-qua-danh-gia-thuc-hanh/72/110119044"
+                                                        class="btn btn-primary">Viewing Result</a>
+
+                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/72/110119044"
+                                                            class="btn btn-primary">Edit</a>
+                                                        
+                                                                                                </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <td>15</td>
+                                                <td>110119052</td>
+                                                <td>Võ Duy  Thông</td>
+                                                <td>5</td>
+                                                <td>6</td>
+                                                <td>
+                                                                                                            <span class="badge bg-success">Granded</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xem-ket-qua-danh-gia-thuc-hanh/72/110119052"
+                                                        class="btn btn-primary">Viewing Result</a>
+
+                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/72/110119052"
+                                                            class="btn btn-primary">Edit</a>
+                                                        
+                                                                                                </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <td>16</td>
+                                                <td>110119060</td>
+                                                <td>Lý Thế  Vinh</td>
+                                                <td>5</td>
+                                                <td>7.5</td>
+                                                <td>
+                                                                                                            <span class="badge bg-success">Granded</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xem-ket-qua-danh-gia-thuc-hanh/72/110119060"
+                                                        class="btn btn-primary">Viewing Result</a>
+
+                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/72/110119060"
+                                                            class="btn btn-primary">Edit</a>
+                                                        
+                                                                                                </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <td>17</td>
+                                                <td>110119063</td>
+                                                <td>Đỗ Thành  Ý</td>
+                                                <td>5</td>
+                                                <td>9</td>
+                                                <td>
+                                                                                                            <span class="badge bg-success">Granded</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xem-ket-qua-danh-gia-thuc-hanh/72/110119063"
+                                                        class="btn btn-primary">Viewing Result</a>
+
+                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/72/110119063"
+                                                            class="btn btn-primary">Edit</a>
+                                                        
+                                                                                                </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <td>18</td>
+                                                <td>110119042</td>
+                                                <td>Trần Thị  Tú Quyên</td>
+                                                <td>5</td>
+                                                <td>3</td>
+                                                <td>
+                                                                                                            <span class="badge bg-success">Granded</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xem-ket-qua-danh-gia-thuc-hanh/72/110119042"
+                                                        class="btn btn-primary">Viewing Result</a>
+
+                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/72/110119042"
+                                                            class="btn btn-primary">Edit</a>
+                                                        
+                                                                                                </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <td>19</td>
+                                                <td>110119025</td>
+                                                <td>Thạch Minh  Lực</td>
+                                                <td>4</td>
+                                                <td>10</td>
+                                                <td>
+                                                                                                            <span class="badge bg-success">Granded</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xem-ket-qua-danh-gia-thuc-hanh/71/110119025"
+                                                        class="btn btn-primary">Viewing Result</a>
+
+                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/71/110119025"
+                                                            class="btn btn-primary">Edit</a>
+                                                        
+                                                                                                </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <td>20</td>
+                                                <td>110119080</td>
+                                                <td>Lý Kim  Lam</td>
+                                                <td>4</td>
+                                                <td>3</td>
+                                                <td>
+                                                                                                            <span class="badge bg-success">Granded</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xem-ket-qua-danh-gia-thuc-hanh/71/110119080"
+                                                        class="btn btn-primary">Viewing Result</a>
+
+                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/71/110119080"
+                                                            class="btn btn-primary">Edit</a>
+                                                        
+                                                                                                </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <td>21</td>
+                                                <td>110119070</td>
+                                                <td>Đào Di  Phong</td>
+                                                <td>4</td>
+                                                <td>7</td>
+                                                <td>
+                                                                                                            <span class="badge bg-success">Granded</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xem-ket-qua-danh-gia-thuc-hanh/71/110119070"
+                                                        class="btn btn-primary">Viewing Result</a>
+
+                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/71/110119070"
+                                                            class="btn btn-primary">Edit</a>
+                                                        
+                                                                                                </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <td>22</td>
+                                                <td>110119011</td>
+                                                <td>Trần Thanh  Duy</td>
+                                                <td>4</td>
+                                                <td>4.5</td>
+                                                <td>
+                                                                                                            <span class="badge bg-success">Granded</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xem-ket-qua-danh-gia-thuc-hanh/71/110119011"
+                                                        class="btn btn-primary">Viewing Result</a>
+
+                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/71/110119011"
+                                                            class="btn btn-primary">Edit</a>
+                                                        
+                                                                                                </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <td>23</td>
+                                                <td>110119023</td>
+                                                <td>Ngô Tuấn  Kiệt</td>
+                                                <td>4</td>
+                                                <td>4</td>
+                                                <td>
+                                                                                                            <span class="badge bg-success">Granded</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xem-ket-qua-danh-gia-thuc-hanh/71/110119023"
+                                                        class="btn btn-primary">Viewing Result</a>
+
+                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/71/110119023"
+                                                            class="btn btn-primary">Edit</a>
+                                                        
+                                                                                                </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <td>24</td>
+                                                <td>110119004</td>
+                                                <td>Kiên Thanh  Bình</td>
+                                                <td>4</td>
+                                                <td>7.5</td>
+                                                <td>
+                                                                                                            <span class="badge bg-success">Granded</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xem-ket-qua-danh-gia-thuc-hanh/71/110119004"
+                                                        class="btn btn-primary">Viewing Result</a>
+
+                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/71/110119004"
+                                                            class="btn btn-primary">Edit</a>
+                                                        
+                                                                                                </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <td>25</td>
+                                                <td>110119031</td>
+                                                <td>Dương Thị  Yến Ngọc</td>
+                                                <td>4</td>
+                                                <td>2</td>
+                                                <td>
+                                                                                                            <span class="badge bg-success">Granded</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xem-ket-qua-danh-gia-thuc-hanh/71/110119031"
+                                                        class="btn btn-primary">Viewing Result</a>
+
+                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/71/110119031"
+                                                            class="btn btn-primary">Edit</a>
+                                                        
+                                                                                                </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <td>26</td>
+                                                <td>110119046</td>
+                                                <td>Nguyễn Anh  Tài</td>
+                                                <td>4</td>
+                                                <td>4.5</td>
+                                                <td>
+                                                                                                            <span class="badge bg-success">Granded</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xem-ket-qua-danh-gia-thuc-hanh/71/110119046"
+                                                        class="btn btn-primary">Viewing Result</a>
+
+                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/71/110119046"
+                                                            class="btn btn-primary">Edit</a>
+                                                        
+                                                                                                </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <td>27</td>
+                                                <td>110119034</td>
+                                                <td>Thái Công  Nhạ</td>
+                                                <td>3</td>
+                                                <td>8.5</td>
+                                                <td>
+                                                                                                            <span class="badge bg-success">Granded</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xem-ket-qua-danh-gia-thuc-hanh/70/110119034"
+                                                        class="btn btn-primary">Viewing Result</a>
+
+                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/70/110119034"
+                                                            class="btn btn-primary">Edit</a>
+                                                        
+                                                                                                </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <td>28</td>
+                                                <td>110119005</td>
+                                                <td>Tăng Quảng  Châu</td>
+                                                <td>3</td>
+                                                <td>1.5</td>
+                                                <td>
+                                                                                                            <span class="badge bg-success">Granded</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xem-ket-qua-danh-gia-thuc-hanh/70/110119005"
+                                                        class="btn btn-primary">Viewing Result</a>
+
+                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/70/110119005"
+                                                            class="btn btn-primary">Edit</a>
+                                                        
+                                                                                                </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <td>29</td>
+                                                <td>110119059</td>
+                                                <td>Trần Quang  Vinh</td>
+                                                <td>3</td>
+                                                <td>3</td>
+                                                <td>
+                                                                                                            <span class="badge bg-success">Granded</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xem-ket-qua-danh-gia-thuc-hanh/70/110119059"
+                                                        class="btn btn-primary">Viewing Result</a>
+
+                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/70/110119059"
+                                                            class="btn btn-primary">Edit</a>
+                                                        
+                                                                                                </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <td>30</td>
+                                                <td>110119057</td>
+                                                <td>Nguyễn Thành  Trung</td>
+                                                <td>3</td>
+                                                <td>7.5</td>
+                                                <td>
+                                                                                                            <span class="badge bg-success">Granded</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xem-ket-qua-danh-gia-thuc-hanh/70/110119057"
+                                                        class="btn btn-primary">Viewing Result</a>
+
+                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/70/110119057"
+                                                            class="btn btn-primary">Edit</a>
+                                                        
+                                                                                                </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <td>31</td>
+                                                <td>110119061</td>
+                                                <td>Nguyễn Lâm  Nguyên Vũ</td>
+                                                <td>3</td>
+                                                <td>3</td>
+                                                <td>
+                                                                                                            <span class="badge bg-success">Granded</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xem-ket-qua-danh-gia-thuc-hanh/70/110119061"
+                                                        class="btn btn-primary">Viewing Result</a>
+
+                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/70/110119061"
+                                                            class="btn btn-primary">Edit</a>
+                                                        
+                                                                                                </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <td>32</td>
+                                                <td>110119038</td>
+                                                <td>Phan Minh  Nhựt</td>
+                                                <td>3</td>
+                                                <td>5</td>
+                                                <td>
+                                                                                                            <span class="badge bg-success">Granded</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xem-ket-qua-danh-gia-thuc-hanh/70/110119038"
+                                                        class="btn btn-primary">Viewing Result</a>
+
+                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/70/110119038"
+                                                            class="btn btn-primary">Edit</a>
+                                                        
+                                                                                                </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <td>33</td>
+                                                <td>110119017</td>
+                                                <td>Lữ Nguyễn  Quốc Huy</td>
+                                                <td>3</td>
+                                                <td>9</td>
+                                                <td>
+                                                                                                            <span class="badge bg-success">Granded</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xem-ket-qua-danh-gia-thuc-hanh/70/110119017"
+                                                        class="btn btn-primary">Viewing Result</a>
+
+                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/70/110119017"
+                                                            class="btn btn-primary">Edit</a>
+                                                        
+                                                                                                </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <td>34</td>
+                                                <td>110119014</td>
+                                                <td>Lý Quốc  Hưng</td>
+                                                <td>3</td>
+                                                <td>8</td>
+                                                <td>
+                                                                                                            <span class="badge bg-success">Granded</span>
+                                                                                                    </td>
+                                                <td>
+                                                                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/xem-ket-qua-danh-gia-thuc-hanh/70/110119014"
+                                                        class="btn btn-primary">Viewing Result</a>
+
+                                                        <a href="http://127.0.0.1:8000/giang-vien/ket-qua-danh-gia/thuc-hanh/sua-diem-thuc-hanh/70/110119014"
+                                                            class="btn btn-primary">Edit</a>
+                                                        
+                                                                                                </td>
+                                            </tr>
+                                                                            </tbody>
+                                    <tfoot></tfoot>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </section>
+    </div>
+
+        <footer class="main-footer">
+            <strong>Copyright &copy; 2020-2021
+                <a href=""> C.A.P system</a>.</strong>
+            <div class="float-right d-none d-sm-inline-block">
+                <b>Version</b> 1.0
+            </div>
+        </footer>
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+    <script>
+        $.widget.bridge("uibutton", $.ui.button);
+
+  
+    </script>
+
+
+    <script type="text/javascript" src="http://127.0.0.1:8000/plugins/select2/js/select2.full.min.js"></script>
+
+    <!-- Bootstrap 4 -->
+    <script src="http://127.0.0.1:8000/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- ChartJS -->
+    <script src="http://127.0.0.1:8000/plugins/chart.js/Chart.min.js"></script>
+    <!-- Sparkline -->
+    <script src="http://127.0.0.1:8000/plugins/sparklines/sparkline.js"></script>
+    <!-- JQVMap -->
+    <script src="http://127.0.0.1:8000/plugins/jqvmap/jquery.vmap.min.js"></script>
+    <script src="http://127.0.0.1:8000/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+    <!-- jQuery Knob Chart -->
+    <script src="http://127.0.0.1:8000/plugins/jquery-knob/jquery.knob.min.js"></script>
+    <!-- daterangepicker -->
+    <script src="http://127.0.0.1:8000/plugins/moment/moment.min.js"></script>
+    <script src="http://127.0.0.1:8000/plugins/daterangepicker/daterangepicker.js"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="http://127.0.0.1:8000/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    <!-- Summernote -->
+    <script src="http://127.0.0.1:8000/plugins/summernote/summernote-bs4.min.js"></script>
+    <!-- overlayScrollbars -->
+    <script src="http://127.0.0.1:8000/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="http://127.0.0.1:8000/dist/js/adminlte.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="http://127.0.0.1:8000/dist/js/demo.js"></script>
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <script src="http://127.0.0.1:8000/dist/js/pages/dashboard.js"></script>
+    <!-- DataTables -->
+    <script src="http://127.0.0.1:8000/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="http://127.0.0.1:8000/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="http://127.0.0.1:8000/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="http://127.0.0.1:8000/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script>
+        $(function() {
+            $("#example2").DataTable({
+                "responsive": true,
+                "autoWidth": false,
+            });
+            $('.select2').select2();
+        });
+
+    </script>
+</body>
+
+</html>

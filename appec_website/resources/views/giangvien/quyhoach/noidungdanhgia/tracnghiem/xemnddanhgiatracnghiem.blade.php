@@ -114,7 +114,7 @@
                                             <th>{{ __('Title') }}</th>
                                             <th>{{ __('Duration') }}</th>
                                             <th>{{ __('The number of question') }}</th>
-                                            <th>Số câu hỏi hiện có</th>
+                                            <th>The number of current question</th>
                                             <th>{{ __('Note') }}</th>
                                             <th>{{ __('Option') }}</th>
                                         </tr>
@@ -132,7 +132,7 @@
                                                     {{ $data->maDeVB }}
                                                 </td>
                                                 <td>{{ $data->tenDe }}</td>
-                                                <td>{{ $data->thoiGian }} phút</td>
+                                                <td>{{ $data->thoiGian }} minutes</td>
                                                 <td>{{ $data->soCauHoi }}</td>
                                                 <td>{{ $data->cauHoiHienCo }}</td>
                                                 <td>{{ $data->ghiChu }}</td>

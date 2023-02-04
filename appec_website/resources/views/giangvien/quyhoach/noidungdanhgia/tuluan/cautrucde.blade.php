@@ -12,18 +12,25 @@
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <h1 class="m-0 text-dark">
-                            Cấu trúc đề thi<noscript></noscript>
+                            Examination structure<noscript></noscript>
                             <nav></nav>
                         </h1>
                     </div>
                     <!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ asset('giang-vien') }}">Trang chủ</a></li>
-                            <li class="breadcrumb-item "><a href="{{ asset('/giang-vien/quy-hoach-danh-gia') }}">Nội dung
-                                    đánh giá</a></li>
-                            <li class="breadcrumb-item "><a href="#"></a> Tự luận</li>
-                            <li class="breadcrumb-item active">Cấu trúc đề thi</li>
+                            <li class="breadcrumb-item"><a href="{{ asset('giang-vien') }}">{{ __('Home') }}</a></li>
+                            <li class="breadcrumb-item ">
+                                <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/'.Session::get('maHocPhan').'/'.Session::get('maBaiQH').'/'.Session::get('maHK').'/'.Session::get('namHoc').'/'.Session::get('maLop')) }}">
+                                   Planing assessment
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item ">
+                                <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/'.Session::get('maCTBaiQH')) }}">
+                                    Examination
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active">{{ __("Exam structure") }}</li>
                         </ol>
                     </div>
                     <!-- /.col -->
@@ -43,25 +50,25 @@
                                 <h3 class="card-title">
                                 </h3>
                                 <div class="card-tools">
-                                    <a class="btn btn-primary"
+                                    {{-- <a class="btn btn-primary"
                                     href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/in-de-thuc-hanh/' . $dethi->maDe . '/' . $hocphan->maHocPhan) }}"><i
-                                        class="fas fa-download"></i></a>
+                                        class="fas fa-download"></i></a> --}}
                                         <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/' . Session::get('maCTBaiQH')) }}"
                                         class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-5">
-                                        <b>Trường: </b>Đại học Trà Vinh <br>
-                                        <b>Lớp:</b>......................... <br>
-                                        <b>Họ và tên:</b>...................
+                                        <b>School: </b>Tra Vinh University <br>
+                                        <b>Class:</b>......................... <br>
+                                        <b>Full name:</b>...................
                                     </div>
                                     <div class="col-md-2"></div>
                                     <div class="col-md-5">
-                                        KHOA KỸ THUẬT VÀ CÔNG NGHỆ <br>
-                                        <b>{{ $dethi->tenDe }}</b><br>
-                                        <b>Học phần:</b> {{ $hocphan->tenHocPhan }} <br>
-                                        <b>Thời gian thi:</b> {{ $dethi->thoiGian }} phút <br>
-                                        <b>Mã đề:</b> {{ $dethi->maDeVB }}
+                                        SCHOOL OF ENGINEERING AND TECHNOLOGY <br>
+                                        <b>Title: {{ $dethi->tenDe }}</b><br>
+                                        <b>Course:</b> {{ $hocphan->tenHocPhan }} <br>
+                                        <b>Duration:</b> {{ $dethi->thoiGian }} minutes <br>
+                                        <b>Exam ID:</b> {{ $dethi->maDeVB }}
                                     </div>
                                 </div>
                                
@@ -79,12 +86,12 @@
                                         onclick="return confirm('Do you want to delete this question?')"
                                         href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/xoa-cau-hoi-de-tu-luan/' . $dethi->maDe . '/' . $data->maCauHoi) }}"><i
                                             class="fa fa-trash"></i></a>\
-                                    <b>Câu </b> {{ $i++ }} <b>({{ $data->diem }}điểm)</b>
+                                    <b>Question </b> {{ $i++ }} <b>({{ $data->diem }} points)</b>
                                     {!! $data->noiDungCauHoi !!}
                                     <div class="card" style="background-color: rgb(166, 243, 239); display:float">
                                         <div class="card-header">
                                             <div class="card-title">
-                                                Phương án trả lời:
+                                                Answers:
                                             </div>
                                             <div class="card-tools">
                                                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -98,7 +105,7 @@
                                         <div class="card-body">
                                             @for ($k = 0; $k < count($data->phuongAn); $k++)
                                                 [{{ $k + 1 }}] ({{ $data->phuongAn[$k]->diemPA }}
-                                                điểm)(ABET:{{ $data->phuongAn[$k]->maChuanAbetVB }})(CDR3:{{ $data->phuongAn[$k]->maCDR3VB }}):
+                                                points)(ABET's SOs:{{ $data->phuongAn[$k]->maChuanAbetVB }})(CDIO's SOs:{{ $data->phuongAn[$k]->maCDR3VB }}):
                                                 <button type="button" class="btn btn-success" data-toggle="modal"
                                                     data-target="#editPA_{{ $data->phuongAn[$k]->id }}">
                                                     <li class="fas fa-edit"></li>
@@ -140,25 +147,9 @@
                                                                                 });
                                                                         </script>
                                                                     </div>
-                                                                    <div class="from-group">
-                                                                        <label for="">{{ __("ABET's SO") }}:</label>
-                                                                        <select name="maChuanAbet" id="" class="form-control">
-                                                                            @foreach ($abet as $ab)
-                                                                                @if ($data->phuongAn[$k]->maChuanAbet == $ab->maChuanAbet)
-                                                                                    <option value="{{ $ab->maChuanAbet }}"
-                                                                                        selected>
-                                                                                        {{ $ab->maChuanAbetVB }}--{{ $ab->tenChuanAbet }}
-                                                                                    </option>
-                                                                                @else
-                                                                                    <option value="{{ $ab->maChuanAbet }}">
-                                                                                        {{ $ab->maChuanAbetVB }}--{{ $ab->tenChuanAbet }}
-                                                                                    </option>
-                                                                                @endif
-                                                                            @endforeach
-                                                                        </select>
-                                                                    </div>
+                                                                  
                                                                     <div class="form-group">
-                                                                        <label for="">Điểm phương án</label>
+                                                                        <label for="">Point</label>
                                                                         <input type="text" name="diemPA"
                                                                             value="{{ $data->phuongAn[$k]->diemPA }}">
                                                                     </div>
@@ -197,11 +188,9 @@
                             </div>
                             <div class="card-footer">
                                 @if ($dem_cau_hoi < $dethi->soCauHoi)
-                                    <span style="color: red">*Hiện có: {{ $dem_cau_hoi }}/{{ $dethi->soCauHoi }} Câu
-                                        hỏi</span>
+                                    <span style="color: red">* Currently: {{ $dem_cau_hoi }}/{{ $dethi->soCauHoi }} Questions</span>
                                 @else
-                                    <span style="color: green">Đã đủ: {{ $dem_cau_hoi }}/{{ $dethi->soCauHoi }} Câu
-                                        hỏi</span>
+                                    <span style="color: green">Fully: {{ $dem_cau_hoi }}/{{ $dethi->soCauHoi }} Questions</span>
                                 @endif
                             </div>
                         </div>
@@ -219,24 +208,8 @@
                                         method="post">
                                         @csrf
                                         <input type="text" name="maDe" value="{{ $dethi->maDe }}" hidden>
-                                        <div class="form-group">
-                                            <label for="">{{ __('SOs') }}:</label>
-                                            <select name="maCDR3" id="them_maCDR3" class="form-control" required>
-                                                @foreach ($cdr3 as $data)
-                                                    <option value="{{ $data->maCDR3 }}">
-                                                        {{ $data->maCDR3VB }}--{{ $data->tenCDR3 }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="">{{ __("ABET's SO") }}:</label>
-                                            <select name="maChuanAbet" id="them_maChuanAbet" class="form-control">
-                                                @foreach ($abet as $ab)
-                                                    <option value="{{ $ab->maChuanAbet }}">
-                                                        {{ $ab->maChuanAbetVB }}--{{ $ab->tenChuanAbet }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+                                        
+                                        
                                         <div class="form-group">
                                             <label for="">{{ __('Chapter') }}</label>
                                             <select name="maChuong" id="chuong" class="form-control">
@@ -246,6 +219,7 @@
                                                 @endforeach
                                             </select>
                                         </div>
+                                        
                                         <div class="form-group">
                                             <label for="">{{ __('Items') }}</label>
                                             <select name="maMuc" id="muc" class="form-control">
@@ -277,7 +251,7 @@
                                                             <td>{!! $item->noiDungCauHoi !!}</td>
                                                             <td>
                                                                 <input type="radio" id="ch_{{ $item->maCauHoi }}"
-                                                                    name="maCauHoi" value="{{ $item->maCauHoi }}">
+                                                                    name="maCauHoi" value="{{ $item->maCauHoi }}" onclick="chonCauHoi({{ $item->maCauHoi }})">
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -286,18 +260,35 @@
                                             </table>
                                         </div>
                                         <div class="form-group">
+                                            <label for="">{{ __('SOs') }}:</label>
+                                            <select name="maCDR3" id="them_maCDR3" class="form-control" required>
+                                                @foreach ($cdr3 as $data)
+                                                    <option value="{{ $data->maCDR3 }}">
+                                                        {{ $data->maCDR3VB }}--
+                                                        @if (Session::get('language') && Session::get('language')=='en')
+                                                        {{ $data->tenCDR3EN }}
+                                                        @else
+                                                        {{ $data->tenCDR3 }}
+                                                        @endif
+                                                        
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
                                             <div class="form-group">
-                                                <label for="">Chọn số ý trả lời:</label>
+                                                <label for="">How many parts of answer:</label>
                                                 <input type="number" min="1" max="20" id="soTC" class="form-control">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div id="tbl-content">
                                                 <div class='form-group'>"
-                                                    <label for=''>Nhập nội dung ý:</label>
+                                                    <label for=''>Content of answer's part:</label>
                                                     <textarea name='phuongAn[]' id='ckcontent_1' cols='30' rows='10'
                                                         class='form-control' required></textarea>
-                                                    <label for=''>Nhập điểm</label>
+                                                    <label for=''>Point</label>
                                                     <input type='text' name='diem[]' class='form-control'>
                                                 </div>
                                                 <script>
@@ -310,8 +301,8 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <button class="btn btn-primary" type="submit">Save</button>
-                                            <button class="btn btn-info" type="reset">Cancel</button>
+                                            <button class="btn btn-primary" type="submit">{{ __('Save') }}</button>
+                                            <button class="btn btn-info" type="reset">{{ __('Cancel') }}</button>
                                         </div>
                                     </form>
                                 </div>
@@ -397,10 +388,10 @@
             $('#tbl-content').empty();
             for (let index = 1; index <= soTC; index++) {
                 html += "<div class='form-group'>" +
-                    "<label for=''>Nhập nội dung ý:</label>" +
+                    "<label for=''>Add content of answer:</label>" +
                     "<textarea name='phuongAn[]' id='ckcontent_" + index +
                     "' cols='30' rows='10' class='form-control' required></textarea>" +
-                    "<label for=''>Nhập điểm</label>" +
+                    "<label for=''>Mark</label>" +
                     "<input type='text' name='diem[]' class='form-control'>" +
                     "</div>";
             }
@@ -429,6 +420,22 @@
                 }
             });
         });
+        function chonCauHoi(maCauHoi){
+            var url='/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-noi-dung-danh-gia/get-cdr3-from-maCauHoi/'+maCauHoi;
+            $.ajax({
+                type: "get",
+                url: url,
+                success: function (data) {
+                    $('them_maCDR3').empty();
+                    var html='';
+                    data.forEach(element => {
+                        html+="<option value='"+element['maCDR3']+"'>"+element['maCDR3VB']+"--"+element['tenCDR3']+"</option>";
+                    });
+                    $('#them_maCDR3').empty();
+                    $('#them_maCDR3').append(html);
+                }
+            });
+        }
 
     </script>
       <script type="text/javascript">

@@ -37,6 +37,7 @@
                                         data-target="#exampleModal">
                                         <i class="fas fa-plus"></i>
                                     </button>
+                                    {{-- <a class="btn btn-success" href="{{ asset('quan-ly/xem-chuong-trinh-dao-tao') }}">View tree</a> --}}
                                     {{-- <a href="{{ asset('quan-ly/chuong-trinh-dao-tao/excel') }}">Xuất excel</a> --}}
                                     <!-- Modal -->
                                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
@@ -57,6 +58,13 @@
                                                         <div class="form-group">
                                                             <label for="">{{ __('Curriculum name') }}:</label>
                                                             <input type="text" name="tenCT" class="form-control" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label
+                                                                for="">{{ __('Curriculum name EN') }}</label>
+                                                            <input type="text" name="tenCT_EN"
+                                                                class="form-control"
+                                                                 required>
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="">{{ __('Education level') }}</label>
@@ -85,6 +93,14 @@
                                                                 @endforeach
                                                             </select>
                                                         </div>
+                                                        <div class="form-group">
+                                                            <label for="">{{ __('Decision No') }}</label>
+                                                            <input type="text" name="soQuyetDinh" class="form-control">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="">{{ __('Desision Date') }}</label>
+                                                            <input type="text" name="ngayBanHanh" class="form-control">
+                                                        </div>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="submit"
@@ -105,9 +121,12 @@
                                         <tr>
                                             <th>{{ __('No.') }}</th>
                                             <th>{{ __('Curriculum name') }}</th>
+                                            <th>{{ __('Curriculum name EN') }}</th>
                                             <th>{{ __('Education level') }}</th>
                                             <th>{{ __('Specialized') }}</th>
                                             <th>{{ __('Forms of training') }}</th>
+                                            <th>{{ __('Desision No') }}</th>
+                                            <th>{{ __('Desision Date') }}</th>
                                             <th>{{ __('Option') }}</th>
                                         </tr>
                                     </thead>
@@ -119,9 +138,12 @@
                                             <tr>
                                                 <td>{{ $i++ }}</td>
                                                 <td>{{ $ct->tenCT }}</td>
+                                                <td>{{ $ct->tenCT_EN }}</td>
                                                 <td>{{ $ct->bac->tenBac }}</td>
                                                 <td>{{ $ct->cnganh->tenCNganh }}</td>
                                                 <td>{{ $ct->he->tenHe }}</td>
+                                                <td>{{ $ct->soQuyetDinh }}</td>
+                                                <td>{{ $ct->ngayBanHanh }}</td>
                                                 <td>
 
                                                     <button class="btn btn-success" data-toggle="modal"
@@ -162,7 +184,13 @@
                                                                                 class="form-control"
                                                                                 value="{{ $ct->tenCT }}" required>
                                                                         </div>
-
+                                                                        <div class="form-group">
+                                                                            <label
+                                                                                for="">{{ __('Curriculum name EN') }}</label>
+                                                                            <input type="text" name="tenCT_EN"
+                                                                                class="form-control"
+                                                                                value="{{ $ct->tenCT_EN }}" required>
+                                                                        </div>
                                                                         <div class="form-group">
                                                                             <label
                                                                                 for="">{{ __('Education level') }}</label>
@@ -219,6 +247,15 @@
                                                                                     @endif
                                                                                 @endforeach
                                                                             </select>
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                            <label for="">{{ __('Decision No') }}</label>
+                                                                            <input type="text" name="soQuyetDinh" class="form-control" value="{{ $ct->soQuyetDinh }}">
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="">{{ __('Desision Date') }}</label>
+                                                                            <input type="text" name="ngayBanHanh" class="form-control" value="{{ $ct->ngayBanHanh }}">
                                                                         </div>
                                                                     </div>
                                                             </form>

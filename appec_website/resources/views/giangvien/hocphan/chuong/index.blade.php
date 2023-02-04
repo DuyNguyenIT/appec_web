@@ -17,7 +17,12 @@
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ asset('/') }}">{{ __('Home') }}</a></li>
                             <li class="breadcrumb-item"><a href="{{ asset('giang-vien/hoc-phan') }}">
-                                    {{ \Illuminate\Support\Str::limit(html_entity_decode($hocPhan->tenHocPhan), $limit = 20, $end = '...') }}
+                                @if (Session::get('language') && Session::get('language')=='en')
+                                {{ \Illuminate\Support\Str::limit(html_entity_decode($hocPhan->tenHocPhanEN), $limit = 20, $end = '...') }}
+                                @else
+                                {{ \Illuminate\Support\Str::limit(html_entity_decode($hocPhan->tenHocPhan), $limit = 20, $end = '...') }}
+                                @endif
+                                   
                                 </a></li>
                             <li class="breadcrumb-item active">{{ __('Course contents') }}</li>
                         </ol>
@@ -38,8 +43,12 @@
                             <div class="card-header">
                                 <h3 class="card-title">
                                     <h3 class="d-flex justify-content-between">
-                                        {{ $hocPhan->tenHocPhan }}
-                                        <a href="{{ asset('/giang-vien/hoc-phan') }}" class="btn btn-secondary"><i
+                                         @if (Session::get('language') && Session::get('language')=='en')
+                                                    {{ $hocPhan->tenHocPhanEN }}
+                                                    @else
+                                                    {{ $hocPhan->tenHocPhan }}
+                                                    @endif
+                                        <a href="{{ asset('/giang-vien/hoc-phan') }}" class="btn btn-success"><i
                                                 class="fas fa-arrow-left"></i></a>
                                     </h3>
                                 </h3>

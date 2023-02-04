@@ -35,7 +35,8 @@
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">
-                                    <form action="{{ asset('/giang-vien/quy-hoach-danh-gia/loc') }}" method="post">
+                                    {{ __('Semester') }}: <b>{{ Session::get('maHK') }}</b>  --  {{ __('Academic year') }}:  <b>{{ Session::get('namHoc') }}</b>
+                                    {{-- <form action="{{ asset('/giang-vien/quy-hoach-danh-gia/loc') }}" method="post">
                                         @csrf
                                         <div class="from-group">
                                             <label for="">{{ __('Semester') }}:</label>
@@ -57,8 +58,12 @@
                                         <button class="btn btn-success" type="submit">
                                             <i class="fas fa-filter"></i> {{ __('Filter') }}
                                         </button>
-                                    </form>
+                                    </form> --}}
                                 </h3>
+                                <div class="card-tools">
+                                    <a href="{{ asset('/giang-vien/quy-hoach-danh-gia') }}" class="btn btn-success"><i
+                                            class="fas fa-arrow-left"></i></a>
+                                </div>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -67,8 +72,6 @@
                                         <tr>
                                             <th>{{ __('No.') }}</th>
                                             <th>{{ __('Course name') }}</th>
-                                            <th>{{ __('Semester') }}</th>
-                                            <th>{{ __('Academic year') }}</th>
                                             <th>{{ __('Class ID') }}</th>
                                             <th>{{ __('Option') }}</th>
                                         </tr>
@@ -80,19 +83,35 @@
                                         @foreach ($gd as $item)
                                             <tr>
                                                 <td>{{ $i++ }}</td>
-                                                <td>{{ $item->tenHocPhan }}</td>
-                                                <td>{{ $item->maHK }}</td>
-                                                <td>{{ $item->namHoc }}</td>
+                                                <td>
+                                                    ({{ $item->maHocPhan }})
+                                                    @if (session::has('language') && session::get('language')=='en')
+                                                    {{ $item->tenHocPhanEN }}
+                                                    @else
+                                                    {{ $item->tenHocPhan }}
+                                                    @endif
+                                                </td>
                                                 <td>
                                                     <a href="{{ asset('giang-vien/hoc-phan/xem-ds-sv/' . $item->maLop) }}">
-                                                        {{ $item->maLop }}
+                                                        {{ strtoupper($item->maLop) }}
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <a href="{{ asset('giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/' . $item->maHocPhan . '/' . $item->maBaiQH . '/' . $item->maHK . '/' . $item->namHoc . '/' . $item->maLop) }}"
+                                                    <a href="{{ asset('giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/' . $item->maHocPhan . '/' . $item->maBaiQH .'/'.$item->maHK.'/'.$item->namHoc. '/' . $item->maLop) }}"
                                                         class="btn btn-success">
                                                         <i class="fas fa-align-justify"></i>
                                                         {{ __('Assessment Planning') }}
+                                                    </a>
+                                                    <br>
+                                                     <a href="{{ asset('/giang-vien/thong-ke/thong-ke-ket-thuc-mon-theo-abet/'. $item->maBaiQH .'/' . $item->maHocPhan) }}"
+                                                        class="btn btn-success">
+                                                        <i class="fas fa-align-justify"></i>
+                                                        Statistics ABET's SOs for course
+                                                    </a>
+                                                    <a href="{{ asset('/giang-vien/thong-ke/thong-ke-ket-thuc-mon-theo-cdio/'. $item->maBaiQH .'/' . $item->maHocPhan) }}"
+                                                        class="btn btn-success">
+                                                        <i class="fas fa-align-justify"></i>
+                                                        Statistics CDIO's SOs for course
                                                     </a>
                                                 </td>
                                             </tr>

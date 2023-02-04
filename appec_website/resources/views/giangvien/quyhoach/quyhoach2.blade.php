@@ -21,7 +21,14 @@
                             </li>
                             <li class="breadcrumb-item">
                                 <a href="{{ asset('giang-vien/quy-hoach-danh-gia') }}">
-                                    {{ $hp->tenHocPhan }}</a>
+                                    @if (session::has('language') && session::get('language')=='en') 
+                                    {{ $hp->tenHocPhanEN }}
+                                     @else 
+                                     {{ $hp->tenHocPhan }}
+                                    @endif
+
+                                    
+                                </a>
                             </li>
                             <li class="breadcrumb-item active">
                                 {{ __('Assessment Planning') }}
@@ -47,7 +54,7 @@
                                             method="post">
                                             @csrf
                                             <div class="form-group">
-                                                <label for="">Chọn nhóm công thức:</label>
+                                                <label for="">{{ __('Formula') }}:</label>
                                                 <select name="groupCT" id="" class="form-control">
                                                     <option value="1">
                                                         @php
@@ -60,12 +67,24 @@
                                                                 @php
                                                                     $cr++;
                                                                 @endphp
-                                                                {{ $data->loaiHTDanhGia['maLoaiHTDG'] }}*{{ $data->trongSo }}%
+                                                                ({{ $data->loaiHTDanhGia['maLoaiHTDG'] }} -  
+                                                                    @if (Session::has('language') && Session::get('language')=='en')
+                                                                        {{ $data->loaiHTDanhGia['tenLoaiHTDG_EN'] }}
+                                                                    @else
+                                                                    {{ $data->loaiHTDanhGia['tenLoaiHTDG'] }}
+                                                                    @endif
+                                                                ) *{{ $data->trongSo }}%
                                                             @elseif($data->groupCT==1)
                                                                 @php
                                                                     $cr++;
                                                                 @endphp
-                                                                {{ $data->loaiHTDanhGia['maLoaiHTDG'] }}*{{ $data->trongSo }}%
+                                                                 ({{ $data->loaiHTDanhGia['maLoaiHTDG'] }} -  
+                                                                 @if (Session::has('language') && Session::get('language')=='en')
+                                                                        {{ $data->loaiHTDanhGia['tenLoaiHTDG_EN'] }}
+                                                                    @else
+                                                                    {{ $data->loaiHTDanhGia['tenLoaiHTDG'] }}
+                                                                    @endif
+                                                                ) *{{ $data->trongSo }}%
                                                             @endif
                                                         @endforeach
                                                     </option>
@@ -81,12 +100,24 @@
                                                                     @php
                                                                         $cr++;
                                                                     @endphp
-                                                                    {{ $data->loaiHTDanhGia['maLoaiHTDG'] }}*{{ $data->trongSo }}%
+                                                                     ({{ $data->loaiHTDanhGia['maLoaiHTDG'] }} -  
+                                                                     @if (Session::has('language') && Session::get('language')=='en')
+                                                                        {{ $data->loaiHTDanhGia['tenLoaiHTDG_EN'] }}
+                                                                    @else
+                                                                    {{ $data->loaiHTDanhGia['tenLoaiHTDG'] }}
+                                                                    @endif
+                                                                     ) *{{ $data->trongSo }}%
                                                                 @elseif($data->groupCT==2)
                                                                     @php
                                                                         $cr++;
                                                                     @endphp
-                                                                    {{ $data->loaiHTDanhGia['maLoaiHTDG'] }}*{{ $data->trongSo }}%
+                                                                     ({{ $data->loaiHTDanhGia['maLoaiHTDG'] }} -  
+                                                                     @if (Session::has('language') && Session::get('language')=='en')
+                                                                        {{ $data->loaiHTDanhGia['tenLoaiHTDG_EN'] }}
+                                                                    @else
+                                                                    {{ $data->loaiHTDanhGia['tenLoaiHTDG'] }}
+                                                                    @endif
+                                                                     ) *{{ $data->trongSo }}%
                                                                 @endif
                                                             @endforeach
                                                         </option>
@@ -100,11 +131,18 @@
                                     </form>
                                 </h3>
                                 <div class="card-tools">
-                                    <a href="{{ asset('/giang-vien/quy-hoach-danh-gia') }}" class="btn btn-secondary"><i
+                                    <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/'.Session::get('namHoc').'/'.Session::get('maHK')) }}" class="btn btn-success"><i
                                             class="fas fa-arrow-left"></i></a>
                                 </div>
                             </div>
                             <div class="card-body">
+                                @if ($count_ndqh==0)
+                                <a title="Delete" class="btn btn-danger"
+                                    onclick="return confirm('Confirm?')"
+                                    href="{{ asset('/giang-vien/quy-hoach-danh-gia/xoa-nhom-cong-thuc/'.Session::get('maBaiQH')) }}">
+                                <i class="fa fa-trash"></i> {{ __('Delete') }} {{ __('Formula') }}
+                            </a>
+                                @endif
                                 {{-- div tree --}}
                                 <div class="tree ">
                                     <ul>
@@ -112,10 +150,16 @@
                                                     href="#Web" aria-expanded="true" aria-controls="Web"><i
                                                         class="collapsed"><i class="fas fa-folder"></i></i>
                                                     <i class="expanded"><i class="far fa-folder-open"></i></i>
-                                                    {{ __('Course') }}: {{ $gd[0]->tenHocPhan }} --
+                                                    {{ __('Course') }}: 
+                                                        @if (session::has('language') && session::get('language')=='en') 
+                                                        {{ $gd[0]->tenHocPhanEN }} 
+                                                        @else 
+                                                        {{ $gd[0]->tenHocPhan }} 
+                                                        @endif
+                                                    --
                                                     {{ __('Semester') }}: {{ $gd[0]->maHK }} --
                                                     {{ __('Academic year') }}: {{ $gd[0]->namHoc }} --||--
-                                                    {{ __('Class ID') }}: {{ $gd[0]->maLop }}</a></span>
+                                                    {{ __('Class ID') }}: {{ strtoupper($gd[0]->maLop) }} </a></span>
                                             <div id="Web" class="collapse show">
                                                 <ul>
                                                     {{-- <li><span><a style="color:#000; text-decoration:none;" data-toggle="collapse" href="#page1" aria-expanded="false" aria-controls="page1"><i class="collapsed"><i class="fas fa-folder"></i></i>
@@ -357,7 +401,7 @@
                                                                                             <i
                                                                                                 class="expanded"><i
                                                                                                     class="far fa-folder-open"></i></i>
-                                                                                            {{ __('Granding officer') }}</a></span>
+                                                                                            {{ __('Granding examiner') }}</a></span>
                                                                                             <div class="collapse" id="project_{{ $x->maLoaiHTDG }}">
                                                                                                 <ul>
                                                                                                     <li>
@@ -465,7 +509,94 @@
                                                                                             href="{{ asset('giang-vien/thong-ke/thong-ke-theo-hoc-phan/trac-nghiem/thong-ke-theo-diem-chu/' . $x->maCTBaiQH) }}">
                                                                                             {{ __('Grate') }}</a></span></li>
                                                                                     @else
-                                                                                        @if ($x->maLoaiHTDG=='T3'){{-- thuc hanh --}}
+                                                                                    @if ($x->maLoaiHTDG=='T3' && $x->maLoaiDG==3) {{-- thuc hanh ket thuc mon--}}
+                                                                                        <li>
+                                                                                            <span><a style="color:#000; text-decoration:none;"
+                                                                                                data-toggle="collapse"
+                                                                                                href="#project_{{ $x->maLoaiHTDG }}"
+                                                                                                aria-expanded="false"
+                                                                                                aria-controls="project_{{ $x->maLoaiHTDG }}"><i
+                                                                                                    class="collapsed"><i
+                                                                                                        class="fas fa-folder"></i></i>
+                                                                                                <i
+                                                                                                    class="expanded"><i
+                                                                                                        class="far fa-folder-open"></i></i>
+                                                                                                {{ __('Granding officer') }}</a></span>
+                                                                                                <div class="collapse" id="project_{{ $x->maLoaiHTDG }}">
+                                                                                                    <ul>
+                                                                                                        <li>
+                                                                                                            <span><a style="color:#000; text-decoration:none;"
+                                                                                                                data-toggle="collapse"
+                                                                                                                href="#project_CP1_{{ $x->maLoaiHTDG }}"
+                                                                                                                aria-expanded="false"
+                                                                                                                aria-controls="project_{{ $x->maLoaiHTDG }}"><i
+                                                                                                                    class="collapsed"><i
+                                                                                                                        class="fas fa-folder"></i></i>
+                                                                                                                <i
+                                                                                                                    class="expanded"><i
+                                                                                                                        class="far fa-folder-open"></i></i>
+                                                                                                                1</a></span>
+                                                                                                            <div class="collapse" id="project_CP1_{{ $x->maLoaiHTDG }}">
+                                                                                                                <ul>
+                                                                                                                    <li> <span><i class="far fa-circle"></i><a 
+                                                                                                                        href="{{ asset('giang-vien/thong-ke/thong-ke-theo-hoc-phan/thuc-hanh/thong-ke-theo-clo/' . $x->maCTBaiQH. '/1') }}">
+                                                                                                                        {{ __("CLOs") }}</a></span></li>
+                                                                                                                    <li><span><i class="far fa-circle"></i><a 
+                                                                                                                        href="{{ asset('giang-vien/thong-ke/thong-ke-theo-hoc-phan/thuc-hanh/thong-ke-theo-abet/' . $x->maCTBaiQH) }}">
+                                                                                                                        {{ __("ABET'sSO") }}</a></span></li>
+                                                                                                                    <li><span><i class="far fa-circle"></i><a 
+                                                                                                                        href="{{ asset('/giang-vien/thong-ke/thong-ke-theo-hoc-phan/thuc-hanh/thong-ke-theo-tieu-chi/' . $x->maCTBaiQH) }}">
+                                                                                                                        {{ __('SOs') }}</a></span></li>
+                                                                                                                    <li><span><i class="far fa-circle"></i><a 
+                                                                                                                    href="{{ asset('giang-vien/thong-ke/thong-ke-theo-hoc-phan/thuc-hanh/thong-ke-theo-xep-hang/' . $x->maCTBaiQH) }}">
+                                                                                                                        {{ __('Rank') }}</a></span></li>
+                                                                                                                    <li><span><i class="far fa-circle"></i><a 
+                                                                                                                        href="{{ asset('giang-vien/thong-ke/thong-ke-theo-hoc-phan/thuc-hanh/thong-ke-theo-diem-chu/' . $x->maCTBaiQH) }}">
+                                                                                                                        {{ __('Grate') }}</a></span></li>
+                                                                                                                </ul>
+                                                                                                            </div>
+                                                                                                        </li>
+                                                                                                        @if ($x->maGV_2!='00000')
+                                                                                                        <li> 
+                                                                                                            <span><a style="color:#000; text-decoration:none;"
+                                                                                                            data-toggle="collapse"
+                                                                                                            href="#project_CP2_{{ $x->maLoaiHTDG }}"
+                                                                                                            aria-expanded="false"
+                                                                                                            aria-controls="project_{{ $x->maLoaiHTDG }}"><i
+                                                                                                                class="collapsed"><i
+                                                                                                                    class="fas fa-folder"></i></i>
+                                                                                                            <i
+                                                                                                                class="expanded"><i
+                                                                                                                    class="far fa-folder-open"></i></i>
+                                                                                                            2</a></span>
+                                                                                                            <div class="collapse" id="project_CP2_{{ $x->maLoaiHTDG }}">
+                                                                                                                <ul>
+                                                                                                                    <li><span><i class="far fa-circle"></i><a 
+                                                                                                                        href="{{ asset('giang-vien/thong-ke/thong-ke-theo-hoc-phan/thuc-hanh/thong-ke-theo-clo2/' . $x->maCTBaiQH.'/'.$x->maGV_2) }}">
+                                                                                                                        {{ __("CLOs") }}</a></span></li>
+                                                                                                                    <li><span><i class="far fa-circle"></i><a 
+                                                                                                                        href="{{ asset('giang-vien/thong-ke/thong-ke-theo-hoc-phan/thuc-hanh/thong-ke-theo-abet/' . $x->maCTBaiQH. '/'.$x->maGV_2) }}">
+                                                                                                                        {{ __("ABET'sSO") }}</a></span></li>
+                                                                                                                    <li><span><i class="far fa-circle"></i><a 
+                                                                                                                        href="{{ asset('/giang-vien/thong-ke/thong-ke-theo-hoc-phan/thuc-hanh/thong-ke-theo-tieu-chi/' . $x->maCTBaiQH. '/'.$x->maGV_2) }}">
+                                                                                                                        {{ __('SOs') }}</a></span></li>
+                                                                                                                    <li><span><i class="far fa-circle"></i><a 
+                                                                                                                    href="{{ asset('giang-vien/thong-ke/thong-ke-theo-hoc-phan/thuc-hanh/thong-ke-theo-xep-hang/' . $x->maCTBaiQH. '/'.$x->maGV_2) }}">
+                                                                                                                        {{ __('Rank') }}</a></span></li>
+                                                                                                                    <li><span><i class="far fa-circle"></i><a 
+                                                                                                                        href="{{ asset('giang-vien/thong-ke/thong-ke-theo-hoc-phan/thuc-hanh/thong-ke-theo-diem-chu/' . $x->maCTBaiQH. '/'.$x->maGV_2) }}">
+                                                                                                                        {{ __('Grate') }}</a></span></li>
+                                                                                                                </ul>
+                                                                                                            </div>
+                                                                                                        </li>
+                                                                                                        @endif
+                                                                                                        
+                                                                                                    </ul>
+                                                                                                </div>
+                                                                                        </li>
+
+                                                                                        @endif
+                                                                                        @if ($x->maLoaiHTDG=='T3' && $x->maLoaiDG!=3){{-- thuc hanh qua trinh --}}
                                                                                             <li><span><i class="far fa-circle"></i><a 
                                                                                                 href="{{ asset('giang-vien/thong-ke/thong-ke-theo-hoc-phan/thuc-hanh/thong-ke-theo-clo/' . $x->maCTBaiQH) }}">
                                                                                                 {{ __("CLOs") }}</a></span></li>

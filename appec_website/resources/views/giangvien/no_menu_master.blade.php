@@ -27,12 +27,13 @@
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="{{ asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}" />
     <!-- Daterange picker -->
-    <link rel="stylesheet" href="{{ asset('plugins/daterangepicker/daterangepicker.css') }}" />
+    {{-- <link rel="stylesheet" href="{{ asset('plugins/daterangepicker/daterangepicker.css') }}" /> --}}
     <!-- DataTables -->
     <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <!-- summernote -->
-    <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}" />
+    {{-- <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}" /> --}}
+    <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.css') }}">
     <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!-- jQuery -->
@@ -121,10 +122,10 @@
         @include('sweet::alert')
         @yield('content')
         <footer class="main-footer">
-            <strong>Copyright &copy; 2020
-                <a href="https://adminlte.io"> Hệ thống đánh giá học sinh CAP</a>.</strong>
+            <strong>Copyright &copy;
+                <a href=""> {{ __('C.A.P System') }}</a>.</strong>
             <div class="float-right d-none d-sm-inline-block">
-                <b>Version</b> 1.0
+                
             </div>
         </footer>
         <!-- Control Sidebar -->
@@ -138,6 +139,8 @@
         $.widget.bridge("uibutton", $.ui.button);
 
     </script>
+    <script type="text/javascript" src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
+
     <!-- Bootstrap 4 -->
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- ChartJS -->
@@ -175,6 +178,7 @@
                 "responsive": true,
                 "autoWidth": false,
             });
+            $('.select2').select2();
         });
 
     </script>

@@ -13,16 +13,16 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">Thống kê theo xếp hạng<noscript></noscript>
+                        <h1 class="m-0 text-dark">Statistic of range<noscript></noscript>
                             <nav></nav>
                         </h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                            <li class="breadcrumb-item "><a href="thongke.html">Thống kê</a></li>
+                            <li class="breadcrumb-item"><a href="{{ asset('/giang-vien') }}">{{ __('Home') }}</a></li>
+                            <li class="breadcrumb-item "><a href="thongke.html">Statistic</a></li>
                             
-                            <li class="breadcrumb-item active">Thống kê theo xếp hạng</li>
+                            <li class="breadcrumb-item active">Statistic of range</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -38,6 +38,9 @@
                                 <h3 class="card-title">
                                 </h3>
                                 <div class="card-tools">
+                                    <a href="{{ asset('/giang-vien/thong-ke/thong-ke-theo-hoc-phan/thuc-hanh/xuat-thong-ke-xep-hang/'.Session::get('maCTBaiQH')) }}" class="btn btn-success">
+                                        <i class="fas fa-download"></i> <i class="fas fa-file-excel"></i>
+                                    </a>
                                     <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/'.session::get('maHocPhan').'/'.session::get('maBaiQH').'/'.session::get('maHK').'/'.session::get('namHoc').'/'.session::get('maLop')) }}" class="btn btn-secondary">
                                           <i class="fas fa-arrow-left"></i>
                                     </a>
@@ -49,10 +52,10 @@
                                     <thead>
                                         <tr>
                                             <th>STT</th>
-                                            <th>Xếp loại</th>
-                                            <th>Số lượng</th>
-                                            <th>Tỉ lệ (%)</th>
-                                            <th>Tỉ lệ tích lũy</th>
+                                            <th>Range</th>
+                                            <th>Quantity</th>
+                                            <th>Ratio (%)</th>
+                                            <th>Cumulative rate</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -65,21 +68,21 @@
                                             <td>{{ $i + 1 }}</td>
                                             <td>
                                                 @switch($i+1)
-                                                    @case(1)
-                                                        Giỏi
-                                                    @break
-                                                    @case(2)
-                                                        Khá
-                                                    @break
-                                                    @case(3)
-                                                        Trung bình
-                                                    @break
-                                                    @case(4)
-                                                        Yếu
-                                                    @break
-                                                    @case(5)
-                                                        Kém
-                                                    @break
+                                                @case(1)
+                                                    Excellent
+                                                @break
+                                                @case(2)
+                                                    Good
+                                                @break
+                                                @case(3)
+                                                    Average
+                                                @break
+                                                @case(4)
+                                                    Below Average
+                                                @break
+                                                @case(5)
+                                                    Weak
+                                                @break
                                                     @default
                                                 @endswitch
                                             </td>
@@ -93,7 +96,7 @@
                                         @endphp
                                     @endfor
                                         <tr>
-                                            <td colspan="2"><b>Tổng</b></td>
+                                            <td colspan="2"><b>Total</b></td>
                                             <td>
                                                 {{ $tongXepHang }}
                                             </td>
@@ -113,7 +116,7 @@
                         <!-- STACKED BAR CHART -->
                         <div class="card card-success">
                             <div class="card-header">
-                                <h3 class="card-title">Biểu đồ</h3>
+                                <h3 class="card-title">Chart</h3>
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                         <i class="fas fa-minus"></i>
@@ -152,9 +155,9 @@
                             console.log(xepHang);
                         }
                         var areaChartData = {
-                            labels: ['Giỏi', 'Khá', 'Trung Bình', 'Yếu', 'Kém'],
+                            labels: ['Excellent', 'Good', 'Average', 'Below Average', 'Weak'],
                             datasets: [{
-                                label: 'số Lượng',
+                                label: 'Quantity',
                                 backgroundColor: 'rgba(60,141,188,0.9)',
                                 borderColor: 'rgba(60,141,188,0.8)',
                                 pointRadius: false,

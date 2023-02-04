@@ -54,7 +54,7 @@
                                 <table id="example2" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>STT</th>
+                                            <th>{{ __('No.') }}</th>
                                             <th>Hình thức đánh giá</th>
                                             <th>Tỉ lệ (%)</th>
                                             <th>Phương pháp đánh giá</th>

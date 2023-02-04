@@ -8,7 +8,12 @@
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <h1 class="m-0 text-dark">
-                            {{ $hocPhan->tenHocPhan }}<noscript></noscript>
+                        @if (Session::get('language') && Session::get('language')=='en')
+                            {{ $hocPhan->tenHocPhanEN }}
+                        @else
+                            {{ $hocPhan->tenHocPhan }}
+                        @endif
+                            <noscript></noscript>
                             <nav></nav>
                         </h1>
                     </div>
@@ -16,12 +21,14 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item">
-                                <a href="{{ asset('giang-vien') }}">Trang chủ</a>
+                                <a href="{{ asset('giang-vien') }}">Home</a>
                             </li>
                             <li class="breadcrumb-item">
-                                <a href="{{ asset('#') }}">Nội dung đánh giá</a>
+                                <a href="{{ asset('/giang-vien/cham-diem-bao-cao') }}">Instructor</a>
                             </li>
-
+                            <li class="">
+                                <a href="{{ asset('#') }}">Assessment planing</a>
+                            </li>
                         </ol>
                     </div>
                     <!-- /.col -->
@@ -60,10 +67,10 @@
                                 <table id="example2" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>STT</th>
-                                            <th>Hình thức đánh giá</th>
-                                            <th>Phương pháp đánh giá</th>
-                                            <th>Tùy chọn</th>
+                                            <th>{{ __('No.') }}</th>
+                                            <th>Assessment activity</th>
+                                            <th>Classification of assessment activity</th>
+                                            <th>Option</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -73,13 +80,25 @@
                                         @foreach ($qh as $x)
                                             <tr>
                                                 <td>{{ $i++ }}</td>
-                                                <td>{{ $x->tenLoaiDG }}</td>
-                                                <td>{{ $x->tenLoaiHTDG }}</td>
+                                                <td>
+                                                @if (Session::get('language') && Session::get('language')=='en')
+                                                    {{ $x->tenLoaiDG_EN }}
+                                                @else
+                                                    {{ $x->tenLoaiDG }}
+                                                @endif
+                                                </td>
+                                                <td>
+                                                @if (Session::get('language') && Session::get('language')=='en')
+                                                     {{ $x->tenLoaiHTDG_EN }}
+                                                @else
+                                                     {{ $x->tenLoaiHTDG }}
+                                                @endif
+                                               </td>
                                                 <td>
                                                     <a
                                                         href="{{ asset('/giang-vien/cham-diem-bao-cao/nhap-ket-qua-danh-gia/' . $x->maCTBaiQH) }}">
                                                         <button class="btn btn-success">
-                                                            <i class="fas fa-info-circle"></i> Nhập kết quả
+                                                            <i class="fas fa-info-circle"></i> Enter the result
                                                         </button>
                                                     </a>
 

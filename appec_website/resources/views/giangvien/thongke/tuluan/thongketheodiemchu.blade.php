@@ -13,16 +13,16 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">{{ $hp->tenHocPhan }}<noscript></noscript>
+                        <h1 class="m-0 text-dark">Statistics of alphabet mark<noscript></noscript>
                             <nav></nav>
                         </h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ asset('giang-vien') }}">{{ __('Home') }}</a></li>
-                            <li class="breadcrumb-item ">Thống kê</li>
+                            <li class="breadcrumb-item ">Statistics</li>
                             
-                            <li class="breadcrumb-item active">Thống kê theo điểm chữ</li>
+                            <li class="breadcrumb-item active">Statistics of alphabet mark</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -39,7 +39,10 @@
 
                                 </h3>
                                 <div class="card-tools">
-                                    <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/'.session::get('maHocPhan').'/'.session::get('maBaiQH').'/'.session::get('maHK').'/'.session::get('namHoc').'/'.session::get('maLop')) }}" class="btn btn-secondary">
+                                    <a href="{{ asset('/giang-vien/thong-ke/thong-ke-theo-hoc-phan/tu-luan/xuat-thong-ke-diem-chu/'.Session::get('maCTBaiQH')) }}" class="btn btn-success">
+                                        <i class="fas fa-download"></i> <i class="fas fa-file-excel"></i>
+                                    </a>
+                                    <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/'.session::get('maHocPhan').'/'.session::get('maBaiQH').'/'.session::get('maHK').'/'.session::get('namHoc').'/'.session::get('maLop')) }}" class="btn btn-success">
                                           <i class="fas fa-arrow-left"></i>
                                     </a>
                             </div>
@@ -49,11 +52,11 @@
                                 <table id="" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>STT</th>
-                                            <th>Điểm chữ</th>
-                                            <th>Số lượng</th>
-                                            <th>Tỉ lệ (%)</th>
-                                            <th>Tỉ lệ tích lũy</th>
+                                            <th>{{ __('No.') }}</th>
+                                            <th>Alphabet mark</th>
+                                            <th>Quantity</th>
+                                            <th>Ratio (%)</th>
+                                            <th>Accumulative rate</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -76,7 +79,7 @@
                                             @endphp
                                         @endfor
                                         <tr>
-                                            <td colspan="2"><b>Tổng</b></td>
+                                            <td colspan="2"><b>Total</b></td>
                                             <td>{{ $tongSL }}</td>
                                             <td>{{ $tongTiLe }}</td>
                                             <td></td>
@@ -112,7 +115,7 @@
                         var areaChartData = {
                             labels: ['A', 'B+', 'B', 'C+', 'C', 'D+', 'D', 'F'],
                             datasets: [{
-                                label: 'số Lượng',
+                                label: 'Quantity',
                                 backgroundColor: 'rgba(60,141,188,0.9)',
                                 borderColor: 'rgba(60,141,188,0.8)',
                                 pointRadius: false,
@@ -127,7 +130,7 @@
                         var barChartData = $.extend(true, {}, areaChartData)
                         var temp1 = areaChartData.datasets[0]
                         barChartData.datasets[0] = temp1
-                        var stackedBarChartCanvas = $('#stackedBarChart').get(0).getContext('2d')
+                        var stackedBarChartCanvas = $('#barChart').get(0).getContext('2d')
                         var stackedBarChartData = $.extend(true, {}, barChartData)
                         var stackedBarChartOptions = {
                             responsive: true,

@@ -19,9 +19,9 @@
                                 <a href="{{ asset('/giang-vien') }}">{{ __('Home') }}</a>
                             </li>
                             <li class="breadcrumb-item">
-                                <a href="#">Đồ án</a>
+                                <a href="#">Project</a>
                             </li>
-                            <li class="breadcrumb-item active">Nội dung đánh giá</li>
+                            <li class="breadcrumb-item active">Content</li>
                         </ol>
                     </div>
                     <!-- /.col -->
@@ -30,21 +30,7 @@
             </div>
             <!-- /.container-fluid -->
         </div>
-        <!-- /.content-header -->
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <h5><i class="icon fas fa-check"></i> Thông báo!</h5>
-                {{ session('success') }}
-            </div>
-        @endif
-        @if (session('warning'))
-            <div class="alert alert-warning alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <h5><i class="icon fas fa-exclamation-triangle"></i> Thông báo!</h5>
-                {{ session('warning') }}
-            </div>
-        @endif
+
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
@@ -54,14 +40,14 @@
                                 <h3 class="card-title">
                                     <button type="button" class="btn btn-primary" data-toggle="modal"
                                         data-target="#exampleModal">
-                                        <i class="far fa-address-card"></i> Thêm phiếu chấm
+                                        <i class="far fa-address-card"></i> Add new assessment sheet
                                     </button>
-                                    <a href="{{ asset('giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-tieu-chi-danh-gia/' . $maCTBaiQH) }}"
+                                    {{-- <a href="{{ asset('giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xem-tieu-chi-danh-gia/' . $maCTBaiQH) }}"
                                         class="btn btn-primary">
                                         <i class="fas fa-balance-scale-left"></i> Tiêu chí đánh giá đồ án
-                                    </a>
+                                    </a> --}}
                                     <button class="btn btn-primary" data-toggle="modal" data-target="#moichambc">
-                                        Mời chấm báo cáo
+                                        Inviting instructor
                                     </button>
                                     <!-- Modal mời chấm báo cáo -->
                                     <div class="modal fade" id="moichambc" tabindex="-1" role="dialog"
@@ -73,7 +59,7 @@
                                                 @csrf
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Mời chấm báo cáo</h5>
+                                                        <h5 class="modal-title" id="exampleModalLabel">Inviting instructor</h5>
                                                         <button type="button" class="close" data-dismiss="modal"
                                                             aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
@@ -81,9 +67,9 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="form-group">
-                                                            <label for=""> Chọn giảng viên:</label>
-                                                            <select name="maGV_2" id="" class="form-control">
-                                                                <option value="00000">Chọn riêng giảng viên chấm cho đề tài
+                                                            <label for=""> Choose lectures:</label>
+                                                            <select name="maGV_2" id="" class="form-control select2" style="width:100%">
+                                                                <option value="00000">Choose 1 lecture for 1 project
                                                                 </option>
                                                                 @foreach ($gv as $x)
                                                                     <option value="{{ $x->maGV }}">{{ $x->hoGV }}
@@ -93,9 +79,9 @@
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="submit" class="btn btn-primary">Lưu</button>
+                                                        <button type="submit" class="btn btn-primary">Save</button>
                                                         <button type="button" class="btn btn-secondary"
-                                                            data-dismiss="modal">Đóng</button>
+                                                            data-dismiss="modal">Cancle</button>
                                                     </div>
                                                 </div>
                                             </form>
@@ -112,7 +98,7 @@
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title" id="exampleModalLabel">
-                                                            Thêm phiếu chấm
+                                                            Add new answer sheet
                                                         </h5>
                                                         <button type="button" class="close" data-dismiss="modal"
                                                             aria-label="Close">
@@ -121,9 +107,9 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="form-group">
-                                                            <label for="hocphan" style="font-size: 20px">Chọn đề tài</label>
+                                                            <label for="hocphan" style="font-size: 20px">Choose project</label>
                                                             <!-- Button trigger modal -->
-                                                            <select name="maDe" id="" class="form-control custom-select" required>
+                                                            <select name="maDe" id="" class="form-control custom-select  select2" style="width:100%" required>
                                                                 @foreach ($deTai as $md)
                                                                     <option value="{{ $md->maDe }}">
                                                                         {{ $md->maDeVB }}--{{ $md->tenDe }}
@@ -132,8 +118,8 @@
                                                             </select>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="">Chọn sinh viên</label>
-                                                            <select name="maSSV" id="" class="form-control custom-select" required>
+                                                            <label for="">Choose student</label>
+                                                            <select name="maSSV[]" id="" class="form-control select2" style="width:100%" multiple required>
                                                                 @foreach ($dsLop as $sv)
                                                                     <option value="{{ $sv->maSSV }}">
                                                                         {{ $sv->maSSV }}--{{ $sv->HoSV }}
@@ -143,8 +129,8 @@
                                                         </div>
                                                         @if ($canbo2->maGV == '00000')
                                                             <div class="form-group">
-                                                                <label for=""> Chọn giảng viên:</label>
-                                                                <select name="maGV_2" id="" class="form-control">
+                                                                <label for=""> Choose lecture:</label>
+                                                                <select name="maGV_2" id="" class="form-control select2" style="width:100%">
                                                                     @foreach ($gv as $x)
                                                                         <option value="{{ $x->maGV }}">
                                                                             {{ $x->hoGV }} {{ $x->tenGV }}
@@ -168,7 +154,7 @@
                                         </div>
                                     </div>
                                     <hr>
-                                    Cán bộ chấm 2: {{ $canbo2->hoGV }} {{ $canbo2->tenGV }}
+                                    Instructor 2: {{ $canbo2->hoGV }} {{ $canbo2->tenGV }}
                                 </h3>
                                 <div class="card-tools">
                                     <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/' . Session::get('maHocPhan') . '/' . Session::get('maBaiQH') . '/' . Session::get('maHK') . '/' . Session::get('namHoc') . '/' . Session::get('maLop')) }}"
@@ -182,16 +168,17 @@
                                     <thead>
                                         <tr>
                                             <th>{{ __("No.") }}</th>
-                                            <th>Mã đề tài</th>
+                                            <th>Project ID</th>
                                             <th>
 
-                                                <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                    data-target="#themDT">
-                                                    <i class="fas fa-plus"></i>
-                                                </button>
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="themDT" tabindex="-1" role="dialog"
+                                            <!-- Button trigger modal -->
+                                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                data-target="#themDT">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="themDT" tabindex="-1" role="dialog"
                                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog" role="document">
                                                         <form
@@ -200,8 +187,7 @@
                                                             @csrf
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h5 class="modal-title" id="exampleModalLabel">Thêm đề
-                                                                        tài</h5>
+                                                                    <h5 class="modal-title" id="exampleModalLabel">Add project</h5>
                                                                     <button type="button" class="close" data-dismiss="modal"
                                                                         aria-label="Close">
                                                                         <span aria-hidden="true">&times;</span>
@@ -209,31 +195,31 @@
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <div class="form-group">
-                                                                        <label for="">Nhập mã đề tài:</label>
+                                                                        <label for="">Project ID:</label>
                                                                         <input type="text" name="maDe" class="form-control">
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <label for="">Nhập tên đề tài:</label>
+                                                                        <label for="">Project title:</label>
                                                                         <input type="text" name="tenDe"
                                                                             class="form-control">
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="submit"
-                                                                        class="btn btn-primary">Lưu</button>
+                                                                        class="btn btn-primary">Save</button>
                                                                     <button type="button" class="btn btn-secondary"
-                                                                        data-dismiss="modal">Hủy</button>
+                                                                        data-dismiss="modal">Cancel</button>
                                                                 </div>
                                                             </div>
                                                         </form>
                                                     </div>
-                                                </div>
-                                                Tên đề tài
+                                            </div>
+                                            Project title
                                             </th>
-                                            <th>Sinh viên thực hiện</th>
-                                            <th>Mã sinh viên</th>
-                                            <th>Cán bộ chấm 2</th>
-                                            <th>Tùy chọn</th>
+                                            <th>Student</th>
+                                            <th>Student ID</th>
+                                            <th>Instructor 2</th>
+                                            <th>Option</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -262,8 +248,14 @@
                                                     <td rowspan={{ $demTenDT }}>
                                                         <button type="button" class="btn btn-primary" data-toggle="modal"
                                                             data-target="#editTen_{{ $dt->maDe }}">
-                                                            <i class="fas fa-edit"></i>
+                                                            <i class="fas fa-edit"></i> 
                                                         </button>
+
+                                                        <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/noi-dung-danh-gia/xoa-ten-de-tai/'.$dt->maDe) }}"
+                                                            onclick="return confirm('Confirm?')"
+                                                            class="btn btn-danger">
+                                                            <i class="fas fa-trash"></i> 
+                                                        </a>
                                                         {{ $dt->tenDe }}
                                                         <!-- Modal -->
                                                         <div class="modal fade" id="editTen_{{ $dt->maDe }}"
@@ -277,7 +269,7 @@
                                                                     <div class="modal-content">
                                                                         <div class="modal-header">
                                                                             <h5 class="modal-title" id="exampleModalLabel">
-                                                                                Modal title</h5>
+                                                                                Edit title</h5>
                                                                             <button type="button" class="close"
                                                                                 data-dismiss="modal" aria-label="Close">
                                                                                 <span aria-hidden="true">&times;</span>
@@ -287,7 +279,7 @@
                                                                             <input type="text" name="maDe" id="" hidden
                                                                                 value="{{ $dt->maDe }}">
                                                                             <div class="form-group">
-                                                                                <label for="">T�n &#273;&#7873; t�i:</label>
+                                                                                <label for="">Project title:</label>
                                                                                 <input type="text" class="form-control"
                                                                                     name="tenDe" id=""
                                                                                     value="{{ $dt->tenDe }}">

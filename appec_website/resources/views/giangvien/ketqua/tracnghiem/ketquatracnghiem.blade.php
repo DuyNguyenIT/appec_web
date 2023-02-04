@@ -8,7 +8,7 @@
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <h1 class="m-0 text-dark">
-                            Trắc nghiệm<noscript></noscript>
+                            {{ __('Multiple Choice Exam') }}<noscript></noscript>
                             <nav></nav>
                         </h1>
                     </div>
@@ -19,9 +19,21 @@
                                 <a href="{{ asset('giang-vien') }}">{{ __('Home') }}</a>
                             </li>
                             <li class="breadcrumb-item">
-                                <a href="{{ asset('giang-vien/ket-qua-danh-gia') }}">{{ $hp->tenHocPhan }}</a>
+                                <a href="{{ asset('giang-vien/ket-qua-danh-gia') }}">
+                                    @if (session::has('language') && session::get('language')=='en')
+                                    {{ $hp->tenHocPhanEN }}
+                                    @else
+                                    {{ $hp->tenHocPhan }}
+                                    @endif
+                                    
+                                </a>
                             </li>
-                            <li class="breadcrumb-item active">Trắc nghiệm</li>
+                            <li class="breadcrumb-item">
+                                <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/' . Session::get('maHocPhan') . '/' . Session::get('maBaiQH') . '/' . Session::get('maHK') . '/' . Session::get('namHoc') . '/' . Session::get('maLop')) }}">
+                                    {{ __('Result') }}
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active">{{ __('Multiple Choice Exam') }}</li>
                         </ol>
                     </div>
                     <!-- /.col -->
@@ -41,12 +53,12 @@
                                 <h4 class="card-title">
                                     <!-- Button trigger modal -->
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addOne">
-                                        Chọn đề cho từng sinh viên
+                                        Adding exam for each student
                                     </button>
                                     <!-- Button trigger modal -->
                                     <button type="button" class="btn btn-primary" data-toggle="modal"
                                         data-target="#exampleModal">
-                                        Chọn đề cho cả lớp
+                                        Adding exam for all students
                                     </button>
                                     <!-- Modal thêm 1-->
                                     <div class="modal fade" id="addOne" tabindex="-1" role="dialog"
@@ -67,7 +79,7 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="form-group">
-                                                            <label for="">Chọn đề thi</label>
+                                                            <label for="">Exam title</label>
                                                             <select name="maDe" id="" class="form-control">
                                                                 @foreach ($deThi as $dt)
                                                                     <option value="{{ $dt->maDe }}">{{ $dt->maDeVB }}
@@ -76,7 +88,7 @@
                                                             </select>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="">Chọn sinh viên</label>
+                                                            <label for="">Student list</label>
                                                             <select name="dssv[]" id="" class="form-control" multiple>
                                                                 @foreach ($dssv as $sv)
                                                                     <option value="{{ $sv->maSSV }}">
@@ -105,8 +117,7 @@
                                                 @csrf
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Thêm 1 đề thi cho cả
-                                                            lớp</h5>
+                                                        <h5 class="modal-title" id="exampleModalLabel">Add exam for all students</h5>
                                                         <button type="button" class="close" data-dismiss="modal"
                                                             aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
@@ -114,13 +125,16 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="form-group">
-                                                            <label for="">Chọn đề thi</label>
+                                                            <label for="">Exam</label>
                                                             <select name="maDe" id="" class="form-control">
                                                                 @foreach ($deThi as $dt)
                                                                     <option value="{{ $dt->maDe }}">
                                                                         {{ $dt->maDeVB }}</option>
                                                                 @endforeach
                                                             </select>
+                                                            @foreach ($phieucham as $data)                                                           
+                                                            <input type="hidden" name="maDetam[]" value="{{$data->maDe}}">
+                                                          @endforeach
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
@@ -134,8 +148,11 @@
                                     </div>
                                 </h4>
                                 <div class="card-tools">
+                                    <a href="{{ asset('/giang-vien/ket-qua-danh-gia/trac-nghiem/xuat-bang-diem-trac-nghiem/'.Session::get('maCTBaiQH')) }}" class="btn btn-success">
+                                        <i class="fas fa-download"></i> <i class="fas fa-file-excel"></i>
+                                    </a>
                                     <a href="{{ asset('/giang-vien/quy-hoach-danh-gia/quy-hoach-ket-qua/' . Session::get('maHocPhan') . '/' . Session::get('maBaiQH') . '/' . Session::get('maHK') . '/' . Session::get('namHoc') . '/' . Session::get('maLop')) }}"
-                                        class="btn btn-secondary"><i class="fas fa-arrow-left"></i></a>
+                                        class="btn btn-success"><i class="fas fa-arrow-left"></i></a>
                                 </div>
                             </div>
                             <!-- /.card-header -->
@@ -143,13 +160,13 @@
                                 <table id="example2" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>STT</th>
-                                            <th>Mã sinh viên</th>
-                                            <th>Sinh viên thực hiện</th>
-                                            <th>Mã đề</th>
-                                            <th>Điểm đánh giá</th>
-                                            <th>Trạng thái</th>
-                                            <th>Tùy chọn</th>
+                                            <th>{{ __('No.') }}</th>
+                                            <th>{{ __('Student ID') }}</th>
+                                            <th>{{ __('Student Name') }}</th>
+                                            <th>{{ __('Exame ID') }}</th>
+                                            <th>{{ __('Mark') }}</th>
+                                            <th>{{ __('Status') }}</th>
+                                            <th>{{ __('Option') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -169,18 +186,24 @@
                                                 </td>
                                                 <td>
                                                     @if ($pc->trangThai == true)
-                                                        <span class="badge bg-success">Đã chấm</span>
+                                                        <span class="badge bg-success">{{ __('Granded') }}</span>
                                                     @else
-                                                        <span class="badge bg-warning">Chờ chấm</span>
+                                                        <span class="badge bg-warning">{{ __('Waiting') }}</span>
                                                     @endif
                                                 </td>
                                                 <td>
                                                     @if ($pc->trangThai == true)
                                                         <a href="{{ asset('/giang-vien/ket-qua-danh-gia/trac-nghiem/xem-ket-qua-danh-gia-trac-nghiem/' . $pc->maDe . '/' . $pc->maSSV) }}"
-                                                            class="btn btn-primary">Xem KQ</a>
+                                                            class="btn btn-primary"><i class="fas fa-eye"></i> {{ __('Viewing') }} {{ __('Result') }}</a>
+                                                            <a href="{{ asset('/giang-vien/ket-qua-danh-gia/trac-nghiem/sua-ket-qua-danh-gia-trac-nghiem/' . $pc->maDe . '/' . $pc->maSSV) }}"
+                                                                class="btn btn-primary"><i class="fas fa-edit"></i> {{ __('Edit') }}</a>
                                                     @else
                                                         <a href="{{ asset('/giang-vien/ket-qua-danh-gia/trac-nghiem/nhap-diem-trac-nghiem/' . $pc->maDe . '/' . $pc->maSSV) }}"
-                                                            class="btn btn-primary">Chấm</a>
+                                                            class="btn btn-primary">{{ __('Granding') }}</a>
+                                                            <a href="{{ asset('/giang-vien/ket-qua-danh-gia/xoa-phieu-cham/' . $pc->maDe . '/' . $pc->maSSV) }}" 
+                                                                class="btn btn-danger" onclick="return confirm('Confirm?')">
+                                                                <i class="fas fa-trash"></i>
+                                                            </a>
                                                     @endif
                                                 </td>
                                             </tr>

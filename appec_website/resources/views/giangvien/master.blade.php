@@ -15,8 +15,7 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
     <!-- Tempusdominus Bootstrap 4 -->
-    <link rel="stylesheet"
-        href="{{ asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}" />
+    {{-- <link rel="stylesheet" href="{{ asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}" /> --}}
     <!-- iCheck -->
     <link rel="stylesheet" href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}" />
     <!-- JQVMap -->
@@ -26,19 +25,34 @@
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="{{ asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}" />
     <!-- Daterange picker -->
-    <link rel="stylesheet" href="{{ asset('plugins/daterangepicker/daterangepicker.css') }}" />
+    {{-- <link rel="stylesheet" href="{{ asset('plugins/daterangepicker/daterangepicker.css') }}" /> --}}
     <!-- summernote -->
-    <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}" />
+    {{-- <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}" /> --}}
     <!-- DataTables -->
     <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.css') }}">
     <!-- jQuery -->
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <!-- jQuery UI 1.11.4 -->
     <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <!-- chọn nhiều trong multiselect -->
+    {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"> --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> --}}
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+  <style type="text/css">
+        .dropdown-toggle{
+            height: 50px;
+            width:760px !important;
+        }
+    </style> 
+    <!-- thử cái này -->
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -98,7 +112,7 @@
             <a href="index.html" class="brand-link">
                 <img src="{{ asset('dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
                     class="brand-image img-circle elevation-3" style="opacity: 0.8" />
-                <span class="brand-text font-weight-light">{{ __('Lecture') }}</span>
+                <span class="brand-text font-weight-light">{{ __('Lecturer') }}</span>
             </a>
             <!-- Sidebar -->
             <div class="sidebar">
@@ -137,6 +151,13 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ asset('/giang-vien/bien-soan-de-cuong') }}" class="nav-link">
+                                <i class="fas fa-business-time"></i>
+                                <p>{{ __('View syllabus') }}</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
                             <a href="{{ asset('/giang-vien/hoc-phan') }}" class="nav-link">
                                 <i class="nav-icon fas fa-book-reader"></i>
                                 <p>{{ __('Courses') }}</p>
@@ -145,7 +166,7 @@
                         <li class="nav-item">
                             <a href="{{ asset('/giang-vien/quy-hoach-danh-gia') }}" class="nav-link">
                                 <i class="nav-icon fas fa-gavel"></i>
-                                <p>{{ __('Assessment Planing') }}</p>
+                                <p>{{ __('Assessment Planning') }}</p>
                             </a>
                         </li>
                         {{-- <li class="nav-item">
@@ -161,25 +182,37 @@
                                 <p>{{ __('Instructor') }}</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+
+                        
+                        {{-- <li class="nav-item">
+                            <a href="{{ asset('/giang-vien/phan-bien-de-cuong') }}" class="nav-link">
+                                <i class="fas fa-business-time"></i>
+                                <p>{{ __('revise syllabus') }}</p>
+                            </a>
+                        </li> --}}
+
+                        {{-- <li class="nav-item">
                             <a href="{{ asset('/giang-vien/tai-khoan') }}" class="nav-link">
                                 <i class="fas fa-user-cog"></i>
                             <p>{{ __('Account') }}</p>
                             </a>
-                        </li>
+                        </li> --}}
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
             </div>
             <!-- /.sidebar -->
+            
         </aside>
         @include('sweet::alert')
         @yield('content')
         <footer class="main-footer">
-            <strong>Copyright &copy; 2020-2021
-                <a href=""> {{ __('C.A.P system') }}</a>.</strong>
+            <strong>Copyright &copy; 
+                {{-- <a href=""> {{ __('C.A.P System') }}</a>. --}}
+                <a href="{{ asset('/giang-vien') }}"> CAP</a>.</strong>
+            </strong>
             <div class="float-right d-none d-sm-inline-block">
-                <b>Version</b> 1.0
+                {{-- <b>Version</b> 1.0 --}}
             </div>
         </footer>
         <!-- Control Sidebar -->
@@ -192,7 +225,12 @@
     <script>
         $.widget.bridge("uibutton", $.ui.button);
 
+  
     </script>
+
+
+    <script type="text/javascript" src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
+
     <!-- Bootstrap 4 -->
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- ChartJS -->
@@ -229,7 +267,9 @@
             $("#example2").DataTable({
                 "responsive": true,
                 "autoWidth": false,
+                "aLengthMenu": [[30, 40, 50], [ 30, 40, 50]]
             });
+            $('.select2').select2();
         });
 
     </script>

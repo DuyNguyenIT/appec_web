@@ -25,7 +25,6 @@ class chuongTrinhDTController extends Controller
     public function excel(Excel $excel)
     {
         $customer_data=ctDaoTao::all();
-     
         $customer_array[]= array('Mã chương trình','Tên chương trình');
         foreach($customer_data as $customer)
         {
@@ -42,9 +41,12 @@ class chuongTrinhDTController extends Controller
         try {
             $ctdt=new ctDaoTao();
             $ctdt->tenCT=$request->tenCT;
+            $ctdt->tenCT_EN=$request->tenCT_EN;
             $ctdt->maBac=$request->maBac;
             $ctdt->maCNganh=$request->maCNganh;
             $ctdt->maHe=$request->maHe;
+            $ctdt->soQuyetDinh=$request->soQuyetDinh;
+            $ctdt->ngayBanHanh	=$request->ngayBanHanh;
             $ctdt->save();
             return redirect('quan-ly/chuong-trinh-dao-tao')->with('success','Thêm thành công!!');
         } catch (\Throwable $th) {      
@@ -58,9 +60,12 @@ class chuongTrinhDTController extends Controller
             $ctdt=ctDaoTao::where('maCT',$request->maCT)->first();
             if($ctdt){
                 $ctdt->tenCT=$request->tenCT;
+                $ctdt->tenCT_EN=$request->tenCT_EN;
                 $ctdt->maBac=$request->maBac;
                 $ctdt->maCNganh=$request->maCNganh;
                 $ctdt->maHe=$request->maHe;
+                $ctdt->soQuyetDinh=$request->soQuyetDinh;
+                $ctdt->ngayBanHanh	=$request->ngayBanHanh;
                 $ctdt->update();
                 return redirect('quan-ly/chuong-trinh-dao-tao')->with('success','Sửa thành công!!');
             }else{
@@ -88,6 +93,9 @@ class chuongTrinhDTController extends Controller
         }
     }
 
-
-    
+    public function xem_thong_tin_hoc_phan($maHocPhan)
+    {
+        $hocphan=hocPhan::where('maHocPhan',$maHocPhan)->orderBy('maHocPhan','desc')->with('hocphan_ctdt')->get();
+        
+    }
 }

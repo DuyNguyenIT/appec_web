@@ -128,7 +128,6 @@ class thongKeController extends Controller
             return view('giaovu.thongke.thongketheohocphan',['qh'=>$qh,'hp'=>$hp,
             'ldg'=>$ldg,'lhtdg'=>$lhtdg]);
         }
-       
     }
 
     //_________________________________________________________________________________________________________________________________
@@ -304,7 +303,8 @@ class thongKeController extends Controller
                 }
             }
 
-
+            //bien dem
+            $dat_a=$dat_b=$dat_c=$dat_d=$c_dat=0;
             foreach ($phieuCham as $pc) {
                 $t=$cdr3->maCDR3;
                 /////////
@@ -424,7 +424,8 @@ class thongKeController extends Controller
                 }
             }
 
-
+            //bien dem
+            $dat_a=$dat_b=$dat_c=$dat_d=$c_dat=0;
             foreach ($phieuCham as $pc) {
                 $t=$cdr3->maCDR3;
                 /////////
@@ -894,7 +895,8 @@ class thongKeController extends Controller
             }
             
             
-
+            //bien dem
+            $dat_a=$dat_b=$dat_c=$dat_d=$c_dat=0;
             foreach ($phieuCham as $pc) {
                 $t=$cdr3->maCDR3;
                 /////////
@@ -1028,7 +1030,8 @@ class thongKeController extends Controller
                     $diem_tieu_chi=$diem_tieu_chi+$tc->diemTCCD;
                 }
             }
-
+            //bien dem
+            $dat_a=$dat_b=$dat_c=$dat_d=$c_dat=0;
             foreach ($phieuCham as $pc) {
                 $t=$cdr3->maCDR3;
                 /////////

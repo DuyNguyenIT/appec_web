@@ -18,9 +18,10 @@
                             <li class="breadcrumb-item"><a href="{{ asset('/giang-vien') }}">{{ __('Home') }}</a></li>
                            
                             <li class="breadcrumb-item">
-                               Ngân hàng câu hỏi trắc nghiệm
+                                Câu hỏi trắc nghiệm
+
                             </li>
-                            <li class="breadcrumb-item active">Trắc nghiệm</li>
+                            <li class="breadcrumb-item active">Câu hỏi trắc nghiệm</li>
                         </ol>
                     </div>
                     <!-- /.col -->
