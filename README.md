@@ -1,2 +1,2 @@
-# appec_web
-Web site quản lý tiêu chuẩn giáo dục APPEC
+# CAP
+Web site quản lý đánh giá sinh viên theo chuẩn đầu ra
