@@ -9,8 +9,6 @@ class BMHomeController extends Controller
 {
     public function index()
     {
-        $i=1;
         # code...
-        $j=6;
     }
 }
