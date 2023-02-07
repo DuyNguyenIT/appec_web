@@ -55,7 +55,7 @@ class loginController extends Controller
         foreach($cauHoi as $ch){
             
         }
-        $i=1; //test thử git
+        $i=3; //test thử git
         Session::put('language','en');
         if(Session::get('user_permission') == 1)	
             return redirect('/quan-ly');
