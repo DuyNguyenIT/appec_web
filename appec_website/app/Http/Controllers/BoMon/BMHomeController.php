@@ -11,5 +11,6 @@ class BMHomeController extends Controller
     {
         $i=1;
         # code...
+        $j=3;
     }
 }
