@@ -9,6 +9,6 @@ class BMHomeController extends Controller
 {
     public function index()
     {
-        # code...
+        return view('bomon.home');
     }
 }

@@ -139,24 +139,19 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ asset('/giao-vu/quan-ly-lop') }}" class="nav-link">
+                            <a href="{{ asset('/giao-vu/cat-phach') }}" class="nav-link">
                                 <i class="fas fa-users"></i>
-                                <p>{{ __('Class') }}</p>
+                                <p>Cắt phách</p>
                             </a>
                         </li>
 
-                        <li class="nav-item">
-                            <a href="{{ asset('/giao-vu/hoc-phan-giang-day') }}" class="nav-link">
-                                <i class="nav-icon fas fa-book-reader"></i>
-                                <p>{{ __('Assignment of teaching') }}</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
+                        
+                        {{-- <li class="nav-item">
                             <a href="{{ asset('/giao-vu/cap-nhat-diem-ket-thuc') }}" class="nav-link">
                                 <i class="fas fa-gavel"></i>
                                 <p>{{ __('Updating final result') }}</p>
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
                             <a href="{{ asset('/giao-vu/thong-ke') }}" class="nav-link">
                                 <i class="fas fa-chart-bar"></i>

@@ -8,14 +8,14 @@
       <div class="row mb-2">
         <div class="col-sm-6">
           <h1 class="m-0 text-dark">
-            Statistics<noscript></noscript>
+            {{ __("Statistics") }}<noscript></noscript>
             <nav></nav>
           </h1>
         </div>
         <!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ asset('/quan-ly') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ asset('/quan-ly') }}">{{ __("Home") }}</a></li>
             <li class="breadcrumb-item active">{{ $ctDaoTao->tenCT }}</li>
             <li class="breadcrumb-item active">Chọn thời gian</li>
           </ol>
@@ -50,8 +50,8 @@
                 <thead>
                   <tr>
                     <th>No.</th>
-                    <th>Years</th>
-                    <th>Semester</th>
+                    <th>{{ __('Academic year') }}</th>
+                    <th>{{ __('Semester') }}</th>
                   </tr>
                 </thead>
                 <tbody>

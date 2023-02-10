@@ -7,7 +7,7 @@
       <div class="row mb-2">
         <div class="col-sm-6">
           <h1 class="m-0 text-dark">
-            Statistics<noscript></noscript>
+            {{ __("Statistics") }}<noscript></noscript>
             <nav></nav>
           </h1>
         </div>
@@ -18,7 +18,7 @@
             <li class="breadcrumb-item ">{{ $ctdaotao->tenCT }}</li>
             <li class="breadcrumb-item ">{{ session::get('maHK') }}</li>
             <li class="breadcrumb-item ">{{ session::get('namHoc') }}</li>
-            <li class="breadcrumb-item active">Thống kê</li>
+            <li class="breadcrumb-item active">{{ __("Statistics") }}</li>
 
           </ol>
         </div>
@@ -53,7 +53,7 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        (Unit:%)
+                        (Đơn vị: %, X: Không đánh giá)
                         <table id="" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
@@ -87,12 +87,50 @@
                                                 @endif
                                             @endforeach
                                         </td>
-                                        <td>{{ number_format($data[1]*100,2) }}</td>
-                                        <td>{{ number_format($data[2]*100,2) }}</td>
-                                        <td>{{ number_format($data[3]*100,2) }}</td>
-                                        <td>{{ number_format($data[4]*100,2) }}</td>
-                                        <td>{{ number_format($data[5]*100,2) }}</td>
-                                        <td>{{ number_format($data[6]*100,2) }}</td>
+                                        <td style="text-align: center">
+                                            @if ($data[1]=='0')
+                                                X
+                                            @else
+                                                {{ number_format($data[1]*100,2) }}
+                                            @endif
+                                            
+                                        </td>
+                                        <td style="text-align: center">
+                                            @if ($data[2]=='0')
+                                                 X
+                                            @else
+                                                {{ number_format($data[2]*100,2) }}
+                                            @endif
+                                        </td>
+                                        <td style="text-align: center">
+                                            @if ($data[3]=='0')
+                                                X
+                                            @else
+                                                {{ number_format($data[3]*100,2) }}
+                                            @endif
+                                            
+                                        </td>
+                                        <td style="text-align: center">
+                                            @if ($data[4]=='0')
+                                                X
+                                            @else
+                                                {{ number_format($data[4]*100,2) }}
+                                            @endif
+                                        </td>
+                                        <td style="text-align: center">
+                                            @if ($data[5]=='0')
+                                                X
+                                            @else
+                                                {{ number_format($data[5]*100,2) }}
+                                            @endif
+                                        </td>
+                                        <td style="text-align: center">
+                                            @if ($data[6]=='0')
+                                                X
+                                            @else
+                                                {{ number_format($data[6]*100,2) }}
+                                            @endif
+                                        </td>
                                     </tr>
                                 @endforeach
                                

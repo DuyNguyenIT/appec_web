@@ -8,7 +8,7 @@
       <div class="row mb-2">
         <div class="col-sm-6">
           <h1 class="m-0 text-dark">
-            Statistics<noscript></noscript>
+            {{ __("Statistics") }}<noscript></noscript>
             <nav></nav>
           </h1>
         </div>

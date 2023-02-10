@@ -74,12 +74,12 @@
                                                     <td rowspan="2">{{ $x->tenLoaiHTDG }}</td>
                                                     <td>
                                                         Cán bộ chấm 1 <br>
-                                                        <a
+                                                        {{-- <a
                                                             href="{{ asset('/giao-vu/thong-ke/thong-ke-theo-hoc-phan/thong-ke-theo-tieu-chi/' . $x->maCTBaiQH . '/1') }}">
                                                             <button class="btn btn-primary">
                                                                 <i class="fas fa-chart-line"></i>{{ __('SOs') }}
                                                             </button>
-                                                        </a>
+                                                        </a> --}}
                                                         <a
                                                             href="{{ asset('giao-vu/thong-ke/thong-ke-theo-hoc-phan/thong-ke-theo-xep-hang/' . $x->maCTBaiQH . '/1') }}">
                                                             <button class="btn btn-primary">
@@ -97,12 +97,12 @@
                                                 <tr>
                                                     <td>
                                                         Cán bộ chấm 2 <br>
-                                                        <a
+                                                        {{-- <a
                                                             href="{{ asset('/giao-vu/thong-ke/thong-ke-theo-hoc-phan/thong-ke-theo-tieu-chi/' . $x->maCTBaiQH . '/2') }}">
                                                             <button class="btn btn-primary">
                                                                 <i class="fas fa-chart-line"></i>{{ __('SOs') }}
                                                             </button>
-                                                        </a>
+                                                        </a> --}}
                                                         <a
                                                             href="{{ asset('giao-vu/thong-ke/thong-ke-theo-hoc-phan/thong-ke-theo-xep-hang/' . $x->maCTBaiQH . '/2') }}">
                                                             <button class="btn btn-primary">
@@ -125,12 +125,12 @@
                                                         <td>{{ $x->trongSo }}%</td>
                                                         <td>{{ $x->tenLoaiHTDG }}</td>
                                                         <td>
-                                                            <a
+                                                            {{-- <a
                                                                 href="{{ asset('/giao-vu/thong-ke/thong-ke-theo-hoc-phan/tu-luan/thong-ke-theo-tieu-chi/' . $x->maCTBaiQH) }}">
                                                                 <button class="btn btn-primary">
                                                                     <i class="fas fa-chart-line"></i> {{ __('SOs') }}
                                                                 </button>
-                                                            </a>
+                                                            </a> --}}
                                                             <a
                                                                 href="{{ asset('giao-vu/thong-ke/thong-ke-theo-hoc-phan/tu-luan/thong-ke-theo-xep-hang/' . $x->maCTBaiQH) }}">
                                                                 <button class="btn btn-primary">
@@ -141,10 +141,10 @@
                                                                 class="btn btn-primary">
                                                                 <i class="fas fa-chart-line"></i>{{__('Grate')}}
                                                             </a>
-                                                            <a href="{{ asset('giao-vu/thong-ke/thong-ke-theo-hoc-phan/tu-luan/thong-ke-theo-abet/' . $x->maCTBaiQH) }}"
+                                                            {{-- <a href="{{ asset('giao-vu/thong-ke/thong-ke-theo-hoc-phan/tu-luan/thong-ke-theo-abet/' . $x->maCTBaiQH) }}"
                                                                 class="btn btn-primary">
                                                                 <i class="fas fa-chart-line"></i>{{ __("ABET's SO") }}
-                                                            </a>
+                                                            </a> --}}
                                                         </td>
                                                     </tr>
                                                 @else
@@ -155,12 +155,12 @@
                                                             <td>{{ $x->trongSo }}%</td>
                                                             <td>{{ $x->tenLoaiHTDG }}</td>
                                                             <td>
-                                                                <a
+                                                                {{-- <a
                                                                     href="{{ asset('/giao-vu/thong-ke/thong-ke-theo-hoc-phan/thuc-hanh/thong-ke-theo-tieu-chi/' . $x->maCTBaiQH) }}">
                                                                     <button class="btn btn-primary">
                                                                         <i class="fas fa-chart-line"></i>{{ __('SOs') }}
                                                                     </button>
-                                                                </a>
+                                                                </a> --}}
                                                                 <a
                                                                     href="{{ asset('giao-vu/thong-ke/thong-ke-theo-hoc-phan/thuc-hanh/thong-ke-theo-xep-hang/' . $x->maCTBaiQH) }}">
                                                                     <button class="btn btn-primary">
@@ -173,10 +173,10 @@
                                                                         <i class="fas fa-chart-line"></i>{{__('Grate')}}
                                                                     </button>
                                                                 </a>
-                                                                <a href="{{ asset('giao-vu/thong-ke/thong-ke-theo-hoc-phan/thu-hanh/thong-ke-theo-abet/' . $x->maCTBaiQH) }}"
+                                                                {{-- <a href="{{ asset('giao-vu/thong-ke/thong-ke-theo-hoc-phan/thu-hanh/thong-ke-theo-abet/' . $x->maCTBaiQH) }}"
                                                                     class="btn btn-primary">
                                                                     <i class="fas fa-chart-line"></i>{{ __("ABET's SO") }}
-                                                                </a>
+                                                                </a> --}}
                                                             </td>
                                                         </tr>
                                                     @endif

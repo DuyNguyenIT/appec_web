@@ -27,7 +27,6 @@ Route::group(['middleware' =>'App\Http\Middleware\isGiaoVu'], function (){
                      Route::get('/', 'GiaoVuhocPhanController@index');
                      Route::post('cap-nhat-ds-sinh-vien-bang-excel', 'dsSinhVienHocPhanImport@import');
                      Route::get('tai-file-mau', 'dsSinhVienHocPhanImport@download_template');
-              //     Route::post('xoa/{id}', '');
               });
           
           

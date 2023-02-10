@@ -16,7 +16,6 @@ Route::group(['prefix' => 'sinh-vien','namespace' => 'App\Http\Controllers\SinhV
             Route::get('/{maHocPhan}/{maLop}', 'SVpkskqhtController@index');
             Route::post('/guiks-kqht/{maHocPhan}', 'SVpkskqhtController@guiks_kqht');
             
-
         });  
         Route::group(['prefix' => 'pks-cdr3'], function () {             
             Route::get('/{maHocPhan}/{maLop}', 'SVpkscdr3Controller@index');

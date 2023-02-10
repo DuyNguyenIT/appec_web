@@ -56,7 +56,7 @@ class loginController extends Controller
             
         }
         $i=3; //test thử git
-        Session::put('language','en');
+        Session::put('language','vi');
         if(Session::get('user_permission') == 1)	
             return redirect('/quan-ly');
         if(Session::get('user_permission') == 2)

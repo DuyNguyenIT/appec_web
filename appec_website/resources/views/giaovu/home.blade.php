@@ -37,7 +37,6 @@
                         <div class="small-box bg-gradient-lime">
                             <div class="inner">
                                 <h3>{{ $count_class }}</h3>
-
                                 <p>{{ __('Class') }}</p>
                             </div>
                             <div class="icon">

@@ -61,7 +61,7 @@
       <div class="row mb-2">
         <div class="col-sm-6">
           <h1 class="m-0 text-dark">
-            Statistics<noscript></noscript>
+            {{ __("Statistics") }}<noscript></noscript>
             <nav></nav>
           </h1>
         </div>
@@ -72,7 +72,7 @@
             <li class="breadcrumb-item ">{{ $ctdaotao->tenCT }}</li>
             <li class="breadcrumb-item ">{{ session::get('maHK') }}</li>
             <li class="breadcrumb-item ">{{ session::get('namHoc') }}</li>
-            <li class="breadcrumb-item active">Thống kê</li>
+            <li class="breadcrumb-item active">{{ __("Statistics") }}</li>
 
           </ol>
         </div>
@@ -107,7 +107,7 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        (Unit:%)
+                        (Đơn vị:%; X: Không đánh giá)
                         <table id="" class="tatable table-bordered table-hover table-responsive table-striped">
                             <thead>
                                 <tr>
@@ -148,9 +148,8 @@
                                                 @if ($data[$i]!=0)
                                                     <b>{{ number_format($data[$i]*100,2) }}</b>
                                                 @else
-                                                    0
+                                                    X
                                                 @endif
-                                                
                                             </td>
                                         @endfor
                                         

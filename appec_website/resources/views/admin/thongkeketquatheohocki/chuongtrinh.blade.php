@@ -8,15 +8,15 @@
       <div class="row mb-2">
         <div class="col-sm-6">
           <h1 class="m-0 text-dark">
-            Statistics<noscript></noscript>
+            {{ __("Statistics") }}<noscript></noscript>
             <nav></nav>
           </h1>
         </div>
         <!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ asset('/quan-ly') }}">Home</a></li>
-            <li class="breadcrumb-item active">Statistics</li>
+            <li class="breadcrumb-item"><a href="{{ asset('/quan-ly') }}">{{ __("Home") }}</a></li>
+            <li class="breadcrumb-item active">{{ __("Statistics") }}</li>
           </ol>
         </div>
         <!-- /.col -->
@@ -44,8 +44,8 @@
                 <thead>
                   <tr>
                     <th>No.</th>
-                    <th>Curriculum name</th>
-                    <th>Statistic Functions</th>
+                    <th>{{ __("Curriculum name") }}</th>
+                    <th>{{ __("Statistics") }}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -59,7 +59,7 @@
                         <td>
                             <a href="{{ asset('/quan-ly/thong-ke-ket-qua-theo-hoc-ki/chuong-trinh/namhoc/'.$ct->maCT) }}">
                                 <button class="btn btn-primary"> 
-                                  <i class="fas fa-chart-line"></i>Chọn
+                                  <i class="fas fa-chart-line"></i> {{ __('Choose') }}
                                 </button>
                             </a>
                         </td>

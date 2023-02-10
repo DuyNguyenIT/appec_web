@@ -54,6 +54,35 @@
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
+
+                <!-- Language Dropdown Menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        @if (Session::has('language') && Session::get('language') == 'vi')
+                            <i class="flag-icon flag-icon-vn"></i>
+                        @else
+                            <i class="flag-icon flag-icon-us"></i>
+                        @endif
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right p-0">
+                        @if (Session::has('language') && Session::get('language') == 'vi')
+                            <a href="{{ asset('/language/en') }}" class="dropdown-item ">
+                                <i class="flag-icon flag-icon-us mr-2"></i> {{ __('English') }}
+                            </a>
+                            <a href="{{ asset('/language/vi') }}" class="dropdown-item active">
+                                <i class="flag-icon flag-icon-vn mr-2"></i> {{ __('Vietnamese') }}
+                            </a>
+                        @else
+                            <a href="{{ asset('/language/en') }}" class="dropdown-item active">
+                                <i class="flag-icon flag-icon-us mr-2"></i> {{ __('English') }}
+                            </a>
+                            <a href="{{ asset('/language/vi') }}" class="dropdown-item">
+                                <i class="flag-icon flag-icon-vn mr-2"></i> {{ __('Vietnamese') }}
+                            </a>
+                        @endif
+                    </div>
+                </li>
+                
                 <!-- Messages Dropdown Menu -->
                 <li class="nav-item">
                     <a class="nav-link" data-widget="fullscreen" href="{{ asset('/dang-xuat') }}" role="button">
@@ -78,7 +107,7 @@
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="{{ asset('dist/img/avatar3.png') }}" class="img-circle elevation-2"
+                        <img src="{{ asset('dist/img/avatar5.png') }}" class="img-circle elevation-2"
                             alt="User Image" />
                     </div>
                     <div class="info">
@@ -103,23 +132,33 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
-                        <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-
                         <li class="nav-item">
-                            <a href="{{ asset('/giang-vien') }}" class="nav-link">
+                            <a href="{{ asset('/bo-mon') }}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>Dashboard</p>
+                                <p>{{ __('Dashboard') }}</p>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a href="{{ asset('/giang-vien/hoc-phan') }}" class="nav-link">
+                            <a href="{{ asset('bo-mon/quan-ly-lop') }}" class="nav-link">
                                 <i class="nav-icon fas fa-book-reader"></i>
-                                <p>Course</p>
+                                <p>Quản lý lớp</p>
                             </a>
                         </li>
 
+                        <li class="nav-item">
+                            <a href="{{ asset('bo-mon/phan-cong-giang-day') }}" class="nav-link">
+                                <i class="nav-icon fas fa-book-reader"></i>
+                                <p>{{ __('Assignment of teaching') }}</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ asset('bo-mon/phan-quyen') }}" class="nav-link">
+                                <i class="nav-icon fas fa-book-reader"></i>
+                                <p>Phân quyền giảng viên</p>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
@@ -137,7 +176,6 @@
                 <b>Version</b> 1.0
             </div>
         </footer>
-
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">
             <!-- Control sidebar content goes here -->
