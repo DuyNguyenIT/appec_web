@@ -19,10 +19,11 @@
 
 <body class="hold-transition login-page" style="background: #ebeced47">
    
-    <div style="text-align:center;">
+    <div style="text-align:center;"> 
         <b> 
+            <img src="{{ asset('dist/img/logo_trang_chu.png') }}" height="150pt" >
             <h2  style="font-weight: 800; line-height: 1.5;">HỆ THỐNG HỖ TRỢ CÔNG TÁC ĐÁNH GIÁ THEO CHUẨN ĐẦU RA 
-                <img src="{{ asset('dist/img/logo_trang_chu.png') }}" height="100pt" style="float: right; padding-left:15pt">
+                
             <br> CỦA CHƯƠNG TRÌNH ĐÀO TẠO  PHỤC VỤ CẢI TIẾN, NÂNG CAO <br> CHẤT LƯỢNG ĐÀO TẠO</h2> </b>
        <i>  <h2 style="line-height: 1.5;">(Learning outcomes evaluation system <br>
        For  curriculum to support improvement and advanced training quality)</h2> </i>
@@ -75,9 +76,9 @@
     </form>
     <!-- /.login-box -->
     <!-- jQuery -->
-    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
-    <!-- Bootstrap 4 -->
-    <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('https://code.jquery.com/jquery-3.5.1.js') }}"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="{{ asset('https://code.jquery.com/jquery-3.5.1.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
 </body>

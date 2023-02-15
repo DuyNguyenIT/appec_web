@@ -35,9 +35,9 @@
     <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}" />
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!-- jQuery -->
-    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('https://code.jquery.com/jquery-3.5.1.js') }}"></script>
     <!-- jQuery UI 1.11.4 -->
-    <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('https://code.jquery.com/jquery-3.5.1.min.js') }}"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.css') }}">
 </head>
@@ -150,59 +150,105 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ asset('/quan-ly/bac-dao-tao') }}" class="nav-link">
-                                <i class="nav-icon fas fa-book-reader"></i>
-                                <p>{{ __('Education level') }}</p>
+                            <a href="#" class="nav-link">
+                              <i class="nav-icon fas fa-book"></i>
+                              <p>
+                                Thông tin chung
+                                <i class="right fas fa-angle-left"></i>
+                              </p>
                             </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ asset('/quan-ly/nganh-hoc') }}" class="nav-link">
-                                <i class="nav-icon fas fa-book-reader"></i>
-                                <p>{{ __('Majors') }}</p>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ asset('/quan-ly/bac-dao-tao') }}" class="nav-link">
+                                        <i class="nav-icon fas fa-book-reader"></i>
+                                        <p>{{ __('Education level') }}</p>
+                                    </a>
+                                </li>
+                                
+                                <li class="nav-item">
+                                    <a href="{{ asset('/quan-ly/nganh-hoc') }}" class="nav-link">
+                                        <i class="nav-icon fas fa-book-reader"></i>
+                                        <p>{{ __('Majors') }}</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ asset('/quan-ly/chuyen-nganh') }}" class="nav-link">
+                                        <i class="nav-icon fas fa-book-reader"></i>
+                                        <p>{{ __('Specialized') }}</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ asset('/quan-ly/he') }}" class="nav-link">
+                                        <i class="nav-icon fas fa-book-reader"></i>
+                                        <p>{{ __('Forms of training') }}</p>
+                                    </a>
+                                </li>
+                            </ul>
+                          </li>
+                          <li class="nav-item">
+                            <a href="#" class="nav-link">
+                              <i class="nav-icon fas fa-book"></i>
+                              <p>
+                                CT đào tạo
+                                <i class="right fas fa-angle-left"></i>
+                              </p>
                             </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ asset('/quan-ly/chuyen-nganh') }}" class="nav-link">
-                                <i class="nav-icon fas fa-book-reader"></i>
-                                <p>{{ __('Specialized') }}</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ asset('/quan-ly/he') }}" class="nav-link">
-                                <i class="nav-icon fas fa-book-reader"></i>
-                                <p>{{ __('Forms of training') }}</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ asset('/quan-ly/chuong-trinh-dao-tao') }}" class="nav-link">
-                                <i class="nav-icon fas fa-book-reader"></i>
-                                <p>{{ __('Curriculum') }}</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ asset('/quan-ly/chuan-dau-ra') }}" class="nav-link">
-                                <i class="nav-icon fas fa-book-reader"></i>
-                                <p>{{ __('Student Outcomes') }}</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ asset('/quan-ly/chuan-dau-ra2-abet') }}" class="nav-link">
-                                <i class="nav-icon fas fa-book-reader"></i>
-                                <p>CLOs level2 <->ABET's SOs</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ asset('/quan-ly/chuan-dau-ra3-abet') }}" class="nav-link">
-                                <i class="nav-icon fas fa-book-reader"></i>
-                                <p>CLOs level 3 <->ABET's SOs</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ asset('/quan-ly/loai-hoc-phan') }}" class="nav-link">
-                                <i class="nav-icon fas fa-book-reader"></i>
-                                <p>{{ __('Course type') }}</p>
-                            </a>
-                        </li>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ asset('/quan-ly/chuong-trinh-dao-tao') }}" class="nav-link">
+                                        <i class="nav-icon fas fa-book-reader"></i>
+                                        <p>{{ __('Curriculum') }}</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ asset('/quan-ly/loai-hoc-phan') }}" class="nav-link">
+                                        <i class="nav-icon fas fa-book-reader"></i>
+                                        <p>{{ __('Course type') }}</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ asset('/quan-ly/khoi-kien-thuc') }}" class="nav-link">
+                                        <i class="nav-icon fas fa-book-reader"></i>
+                                        <p>{{ __('Knowledge block') }}</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ asset('/quan-ly/phuong-phap-giang-day') }}" class="nav-link">
+                                        <i class="nav-icon fas fa-book-reader"></i>
+                                        <p>{{ __('Teaching methods') }}</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                      <i class="nav-icon fas fa-chart-bar"></i>
+                                      <p>
+                                        Thống kê
+                                        <i class="right fas fa-angle-left"></i>
+                                      </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        {{-- Thong ke ket qua hoc tap theo hoc ki --}}
+                                        <li class="nav-item">
+                                            <a href="{{ asset('/quan-ly/thong-ke-ket-qua-theo-hoc-ki/chuong-trinh') }}" class="nav-link">
+                                                <i class="nav-icon  fas fa-chart-bar"></i>
+                                                <p>Học kì</p>
+                                            </a>
+                                        </li>
+                                        {{-- Thong ke  theo chuong trinh--}}
+                                        <li class="nav-item">
+                                            <a href="{{ asset('/quan-ly/thong-ke') }}" class="nav-link">
+                                                <i class="nav-icon  fas fa-chart-bar"></i>
+                                                <p>Chương trình </p>
+                                            </a>
+                                        </li>
+                                        
+                                    </ul>
+                                </li>
+                            </ul>
+                          </li>
+                        
+                        
+                        
                         <li class="nav-item">
                             <a href="{{ asset('/quan-ly/hoc-phan') }}" class="nav-link">
                                 <i class="nav-icon fas fa-book-reader"></i>
@@ -217,33 +263,43 @@
                         </li>
                         
                         <li class="nav-item">
-                            <a href="{{ asset('/quan-ly/khoi-kien-thuc') }}" class="nav-link">
-                                <i class="nav-icon fas fa-book-reader"></i>
-                                <p>{{ __('Knowledge block') }}</p>
+                            <a href="#" class="nav-link">
+                              <i class="nav-icon fas fa-book"></i>
+                              <p>
+                                Chuẩn đầu ra
+                                <i class="right fas fa-angle-left"></i>
+                              </p>
                             </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ asset('/quan-ly/phuong-phap-giang-day') }}" class="nav-link">
-                                <i class="nav-icon fas fa-book-reader"></i>
-                                <p>{{ __('Teaching methods') }}</p>
-                            </a>
-                        </li>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ asset('/quan-ly/chuan-dau-ra') }}" class="nav-link">
+                                        <i class="nav-icon fas fa-book-reader"></i>
+                                        <p>{{ __('Student Outcomes') }}</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ asset('/quan-ly/chuan-dau-ra2-abet') }}" class="nav-link">
+                                        <i class="nav-icon fas fa-book-reader"></i>
+                                        <p>CLOs level2 <->ABET's SOs</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ asset('/quan-ly/chuan-dau-ra3-abet') }}" class="nav-link">
+                                        <i class="nav-icon fas fa-book-reader"></i>
+                                        <p>CLOs level 3 <->ABET's SOs</p>
+                                    </a>
+                                </li>
+                            </ul>
+                          </li>
+
+                        
+                        
+
+                        {{-- Quan ly tai khoan --}}
                         <li class="nav-item">
                             <a href="{{ asset('/quan-ly/tai-khoan') }}" class="nav-link">
                                 <i class="nav-icon  fas fa-users-cog"></i>
                                 <p>{{ __('Accounts') }}</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ asset('/quan-ly/thong-ke') }}" class="nav-link">
-                                <i class="nav-icon  fas fa-chart-bar"></i>
-                                <p>{{ __('Statistics') }} </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ asset('/quan-ly/thong-ke-ket-qua-theo-hoc-ki/chuong-trinh') }}" class="nav-link">
-                                <i class="nav-icon  fas fa-chart-bar"></i>
-                                <p>{{ __('Statistic results') }}</p>
                             </a>
                         </li>
                     </ul>

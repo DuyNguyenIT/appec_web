@@ -56,7 +56,11 @@ class loginController extends Controller
             
         }
         $i=3; //test thử git
+<<<<<<< Updated upstream
         Session::put('language','vi');
+=======
+        Session::put('language','en');
+>>>>>>> Stashed changes
         if(Session::get('user_permission') == 1)	
             return redirect('/quan-ly');
         if(Session::get('user_permission') == 2)
